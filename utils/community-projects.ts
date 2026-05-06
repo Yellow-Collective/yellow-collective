@@ -8,20 +8,55 @@ const communityProjectsDirectory = path.join(
   "community-projects"
 );
 
+const isStringArray = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.every((item) => typeof item === "string");
+
+const isProjectLinks = (value: unknown): value is CommunityProject["links"] =>
+  Array.isArray(value) &&
+  value.every(
+    (item) =>
+      item &&
+      typeof item === "object" &&
+      typeof (item as { title?: unknown }).title === "string" &&
+      typeof (item as { href?: unknown }).href === "string"
+  );
+
 const isCommunityProject = (value: unknown): value is CommunityProject => {
   if (!value || typeof value !== "object") return false;
 
   const project = value as Partial<CommunityProject>;
+  if (
+    typeof project.slug !== "string" ||
+    typeof project.title !== "string" ||
+    typeof project.description !== "string" ||
+    !isStringArray(project.details) ||
+    typeof project.artist !== "string" ||
+    typeof project.category !== "string" ||
+    typeof project.date !== "string" ||
+    typeof project.href !== "string" ||
+    typeof project.image !== "string"
+  ) {
+    return false;
+  }
+
+  if (project.galleryImages && !isStringArray(project.galleryImages)) {
+    return false;
+  }
+
+  if (project.links && !isProjectLinks(project.links)) {
+    return false;
+  }
+
   return Boolean(
-    project.slug &&
-      project.title &&
-      project.description &&
-      Array.isArray(project.details) &&
-      project.artist &&
-      project.category &&
-      project.date &&
-      project.href &&
-      project.image
+    project.slug.trim() &&
+      project.title.trim() &&
+      project.description.trim() &&
+      project.details.length &&
+      project.artist.trim() &&
+      project.category.trim() &&
+      project.date.trim() &&
+      project.href.trim() &&
+      project.image.trim()
   );
 };
 
