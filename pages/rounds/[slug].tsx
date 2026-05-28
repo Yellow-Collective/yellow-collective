@@ -371,9 +371,10 @@ export default function RoundDetailPage({
                           <h3 className="mt-1 break-words font-heading text-2xl leading-none text-[#212529]">
                             {submission.title}
                           </h3>
-                          <div className="mt-2 text-sm font-semibold text-[#212529]">
-                            {formatSubmissionAuthor(submission.walletAddress)}
-                          </div>
+                          <WalletIdentityLink
+                            address={submission.walletAddress}
+                            className="mt-2 block break-words text-sm font-semibold text-[#212529]"
+                          />
                         </div>
                       </div>
                       <div className="flex shrink-0 flex-col gap-2 md:items-end">
@@ -618,7 +619,6 @@ const SubmissionCard = ({
         <div className="mt-auto flex items-center justify-between gap-3">
           <WalletIdentityLink
             address={submission.walletAddress}
-            ensName={demoAuthorNames[submission.walletAddress.toLowerCase()]}
             className={`font-heading text-base underline ${primaryTextClass}`}
           />
           {canVote && (
@@ -868,9 +868,6 @@ const SubmissionModal = ({
               </div>
               <WalletIdentityLink
                 address={submission.walletAddress}
-                ensName={
-                  demoAuthorNames[submission.walletAddress.toLowerCase()]
-                }
                 className="break-all text-right text-sm font-semibold text-black"
               />
             </div>
@@ -923,9 +920,6 @@ const SubmissionModal = ({
                     >
                       <WalletIdentityLink
                         address={vote.walletAddress}
-                        ensName={
-                          demoAuthorNames[vote.walletAddress.toLowerCase()]
-                        }
                         className="min-w-0 break-all font-heading text-lg leading-none text-skin-base"
                       />
                       <span className="shrink-0 rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
@@ -1213,7 +1207,6 @@ const RoundActivityItem = ({ item }: { item: RoundActivityItemData }) => (
           by{" "}
           <WalletIdentityLink
             address={item.walletAddress}
-            ensName={demoAuthorNames[item.walletAddress.toLowerCase()]}
             className="break-words font-semibold text-skin-base"
           />
         </div>
@@ -1424,14 +1417,6 @@ const getWinnerCardStyle = (rank: number) => {
     pillClass: "bg-[#7ba1ff] text-[#0d244f]",
   };
 };
-
-const demoAuthorNames: Record<string, string> = {
-  "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19": "yellowadmin.eth",
-  "0x70abdcd7a5a8ff9cdef1cca9ea15a5d315780986": "roundbuilder.eth",
-};
-
-const formatSubmissionAuthor = (address: string) =>
-  demoAuthorNames[address.toLowerCase()] || shortenAddress(address);
 
 const shortenAddress = (address: string) =>
   address.length > 12
