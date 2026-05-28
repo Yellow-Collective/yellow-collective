@@ -36,9 +36,9 @@ export const RoundTimeline = ({ round }: { round: Round }) => {
   return (
     <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-4 text-skin-base shadow-sm md:px-5 md:py-4">
       <div className="relative grid gap-5 md:grid-cols-3 md:gap-0">
-        <div className="absolute left-5 right-5 top-[46px] hidden h-1 bg-[#d7d7d7] md:block" />
+        <div className="absolute left-5 right-5 top-[52px] hidden h-1 bg-[#d7d7d7] md:block" />
         <div
-          className="absolute left-5 top-[46px] hidden h-1 bg-[#4bd27c] md:block"
+          className="absolute left-5 top-[52px] hidden h-1 bg-[#4bd27c] md:block"
           style={{
             width:
               state === "ended" || state === "archived"
