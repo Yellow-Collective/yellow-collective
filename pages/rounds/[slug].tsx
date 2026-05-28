@@ -431,7 +431,7 @@ export default function RoundDetailPage({
             <h2 className="font-heading text-[34px] leading-none text-[#212529]">
               Submissions
             </h2>
-            <span className="rounded-full bg-[#c93d2f] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#7f2219]">
+            <span className="self-start rounded-full bg-[#c93d2f] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#7f2219]">
               {round.submissions.length}
             </span>
           </div>

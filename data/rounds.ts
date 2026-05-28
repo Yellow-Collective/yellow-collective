@@ -1412,10 +1412,10 @@ export const listAdminRoundRequests = async () => {
       SELECT ${requestSelectFields}
       FROM round_requests
       WHERE deleted_at IS NULL
+        AND status <> 'approved'
       ORDER BY
         CASE status
           WHEN 'pending' THEN 0
-          WHEN 'approved' THEN 1
           ELSE 3
         END,
         created_at DESC
@@ -1557,11 +1557,11 @@ export const approveRoundRequest = async (id: string) => {
       votingStartsAt: request.votingStartsAt,
       votingEndsAt: request.votingEndsAt,
       endsAt: request.endsAt,
-      active: true,
+      active: false,
       featured: false,
       isTraitContest: request.isTraitContest,
       traitSubmissionsEnabled: request.traitSubmissionsEnabled,
-      status: "published",
+      status: "draft",
       votingStrategy: request.votingStrategy,
       votesPerWallet: request.votesPerWallet,
       winnerCount: request.winnerCount,
@@ -1590,7 +1590,63 @@ export const approveRoundRequest = async (id: string) => {
     );
 
     if (existingRound.rows[0]?.id) {
-      roundId = existingRound.rows[0].id;
+      const existingRoundId = String(existingRound.rows[0].id);
+      roundId = existingRoundId;
+      await client.query(
+        `
+          UPDATE rounds
+          SET title = $2,
+            description = $3,
+            content = $4,
+            image = $5,
+            starts_at = $6,
+            submissions_open_at = $7,
+            voting_starts_at = $8,
+            voting_ends_at = $9,
+            ends_at = $10,
+            active = $11,
+            featured = $12,
+            is_trait_contest = $13,
+            trait_submissions_enabled = $14,
+            status = $15,
+            voting_strategy = $16,
+            votes_per_wallet = $17,
+            winner_count = $18,
+            max_submissions_per_wallet = $19,
+            min_title_length = $20,
+            max_title_length = $21,
+            min_description_length = $22,
+            max_description_length = $23,
+            updated_at = now()
+          WHERE id = $1
+        `,
+        [
+          roundId,
+          roundInput.title,
+          roundInput.description,
+          roundInput.content,
+          roundInput.image,
+          roundInput.startsAt,
+          roundInput.submissionsOpenAt,
+          roundInput.votingStartsAt,
+          roundInput.votingEndsAt,
+          roundInput.endsAt,
+          roundInput.active,
+          roundInput.featured,
+          roundInput.isTraitContest,
+          roundInput.traitSubmissionsEnabled,
+          roundInput.status,
+          roundInput.votingStrategy,
+          roundInput.votesPerWallet,
+          roundInput.winnerCount,
+          roundInput.maxSubmissionsPerWallet,
+          roundInput.minTitleLength,
+          roundInput.maxTitleLength,
+          roundInput.minDescriptionLength,
+          roundInput.maxDescriptionLength,
+        ]
+      );
+      await replaceRoundAwards(existingRoundId, request.awards, client);
     } else {
       roundId = randomUUID();
       await client.query(

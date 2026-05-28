@@ -3,13 +3,22 @@ import Layout from "@/components/Layout";
 import type { Round } from "data/rounds";
 import { getPublicRoundBySlug } from "data/rounds";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
+import {
+  ROUND_IMAGE_UPLOAD_ACCEPT,
+  resizeRoundImageFile,
+} from "@/utils/rounds/round-image-upload";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getRoundState } from "@/utils/rounds/state";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import { TOKEN_NETWORK } from "constants/addresses";
-import type { GetServerSidePropsContext, GetServerSidePropsResult, InferGetServerSidePropsType } from "next";
+import type {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  InferGetServerSidePropsType,
+} from "next";
 import Head from "next/head";
 import Link from "next/link";
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 
@@ -53,6 +62,7 @@ export default function SubmitRoundPage({
   const { signMessageAsync, isLoading: isSigning } = useSignMessage();
   const [values, setValues] = useState(initialValues);
   const [message, setMessage] = useState("");
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!round) {
@@ -72,6 +82,7 @@ export default function SubmitRoundPage({
       values.title.trim() &&
         values.description.trim() &&
         values.image.trim() &&
+        !isUploadingImage &&
         address
     );
 
@@ -186,6 +197,12 @@ export default function SubmitRoundPage({
             onChange={(value) => updateValue("image", value)}
             placeholder="example.com/image.png"
             className="mt-5"
+            upload={{
+              isUploading: isUploadingImage,
+              onUploadStart: () => setIsUploadingImage(true),
+              onUploadEnd: () => setIsUploadingImage(false),
+              onError: setMessage,
+            }}
           />
           <label
             htmlFor="round-submission-description"
@@ -236,26 +253,82 @@ const FormField = ({
   onChange,
   placeholder,
   className = "",
+  upload,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
   className?: string;
-}) => (
-  <div className={className}>
-    <label
-      htmlFor={`round-submission-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-      className="font-heading text-base text-skin-base"
-    >
-      {label}
-    </label>
-    <input
-      id={`round-submission-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-      value={value}
-      onChange={(event) => onChange(event.target.value)}
-      placeholder={placeholder}
-      className="mt-2 w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
-    />
-  </div>
-);
+  upload?: {
+    isUploading: boolean;
+    onUploadStart: () => void;
+    onUploadEnd: () => void;
+    onError: (message: string) => void;
+  };
+}) => {
+  const id = `round-submission-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !upload) return;
+
+    upload.onUploadStart();
+    try {
+      onChange(await resizeRoundImageFile(file));
+    } catch (error) {
+      upload.onError(
+        error instanceof Error ? error.message : "Unable to upload image."
+      );
+    } finally {
+      upload.onUploadEnd();
+      event.target.value = "";
+    }
+  };
+
+  return (
+    <div className={className}>
+      <label htmlFor={id} className="font-heading text-base text-skin-base">
+        {label}
+      </label>
+      <input
+        id={id}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        placeholder={placeholder}
+        className="mt-2 w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+      />
+      {upload && (
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <label className="yc-dark-submit-blue flex w-fit cursor-pointer items-center justify-center rounded-[18px] bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none">
+            {upload.isUploading ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept={ROUND_IMAGE_UPLOAD_ACCEPT}
+              className="sr-only"
+              onChange={handleFileChange}
+              disabled={upload.isUploading}
+            />
+          </label>
+          {value && (
+            <button
+              type="button"
+              onClick={() => onChange("")}
+              className="yc-dark-reset-red flex items-center justify-center rounded-[18px] border border-skin-stroke bg-white px-5 py-3 font-heading text-base text-skin-base shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition hover:-translate-y-0.5 hover:bg-[#fff7bf] active:translate-y-1 active:shadow-none"
+            >
+              Remove image
+            </button>
+          )}
+        </div>
+      )}
+      {upload && value && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={value}
+          alt="Submission preview"
+          className="mt-3 aspect-[16/9] w-full rounded-lg border border-skin-stroke bg-white object-cover"
+        />
+      )}
+    </div>
+  );
+};

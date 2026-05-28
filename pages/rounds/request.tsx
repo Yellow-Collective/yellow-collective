@@ -2,6 +2,10 @@ import CustomConnectButton from "@/components/CustomConnectButton";
 import Layout from "@/components/Layout";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
+import {
+  ROUND_IMAGE_UPLOAD_ACCEPT,
+  resizeRoundImageFile,
+} from "@/utils/rounds/round-image-upload";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import { TOKEN_NETWORK } from "constants/addresses";
 import Head from "next/head";
@@ -492,51 +496,6 @@ const slugify = (value: string) =>
 const dateInputToIso = (value: string) =>
   value ? new Date(value).toISOString() : "";
 
-const resizeRoundImageFile = (file: File) =>
-  new Promise<string>((resolve, reject) => {
-    if (!file.type.startsWith("image/")) {
-      reject(new Error("Choose an image file."));
-      return;
-    }
-
-    if (file.size > 8 * 1024 * 1024) {
-      reject(new Error("Choose an image smaller than 8MB."));
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      const image = document.createElement("img");
-      image.onload = () => {
-        const maxSize = 1600;
-        const scale = Math.min(
-          1,
-          maxSize / Math.max(image.width, image.height)
-        );
-        const width = Math.max(1, Math.round(image.width * scale));
-        const height = Math.max(1, Math.round(image.height * scale));
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-
-        const context = canvas.getContext("2d");
-        if (!context) {
-          reject(new Error("Unable to process image."));
-          return;
-        }
-
-        context.fillStyle = "#ffcc00";
-        context.fillRect(0, 0, width, height);
-        context.drawImage(image, 0, 0, width, height);
-        resolve(canvas.toDataURL("image/jpeg", 0.88));
-      };
-      image.onerror = () => reject(new Error("Unable to read image."));
-      image.src = String(reader.result || "");
-    };
-    reader.onerror = () => reject(new Error("Unable to read image."));
-    reader.readAsDataURL(file);
-  });
-
 const buildAwards = (awards: AwardFormValue[]) =>
   awards
     .map((award, index) => {
@@ -638,7 +597,7 @@ const ImageUploadField = ({
               Upload image
               <input
                 type="file"
-                accept="image/png,image/jpeg,image/webp,image/gif"
+                accept={ROUND_IMAGE_UPLOAD_ACCEPT}
                 className="sr-only"
                 onChange={handleFileChange}
               />

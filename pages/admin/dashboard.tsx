@@ -3,6 +3,11 @@ import CoinMediaPreview from "@/components/coins/CoinMediaPreview";
 import ProjectMemberSelector from "@/components/community/ProjectMemberSelector";
 import { isAdminAddress } from "@/utils/admin";
 import { getAdminSessionSignedRequestAction } from "@/utils/admin-auth";
+import {
+  getAdminRoundDatePayload,
+  toDateInput,
+  type SavedRoundDates,
+} from "@/utils/rounds/admin-round-form";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getSafeLinkProps, normalizeSafeImageUrl } from "@/utils/url-safety";
 import { TOKEN_NETWORK } from "constants/addresses";
@@ -1545,25 +1550,16 @@ const RoundsVisibilitySwitch = ({
   </button>
 );
 
-const toDateInput = (value: string) => {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toISOString().slice(0, 16);
-};
-
-const fromDateInput = (value: string) =>
-  value ? new Date(value).toISOString() : "";
-
 const getRoundPayloadFromForm = ({
   title,
   slug,
   description,
   content,
   image,
-  startsAt,
   submissionsOpenAt,
   votingStartsAt,
   votingEndsAt,
+  currentDates,
   active,
   featured,
   isTraitContest,
@@ -1583,10 +1579,10 @@ const getRoundPayloadFromForm = ({
   description: string;
   content: string;
   image: string;
-  startsAt: string;
   submissionsOpenAt: string;
   votingStartsAt: string;
   votingEndsAt: string;
+  currentDates: SavedRoundDates;
   active: boolean;
   featured: boolean;
   isTraitContest: boolean;
@@ -1600,31 +1596,39 @@ const getRoundPayloadFromForm = ({
   minDescriptionLength: number;
   maxDescriptionLength: number;
   awards: RoundInput["awards"];
-}): RoundInput => ({
-  title,
-  slug,
-  description,
-  content,
-  image,
-  startsAt: fromDateInput(startsAt),
-  submissionsOpenAt: fromDateInput(submissionsOpenAt),
-  votingStartsAt: fromDateInput(votingStartsAt),
-  votingEndsAt: fromDateInput(votingEndsAt),
-  active,
-  featured,
-  isTraitContest,
-  traitSubmissionsEnabled: isTraitContest,
-  status,
-  votingStrategy,
-  votesPerWallet,
-  winnerCount,
-  maxSubmissionsPerWallet,
-  minTitleLength,
-  maxTitleLength,
-  minDescriptionLength,
-  maxDescriptionLength,
-  awards,
-});
+}): RoundInput => {
+  const dates = getAdminRoundDatePayload(
+    {
+      submissionsOpenAt,
+      votingStartsAt,
+      votingEndsAt,
+    },
+    currentDates
+  );
+
+  return {
+    title,
+    slug,
+    description,
+    content,
+    image,
+    ...dates,
+    active,
+    featured,
+    isTraitContest,
+    traitSubmissionsEnabled: isTraitContest,
+    status,
+    votingStrategy,
+    votesPerWallet,
+    winnerCount,
+    maxSubmissionsPerWallet,
+    minTitleLength,
+    maxTitleLength,
+    minDescriptionLength,
+    maxDescriptionLength,
+    awards,
+  };
+};
 
 const validateRoundPublishForm = (round: RoundInput) => {
   if (
@@ -1672,7 +1676,6 @@ const RoundEditor = ({
   const [description, setDescription] = useState(round.description);
   const [content, setContent] = useState(round.content);
   const [image, setImage] = useState(round.image);
-  const [startsAt, setStartsAt] = useState(toDateInput(round.startsAt));
   const [submissionsOpenAt, setSubmissionsOpenAt] = useState(
     toDateInput(round.submissionsOpenAt)
   );
@@ -1716,10 +1719,15 @@ const RoundEditor = ({
       description,
       content,
       image,
-      startsAt,
       submissionsOpenAt,
       votingStartsAt,
       votingEndsAt,
+      currentDates: {
+        startsAt: round.startsAt,
+        submissionsOpenAt: round.submissionsOpenAt,
+        votingStartsAt: round.votingStartsAt,
+        votingEndsAt: round.votingEndsAt,
+      },
       active,
       featured,
       isTraitContest,
@@ -1837,7 +1845,6 @@ const RoundEditor = ({
       />
       <FormField label="Image URL" value={image} onChange={setImage} />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        <DateField label="Start date" value={startsAt} onChange={setStartsAt} />
         <DateField
           label="Submissions open"
           value={submissionsOpenAt}
@@ -2257,6 +2264,7 @@ const RoundRequestEditor = ({
   mutateRounds: KeyedMutator<{ rounds: Round[] }>;
   mutateRequests: KeyedMutator<{ requests: RoundRequest[] }>;
 }) => {
+  const router = useRouter();
   const [message, setMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -2271,7 +2279,7 @@ const RoundRequestEditor = ({
     try {
       setIsSaving(true);
       setMessage(null);
-      await sendAdminRequest(
+      const result = await sendAdminRequest(
         `/api/admin/rounds/requests/${request.id}`,
         adminAuth,
         action === "remove" ? "DELETE" : "PATCH",
@@ -2281,11 +2289,28 @@ const RoundRequestEditor = ({
         await mutateRounds();
       }
       await mutateRequests();
+      if (action === "approved") {
+        const round = result.round as Round | undefined;
+        if (round?.id) {
+          void router.push(
+            {
+              pathname: "/admin/dashboard",
+              query: {
+                section: "rounds",
+                roundMode: "draft",
+                round: round.id,
+              },
+            },
+            undefined,
+            { shallow: true }
+          );
+        }
+      }
       setMessage(
         action === "remove"
           ? "Request removed."
           : action === "approved"
-            ? "Round published from request."
+            ? "Round moved to drafts."
             : `Request marked ${action}.`
       );
     } catch (error) {

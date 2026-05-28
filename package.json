@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit --incremental false",
-    "test": "node tests/profile-utils.test.mjs && node tests/bid-comments.test.mjs && node tests/community-projects.test.mjs && node tests/signature-auth.test.mjs && node tests/admin-session.test.mjs && node tests/url-safety.test.mjs && node tests/security-static.test.mjs",
+    "test": "node tests/profile-utils.test.mjs && node tests/bid-comments.test.mjs && node tests/community-projects.test.mjs && node tests/signature-auth.test.mjs && node tests/admin-session.test.mjs && node tests/url-safety.test.mjs && node tests/round-image-upload.test.mjs && node tests/admin-round-form.test.mjs && node tests/round-request-flow-static.test.mjs && node tests/security-static.test.mjs",
     "audit:security": "yarn audit --level high",
     "index:content-coins": "node scripts/index-content-coins.js"
   },
