@@ -96,15 +96,6 @@ export default async function handler(
   }
 
   try {
-    const collectiveNounBalance =
-      await getCollectiveNounVotingPower(recoveredAddress);
-
-    if (collectiveNounBalance <= 0) {
-      return res.status(403).json({
-        error: "Only Collective Noun holders can submit Snapshot votes.",
-      });
-    }
-
     const snapshotProposal = await getSnapshotProposalForNouns(proposalNumber);
 
     if (!snapshotProposal || snapshotProposal.id !== message.proposal) {
@@ -119,6 +110,17 @@ export default async function handler(
       return res
         .status(400)
         .json({ error: "Snapshot proposal is not active." });
+    }
+
+    const collectiveNounBalance = await getCollectiveNounVotingPower(
+      recoveredAddress,
+      Number(snapshotProposal.snapshot)
+    );
+
+    if (collectiveNounBalance <= 0) {
+      return res.status(403).json({
+        error: "Only Collective Noun holders can submit Snapshot votes.",
+      });
     }
 
     const snapshotResponse = await fetch(SNAPSHOT_SEQUENCER_URL, {

@@ -1,6 +1,5 @@
 import ModalWrapper from "@/components/ModalWrapper";
 import { submitSnapshotVote } from "@/utils/snapshot-vote";
-import { TOKEN_CONTRACT } from "constants/addresses";
 import { SNAPSHOT_SPACE_ID, SNAPSHOT_SPACE_URL } from "constants/metagov";
 import { ethers } from "ethers";
 import CheckIcon from "@heroicons/react/20/solid/CheckIcon";
@@ -42,6 +41,7 @@ type SnapshotStatusResponse = {
   safeAddress: string;
   proposal: SnapshotProposal | null;
   userVote: SnapshotVote | null;
+  userVotingPower: number | null;
 };
 
 type VoteChoice = {
@@ -77,24 +77,12 @@ export default function NounsSnapshotVoteCard({
       address ? `?voter=${address}` : ""
     }`
   );
-  const {
-    data: collectiveNounsBalance,
-    error: collectiveNounsBalanceError,
-    isLoading: collectiveNounsBalanceLoading,
-  } = useSWR<number | string>(
-    address ? `/api/token/${TOKEN_CONTRACT}/balance/${address}` : null
-  );
   const proposal = data?.proposal;
   const isActive = proposal?.state === "active";
   const alreadyVoted = Boolean(data?.userVote);
-  const hasCollectiveNoun = Number(collectiveNounsBalance || 0) > 0;
+  const hasCollectiveNoun = Number(data?.userVotingPower || 0) > 0;
   const canSubmitVote = Boolean(
-    isConnected &&
-      isActive &&
-      !alreadyVoted &&
-      hasCollectiveNoun &&
-      !collectiveNounsBalanceLoading &&
-      !collectiveNounsBalanceError
+    isConnected && isActive && !alreadyVoted && hasCollectiveNoun
   );
   const selectedChoice = voteChoices.find(
     (option) => option.snapshotChoice === data?.userVote?.choice
@@ -242,14 +230,10 @@ export default function NounsSnapshotVoteCard({
                   : "You already submitted a Snapshot vote."
                 : canSubmitVote
                   ? "Vote by signing a gasless Snapshot message."
-                  : isActive && isConnected && collectiveNounsBalanceLoading
-                    ? "Checking your Collective Noun balance..."
-                    : isActive && isConnected && collectiveNounsBalanceError
-                      ? "Unable to verify your Collective Noun balance."
-                      : isActive && isConnected
-                        ? "Only connected Collective Noun holders can submit a Snapshot vote."
-                        : isActive
-                          ? "Connect a wallet holding a Collective Noun to vote."
+                  : isActive && isConnected
+                    ? "Only wallets with Collective Noun voting power at this proposal's Snapshot block can vote."
+                    : isActive
+                      ? "Connect a wallet holding a Collective Noun to vote."
                   : "Voting is not active for this Snapshot proposal."}
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -275,12 +259,8 @@ export default function NounsSnapshotVoteCard({
                   ? "Connect wallet to vote"
                   : alreadyVoted
                     ? "Vote submitted"
-                  : collectiveNounsBalanceLoading
-                    ? "Checking holder status"
-                    : collectiveNounsBalanceError
-                      ? "Unable to verify holder"
-                      : !hasCollectiveNoun
-                        ? "Collective Noun required"
+                  : !hasCollectiveNoun
+                    ? "Collective Noun required"
                     : "Submit vote"}
               </button>
             </div>

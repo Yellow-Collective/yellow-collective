@@ -10,6 +10,7 @@ import {
   SNAPSHOT_SPACE_URL,
   YELLOW_METAGOV_SAFE_ADDRESS,
 } from "constants/metagov";
+import { getCollectiveNounVotingPower } from "@/utils/rounds/getCollectiveNounVotingPower";
 
 type SnapshotProposalResponse = {
   space: string;
@@ -17,6 +18,7 @@ type SnapshotProposalResponse = {
   safeAddress: string;
   proposal: SnapshotProposal | null;
   userVote: SnapshotVote | null;
+  userVotingPower: number | null;
 };
 
 const isAddress = (value: unknown) =>
@@ -40,6 +42,10 @@ export default async function handler(
     const proposal = await getSnapshotProposalForNouns(proposalNumber);
     const votes =
       proposal && voter ? await getSnapshotVotes(proposal.id, voter) : [];
+    const userVotingPower =
+      voter && proposal
+        ? await getCollectiveNounVotingPower(voter, Number(proposal.snapshot))
+        : null;
 
     res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=300");
     return res.status(200).json({
@@ -48,6 +54,7 @@ export default async function handler(
       safeAddress: YELLOW_METAGOV_SAFE_ADDRESS,
       proposal,
       userVote: votes[0] || null,
+      userVotingPower,
     });
   } catch (error) {
     console.error("Unable to load Snapshot metagov proposal", error);
