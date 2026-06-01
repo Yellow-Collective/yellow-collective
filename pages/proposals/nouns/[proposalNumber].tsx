@@ -1,5 +1,6 @@
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import Layout from "@/components/Layout";
+import MetagovStatusCard from "@/components/MetagovStatusCard";
 import NounsSnapshotVoteCard from "@/components/NounsSnapshotVoteCard";
 import ProposalTabs from "@/components/ProposalTabs";
 import ProposalTransactions from "@/components/ProposalTransactions";
@@ -224,6 +225,8 @@ export default function NounsProposalDetailPage({
                 },
               ]}
             />
+
+            <MetagovStatusCard proposalNumber={proposal.proposalNumber} />
 
             <NounsSnapshotVoteCard proposalNumber={proposal.proposalNumber} />
 

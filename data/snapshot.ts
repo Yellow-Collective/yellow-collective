@@ -124,9 +124,17 @@ const parseNounsProposalNumber = (proposal: SnapshotProposalResponse) => {
   const nounsMatch = title.match(/^Nouns\s*#?(\d+)\s*:/i);
   if (nounsMatch) return Number(nounsMatch[1]);
 
-  const body = proposal.body || "";
-  const linkMatch = body.match(/nouns\.wtf\/vote\/(\d+)/i);
-  if (linkMatch) return Number(linkMatch[1]);
+  const text = `${title}\n${proposal.body || ""}`;
+  const linkPatterns = [
+    /nouns\.game\/proposals\/(\d+)/i,
+    /yellowcollective\.art\/proposals\/nouns\/(\d+)/i,
+    /nouns\.wtf\/vote\/(\d+)/i,
+  ];
+
+  for (const pattern of linkPatterns) {
+    const linkMatch = text.match(pattern);
+    if (linkMatch) return Number(linkMatch[1]);
+  }
 
   return null;
 };

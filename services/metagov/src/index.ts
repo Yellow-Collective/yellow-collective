@@ -1,4 +1,5 @@
 import { config } from "./config";
+import { shouldCreateSnapshotProposal } from "./core";
 import { fetchNewProposals, fetchProposalById } from "./listeners/nouns-proposals";
 import {
   cancelSnapshotProposal,
@@ -28,9 +29,6 @@ const submittedVotes = new Set<string>();
 let lastCheckedTimestamp =
   Math.floor(Date.now() / 1000) - config.lookbackDays * 24 * 60 * 60;
 let isExecutingVotes = false;
-
-const shouldSkipNounsProposal = (status: string) =>
-  ["CANCELLED", "VETOED", "EXECUTED"].includes(status);
 
 const buildTrackedProposal = (
   nounsProposalId: string,
@@ -86,19 +84,32 @@ const checkForNewProposals = async () => {
   const state = store.load();
 
   for (const proposal of proposals) {
-    const proposalNumber = Number(proposal.id);
-    if (
-      proposalNumber < config.minProposalId ||
-      processedProposals.has(proposal.id) ||
-      existingSnapshotIds.has(proposal.id) ||
-      state.proposals[proposal.id]
-    ) {
+    const eligibility = shouldCreateSnapshotProposal({
+      proposal,
+      minProposalId: config.minProposalId,
+      processedProposalIds: processedProposals,
+      existingSnapshotProposalIds: existingSnapshotIds,
+      trackedProposal: state.proposals[proposal.id],
+      dryRun: config.dryRun,
+    });
+
+    if (!eligibility.eligible) {
+      if (eligibility.reason === "terminal-nouns-status") {
+        processedProposals.add(proposal.id);
+      }
+
+      if (eligibility.reason === "stale-dry-run-state-existing-snapshot") {
+        console.warn(
+          `Stale dry-run state found for Nouns #${proposal.id}, but a live Snapshot proposal already exists; skipping duplicate creation.`
+        );
+      }
       continue;
     }
 
-    if (shouldSkipNounsProposal(proposal.status)) {
-      processedProposals.add(proposal.id);
-      continue;
+    if (eligibility.reason === "stale-dry-run-state") {
+      console.warn(
+        `Stale dry-run state found for Nouns #${proposal.id}; creating a real Snapshot proposal because DRY_RUN is disabled.`
+      );
     }
 
     console.log(`Creating Snapshot vote for Nouns #${proposal.id}`);

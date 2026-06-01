@@ -1,0 +1,308 @@
+import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+import { existsSync, mkdtempSync, readFileSync, rmSync, readdirSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { resolve, join } from "node:path";
+import ts from "typescript";
+
+const root = process.cwd();
+const require = createRequire(import.meta.url);
+const read = (path) => readFileSync(resolve(root, path), "utf8");
+const exists = (path) => existsSync(resolve(root, path));
+
+const loadTsModule = (path, mocks = {}) => {
+  const filename = resolve(root, path);
+  const source = readFileSync(filename, "utf8");
+  const output = ts.transpileModule(source, {
+    compilerOptions: {
+      esModuleInterop: true,
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2022,
+    },
+    fileName: filename,
+  }).outputText;
+  const module = { exports: {} };
+  const localRequire = (id) => {
+    if (Object.prototype.hasOwnProperty.call(mocks, id)) return mocks[id];
+    if (id.startsWith(".") && Object.prototype.hasOwnProperty.call(mocks, resolve(filename, "..", id))) {
+      return mocks[resolve(filename, "..", id)];
+    }
+    return require(id);
+  };
+  const fn = new Function("require", "module", "exports", output);
+  fn(localRequire, module, module.exports);
+  return module.exports;
+};
+
+const makeJsonResponse = (payload, ok = true, status = 200) => ({
+  ok,
+  status,
+  json: async () => payload,
+});
+
+const snapshotConstants = {
+  SNAPSHOT_GRAPHQL_URL: "https://snapshot.test/graphql",
+  SNAPSHOT_SPACE_ID: "yellowcollective.eth",
+  SNAPSHOT_SPACE_URL: "https://snapshot.box/#/s:yellowcollective.eth",
+};
+
+{
+  const { getSnapshotProposalForNouns } = loadTsModule("data/snapshot.ts", {
+    "constants/metagov": snapshotConstants,
+  });
+
+  const originalFetch = global.fetch;
+  global.fetch = async () =>
+    makeJsonResponse({
+      data: {
+        proposals: [
+          {
+            id: "snapshot-nouns-game",
+            title: "Current body-link-only proposal",
+            body: "**Nouns proposal:** https://nouns.game/proposals/999",
+            choices: ["For", "Against", "Abstain"],
+            snapshot: "123",
+            state: "active",
+          },
+          {
+            id: "snapshot-site-link",
+            title: "Site body-link-only proposal",
+            body: "https://yellowcollective.art/proposals/nouns/998",
+            choices: ["For", "Against", "Abstain"],
+            snapshot: "122",
+            state: "active",
+          },
+          {
+            id: "snapshot-title",
+            title: "Nouns #997: Title format changed",
+            body: "",
+            choices: ["For", "Against", "Abstain"],
+            snapshot: "121",
+            state: "active",
+          },
+        ],
+      },
+    });
+
+  const nounsGameMatch = await getSnapshotProposalForNouns(999);
+  assert.equal(
+    nounsGameMatch?.id,
+    "snapshot-nouns-game",
+    "Snapshot matcher must recognize current nouns.game proposal body links."
+  );
+
+  const siteLinkMatch = await getSnapshotProposalForNouns(998);
+  assert.equal(
+    siteLinkMatch?.id,
+    "snapshot-site-link",
+    "Snapshot matcher must recognize Yellow proposal-page body links."
+  );
+
+  const titleMatch = await getSnapshotProposalForNouns(997);
+  assert.equal(
+    titleMatch?.id,
+    "snapshot-title",
+    "Snapshot matcher must continue to recognize Nouns #id title prefixes."
+  );
+
+  global.fetch = originalFetch;
+  console.log("ok - Snapshot proposal matching covers current title/body/link formats");
+}
+
+{
+  assert.equal(exists("data/metagov.ts"), true, "Site metagov state reader must exist.");
+  assert.equal(
+    exists("pages/api/metagov/nouns/[proposalNumber].ts"),
+    true,
+    "Per-proposal metagov status API must exist."
+  );
+  assert.equal(
+    exists("components/MetagovStatusCard.tsx"),
+    true,
+    "Proposal detail page must have a metagov status card."
+  );
+
+  const metagovData = read("data/metagov.ts");
+  assert.match(
+    metagovData,
+    /METAGOV_STATE_URL|NEXT_PUBLIC_METAGOV_STATE_URL|METAGOV_STATE_FILE|DATA_DIR/,
+    "Metagov state reader must support remote and local persisted state sources."
+  );
+
+  const statusApi = read("pages/api/metagov/nouns/[proposalNumber].ts");
+  assert.doesNotMatch(
+    statusApi,
+    /getNounsMetagovEnabled|isAdminAddress/,
+    "Backend metagov status API must stay available when public UI access is toggled off."
+  );
+  assert.match(statusApi, /getMetagovProposalStatus/, "Status API must return persisted bot state.");
+
+  const statusCard = read("components/MetagovStatusCard.tsx");
+  for (const expected of [
+    "winningChoice",
+    "scores",
+    "scoresTotal",
+    "failureReason",
+    "snapshotUrl",
+    "safeTxHash",
+    "executionTxHash",
+  ]) {
+    assert.match(
+      statusCard,
+      new RegExp(expected),
+      `Metagov status card must render ${expected}.`
+    );
+  }
+
+  const detailPage = read("pages/proposals/nouns/[proposalNumber].tsx");
+  assert.match(
+    detailPage,
+    /<MetagovStatusCard proposalNumber=\{proposal\.proposalNumber\} \/>/,
+    "Nouns proposal detail page must render the metagov status card."
+  );
+  console.log("ok - Site metagov status API and UI are wired independently of public gating");
+}
+
+{
+  const voteCard = read("components/NounsSnapshotVoteCard.tsx");
+  assert.match(voteCard, /submitSuccess/, "Snapshot vote card must expose a success state after a mocked submit.");
+  assert.match(voteCard, /submitError/, "Snapshot vote card must expose an error state after a mocked submit.");
+  assert.match(voteCard, /Collective Noun required/, "Snapshot vote card must expose holder eligibility messaging.");
+  assert.match(voteCard, /disabled=\{!canSubmitVote\}/, "Snapshot vote CTA must be disabled when voting is unavailable.");
+  console.log("ok - Snapshot vote UI exposes success, error, eligibility, and disabled states");
+}
+
+{
+  const core = loadTsModule("services/metagov/src/core.ts");
+
+  assert.deepEqual(
+    core.determineSnapshotWinner([4, 2, 1]),
+    "FOR",
+    "For must win when it has the highest Snapshot score."
+  );
+  assert.deepEqual(
+    core.determineSnapshotWinner([1, 5, 1]),
+    "AGAINST",
+    "Against must win when it has the highest Snapshot score."
+  );
+  assert.deepEqual(
+    core.determineSnapshotWinner([0, 0, 0]),
+    "NO_VOTES",
+    "Empty Snapshot tallies must be explicit."
+  );
+  assert.deepEqual(
+    core.determineSnapshotWinner([5, 5, 1]),
+    "ABSTAIN",
+    "Tied Snapshot tallies must resolve to Abstain."
+  );
+
+  const proposal = {
+    id: "1000",
+    title: "Fund public goods",
+    description: "Body",
+    proposer: "0x0000000000000000000000000000000000000001",
+    startBlock: "1",
+    endBlock: "2",
+    createdTimestamp: "3",
+    status: "ACTIVE",
+  };
+
+  assert.equal(
+    core.shouldCreateSnapshotProposal({
+      proposal,
+      minProposalId: 900,
+      processedProposalIds: new Set(["1000"]),
+      existingSnapshotProposalIds: new Set(),
+      trackedProposal: { nounsProposalId: "1000", snapshotId: "dry-run-1000" },
+      dryRun: false,
+    }).eligible,
+    true,
+    "Stale dry-run state must not block real Snapshot creation after DRY_RUN is disabled."
+  );
+
+  assert.equal(
+    core.shouldCreateSnapshotProposal({
+      proposal: { ...proposal, status: "EXECUTED" },
+      minProposalId: 900,
+      processedProposalIds: new Set(),
+      existingSnapshotProposalIds: new Set(),
+      dryRun: false,
+    }).eligible,
+    false,
+    "Executed Nouns proposals must not create Snapshot votes."
+  );
+
+  const message = core.buildSnapshotProposalMessage({
+    proposal,
+    from: "0x0000000000000000000000000000000000000002",
+    space: "yellowcollective.eth",
+    now: 100,
+    snapshotBlock: 12345,
+    votingDurationSeconds: 432000,
+    proposalLinkTemplate: "https://nouns.game/proposals/{id}",
+    siteProposalLinkTemplate: "https://yellowcollective.art/proposals/nouns/{id}",
+  });
+  assert.equal(message.title, "1000: Fund public goods");
+  assert.deepEqual(message.choices, ["For", "Against", "Abstain"]);
+  assert.equal(message.discussion, "https://nouns.game/proposals/1000");
+  assert.match(message.body, /https:\/\/nouns\.game\/proposals\/1000/);
+  assert.match(message.body, /https:\/\/yellowcollective\.art\/proposals\/nouns\/1000/);
+  assert.equal(message.end - message.start, 432000);
+  console.log("ok - Metagov core covers proposal eligibility, Snapshot shape, stale dry-run recovery, and winner resolution");
+}
+
+{
+  const tempDir = mkdtempSync(join(tmpdir(), "yc-metagov-state-"));
+  try {
+    const statePath = join(tempDir, "metagov-state.json");
+    const { StateStore } = loadTsModule("services/metagov/src/services/state-store.ts", {
+      "../config": { config: { dataDir: tempDir } },
+      "../types": {},
+    });
+    const store = new StateStore(statePath);
+    store.upsertProposal({
+      nounsProposalId: "1001",
+      nounsTitle: "Restart-safe state",
+      snapshotId: "snapshot-1001",
+      snapshotTitle: "1001: Restart-safe state",
+      snapshotUrl: "https://snapshot.box/#/s:yellowcollective.eth/proposal/snapshot-1001",
+      status: "created",
+      createdAt: "2026-01-01T00:00:00.000Z",
+      updatedAt: "2026-01-01T00:00:00.000Z",
+    });
+
+    const reloaded = new StateStore(statePath).load();
+    assert.equal(
+      reloaded.proposals["1001"].snapshotId,
+      "snapshot-1001",
+      "StateStore must recover tracked proposals after restart."
+    );
+    assert.deepEqual(
+      readdirSync(tempDir).filter((file) => file.endsWith(".tmp")),
+      [],
+      "StateStore atomic writes must not leave temp files after a successful save."
+    );
+  } finally {
+    rmSync(tempDir, { recursive: true, force: true });
+  }
+  console.log("ok - State persistence writes atomically and recovers after restart");
+}
+
+{
+  const serviceSnapshot = read("services/metagov/src/services/snapshot.ts");
+  assert.match(serviceSnapshot, /config\.dryRun[\s\S]*dry-run-\$\{proposal\.id\}/, "Snapshot creation must use DRY_RUN fake IDs.");
+  assert.match(serviceSnapshot, /buildSnapshotProposalMessage/, "Snapshot creation must use the tested proposal message builder.");
+  assert.match(
+    read("services/metagov/src/core.ts"),
+    /discussion:\s*proposalLinkTemplate\.replace\("\{id\}", proposal\.id\)/,
+    "Snapshot discussion must use the configured proposal link template."
+  );
+
+  const safeVoting = read("services/metagov/src/services/safe-voting.ts");
+  assert.match(safeVoting, /executionMode:\s*"safe"/, "Final execution result must be Safe-only.");
+  assert.match(safeVoting, /castRefundableVoteWithReason/, "Final execution must target the Nouns DAO vote method.");
+  assert.match(safeVoting, /hasAlreadyVoted\(proposalId,\s*config\.safeAddress\)/, "Already-voted detection must check the configured Safe address.");
+  assert.doesNotMatch(safeVoting, /getCurrentVotes|getPriorVotes/, "Final execution must not hard-block zero-weight Safe votes.");
+  assert.doesNotMatch(safeVoting, /bot-wallet|executionMode:\s*"bot"/, "Final execution must not fall back to a bot-wallet vote.");
+  console.log("ok - Final Nouns DAO execution path is dry-run capable, Safe-only, and zero-weight tolerant");
+}

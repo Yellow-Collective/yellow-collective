@@ -66,6 +66,7 @@ export default function NounsSnapshotVoteCard({
   const [choice, setChoice] = useState<VoteChoice | null>(null);
   const [reason, setReason] = useState("");
   const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [now, setNow] = useState(() => Date.now());
   const {
@@ -114,6 +115,7 @@ export default function NounsSnapshotVoteCard({
 
     setSubmitting(true);
     setSubmitError("");
+    setSubmitSuccess("");
 
     try {
       await submitSnapshotVote({
@@ -128,6 +130,7 @@ export default function NounsSnapshotVoteCard({
       setModalOpen(false);
       setReason("");
       setChoice(null);
+      setSubmitSuccess("Snapshot vote submitted.");
       await refreshSnapshot();
     } catch (error) {
       console.error("Snapshot vote failed", error);
@@ -265,6 +268,12 @@ export default function NounsSnapshotVoteCard({
               </button>
             </div>
           </div>
+
+          {submitSuccess && (
+            <div className="mt-4 rounded-xl border border-skin-proposal-success bg-white p-3 text-sm text-skin-proposal-success">
+              {submitSuccess}
+            </div>
+          )}
 
           <ModalWrapper
             className="w-full max-w-lg border border-skin-stroke bg-skin-backdrop"
