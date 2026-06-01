@@ -132,7 +132,8 @@ export default function NounsProposalDetailPage({
   );
   const currentNounsMetagovEnabled =
     nounsSettings?.nounsMetagovEnabled ?? nounsMetagovEnabled;
-  const canAccessNouns = currentNounsMetagovEnabled || isAdminAddress(address);
+  const isAdmin = isAdminAddress(address);
+  const canAccessNouns = currentNounsMetagovEnabled || isAdmin;
   const status = getStatus(proposal.state);
   const description = getDescriptionWithoutTitle(proposal);
   const forVotes = Number(proposal.forVotes || 0);
@@ -226,7 +227,9 @@ export default function NounsProposalDetailPage({
               ]}
             />
 
-            <MetagovStatusCard proposalNumber={proposal.proposalNumber} />
+            {isAdmin && (
+              <MetagovStatusCard proposalNumber={proposal.proposalNumber} />
+            )}
 
             <NounsSnapshotVoteCard proposalNumber={proposal.proposalNumber} />
 

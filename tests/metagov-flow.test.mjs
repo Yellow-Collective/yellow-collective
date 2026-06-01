@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
-import { existsSync, mkdtempSync, readFileSync, rmSync, readdirSync } from "node:fs";
+import {
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  readdirSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve, join } from "node:path";
 import ts from "typescript";
@@ -144,6 +151,9 @@ const snapshotConstants = {
     "scoresTotal",
     "failureReason",
     "snapshotUrl",
+    "snapshotTitle",
+    "voterAddress",
+    "stateUpdatedAt",
     "safeTxHash",
     "executionTxHash",
   ]) {
@@ -157,10 +167,99 @@ const snapshotConstants = {
   const detailPage = read("pages/proposals/nouns/[proposalNumber].tsx");
   assert.match(
     detailPage,
-    /<MetagovStatusCard proposalNumber=\{proposal\.proposalNumber\} \/>/,
-    "Nouns proposal detail page must render the metagov status card."
+    /const isAdmin = isAdminAddress\(address\);/,
+    "Nouns proposal detail page must calculate the connected admin state."
+  );
+  assert.match(
+    detailPage,
+    /\{isAdmin && \(\s*<MetagovStatusCard proposalNumber=\{proposal\.proposalNumber\} \/>\s*\)\}/,
+    "Nouns proposal detail page must render the metagov status card only for admin wallets."
   );
   console.log("ok - Site metagov status API and UI are wired independently of public gating");
+}
+
+{
+  const tempDir = mkdtempSync(join(tmpdir(), "yc-metagov-site-state-"));
+  const statePath = join(tempDir, "metagov-state.json");
+  const previousMetagovStateFile = process.env.METAGOV_STATE_FILE;
+  const previousMetagovStateUrl = process.env.METAGOV_STATE_URL;
+  const previousPublicMetagovStateUrl = process.env.NEXT_PUBLIC_METAGOV_STATE_URL;
+
+  try {
+    process.env.METAGOV_STATE_FILE = statePath;
+    delete process.env.METAGOV_STATE_URL;
+    delete process.env.NEXT_PUBLIC_METAGOV_STATE_URL;
+
+    writeFileSync(
+      statePath,
+      JSON.stringify({
+        version: 1,
+        updatedAt: "2026-06-01T12:00:00.000Z",
+        proposals: {
+          "1002": {
+            nounsProposalId: "1002",
+            nounsTitle: "Verify metagov display",
+            snapshotId: "snapshot-1002",
+            snapshotTitle: "1002: Verify metagov display",
+            snapshotUrl:
+              "https://snapshot.box/#/s:yellowcollective.eth/proposal/snapshot-1002",
+            status: "executed",
+            createdAt: "2026-06-01T11:00:00.000Z",
+            updatedAt: "2026-06-01T12:00:00.000Z",
+            scores: [3, 1, 0],
+            scoresTotal: 4,
+            winningChoice: "FOR",
+            executionMode: "safe",
+            voterAddress: "0x00EC9615Ab4f45cBeb66b5FA36bcEd3D79f38Bb3",
+            safeTxHash: "0xsafe",
+          },
+        },
+        executedVotes: [
+          {
+            nounsProposalId: "1002",
+            snapshotId: "snapshot-1002",
+            choice: "FOR",
+            executionMode: "safe",
+            voterAddress: "0x00EC9615Ab4f45cBeb66b5FA36bcEd3D79f38Bb3",
+            safeTxHash: "0xsafe-execution",
+            executionTxHash: "0xexecution",
+            blockNumber: 123,
+            gasUsed: "456",
+            executedAt: "2026-06-01T12:01:00.000Z",
+          },
+        ],
+      })
+    );
+
+    const { getMetagovProposalStatus } = loadTsModule("data/metagov.ts");
+    const status = await getMetagovProposalStatus(1002);
+
+    assert.equal(status.stateUpdatedAt, "2026-06-01T12:00:00.000Z");
+    assert.equal(status.proposal?.status, "executed");
+    assert.equal(status.proposal?.winningChoice, "FOR");
+    assert.deepEqual(status.proposal?.scores, [3, 1, 0]);
+    assert.equal(status.proposal?.scoresTotal, 4);
+    assert.equal(status.execution?.executionTxHash, "0xexecution");
+  } finally {
+    if (previousMetagovStateFile === undefined) {
+      delete process.env.METAGOV_STATE_FILE;
+    } else {
+      process.env.METAGOV_STATE_FILE = previousMetagovStateFile;
+    }
+    if (previousMetagovStateUrl === undefined) {
+      delete process.env.METAGOV_STATE_URL;
+    } else {
+      process.env.METAGOV_STATE_URL = previousMetagovStateUrl;
+    }
+    if (previousPublicMetagovStateUrl === undefined) {
+      delete process.env.NEXT_PUBLIC_METAGOV_STATE_URL;
+    } else {
+      process.env.NEXT_PUBLIC_METAGOV_STATE_URL =
+        previousPublicMetagovStateUrl;
+    }
+    rmSync(tempDir, { recursive: true, force: true });
+  }
+  console.log("ok - Site metagov state reader returns persisted status and execution data");
 }
 
 {

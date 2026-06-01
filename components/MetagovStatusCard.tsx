@@ -9,6 +9,7 @@ type MetagovTrackedProposal = {
   snapshotTitle: string;
   snapshotUrl: string;
   status: string;
+  updatedAt: string;
   scores?: number[];
   scoresTotal?: number;
   winningChoice?: "FOR" | "AGAINST" | "ABSTAIN" | "NO_VOTES";
@@ -78,6 +79,7 @@ export default function MetagovStatusCard({
   const safeTxHash = execution?.safeTxHash || proposal?.safeTxHash;
   const executionTxHash =
     execution?.executionTxHash || proposal?.executionTxHash;
+  const voterAddress = execution?.voterAddress || proposal?.voterAddress;
 
   return (
     <section className="yc-dark-yellow-surface mt-2 rounded-2xl border border-skin-stroke bg-white p-6 shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] md:p-8">
@@ -114,6 +116,9 @@ export default function MetagovStatusCard({
             <div className="font-heading text-lg font-bold text-skin-base">
               Snapshot decision
             </div>
+            <div className="mt-2 text-sm text-secondary">
+              {proposal.snapshotTitle}
+            </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               {["For", "Against", "Abstain"].map((label, index) => (
                 <div key={label} className="rounded-lg bg-white p-3">
@@ -135,6 +140,9 @@ export default function MetagovStatusCard({
               </span>
               {scoresTotal ? ` from ${scoresTotal.toLocaleString()} votes` : ""}
             </div>
+            <div className="mt-2 break-all text-sm text-secondary">
+              Snapshot: {proposal.snapshotId}
+            </div>
           </div>
 
           <div className="rounded-xl border border-skin-stroke bg-skin-muted p-4">
@@ -154,6 +162,12 @@ export default function MetagovStatusCard({
                 </span>
               </div>
               <div>
+                Voter:{" "}
+                <span className="break-all font-heading text-skin-base">
+                  {voterAddress || "Pending"}
+                </span>
+              </div>
+              <div>
                 Safe tx:{" "}
                 <span className="break-all font-heading text-skin-base">
                   {safeTxHash || "Pending"}
@@ -163,6 +177,12 @@ export default function MetagovStatusCard({
                 Execution tx:{" "}
                 <span className="break-all font-heading text-skin-base">
                   {executionTxHash || "Pending"}
+                </span>
+              </div>
+              <div>
+                Updated:{" "}
+                <span className="font-heading text-skin-base">
+                  {formatDate(data.stateUpdatedAt || proposal.updatedAt)}
                 </span>
               </div>
             </div>
@@ -193,3 +213,12 @@ export default function MetagovStatusCard({
     </section>
   );
 }
+
+const formatDate = (value?: string | null) => {
+  if (!value) return "Unknown";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return date.toLocaleString();
+};
