@@ -71,6 +71,24 @@ const fetcher = async (url: string) => {
   return data;
 };
 
+const getLockedVotesBySubmission = (
+  voteActivity: RoundVoteActivity[],
+  walletAddress?: string
+) => {
+  if (!walletAddress) return {} as Record<string, number>;
+
+  const normalizedWallet = walletAddress.toLowerCase();
+  return voteActivity.reduce<Record<string, number>>((lockedVotes, activity) => {
+    if (activity.walletAddress.toLowerCase() !== normalizedWallet) {
+      return lockedVotes;
+    }
+
+    lockedVotes[activity.submissionId] =
+      (lockedVotes[activity.submissionId] || 0) + activity.voteCount;
+    return lockedVotes;
+  }, {});
+};
+
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext): Promise<
@@ -135,7 +153,15 @@ export default function RoundDetailPage({
     [allocations]
   );
   const votingPower = votingPowerData?.votingPower || 0;
-  const remainingVotes = Math.max(votingPower - allocatedVotes, 0);
+  const alreadySubmittedVotes = votingPowerData?.usedVotes || 0;
+  const availableVotes =
+    votingPowerData?.remainingVotes ??
+    Math.max(votingPower - alreadySubmittedVotes, 0);
+  const remainingVotes = Math.max(availableVotes - allocatedVotes, 0);
+  const lockedVotesBySubmission = useMemo(
+    () => getLockedVotesBySubmission(round?.voteActivity || [], address),
+    [round?.voteActivity, address]
+  );
   const votingStrategyLabel = getVotingStrategyLabel(round);
   const winners =
     round && state === "ended"
@@ -172,7 +198,7 @@ export default function RoundDetailPage({
         0
       );
       const maxForSubmission = Math.max(
-        votingPower - usedByOtherSubmissions,
+        availableVotes - usedByOtherSubmissions,
         0
       );
       const normalizedValue = Number.isFinite(nextValue)
@@ -404,16 +430,32 @@ export default function RoundDetailPage({
                   Voting
                 </h2>
                 <p className="mt-2 text-base text-secondary">
-                  {votingStrategyLabel}. Server verification happens when votes
-                  are submitted.
+                  {votingStrategyLabel}.{" "}
+                  {
+                    "Previously submitted votes cannot be changed. You can still allocate your remaining votes until voting ends."
+                  }
                 </p>
               </div>
               {isConnected ? (
-                <div className="rounded-xl bg-[#fff7bf] px-4 py-3 text-sm text-secondary">
-                  <span className="font-heading text-lg text-skin-base">
-                    {votingPower}
-                  </span>{" "}
-                  votes available
+                <div className="grid gap-2 rounded-xl bg-[#fff7bf] px-4 py-3 text-sm text-secondary sm:grid-cols-3">
+                  <div>
+                    <span className="block font-heading text-lg leading-none text-skin-base">
+                      {remainingVotes}
+                    </span>
+                    votes remaining
+                  </div>
+                  <div>
+                    <span className="block font-heading text-lg leading-none text-skin-base">
+                      {alreadySubmittedVotes}
+                    </span>
+                    votes already submitted
+                  </div>
+                  <div>
+                    <span className="block font-heading text-lg leading-none text-skin-base">
+                      {allocatedVotes}
+                    </span>
+                    draft votes
+                  </div>
                 </div>
               ) : (
                 <CustomConnectButton className="h-11 rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base" />
@@ -445,8 +487,9 @@ export default function RoundDetailPage({
                   rank={index + 1}
                   isWinner={state === "ended" && index < round.winnerCount}
                   isRoundEnded={isRoundEnded}
-                  canVote={state === "voting_open" && votingPower > 0}
+                  canVote={state === "voting_open" && availableVotes > 0}
                   allocation={allocations[submission.id] || 0}
+                  lockedVotes={lockedVotesBySubmission[submission.id] || 0}
                   remainingVotes={remainingVotes}
                   onChange={(value) => updateAllocation(submission.id, value)}
                   onOpen={() => setSelectedSubmission(submission)}
@@ -463,7 +506,7 @@ export default function RoundDetailPage({
           )}
         </section>
 
-        {state === "voting_open" && votingPower > 0 && (
+        {state === "voting_open" && availableVotes > 0 && (
           <div className="yc-dark-yellow-form-surface sticky bottom-[calc(1rem+env(safe-area-inset-bottom)+var(--miniapp-safe-area-bottom))] z-30 rounded-2xl border border-skin-stroke bg-accent p-4 shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))]">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div className="text-base text-secondary">
@@ -471,14 +514,15 @@ export default function RoundDetailPage({
                 <span className="font-heading text-xl text-skin-base">
                   {allocatedVotes}
                 </span>{" "}
-                of {votingPower} votes
+                new vote{allocatedVotes === 1 ? "" : "s"} · {remainingVotes}{" "}
+                vote{remainingVotes === 1 ? "" : "s"} remaining
               </div>
               <button
                 type="button"
                 onClick={submitVotes}
                 disabled={
                   allocatedVotes <= 0 ||
-                  allocatedVotes > votingPower ||
+                  allocatedVotes > availableVotes ||
                   isVoting ||
                   isSigning
                 }
@@ -510,6 +554,7 @@ const SubmissionCard = ({
   isRoundEnded,
   canVote,
   allocation,
+  lockedVotes,
   remainingVotes,
   onChange,
   onOpen,
@@ -523,6 +568,7 @@ const SubmissionCard = ({
   isRoundEnded: boolean;
   canVote: boolean;
   allocation: number;
+  lockedVotes: number;
   remainingVotes: number;
   onChange: (value: number) => void;
   onOpen: () => void;
@@ -616,41 +662,51 @@ const SubmissionCard = ({
           className={secondaryTextClass}
           compact
         />
-        <div className="mt-auto flex items-center justify-between gap-3">
-          <WalletIdentityLink
-            address={submission.walletAddress}
-            className={`font-heading text-base underline ${primaryTextClass}`}
-          />
+        <div className="mt-auto flex flex-col gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <WalletIdentityLink
+              address={submission.walletAddress}
+              className={`font-heading text-base underline ${primaryTextClass}`}
+            />
+            {lockedVotes > 0 && (
+              <div className="rounded-full bg-white/95 px-3 py-1 font-heading text-sm text-skin-base shadow-[0px_3px_0px_0px_rgba(0,0,0,0.28)]">
+                {lockedVotes} locked
+              </div>
+            )}
+          </div>
           {canVote && (
-            <div className="yc-round-vote-controls flex items-center gap-2 rounded-xl border border-skin-stroke bg-[#f1f1f1] p-1">
-              <button
-                type="button"
-                onClick={() => onChange(allocation - 1)}
-                disabled={allocation <= 0}
-                className="yc-round-vote-remove h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
-                aria-label={`Remove vote from ${submission.title}`}
-              >
-                -
-              </button>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                max={maxAllocation}
-                value={allocation}
-                onChange={(event) => onChange(Number(event.target.value))}
-                aria-label={`Votes for ${submission.title}`}
-                className="h-9 w-16 rounded-lg border border-skin-stroke bg-white text-center font-heading text-lg text-skin-base focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
-              />
-              <button
-                type="button"
-                onClick={() => onChange(allocation + 1)}
-                disabled={remainingVotes <= 0}
-                className="yc-round-vote-add h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
-                aria-label={`Add vote to ${submission.title}`}
-              >
-                +
-              </button>
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/20 bg-black/20 p-2">
+              <span className="font-heading text-sm text-white">New votes</span>
+              <div className="yc-round-vote-controls flex items-center gap-2 rounded-xl border border-skin-stroke bg-[#f1f1f1] p-1">
+                <button
+                  type="button"
+                  onClick={() => onChange(allocation - 1)}
+                  disabled={allocation <= 0}
+                  className="yc-round-vote-remove h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
+                  aria-label={`Remove draft vote from ${submission.title}`}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  max={maxAllocation}
+                  value={allocation}
+                  onChange={(event) => onChange(Number(event.target.value))}
+                  aria-label={`New votes for ${submission.title}`}
+                  className="h-9 w-16 rounded-lg border border-skin-stroke bg-white text-center font-heading text-lg text-skin-base focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+                />
+                <button
+                  type="button"
+                  onClick={() => onChange(allocation + 1)}
+                  disabled={remainingVotes <= 0}
+                  className="yc-round-vote-add h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
+                  aria-label={`Add draft vote to ${submission.title}`}
+                >
+                  +
+                </button>
+              </div>
             </div>
           )}
         </div>
