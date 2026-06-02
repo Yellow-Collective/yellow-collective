@@ -92,7 +92,7 @@ export default function ProposalsPage({
         <title>Proposals | Yellow Collective</title>
       </Head>
 
-      <div className="yc-mobile-dark-page -m-6 min-h-screen bg-white p-6 sm:m-0 sm:min-h-0 sm:bg-transparent sm:p-0">
+      <div className="yc-mobile-dark-page -m-6 min-h-screen bg-skin-backdrop p-6 sm:m-0 sm:min-h-0 sm:bg-transparent sm:p-0">
         <div className="mx-auto flex w-full max-w-[1120px] flex-col gap-8 pb-12">
           <div className="flex flex-col items-center gap-4 text-center md:flex-row md:items-center md:justify-between md:text-left">
             <div className="flex w-full flex-col items-center gap-3 md:w-auto md:flex-row md:items-center md:gap-5">

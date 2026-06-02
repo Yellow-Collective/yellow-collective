@@ -1,7 +1,13 @@
 import Layout from "@/components/Layout";
 import CoinMediaPreview from "@/components/coins/CoinMediaPreview";
 import ProjectMemberSelector from "@/components/community/ProjectMemberSelector";
-import { isAdminAddress } from "@/utils/admin";
+import {
+  ADMIN_PERMISSION_DEFINITIONS,
+  GLOBAL_ADMIN_WALLET_ADDRESS,
+  normalizeAdminWalletAddress,
+  type AdminAccessRecord,
+  type AdminPermission,
+} from "@/utils/admin-permissions";
 import { getAdminSessionSignedRequestAction } from "@/utils/admin-auth";
 import {
   getAdminRoundDatePayload,
@@ -22,6 +28,7 @@ import type {
   RoundInput,
   RoundRequest,
 } from "data/rounds";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,15 +37,24 @@ import { useEffect, useMemo, useState } from "react";
 import useSWR, { type Fetcher, type KeyedMutator } from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 
-type AdminSection = "community" | "noundry" | "gallery" | "rounds" | "nouns";
+type AdminSection = Exclude<AdminPermission, "testing">;
 type CommunityListMode = "queue" | "existing";
 type ProjectEditorMode = "edit" | "preview";
 type RoundListMode = "draft" | "published" | "archived";
 
-type AdminAuth = Required<Pick<{ adminAddress?: string }, "adminAddress">>;
+type AdminAuth = {
+  adminAddress: string;
+  permissions: AdminPermission[];
+  isGlobal: boolean;
+};
 
 type AdminRequestBody = Record<string, unknown>;
 type AdminSWRKey = readonly [string, AdminAuth];
+type AdminAccessResponseRecord = AdminAccessRecord & { isGlobal: boolean };
+type AdminAccessResponse = {
+  admins: AdminAccessResponseRecord[];
+  permissionDefinitions: typeof ADMIN_PERMISSION_DEFINITIONS;
+};
 
 const adminSections: { id: AdminSection; label: string }[] = [
   {
@@ -62,6 +78,8 @@ const adminSections: { id: AdminSection; label: string }[] = [
     label: "Nouns + Metagov",
   },
 ];
+
+const adminSectionIds = new Set(adminSections.map((section) => section.id));
 
 const communityListModes: { id: CommunityListMode; label: string }[] = [
   {
@@ -125,7 +143,7 @@ const createAdminSession = async (
     throw new Error(data.error || "Unable to authorize admin session.");
   }
 
-  return data as { adminAddress: string };
+  return data as AdminAuth;
 };
 
 const createAdminFetcher =
@@ -185,6 +203,8 @@ const nounsSettingsFetcher = createAdminFetcher<{
   nounsMetagovEnabled: boolean;
 }>();
 
+const adminAccessFetcher = createAdminFetcher<AdminAccessResponse>();
+
 const roundSubmissionsFetcher = createAdminFetcher<{
   submissions: RoundSubmission[];
 }>();
@@ -192,6 +212,10 @@ const roundSubmissionsFetcher = createAdminFetcher<{
 const roundRequestsFetcher = createAdminFetcher<{
   requests: RoundRequest[];
 }>();
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 const sendAdminRequest = async (
   path: string,
@@ -300,6 +324,13 @@ const formatVotingStrategy = (
 const getQueryValue = (value: string | string[] | undefined) =>
   typeof value === "string" ? value : value?.[0];
 
+const getAdminSectionFromQuery = (
+  value: string | string[] | undefined
+): AdminSection =>
+  adminSectionIds.has(getQueryValue(value) as AdminSection)
+    ? (getQueryValue(value) as AdminSection)
+    : "community";
+
 export default function AdminDashboardPage() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
@@ -307,41 +338,40 @@ export default function AdminDashboardPage() {
   const [adminAuth, setAdminAuth] = useState<AdminAuth | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
   const [isCheckingSession, setIsCheckingSession] = useState(false);
-  const isAdmin = isAdminAddress(address);
-  const activeSection: AdminSection =
-    router.query.section === "noundry"
-      ? "noundry"
-      : router.query.section === "gallery"
-        ? "gallery"
-        : router.query.section === "rounds"
-          ? "rounds"
-          : router.query.section === "nouns"
-            ? "nouns"
-            : "community";
+  const activeSection = getAdminSectionFromQuery(router.query.section);
+  const hasPermission = (permission: AdminPermission) =>
+    Boolean(adminAuth?.permissions.includes(permission));
+  const visibleAdminSections = adminAuth
+    ? adminSections.filter((section) => hasPermission(section.id))
+    : adminSections;
+  const activeSectionAllowed = Boolean(adminAuth && hasPermission(activeSection));
 
-  const communityKey = adminAuth
+  const communityKey = adminAuth && hasPermission("community")
     ? (["/api/admin/community-projects", adminAuth] as const)
     : null;
-  const noundryKey = adminAuth
+  const noundryKey = adminAuth && hasPermission("noundry")
     ? (["/api/admin/noundry-submissions", adminAuth] as const)
     : null;
-  const galleryKey = adminAuth
+  const galleryKey = adminAuth && hasPermission("gallery")
     ? (["/api/admin/gallery", adminAuth] as const)
     : null;
-  const roundsKey = adminAuth
+  const roundsKey = adminAuth && hasPermission("rounds")
     ? (["/api/admin/rounds", adminAuth] as const)
     : null;
-  const roundsSettingsKey = adminAuth
+  const roundsSettingsKey = adminAuth && hasPermission("rounds")
     ? (["/api/admin/rounds/settings", adminAuth] as const)
     : null;
-  const testingSettingsKey = adminAuth
+  const testingSettingsKey = adminAuth && hasPermission("testing")
     ? (["/api/admin/testing/settings", adminAuth] as const)
     : null;
-  const nounsSettingsKey = adminAuth
+  const nounsSettingsKey = adminAuth && hasPermission("nouns")
     ? (["/api/admin/nouns/settings", adminAuth] as const)
     : null;
-  const roundRequestsKey = adminAuth
+  const roundRequestsKey = adminAuth && hasPermission("rounds")
     ? (["/api/admin/rounds/requests", adminAuth] as const)
+    : null;
+  const adminAccessKey = adminAuth?.isGlobal
+    ? (["/api/admin/access", adminAuth] as const)
     : null;
 
   const {
@@ -403,6 +433,14 @@ export default function AdminDashboardPage() {
     nounsSettingsFetcher
   );
   const {
+    data: adminAccessData,
+    error: adminAccessError,
+    mutate: mutateAdminAccess,
+  } = useSWR<AdminAccessResponse, Error, AdminSWRKey | null>(
+    adminAccessKey,
+    adminAccessFetcher
+  );
+  const {
     data: roundRequestsData,
     error: roundRequestsError,
     mutate: mutateRoundRequests,
@@ -412,11 +450,14 @@ export default function AdminDashboardPage() {
   );
 
   useEffect(() => {
-    if (!isAdmin) setAdminAuth(null);
-  }, [isAdmin, address]);
+    if (!address || !adminAuth) return;
+    if (adminAuth.adminAddress.toLowerCase() !== address.toLowerCase()) {
+      setAdminAuth(null);
+    }
+  }, [address, adminAuth]);
 
   useEffect(() => {
-    if (!isAdmin || !address || adminAuth) return;
+    if (!address || adminAuth) return;
 
     let isMounted = true;
     setIsCheckingSession(true);
@@ -426,7 +467,7 @@ export default function AdminDashboardPage() {
     })
       .then(async (response) => {
         if (!response.ok) return null;
-        return (await response.json()) as { adminAddress?: string };
+        return (await response.json()) as AdminAuth;
       })
       .then((data) => {
         if (
@@ -434,7 +475,7 @@ export default function AdminDashboardPage() {
           data?.adminAddress &&
           data.adminAddress.toLowerCase() === address.toLowerCase()
         ) {
-          setAdminAuth({ adminAddress: data.adminAddress });
+          setAdminAuth(data);
         }
       })
       .catch(() => undefined)
@@ -445,7 +486,22 @@ export default function AdminDashboardPage() {
     return () => {
       isMounted = false;
     };
-  }, [isAdmin, address, adminAuth]);
+  }, [address, adminAuth]);
+
+  useEffect(() => {
+    if (!adminAuth || activeSectionAllowed || visibleAdminSections.length === 0) {
+      return;
+    }
+
+    void router.replace(
+      {
+        pathname: "/admin/dashboard",
+        query: { section: visibleAdminSections[0].id },
+      },
+      undefined,
+      { shallow: true }
+    );
+  }, [activeSectionAllowed, adminAuth, router, visibleAdminSections]);
 
   const authorize = async () => {
     if (!address) return;
@@ -453,7 +509,7 @@ export default function AdminDashboardPage() {
     try {
       setAuthError(null);
       const session = await createAdminSession(address, signMessageAsync);
-      setAdminAuth({ adminAddress: session.adminAddress || address });
+      setAdminAuth(session);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Unable to authorize admin.";
@@ -487,17 +543,19 @@ export default function AdminDashboardPage() {
                 manage Gallery, Noundry, rounds, and Nouns metagov access.
               </p>
             </div>
-            {isAdmin && (
+            {isConnected && (
               <button
                 type="button"
                 onClick={authorize}
-                disabled={isSigning}
+                disabled={isSigning || isCheckingSession}
                 className={dangerButtonClass}
               >
                 {adminAuth
                   ? "Admin access active"
                   : isSigning
                     ? "Signing..."
+                    : isCheckingSession
+                      ? "Checking..."
                     : "Unlock admin requests"}
               </button>
             )}
@@ -509,25 +567,20 @@ export default function AdminDashboardPage() {
             Connect the admin wallet to load this dashboard.
           </AdminNotice>
         )}
-        {isConnected && !isAdmin && (
-          <AdminNotice title="Admin wallet required">
-            This dashboard is only available to the configured admin wallet.
-          </AdminNotice>
-        )}
-        {isAdmin && authError && (
+        {isConnected && authError && (
           <AdminNotice title="Signature failed">{authError}</AdminNotice>
         )}
-        {isAdmin && !adminAuth && !isCheckingSession && (
+        {isConnected && !adminAuth && !isCheckingSession && (
           <AdminNotice title="Signature required">
-            Unlock admin requests once to manage community projects, Noundry,
-            rounds, and Nouns metagov access.
+            Unlock admin requests once. The server will verify whether this
+            wallet has dashboard access.
           </AdminNotice>
         )}
 
-        {isAdmin && (
+        {adminAuth && (
           <section className="flex flex-col gap-6">
             <div className="flex flex-nowrap justify-center gap-1 overflow-x-auto border-b border-skin-stroke sm:gap-3">
-              {adminSections.map((section) => {
+              {visibleAdminSections.map((section) => {
                 const isActive = activeSection === section.id;
 
                 return (
@@ -546,8 +599,31 @@ export default function AdminDashboardPage() {
                 );
               })}
             </div>
-            {adminAuth && (
+            {visibleAdminSections.length === 0 ? (
+              <AdminNotice title="No admin sections enabled">
+                This wallet is an admin, but it does not currently have access
+                to any dashboard sections.
+              </AdminNotice>
+            ) : !activeSectionAllowed ? (
+              <AdminNotice title="Access denied">
+                This wallet does not have access to that dashboard section.
+              </AdminNotice>
+            ) : (
               <>
+                {adminAuth.isGlobal && (
+                  <AdminAccessPanel
+                    adminAuth={adminAuth}
+                    admins={adminAccessData?.admins || []}
+                    permissionDefinitions={
+                      adminAccessData?.permissionDefinitions ||
+                      ADMIN_PERMISSION_DEFINITIONS
+                    }
+                    error={adminAccessError?.message}
+                    isLoading={!adminAccessData && !adminAccessError}
+                    mutate={mutateAdminAccess}
+                  />
+                )}
+                {hasPermission("testing") && (
                 <TestingSettingsPanel
                   adminAuth={adminAuth}
                   dummyContentEnabled={
@@ -557,6 +633,7 @@ export default function AdminDashboardPage() {
                   isLoading={!testingSettingsData && !testingSettingsError}
                   mutate={mutateTestingSettings}
                 />
+                )}
                 {activeSection === "community" ? (
                   <CommunityAdminPanel
                     adminAuth={adminAuth}
@@ -640,6 +717,227 @@ const AdminNotice = ({
     <p className="mt-2 text-base text-secondary">{children}</p>
   </section>
 );
+
+const AdminAccessPanel = ({
+  adminAuth,
+  admins,
+  permissionDefinitions,
+  error,
+  isLoading,
+  mutate,
+}: {
+  adminAuth: AdminAuth;
+  admins: AdminAccessResponseRecord[];
+  permissionDefinitions: typeof ADMIN_PERMISSION_DEFINITIONS;
+  error?: string;
+  isLoading: boolean;
+  mutate: KeyedMutator<AdminAccessResponse>;
+}) => {
+  const [newAdminWallet, setNewAdminWallet] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+  const [localError, setLocalError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const editableAdmins = admins
+    .filter((admin) => !admin.isGlobal)
+    .map(({ isGlobal, ...admin }) => admin);
+
+  const saveAdmins = async (
+    nextAdmins: AdminAccessRecord[],
+    successMessage: string
+  ) => {
+    try {
+      setIsSaving(true);
+      setLocalError(null);
+      setMessage(null);
+      const result = await sendAdminRequest(
+        "/api/admin/access",
+        adminAuth,
+        "PATCH",
+        { admins: nextAdmins }
+      );
+      await mutate(result as AdminAccessResponse, { revalidate: false });
+      setMessage(successMessage);
+    } catch (saveError) {
+      const nextError =
+        saveError instanceof Error
+          ? saveError.message
+          : "Unable to update admin access.";
+      setLocalError(nextError);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const addAdmin = async () => {
+    const walletAddress = normalizeAdminWalletAddress(newAdminWallet);
+
+    if (!walletAddress) {
+      setLocalError("Enter a valid wallet address.");
+      return;
+    }
+
+    if (walletAddress === GLOBAL_ADMIN_WALLET_ADDRESS) {
+      setLocalError("The global admin wallet is already included.");
+      return;
+    }
+
+    if (
+      admins.some(
+        (admin) => admin.walletAddress.toLowerCase() === walletAddress.toLowerCase()
+      )
+    ) {
+      setLocalError("That wallet is already an admin.");
+      return;
+    }
+
+    await saveAdmins(
+      [...editableAdmins, { walletAddress, permissions: [] }],
+      "Admin wallet added."
+    );
+    setNewAdminWallet("");
+  };
+
+  const removeAdmin = async (walletAddress: string) => {
+    await saveAdmins(
+      editableAdmins.filter((admin) => admin.walletAddress !== walletAddress),
+      "Admin wallet removed."
+    );
+  };
+
+  const togglePermission = async (
+    walletAddress: string,
+    permission: AdminPermission
+  ) => {
+    const nextAdmins = editableAdmins.map((admin) => {
+      if (admin.walletAddress !== walletAddress) return admin;
+
+      const hasExistingPermission = admin.permissions.includes(permission);
+      return {
+        ...admin,
+        permissions: hasExistingPermission
+          ? admin.permissions.filter((item) => item !== permission)
+          : [...admin.permissions, permission],
+      };
+    });
+
+    await saveAdmins(nextAdmins, "Admin permissions updated.");
+  };
+
+  return (
+    <section className="yc-dark-yellow-form-surface flex flex-col gap-5 rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm">
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 className="font-heading text-3xl leading-none text-skin-base">
+            Admin Access
+          </h2>
+          <p className="mt-2 max-w-3xl text-base leading-snug text-secondary">
+            Add admin wallets and choose which dashboard areas each wallet can
+            access.
+          </p>
+        </div>
+        <div className="flex w-full flex-col gap-2 md:w-[420px]">
+          <label className={labelClass} htmlFor="new-admin-wallet">
+            Add admin wallet
+          </label>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <input
+              id="new-admin-wallet"
+              className={fieldClass}
+              value={newAdminWallet}
+              onChange={(event) => setNewAdminWallet(event.target.value)}
+              placeholder="0x..."
+              disabled={isSaving}
+            />
+            <button
+              type="button"
+              onClick={addAdmin}
+              disabled={isSaving || !newAdminWallet.trim()}
+              className={primaryButtonClass}
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {(error || localError || message) && (
+        <p
+          className={`rounded-2xl border px-4 py-3 text-sm font-semibold ${
+            error || localError
+              ? "border-[#c93d2f]/40 bg-[#c93d2f]/10 text-[#8c1d1d]"
+              : "border-[#16a34a]/40 bg-[#16a34a]/10 text-[#166534]"
+          }`}
+        >
+          {error || localError || message}
+        </p>
+      )}
+
+      {isLoading ? (
+        <p className="text-base text-secondary">Loading admin access...</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[860px] border-separate border-spacing-y-3">
+            <thead>
+              <tr className="text-left text-xs uppercase tracking-wide text-secondary">
+                <th className="px-3 py-2">Wallet</th>
+                {permissionDefinitions.map((permission) => (
+                  <th key={permission.id} className="px-3 py-2">
+                    {permission.label}
+                  </th>
+                ))}
+                <th className="px-3 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {admins.map((admin) => (
+                <tr key={admin.walletAddress} className="bg-[#fff7bf]">
+                  <td className="rounded-l-2xl px-3 py-4 font-mono text-sm text-skin-base">
+                    <div className="flex flex-col gap-1">
+                      <span>{admin.walletAddress}</span>
+                      {admin.isGlobal && (
+                        <span className="w-fit rounded-full bg-accent px-2 py-1 font-sans text-xs font-bold text-skin-base">
+                          Global admin
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  {permissionDefinitions.map((permission) => (
+                    <td key={permission.id} className="px-3 py-4 text-center">
+                      <input
+                        type="checkbox"
+                        checked={
+                          admin.isGlobal ||
+                          admin.permissions.includes(permission.id)
+                        }
+                        disabled={admin.isGlobal || isSaving}
+                        onChange={() =>
+                          togglePermission(admin.walletAddress, permission.id)
+                        }
+                        className="h-5 w-5 accent-[#16a34a]"
+                        aria-label={`${permission.label} access for ${admin.walletAddress}`}
+                      />
+                    </td>
+                  ))}
+                  <td className="rounded-r-2xl px-3 py-4">
+                    <button
+                      type="button"
+                      onClick={() => removeAdmin(admin.walletAddress)}
+                      disabled={admin.isGlobal || isSaving}
+                      className={dangerButtonClass}
+                    >
+                      {admin.isGlobal ? "Locked" : "Remove"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  );
+};
 
 const TestingSettingsPanel = ({
   adminAuth,

@@ -34,7 +34,7 @@ export default async function handler(
     return res.status(405).json({ error: "Method not allowed." });
   }
 
-  if (!(await requireAdminRequest(req, res))) return;
+  if (!(await requireAdminRequest(req, res, "rounds"))) return;
 
   const id = getQueryValue(req.query.id);
   const submissionId = getQueryValue(req.query.submissionId);

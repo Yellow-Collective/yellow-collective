@@ -19,6 +19,7 @@ import {
   SITE_THEME_COLOR,
   getAbsoluteUrl,
 } from "@/utils/site";
+import { useEffect, useState } from "react";
 
 export const pally = localFont({
   src: "../styles/Pally-Variable.ttf",
@@ -28,6 +29,50 @@ export const pally = localFont({
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   useInitTheme();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const appContent = (
+    <>
+      <Head>
+        <title>{SITE_NAME}</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta name="description" content={SITE_DESCRIPTION} />
+        <meta name="application-name" content={SITE_NAME} />
+        <meta name="theme-color" content={SITE_THEME_COLOR} />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content={SITE_SHORT_NAME} />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta property="og:title" content={SITE_NAME} />
+        <meta property="og:description" content={SITE_DESCRIPTION} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={getAbsoluteUrl("/")} />
+        <meta property="og:image" content={getAbsoluteUrl("/og-image.png")} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={SITE_NAME} />
+        <meta name="twitter:description" content={SITE_DESCRIPTION} />
+        <meta name="twitter:image" content={getAbsoluteUrl("/og-image.png")} />
+        <meta name="fc:miniapp" content={MINI_APP_EMBED_JSON} />
+        <meta name="fc:frame" content={LEGACY_FRAME_EMBED_JSON} />
+      </Head>
+
+      <main className={pally.variable}>
+        <MiniAppReady />
+        <PWARegister />
+        <Component {...pageProps} />
+        <Analytics />
+      </main>
+    </>
+  );
 
   return (
     <SWRConfig
@@ -37,51 +82,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       }}
     >
       <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains}>
-          <Head>
-            <title>{SITE_NAME}</title>
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, viewport-fit=cover"
-            />
-            <meta name="description" content={SITE_DESCRIPTION} />
-            <meta name="application-name" content={SITE_NAME} />
-            <meta name="theme-color" content={SITE_THEME_COLOR} />
-            <meta name="mobile-web-app-capable" content="yes" />
-            <meta name="apple-mobile-web-app-capable" content="yes" />
-            <meta name="apple-mobile-web-app-title" content={SITE_SHORT_NAME} />
-            <meta
-              name="apple-mobile-web-app-status-bar-style"
-              content="default"
-            />
-            <link rel="manifest" href="/manifest.webmanifest" />
-            <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-            <meta property="og:title" content={SITE_NAME} />
-            <meta property="og:description" content={SITE_DESCRIPTION} />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={getAbsoluteUrl("/")} />
-            <meta
-              property="og:image"
-              content={getAbsoluteUrl("/og-image.png")}
-            />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={SITE_NAME} />
-            <meta name="twitter:description" content={SITE_DESCRIPTION} />
-            <meta
-              name="twitter:image"
-              content={getAbsoluteUrl("/og-image.png")}
-            />
-            <meta name="fc:miniapp" content={MINI_APP_EMBED_JSON} />
-            <meta name="fc:frame" content={LEGACY_FRAME_EMBED_JSON} />
-          </Head>
-
-          <main className={pally.variable}>
-            <MiniAppReady />
-            <PWARegister />
-            <Component {...pageProps} />
-            <Analytics />
-          </main>
-        </RainbowKitProvider>
+        {isMounted ? (
+          <RainbowKitProvider chains={chains}>{appContent}</RainbowKitProvider>
+        ) : (
+          appContent
+        )}
       </WagmiConfig>
     </SWRConfig>
   );

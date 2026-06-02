@@ -1,6 +1,6 @@
 import AddressLink from "@/components/AddressLink";
 import { ETHER_ACTOR_BASEURL } from "constants/urls";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ethers } from "@/utils/ethers-compat";
 import useSWR from "swr";
 
 export type ProposalTransactionItem = {

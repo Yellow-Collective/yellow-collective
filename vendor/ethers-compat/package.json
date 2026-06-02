@@ -1,0 +1,22 @@
+{
+  "name": "ethers",
+  "version": "5.8.1",
+  "main": "index.js",
+  "module": "index.mjs",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./lib/utils.js": {
+      "import": "./lib/utils.mjs",
+      "require": "./lib/utils.js",
+      "default": "./lib/utils.js"
+    }
+  },
+  "dependencies": {
+    "@ethersproject/bignumber": "^5.8.0",
+    "ethers6": "npm:ethers@^6.16.0"
+  }
+}

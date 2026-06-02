@@ -1,5 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { isAdminAddress } from "@/utils/admin";
+import {
+  getWalletAdminPermissions,
+  isAdminWalletAddress,
+  isGlobalAdminWalletAddress,
+} from "data/admin-access";
 import { getAdminSessionSignedRequestAction } from "@/utils/admin-auth";
 import {
   clearAdminSessionCookie,
@@ -20,11 +24,15 @@ export default async function handler(
   if (req.method === "GET") {
     const adminAddress = getAdminSessionAddress(req);
 
-    if (!adminAddress || !isAdminAddress(adminAddress)) {
+    if (!adminAddress || !(await isAdminWalletAddress(adminAddress))) {
       return res.status(401).json({ error: "Admin session required." });
     }
 
-    return res.status(200).json({ adminAddress });
+    return res.status(200).json({
+      adminAddress,
+      permissions: await getWalletAdminPermissions(adminAddress),
+      isGlobal: isGlobalAdminWalletAddress(adminAddress),
+    });
   }
 
   if (req.method === "DELETE") {
@@ -44,10 +52,14 @@ export default async function handler(
 
   if (!adminAddress) return;
 
-  if (!isAdminAddress(adminAddress)) {
+  if (!(await isAdminWalletAddress(adminAddress))) {
     return res.status(403).json({ error: "Admin wallet required." });
   }
 
   setAdminSessionCookie(res, adminAddress);
-  return res.status(200).json({ adminAddress });
+  return res.status(200).json({
+    adminAddress,
+    permissions: await getWalletAdminPermissions(adminAddress),
+    isGlobal: isGlobalAdminWalletAddress(adminAddress),
+  });
 }

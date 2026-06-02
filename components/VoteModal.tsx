@@ -10,7 +10,6 @@ import {
 } from "wagmi";
 import { useDAOAddresses } from "../hooks";
 import { GovernorABI } from "@buildersdk/sdk";
-import { BigNumber } from "ethers";
 import { useState } from "react";
 import Image from "next/image";
 import { CheckIcon, MinusIcon, XMarkIcon } from "@heroicons/react/20/solid";
@@ -40,14 +39,14 @@ export default function VoteModal({
     address: addresses?.governor,
     abi: GovernorABI,
     functionName: "castVote",
-    args: [proposal.proposalId, BigNumber.from(support ?? 0)],
+    args: [proposal.proposalId, BigInt(support ?? 0)],
     enabled: shouldPrepare && !hasReason,
   });
   const { config: castVoteWithReasonConfig } = usePrepareContractWrite({
     address: addresses?.governor,
     abi: GovernorABI,
     functionName: "castVoteWithReason",
-    args: [proposal.proposalId, BigNumber.from(support ?? 0), trimmedReason],
+    args: [proposal.proposalId, BigInt(support ?? 0), trimmedReason],
     enabled: shouldPrepare && hasReason,
   });
   const castVoteWrite = useContractWrite(castVoteConfig);

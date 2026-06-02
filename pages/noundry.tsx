@@ -448,9 +448,24 @@ const downloadCanvas = async ({
   link.click();
 };
 
+const NoundryWalletState = ({
+  onAddressChange,
+}: {
+  onAddressChange: (address: string | undefined) => void;
+}) => {
+  const { address } = useAccount();
+
+  useEffect(() => {
+    onAddressChange(address);
+  }, [address, onAddressChange]);
+
+  return null;
+};
+
 export default function NoundryPage() {
   const router = useRouter();
-  const { address } = useAccount();
+  const [isMounted, setIsMounted] = useState(false);
+  const [address, setAddress] = useState<string | undefined>();
   const {
     data: artwork,
     error: artworkError,
@@ -506,7 +521,7 @@ export default function NoundryPage() {
   const suppressTouchDrawRef = useRef(false);
   const selectedTraitName = selectedTraits[traitType];
   const submissions = submissionData?.submissions || [];
-  const isAdmin = isAdminAddress(address);
+  const isAdmin = isMounted && isAdminAddress(address);
   const setCustomTraitPixels = (trait: string, nextPixels: string[]) => {
     const nextCustomTraitPixels = {
       ...customTraitPixelsRef.current,
@@ -519,6 +534,10 @@ export default function NoundryPage() {
     if (selectedTraits[traitType] !== CUSTOM_TRAIT_NAME) return;
     setCustomTraitPixels(traitType, nextPixels);
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const editableLayers = useMemo(
     () =>
@@ -1262,6 +1281,7 @@ export default function NoundryPage() {
 
   return (
     <Layout>
+      {isMounted ? <NoundryWalletState onAddressChange={setAddress} /> : null}
       <Head>
         <title>Noundry | Yellow Collective</title>
       </Head>

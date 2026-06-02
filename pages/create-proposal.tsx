@@ -11,8 +11,7 @@ import {
   CheckCircleIcon,
   ChevronUpDownIcon,
 } from "@heroicons/react/20/solid";
-import { ethers } from "ethers";
-import { parseEther } from "ethers/lib/utils.js";
+import { ethers, parseEther } from "@/utils/ethers-compat";
 import {
   Field,
   FieldArray,
@@ -23,7 +22,7 @@ import {
 } from "formik";
 import { TOKEN_CONTRACT } from "constants/addresses";
 import { useDAOAddresses } from "@/hooks/fetch";
-import dynamic from "next/dynamic";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -70,9 +69,13 @@ interface Transaction {
 
 interface PreparedTransaction {
   target: `0x${string}`;
-  value: ethers.BigNumber;
+  value: bigint;
   calldata: `0x${string}`;
 }
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 interface Values {
   title: string;
@@ -266,9 +269,10 @@ const decodeKnownCalldata = (calldata: string) => {
   for (const contractInterface of [erc20Interface, erc721Interface]) {
     try {
       const parsed = contractInterface.parseTransaction({ data: calldata });
+      if (!parsed) continue;
       return {
         name: parsed.name,
-        args: parsed.args.map((arg) => arg.toString()),
+        args: parsed.args.map((arg: unknown) => String(arg)),
       };
     } catch {
       // Try the next known interface.
@@ -988,13 +992,6 @@ const prepareTransaction = (
   }
 };
 
-const RichTextEditor = dynamic(() => import("@mantine/rte"), {
-  ssr: false,
-  loading: () => (
-    <div className="mt-2 min-h-[250px] rounded-xl bg-skin-muted animate-pulse" />
-  ),
-});
-
 const HTMLTextEditor = () => {
   const props = { name: "summary", type: "text", id: "summary" };
   const [_, meta, helpers] = useField(props.name);
@@ -1002,14 +999,10 @@ const HTMLTextEditor = () => {
   const { setValue } = helpers;
 
   return (
-    <RichTextEditor
-      controls={[
-        ["bold", "italic", "underline", "link"],
-        ["unorderedList", "h1", "h2", "h3"],
-      ]}
-      className="mt-2 min-h-[250px] overflow-hidden rounded-xl border border-skin-stroke bg-white"
-      value={value}
-      onChange={(value) => setValue(value)}
+    <textarea
+      className="mt-2 min-h-[250px] w-full rounded-xl border border-skin-stroke bg-white p-4 font-body text-base text-skin-base outline-none transition placeholder:text-skin-muted focus:border-skin-highlight"
+      value={value || ""}
+      onChange={(event) => setValue(event.target.value)}
       {...props}
     />
   );

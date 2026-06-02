@@ -1,4 +1,4 @@
-import { BigNumber, utils } from "ethers";
+import { BigNumber, utils } from "@/utils/ethers-compat";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import {
@@ -117,7 +117,10 @@ export const PlaceBid = ({
   const getError = () => {
     const minNextBid = utils.formatEther(nextBidAmount);
     const bidAmount = parseBidAmount(bid);
-    if (bid && (!bidAmount || bidAmount.lt(nextBidAmount))) {
+    if (
+      bid &&
+      (!bidAmount || BigNumber.from(bidAmount.toString()).lt(nextBidAmount))
+    ) {
       return `Bid must be at least ${minNextBid}`;
     }
 
@@ -127,11 +130,11 @@ export const PlaceBid = ({
     if (reason.includes("insufficient funds"))
       return "Error insufficient funds for bid";
 
-    if (parsedBid && parsedBid.lt(nextBidAmount))
+    if (parsedBid && BigNumber.from(parsedBid.toString()).lt(nextBidAmount))
       return "Error invalid bid";
   };
   const showBridgeToBase =
-    isConnected && baseBalance?.value && baseBalance.value.isZero();
+    isConnected && baseBalance?.value !== undefined && baseBalance.value === 0n;
 
   return (
     <div

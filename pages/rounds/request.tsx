@@ -1,4 +1,3 @@
-import CustomConnectButton from "@/components/CustomConnectButton";
 import Layout from "@/components/Layout";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
@@ -8,6 +7,8 @@ import {
 } from "@/utils/rounds/round-image-upload";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import { TOKEN_NETWORK } from "constants/addresses";
+import type { GetServerSideProps } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import type { ChangeEvent } from "react";
@@ -41,6 +42,14 @@ type FormValues = {
 
 const prizeCountOptions = Array.from({ length: 10 }, (_, index) => index + 1);
 const ROUND_SIGNED_REQUEST_CHAIN_ID = Number(TOKEN_NETWORK);
+const CustomConnectButton = dynamic(
+  () => import("@/components/CustomConnectButton"),
+  { ssr: false }
+);
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 const createAwardValues = (
   count: number,

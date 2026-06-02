@@ -66,7 +66,9 @@ assert.equal(adminSession.verifyAdminSessionToken(token), adminAddress);
 console.log("ok - admin session token verifies");
 
 assert.equal(
-  adminSession.verifyAdminSessionToken(`${token.slice(0, -1)}0`),
+  adminSession.verifyAdminSessionToken(
+    `${token.slice(0, -1)}${token.endsWith("0") ? "1" : "0"}`
+  ),
   undefined
 );
 console.log("ok - tampered admin session token fails");

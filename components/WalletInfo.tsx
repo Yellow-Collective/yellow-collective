@@ -1,5 +1,5 @@
 import { shortenAddress } from "@/utils/shortenAddress";
-import { ethers } from "ethers";
+import { ethers } from "@/utils/ethers-compat";
 import { Address } from "wagmi";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { getAddress, zeroAddress } from "viem";

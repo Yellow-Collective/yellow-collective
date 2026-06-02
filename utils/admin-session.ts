@@ -50,7 +50,7 @@ const safeEqual = (first: string, second: string) => {
 
   return (
     firstBuffer.length === secondBuffer.length &&
-    timingSafeEqual(firstBuffer, secondBuffer)
+    timingSafeEqual(new Uint8Array(firstBuffer), new Uint8Array(secondBuffer))
   );
 };
 

@@ -1,6 +1,5 @@
 import { BuilderSDK } from "@buildersdk/sdk";
 import DefaultProvider from "@/utils/DefaultProvider";
-import { BigNumber } from "ethers";
 import { GraphQLClient, gql } from "graphql-request";
 import { SUBGRAPH_ENDPOINT } from "constants/urls";
 
@@ -96,7 +95,7 @@ export const getUserVotes = async ({
   user: `0x${string}`;
   timestamp: number;
 }) => {
-  return governor({ address }).getVotes(user, BigNumber.from(timestamp));
+  return governor({ address }).getVotes(user, BigInt(timestamp));
 };
 
 export const getProposalThreshold = async ({

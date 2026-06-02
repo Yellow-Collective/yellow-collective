@@ -3,6 +3,7 @@ import ProjectMemberSelector from "@/components/community/ProjectMemberSelector"
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import type { CommunityProject } from "data/community";
 import type { DaoMemberSummary } from "data/members";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
@@ -45,6 +46,10 @@ const fetcher = async (url: string) => {
   if (!response.ok) throw new Error(data.error || "Unable to load data.");
   return data;
 };
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 export default function SubmitCommunityProjectPage() {
   const { address: connectedAddress } = useAccount();
