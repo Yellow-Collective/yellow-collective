@@ -1,5 +1,11 @@
 import { ethers } from "ethers";
 import { config, snapshotVotingDuration } from "../config";
+import {
+  buildSnapshotProposalMessage,
+  determineSnapshotWinner,
+  formatProposalBody as formatSnapshotProposalBody,
+  parseNounsIdFromSnapshotProposal,
+} from "../core";
 import { NounsProposal, SnapshotChoice, SnapshotResult } from "../types";
 import { graphqlRequest } from "../utils/http";
 import { getBotWallet, getCurrentBlockNumber } from "../utils/wallet";
@@ -40,6 +46,7 @@ const GET_SPACE_PROPOSALS = `
     proposals(where: { space: $space }, first: 100, orderBy: "created", orderDirection: desc) {
       id
       title
+      body
       state
       end
     }
@@ -51,6 +58,7 @@ const GET_FILTERED_PROPOSALS = `
     proposals(where: { space: $space, state: $state }, first: 100, orderBy: "end", orderDirection: asc) {
       id
       title
+      body
       state
       end
     }
@@ -79,6 +87,7 @@ const GET_PROPOSAL_RESULTS = `
 type SnapshotProposalLite = {
   id: string;
   title: string;
+  body?: string;
   state?: string;
   end?: number;
 };
@@ -100,16 +109,6 @@ export type ActiveSnapshotProposal = {
 export type SnapshotProposalReceipt = {
   id: string;
   ipfs?: string;
-};
-
-const parseNounsIdFromTitle = (title: string) => {
-  const directMatch = title.match(/^(\d+)\s*:/);
-  if (directMatch) return directMatch[1];
-
-  const nounsMatch = title.match(/^Nouns\s*#?(\d+)\s*:/i);
-  if (nounsMatch) return nounsMatch[1];
-
-  return null;
 };
 
 const snapshotProposalUrl = (snapshotId: string) =>
@@ -143,15 +142,11 @@ const postSnapshotEnvelope = async (
 };
 
 export const formatProposalBody = (proposal: NounsProposal) => {
-  const nounsLink = config.proposalLinkTemplate.replace("{id}", proposal.id);
-  const siteLink = config.siteProposalLinkTemplate.replace("{id}", proposal.id);
-
-  return [
-    `**Nouns proposal:** ${nounsLink}`,
-    `**Yellow Collective voting page:** ${siteLink}`,
-    "",
-    "Vote here to decide how Yellow Collective should vote on the Nouns DAO proposal.",
-  ].join("\n");
+  return formatSnapshotProposalBody({
+    proposal,
+    proposalLinkTemplate: config.proposalLinkTemplate,
+    siteProposalLinkTemplate: config.siteProposalLinkTemplate,
+  });
 };
 
 export const createSnapshotProposal = async (
@@ -160,23 +155,16 @@ export const createSnapshotProposal = async (
   const wallet = getBotWallet();
   const now = Math.floor(Date.now() / 1000);
   const snapshotBlock = await getCurrentBlockNumber();
-  const message = {
+  const message = buildSnapshotProposalMessage({
     from: wallet.address,
     space: config.snapshotSpaceId,
-    timestamp: now,
-    type: "single-choice",
-    title: `${proposal.id}: ${proposal.title}`,
-    body: formatProposalBody(proposal),
-    discussion: config.proposalLinkTemplate.replace("{id}", proposal.id),
-    choices: ["For", "Against", "Abstain"],
-    labels: [] as string[],
-    start: now,
-    end: now + snapshotVotingDuration(),
-    snapshot: snapshotBlock,
-    plugins: "{}",
-    privacy: "",
-    app: "yellowcollective",
-  };
+    now,
+    snapshotBlock,
+    votingDurationSeconds: snapshotVotingDuration(),
+    proposalLinkTemplate: config.proposalLinkTemplate,
+    siteProposalLinkTemplate: config.siteProposalLinkTemplate,
+    proposal,
+  });
 
   if (config.dryRun) {
     console.log("[DRY RUN] Would create Snapshot proposal", message);
@@ -202,7 +190,7 @@ export const getExistingProposalIds = async () => {
 
   return new Set(
     data.proposals
-      .map((proposal) => parseNounsIdFromTitle(proposal.title))
+      .map((proposal) => parseNounsIdFromSnapshotProposal(proposal))
       .filter((id): id is string => Boolean(id))
   );
 };
@@ -216,7 +204,7 @@ const getFilteredSnapshotProposals = async (state: "active" | "closed") => {
 
   return data.proposals
     .map((proposal) => {
-      const nounsId = parseNounsIdFromTitle(proposal.title);
+      const nounsId = parseNounsIdFromSnapshotProposal(proposal);
       if (!nounsId) return null;
       return {
         snapshotId: proposal.id,
@@ -249,20 +237,7 @@ export const getSnapshotResults = async (snapshotId: string) => {
   if (!proposal || proposal.state !== "closed") return null;
 
   const scores = proposal.scores || [0, 0, 0];
-  const [forVotes = 0, againstVotes = 0, abstainVotes = 0] = scores;
-  const maxVotes = Math.max(forVotes, againstVotes, abstainVotes);
-
-  if (maxVotes === 0) return "NO_VOTES" as SnapshotResult;
-
-  const winners = [
-    ["FOR", forVotes],
-    ["AGAINST", againstVotes],
-    ["ABSTAIN", abstainVotes],
-  ].filter(([, score]) => score === maxVotes);
-
-  if (winners.length > 1) return "ABSTAIN" as SnapshotChoice;
-
-  return winners[0][0] as SnapshotChoice;
+  return determineSnapshotWinner(scores) as SnapshotResult;
 };
 
 export const getSnapshotScores = async (snapshotId: string) => {
