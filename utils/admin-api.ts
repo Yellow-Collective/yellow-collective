@@ -1,5 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { isAdminAddress } from "./admin";
+import {
+  hasWalletAdminPermission,
+  isAdminWalletAddress,
+} from "data/admin-access";
+import type { AdminPermission } from "./admin-permissions";
 import { getAdminSignedRequestAction } from "./admin-auth";
 import { getAdminSessionAddress } from "./admin-session";
 import { setNoStoreHeaders, verifySignedRequest } from "./signature-auth-server";
@@ -15,7 +19,8 @@ const hasAdminAuthInQuery = (req: NextApiRequest) =>
 
 export const requireAdminRequest = async (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
+  permission?: AdminPermission
 ) => {
   setNoStoreHeaders(res);
 
@@ -28,8 +33,16 @@ export const requireAdminRequest = async (
 
   const sessionAddress = getAdminSessionAddress(req);
   if (sessionAddress) {
-    if (!isAdminAddress(sessionAddress)) {
+    if (!(await isAdminWalletAddress(sessionAddress))) {
       res.status(403).json({ error: "Admin wallet required." });
+      return undefined;
+    }
+
+    if (
+      permission &&
+      !(await hasWalletAdminPermission(sessionAddress, permission))
+    ) {
+      res.status(403).json({ error: "Admin permission required." });
       return undefined;
     }
 
@@ -42,8 +55,13 @@ export const requireAdminRequest = async (
 
   if (!adminAddress) return undefined;
 
-  if (!isAdminAddress(adminAddress)) {
+  if (!(await isAdminWalletAddress(adminAddress))) {
     res.status(403).json({ error: "Admin wallet required." });
+    return undefined;
+  }
+
+  if (permission && !(await hasWalletAdminPermission(adminAddress, permission))) {
+    res.status(403).json({ error: "Admin permission required." });
     return undefined;
   }
 

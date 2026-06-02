@@ -16,7 +16,7 @@ export default async function handler(
     return res.status(405).json({ error: "Method not allowed." });
   }
 
-  if (!(await requireAdminRequest(req, res))) return;
+  if (!(await requireAdminRequest(req, res, "gallery"))) return;
 
   const address = getAddressParam(req);
   if (!address) {

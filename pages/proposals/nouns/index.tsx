@@ -165,7 +165,7 @@ export default function NounsProposalsPage({
         <title>Nouns DAO Proposals | Yellow Collective</title>
       </Head>
 
-      <div className="yc-mobile-dark-page -m-6 min-h-screen bg-white p-6 sm:m-0 sm:min-h-0 sm:bg-transparent sm:p-0">
+      <div className="yc-mobile-dark-page -m-6 min-h-screen bg-skin-backdrop p-6 sm:m-0 sm:min-h-0 sm:bg-transparent sm:p-0">
         <div className="mx-auto flex w-full max-w-[1120px] flex-col gap-8 pb-12">
           {!canAccessNouns ? (
             <NounsAccessGate isConnected={isConnected} />
