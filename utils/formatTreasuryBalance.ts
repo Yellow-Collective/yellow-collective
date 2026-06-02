@@ -1,4 +1,4 @@
-import { BigNumber, utils } from "ethers";
+import { BigNumber, utils } from "@/utils/ethers-compat";
 
 export const formatTreasuryBalance = (balance: BigNumber) => {
   const balanceEth = parseFloat(utils.formatEther(balance || 0));

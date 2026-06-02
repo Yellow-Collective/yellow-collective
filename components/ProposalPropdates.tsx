@@ -1,7 +1,7 @@
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import { TOKEN_CONTRACT, TOKEN_NETWORK } from "constants/addresses";
 import { ETHERSCAN_BASEURL } from "constants/urls";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ethers } from "@/utils/ethers-compat";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -237,15 +237,15 @@ const PropdateForm = ({
         schema: PROPDATE_SCHEMA_UID,
         data: {
           recipient: tokenAddress,
-          expirationTime: BigNumber.from(0),
+          expirationTime: 0n,
           revocable: true,
           refUID: zeroHash,
           data: encodedData as `0x${string}`,
-          value: BigNumber.from(0),
+          value: 0n,
         },
       },
     ],
-    overrides: { value: BigNumber.from(0) },
+    overrides: { value: 0n },
     enabled,
   });
   const { write, data, isLoading: writeLoading } = useContractWrite(config);

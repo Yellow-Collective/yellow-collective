@@ -117,7 +117,10 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  experimental: {
+    staticGenerationMaxConcurrency: 1,
+    staticGenerationMinPagesPerWorker: 1000,
+  },
   images: {
     remotePatterns: [
       // Zora renderer URLs used by token and Builder media.
@@ -235,16 +238,17 @@ const nextConfig = {
       },
     ];
   },
-  webpack(config) {
-    if (!fs.existsSync(farcasterMiniAppSdkPath)) {
-      config.resolve.alias["@farcaster/miniapp-sdk"] = path.resolve(
-        __dirname,
-        "utils/farcasterMiniAppSdkShim.ts"
-      );
-    }
+};
+
+if (!fs.existsSync(farcasterMiniAppSdkPath)) {
+  nextConfig.webpack = (config) => {
+    config.resolve.alias["@farcaster/miniapp-sdk"] = path.resolve(
+      __dirname,
+      "utils/farcasterMiniAppSdkShim.ts"
+    );
 
     return config;
-  },
-};
+  };
+}
 
 module.exports = nextConfig;

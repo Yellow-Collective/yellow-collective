@@ -5,7 +5,7 @@ import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { parse } from "graphql";
 import { GraphQLClient, gql } from "graphql-request";
 import { TOKEN_CONTRACT } from "constants/addresses";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@/utils/ethers-compat";
 import { Address } from "wagmi";
 import { SUBGRAPH_ENDPOINT } from "constants/urls";
 import { zeroAddress } from "viem";
@@ -36,20 +36,24 @@ export type PreviousAuction = {
 
 const { auction } = BuilderSDK.connect({ signerOrProvider: DefaultProvider });
 
+const toBigNumber = (value: unknown) => BigNumber.from(value?.toString() || 0);
+const toNumber = (value: unknown) => Number(value?.toString() || 0);
+
 export const getCurrentAuction = async ({ address }: { address: string }) => {
   const { tokenId, highestBid, highestBidder, startTime, endTime, settled } =
     await auction({
       address,
     }).auction();
 
-  const bids = await getBidHistory({ tokenId });
+  const tokenIdBN = toBigNumber(tokenId);
+  const bids = await getBidHistory({ tokenId: tokenIdBN });
 
   return {
-    tokenId: tokenId.toHexString(),
-    highestBid: highestBid.toHexString(),
+    tokenId: tokenIdBN.toHexString(),
+    highestBid: toBigNumber(highestBid).toHexString(),
     highestBidder,
-    startTime,
-    endTime,
+    startTime: toNumber(startTime),
+    endTime: toNumber(endTime),
     settled,
     bids,
   } as AuctionInfo;

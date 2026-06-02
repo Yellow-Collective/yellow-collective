@@ -15,7 +15,7 @@ import {
 import { getEnsName } from "data/ens";
 import { TOKEN_CONTRACT, TOKEN_NETWORK } from "constants/addresses";
 import { YELLOW_COLLECTIVE_CONTRACTS } from "data/contracts";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@/utils/ethers-compat";
 import type { GetStaticPropsResult, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -259,9 +259,8 @@ export const getStaticProps = async (): Promise<
 
   let treasuryBalance: string | null = null;
   try {
-    treasuryBalance = (
-      await DefaultProvider.getBalance(addresses.treasury)
-    ).toHexString();
+    const balance = await DefaultProvider.getBalance(addresses.treasury);
+    treasuryBalance = BigNumber.from(balance.toString()).toHexString();
   } catch (error) {
     console.warn("Unable to load treasury balance", error);
   }

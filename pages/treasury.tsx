@@ -4,7 +4,7 @@ import DefaultProvider from "@/utils/DefaultProvider";
 import { TOKEN_CONTRACT } from "constants/addresses";
 import { SUBGRAPH_ENDPOINT } from "constants/urls";
 import { YELLOW_COLLECTIVE_CONTRACTS } from "data/contracts";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, Contract, utils } from "@/utils/ethers-compat";
 import { GraphQLClient, gql } from "graphql-request";
 import type { GetStaticPropsResult, InferGetStaticPropsType } from "next";
 import Head from "next/head";
@@ -164,7 +164,7 @@ export const getStaticProps = async (): Promise<
 
   const [{ eth, zora }, ethBalance] = await Promise.all([
     getTokenPrices(),
-    DefaultProvider.getBalance(treasuryAddress).then((balance) =>
+    DefaultProvider.getBalance(treasuryAddress).then((balance: any) =>
       balance.toString()
     ),
   ]);

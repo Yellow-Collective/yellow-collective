@@ -28,6 +28,7 @@ import type {
   RoundInput,
   RoundRequest,
 } from "data/rounds";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -211,6 +212,10 @@ const roundSubmissionsFetcher = createAdminFetcher<{
 const roundRequestsFetcher = createAdminFetcher<{
   requests: RoundRequest[];
 }>();
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 const sendAdminRequest = async (
   path: string,

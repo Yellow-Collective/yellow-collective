@@ -1,4 +1,4 @@
-import { BigNumber, ethers, utils } from "ethers";
+import { BigNumber, ethers, utils } from "@/utils/ethers-compat";
 import Image from "next/image";
 import { CountdownDisplay } from "../CountdownDisplay";
 import { useCurrentAuctionInfo, useContractInfo, useTokenInfo } from "hooks";
@@ -185,7 +185,7 @@ const EndedAuction = ({
         <div className="flex flex-col gap-2">
           <div className="font-light">Held by</div>
           <WalletInfo
-            address={owner || ethers.constants.AddressZero}
+            address={(owner || ethers.constants.AddressZero) as `0x${string}`}
             size="lg"
           />
         </div>

@@ -1,19 +1,12 @@
-import { formatNumber } from "@/utils/formatNumber";
-import { useNounsBalance } from "@/hooks/fetch/useNounsBalance";
 import { useThemeMode } from "@/hooks/useThemeMode";
 import { isAdminAddress } from "@/utils/admin";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
-import CustomConnectButton from "./CustomConnectButton";
 import ThemeToggle from "./ThemeToggle";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { BASED_AND_YELLOW_MULTISIG, TOKEN_CONTRACT } from "constants/addresses";
-import { BigNumber, ethers } from "ethers";
-import { ETHERSCAN_BASEURL } from "constants/urls";
-import { useAccount, useBalance } from "wagmi";
-import { useDAOAddresses, useTreasuryBalance } from "hooks";
 import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 
@@ -56,69 +49,33 @@ const fetcher = async (url: string) => {
   return data;
 };
 
+const TreasuryPill = dynamic(() => import("./HeaderTreasuryPill"), {
+  ssr: false,
+});
+const HeaderWalletState = dynamic(() => import("./HeaderWalletState"), {
+  ssr: false,
+});
+const CustomConnectButton = dynamic(() => import("./CustomConnectButton"), {
+  ssr: false,
+});
+
 export default function Header() {
-  const { address } = useAccount();
   const { isDarkMode } = useThemeMode();
   const [isMounted, setIsMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string | undefined>();
   const { data: roundsSettings } = useSWR<{
     roundsPublicEnabled: boolean;
   }>("/api/rounds/settings", fetcher);
   const { data: gallerySettings } = useSWR<{
     galleryPublicEnabled: boolean;
   }>("/api/gallery/settings", fetcher);
-  const { data: addresses } = useDAOAddresses({
-    tokenContract: TOKEN_CONTRACT,
-  });
-  const { data: treasury } = useTreasuryBalance({
-    treasuryContract: addresses?.treasury,
-  });
-  const { data: treasuryNounsBalance } = useNounsBalance({
-    user: addresses?.treasury,
-  });
-
-  const { data: multisigBalanceData } = useBalance({
-    address: BASED_AND_YELLOW_MULTISIG,
-  });
-  const { data: multisigNounsBalance } = useNounsBalance({
-    user: BASED_AND_YELLOW_MULTISIG,
-  });
-
-  const nounsBalance = BigNumber.from(treasuryNounsBalance ?? 0).add(
-    BigNumber.from(multisigNounsBalance ?? 0)
-  );
-  const multisigBalance = multisigBalanceData?.value ?? BigNumber.from(0);
-  const balanceLabel = useMemo(() => {
-    if (!isMounted) return "0";
-
-    const parts = [
-      treasury ? formatNumber(ethers.utils.formatEther(treasury), 2) : "0",
-    ];
-
-    if (multisigBalance.gt(1000)) {
-      parts.push(formatNumber(multisigBalanceData?.formatted, 2));
-    }
-
-    if (nounsBalance.gt(0)) {
-      parts.push(
-        `${nounsBalance.toString()} ${nounsBalance.gt(1) ? "Nouns" : "Noun"}`
-      );
-    }
-
-    return parts.join(" + ");
-  }, [
-    isMounted,
-    multisigBalance,
-    multisigBalanceData?.formatted,
-    nounsBalance,
-    treasury,
-  ]);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const isAdmin = isMounted && isAdminAddress(address);
+  const isAdmin = isMounted && isAdminAddress(walletAddress);
   const artItems = useMemo(() => {
     const visibleBaseArtItems =
       isAdmin || gallerySettings?.galleryPublicEnabled
@@ -148,10 +105,11 @@ export default function Header() {
     roundsSettings?.roundsPublicEnabled,
   ]);
 
-  const treasuryHref = `${ETHERSCAN_BASEURL}/tokenholdings?a=${addresses?.treasury}`;
-
   return (
     <header className="relative z-50 w-full">
+      {isMounted ? (
+        <HeaderWalletState onAddressChange={setWalletAddress} />
+      ) : null}
       <div className="flex h-[80px] w-full items-center justify-between gap-2 px-4 py-2 md:px-10">
         <div className="flex flex-row items-center justify-start gap-4 md:gap-8">
           <Link href="/" aria-label="Yellow Collective home">
@@ -164,19 +122,17 @@ export default function Header() {
             />
           </Link>
           <div className="hidden lg:block">
-            <Button
-              variant="outline"
-              size="tight"
-              className="yc-treasury-pill"
-            >
-              <Link
-                href={treasuryHref}
-                rel="noreferer noopener noreferrer"
-                target="_blank"
+            {isMounted ? (
+              <TreasuryPill />
+            ) : (
+              <Button
+                variant="outline"
+                size="tight"
+                className="yc-treasury-pill"
               >
-                <h6>&Xi; {balanceLabel}</h6>
-              </Link>
-            </Button>
+                <h6>&Xi; 0</h6>
+              </Button>
+            )}
           </div>
         </div>
 
@@ -197,7 +153,9 @@ export default function Header() {
         </div>
 
         <div className="hidden shrink-0 items-center gap-2 lg:flex">
-          <CustomConnectButton className="!h-10 rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base transition ease-in-out hover:-translate-y-0.5 hover:shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral-hover))]" />
+          {isMounted ? (
+            <CustomConnectButton className="!h-10 rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base transition ease-in-out hover:-translate-y-0.5 hover:shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral-hover))]" />
+          ) : null}
           <ThemeToggle className="!h-10 !w-10" />
         </div>
 
@@ -261,7 +219,9 @@ export default function Header() {
           </div>
           <div className="flex items-center gap-2 border-t border-skin-stroke pt-3">
             <div className="min-w-0 flex-1">
-              <CustomConnectButton className="h-11 w-full overflow-hidden rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base transition ease-in-out" />
+              {isMounted ? (
+                <CustomConnectButton className="h-11 w-full overflow-hidden rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base transition ease-in-out" />
+              ) : null}
             </div>
             <ThemeToggle className="h-11 w-11" />
           </div>

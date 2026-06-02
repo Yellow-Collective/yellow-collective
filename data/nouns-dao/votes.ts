@@ -2,7 +2,7 @@ import {
   getNounsDaoIndexerPool,
   getNounsDaoIndexerSchema,
 } from "data/nouns-dao/indexer";
-import { providers, utils } from "ethers";
+import { providers, utils } from "@/utils/ethers-compat";
 
 export type NounsDaoProposalVote = {
   voter: string;
@@ -262,10 +262,7 @@ const getNounsDaoProposalVotesFromIndexer = async (
 const getRpcProviders = () =>
   RPC_URLS.map((rpcUrl) => new providers.JsonRpcProvider(rpcUrl));
 
-const getProposalVoteRange = async (
-  provider: providers.JsonRpcProvider,
-  proposalNumber: number
-) => {
+const getProposalVoteRange = async (provider: any, proposalNumber: number) => {
   const result = await provider.call({
     to: NOUNS_DAO_PROXY,
     data: nounsDaoVoteInterface.encodeFunctionData("proposals", [
@@ -284,12 +281,12 @@ const getProposalVoteRange = async (
 };
 
 const getVoteLogsForTopic = async (
-  provider: providers.JsonRpcProvider,
+  provider: any,
   topic: string,
   fromBlock: number,
   toBlock: number
 ) => {
-  const logs: providers.Log[] = [];
+  const logs: any[] = [];
 
   for (let from = fromBlock; from <= toBlock; from += BLOCK_RANGE + 1) {
     const to = Math.min(from + BLOCK_RANGE, toBlock);
@@ -307,8 +304,8 @@ const getVoteLogsForTopic = async (
 };
 
 const getBlockTimestamps = async (
-  provider: providers.JsonRpcProvider,
-  logs: providers.Log[]
+  provider: any,
+  logs: any[]
 ) => {
   const blockTimestamps = new Map<number, number>();
   const blockNumbers = Array.from(
@@ -327,7 +324,7 @@ const getBlockTimestamps = async (
 
 const getNounsDaoProposalVotesFromRpcProvider = async (
   proposalNumber: number,
-  provider: providers.JsonRpcProvider
+  provider: any
 ): Promise<NounsDaoProposalVote[]> => {
   const [voteRange, latestBlock] = await Promise.all([
     getProposalVoteRange(provider, proposalNumber),
@@ -356,7 +353,7 @@ const getNounsDaoProposalVotesFromRpcProvider = async (
   const matchingLogs = logs
     .filter((log) => {
       try {
-        const parsed = nounsDaoVoteInterface.parseLog(log);
+        const parsed = nounsDaoVoteInterface.parseLog(log)!;
         return parsed.args.proposalId.toString() === String(proposalNumber);
       } catch {
         return false;
@@ -366,7 +363,7 @@ const getNounsDaoProposalVotesFromRpcProvider = async (
   const blockTimestamps = await getBlockTimestamps(provider, matchingLogs);
 
   return matchingLogs.map((log) => {
-    const parsed = nounsDaoVoteInterface.parseLog(log);
+    const parsed = nounsDaoVoteInterface.parseLog(log)!;
 
     return {
       voter: String(parsed.args.voter || ""),

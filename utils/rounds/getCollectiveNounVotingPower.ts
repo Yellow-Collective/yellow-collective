@@ -1,6 +1,6 @@
 import { getBalanceOf } from "data/nouns-builder/token";
 import DefaultProvider from "@/utils/DefaultProvider";
-import { Contract } from "ethers";
+import { Contract } from "@/utils/ethers-compat";
 import { getAddress, isAddress } from "viem";
 
 export const ROUND_VOTING_TOKEN_CONTRACT =
@@ -34,7 +34,7 @@ export const getCollectiveNounVotingPower = async (
     user: getAddress(walletAddress),
   });
 
-  return balance.toNumber();
+  return Number(balance.toString());
 };
 
 export const getBlockNumberAtOrBeforeTimestamp = async (timestamp: string) => {

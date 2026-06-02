@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber } from "@/utils/ethers-compat";
 import useSWR from "swr";
 
 export const useTreasuryBalance = ({

@@ -1,4 +1,4 @@
-import { providers, utils } from "ethers";
+import { providers, utils } from "@/utils/ethers-compat";
 import {
   getNounsDaoIndexerPool,
   getNounsDaoIndexerSchema,
@@ -277,9 +277,7 @@ const mapIndexerRowToProposal = (
   };
 };
 
-const getNounsDaoProposalsFromProvider = async (
-  provider: providers.JsonRpcProvider
-) => {
+const getNounsDaoProposalsFromProvider = async (provider: any) => {
   const latestBlock = Math.max(
     NOUNS_DAO_START_BLOCK,
     (await provider.getBlockNumber()) - CONFIRMATION_BLOCKS
@@ -289,7 +287,7 @@ const getNounsDaoProposalsFromProvider = async (
     nounsDaoInterface.getEventTopic("ProposalCreatedWithRequirements"),
   ];
   let toBlock = latestBlock;
-  let logs: providers.Log[] = [];
+  let logs: any[] = [];
 
   while (logs.length < MAX_PROPOSALS && toBlock > NOUNS_DAO_START_BLOCK) {
     const fromBlock = Math.max(NOUNS_DAO_START_BLOCK, toBlock - BLOCK_RANGE);
@@ -308,7 +306,7 @@ const getNounsDaoProposalsFromProvider = async (
 
   return Promise.all(
     recentLogs.map(async (log) => {
-      const parsed = nounsDaoInterface.parseLog(log);
+      const parsed = nounsDaoInterface.parseLog(log)!;
       const proposalId = parsed.args.id.toString();
       const [block, state, details] = await Promise.all([
         provider.getBlock(log.blockNumber),
@@ -317,7 +315,7 @@ const getNounsDaoProposalsFromProvider = async (
             to: NOUNS_DAO_PROXY,
             data: nounsDaoInterface.encodeFunctionData("state", [proposalId]),
           })
-          .then((result) =>
+          .then((result: string) =>
             Number(nounsDaoInterface.decodeFunctionResult("state", result)[0])
           )
           .catch(() => 0),
@@ -328,7 +326,7 @@ const getNounsDaoProposalsFromProvider = async (
               proposalId,
             ]),
           })
-          .then((result) =>
+          .then((result: string) =>
             nounsDaoInterface.decodeFunctionResult("proposals", result)
           ),
       ]);

@@ -57,7 +57,7 @@ import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 import { getAddress, isAddress, zeroAddress } from "viem";
-import { utils as ethersUtils } from "ethers";
+import { utils as ethersUtils } from "@/utils/ethers-compat";
 
 type ProfilePageProps = {
   profile: PublicProfileData | null;

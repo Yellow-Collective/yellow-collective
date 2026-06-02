@@ -1,7 +1,6 @@
 import ModalWrapper from "@/components/ModalWrapper";
 import { submitSnapshotVote } from "@/utils/snapshot-vote";
 import { SNAPSHOT_SPACE_ID, SNAPSHOT_SPACE_URL } from "constants/metagov";
-import { ethers } from "ethers";
 import CheckIcon from "@heroicons/react/20/solid/CheckIcon";
 import MinusIcon from "@heroicons/react/20/solid/MinusIcon";
 import XMarkIcon from "@heroicons/react/20/solid/XMarkIcon";
@@ -119,7 +118,7 @@ export default function NounsSnapshotVoteCard({
 
     try {
       await submitSnapshotVote({
-        signer: signer as ethers.providers.JsonRpcSigner,
+        signer: signer as any,
         address,
         space: data?.space || SNAPSHOT_SPACE_ID,
         proposal: proposal.id,

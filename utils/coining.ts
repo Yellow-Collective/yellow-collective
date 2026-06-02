@@ -1,5 +1,5 @@
 import { ETHERSCAN_BASEURL } from "constants/urls";
-import { ethers } from "ethers";
+import { ethers } from "@/utils/ethers-compat";
 import { getAddress, isAddress } from "viem";
 
 export const BASE_CHAIN_ID = 8453;

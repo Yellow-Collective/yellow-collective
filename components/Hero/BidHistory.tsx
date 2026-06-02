@@ -1,6 +1,6 @@
 import { Bid } from "@/services/nouns-builder/auction";
 import { formatNumber } from "@/utils/formatNumber";
-import { utils } from "ethers";
+import { utils } from "@/utils/ethers-compat";
 import ExternalLink from "../ExternalLink";
 import Image from "next/image";
 import { ETHERSCAN_BASEURL } from "constants/urls";

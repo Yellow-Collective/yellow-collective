@@ -3,6 +3,7 @@ import type {
   PlaygroundArtwork,
   PlaygroundImage,
 } from "data/nouns-builder/artwork";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
@@ -19,6 +20,10 @@ type SubmitDraft = {
 const GRID_SIZE = 32;
 const EMPTY_PIXEL = "transparent";
 const LOCKED_TRAIT = "glasses";
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 const layerLabels: Record<string, string> = {
   accessories: "Accessory",
