@@ -19,6 +19,7 @@ import { zoraTestnet, zora, base, baseGoerli } from "@wagmi/chains";
 
 import { createPublicClient, fallback, http } from "viem";
 import { TOKEN_NETWORK } from "constants/addresses";
+import { FarcasterMiniAppConnector } from "./farcaster-mini-app-connector";
 
 const mainnetViem = mainnet as any;
 const baseSepolia = {
@@ -161,7 +162,7 @@ const { chains, provider } = configureChains(
 const appName = "Yellow Collective";
 const projectId = "afb449b5b1ea52d11db1ec72bc452500";
 
-const connectors = connectorsForWallets([
+const rainbowKitConnectors = connectorsForWallets([
   {
     groupName: "Popular",
     wallets: [
@@ -177,6 +178,11 @@ const connectors = connectorsForWallets([
     ],
   },
 ]);
+
+const connectors = () => [
+  new FarcasterMiniAppConnector({ chains }),
+  ...rainbowKitConnectors(),
+];
 
 const wagmiClient = createClient({
   autoConnect: true,
