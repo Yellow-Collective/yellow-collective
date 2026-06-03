@@ -404,7 +404,7 @@ export default function RoundDetailPage({
                         </div>
                       </div>
                       <div className="flex shrink-0 flex-col gap-2 md:items-end">
-                        <span className="w-fit rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+                        <span className="w-fit whitespace-nowrap rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
                           {submission.voteCount} votes
                         </span>
                         {award && (
@@ -437,24 +437,24 @@ export default function RoundDetailPage({
                 </p>
               </div>
               {isConnected ? (
-                <div className="grid gap-2 rounded-xl bg-[#fff7bf] px-4 py-3 text-sm text-secondary sm:grid-cols-3">
-                  <div>
-                    <span className="block font-heading text-lg leading-none text-skin-base">
+                <div className="grid gap-2 rounded-xl bg-[#fff7bf] px-4 py-3 text-center text-sm text-[#212529] sm:grid-cols-3">
+                  <div className="whitespace-nowrap">
+                    <span className="block font-heading text-lg leading-none text-[#212529]">
                       {remainingVotes}
                     </span>
                     votes remaining
                   </div>
-                  <div>
-                    <span className="block font-heading text-lg leading-none text-skin-base">
+                  <div className="whitespace-nowrap">
+                    <span className="block font-heading text-lg leading-none text-[#212529]">
                       {alreadySubmittedVotes}
                     </span>
-                    votes already submitted
+                    votes submitted
                   </div>
-                  <div>
-                    <span className="block font-heading text-lg leading-none text-skin-base">
+                  <div className="whitespace-nowrap">
+                    <span className="block font-heading text-lg leading-none text-[#212529]">
                       {allocatedVotes}
                     </span>
-                    draft votes
+                    pending votes
                   </div>
                 </div>
               ) : (
@@ -652,7 +652,7 @@ const SubmissionCard = ({
             </button>
           </div>
           {showVoteCount && (
-            <div className="rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+            <div className="whitespace-nowrap rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
               {submission.voteCount} votes
             </div>
           )}
@@ -669,7 +669,7 @@ const SubmissionCard = ({
               className={`font-heading text-base underline ${primaryTextClass}`}
             />
             {lockedVotes > 0 && (
-              <div className="rounded-full bg-white/95 px-3 py-1 font-heading text-sm text-skin-base shadow-[0px_3px_0px_0px_rgba(0,0,0,0.28)]">
+              <div className="rounded-full bg-white/95 px-3 py-1 font-heading text-sm text-[#212529] shadow-[0px_3px_0px_0px_rgba(0,0,0,0.28)]">
                 {lockedVotes} locked
               </div>
             )}

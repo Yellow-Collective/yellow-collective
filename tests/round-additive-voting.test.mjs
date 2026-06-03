@@ -229,14 +229,19 @@ test("existing round votes remain reported even when current voting power is zer
     roundPageSource,
     /const alreadySubmittedVotes = votingPowerData\?\.usedVotes \|\| 0;/
   );
-  assert.match(roundPageSource, /votes already submitted/);
+  assert.match(roundPageSource, /votes submitted/);
 });
 
-test("round voting UI separates locked votes, draft votes, and remaining votes", () => {
-  assert.match(roundPageSource, /votes already submitted/);
+test("round voting UI separates locked votes, pending votes, and remaining votes", () => {
+  assert.match(roundPageSource, /votes submitted/);
+  assert.doesNotMatch(roundPageSource, /votes already submitted/);
+  assert.match(roundPageSource, /pending votes/);
+  assert.doesNotMatch(roundPageSource, /draft votes/);
   assert.match(roundPageSource, /Previously submitted votes cannot be changed/);
   assert.match(roundPageSource, /votes remaining/);
   assert.match(roundPageSource, /lockedVotesBySubmission/);
+  assert.match(roundPageSource, /text-\[#212529\][\s\S]*\{lockedVotes\} locked/);
+  assert.match(roundPageSource, /whitespace-nowrap[\s\S]*\{submission\.voteCount\} votes/);
   assert.match(roundPageSource, /New votes/);
 });
 
