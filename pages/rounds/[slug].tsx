@@ -25,6 +25,11 @@ import {
   getRoundStateLabel,
   type RoundState,
 } from "@/utils/rounds/state";
+import {
+  hydrateRoundInlineMedia,
+  stripRoundInlineMediaForSsr,
+  type RoundMediaPayload,
+} from "@/utils/rounds/roundMediaPayload";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
@@ -90,8 +95,6 @@ const getLockedVotesBySubmission = (
   }, {});
 };
 
-const isInlineDataImage = (src: string) => src.startsWith("data:image/");
-
 const DeferredInlineImage = ({
   src,
   alt,
@@ -105,7 +108,7 @@ const DeferredInlineImage = ({
 }) => {
   const isMounted = useIsMounted();
 
-  if (isInlineDataImage(src) && !isMounted) {
+  if (!src || (src.startsWith("data:image/") && !isMounted)) {
     return <>{fallback}</>;
   }
 
@@ -127,7 +130,12 @@ export const getServerSideProps = async ({
     ]);
     if (!round) return { notFound: true };
 
-    return { props: { round, roundsPublicEnabled } };
+    return {
+      props: {
+        round: stripRoundInlineMediaForSsr(round),
+        roundsPublicEnabled,
+      },
+    };
   } catch (error) {
     console.error("Unable to load round detail", error);
     return {
@@ -141,7 +149,7 @@ export const getServerSideProps = async ({
 };
 
 export default function RoundDetailPage({
-  round,
+  round: initialRound,
   roundsPublicEnabled,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -155,6 +163,14 @@ export default function RoundDetailPage({
     useState<RoundSubmission | null>(null);
   const [message, setMessage] = useState("");
   const [isVoting, setIsVoting] = useState(false);
+  const mediaKey = initialRound
+    ? `/api/rounds/${initialRound.slug}/media`
+    : null;
+  const { data: roundMedia } = useSWR<RoundMediaPayload>(mediaKey, fetcher);
+  const round = useMemo(
+    () => hydrateRoundInlineMedia(initialRound, roundMedia),
+    [initialRound, roundMedia]
+  );
   const state = round ? getRoundState(round) : "draft";
   const hasTraitSubmissions = Boolean(
     round?.submissions.some(
