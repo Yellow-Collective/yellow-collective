@@ -7,7 +7,7 @@ import vm from "node:vm";
 const require = createRequire(import.meta.url);
 const ts = require("typescript");
 
-const loadTsModule = (filePath) => {
+const loadTsModule = (filePath, requireOverrides = {}) => {
   const source = readFileSync(filePath, "utf8");
   const transpiled = ts.transpileModule(source, {
     compilerOptions: {
@@ -17,9 +17,13 @@ const loadTsModule = (filePath) => {
     },
   });
   const module = { exports: {} };
+  const localRequire = (specifier) =>
+    Object.prototype.hasOwnProperty.call(requireOverrides, specifier)
+      ? requireOverrides[specifier]
+      : require(specifier);
 
   vm.runInNewContext(transpiled.outputText, {
-    require,
+    require: localRequire,
     module,
     exports: module.exports,
   });
@@ -30,7 +34,17 @@ const loadTsModule = (filePath) => {
 const voteValidation = loadTsModule(
   resolve(process.cwd(), "utils/rounds/validateRoundVote.ts")
 );
+const loadRoundVotingPowerModule = (delegatedVotes) =>
+  loadTsModule(resolve(process.cwd(), "utils/rounds/getRoundVotingPower.ts"), {
+    "./getCollectiveNounVotingPower": {
+      getCollectiveNounVotingPower: async () => delegatedVotes,
+    },
+  });
 const roundsSource = readFileSync(resolve(process.cwd(), "data/rounds.ts"), "utf8");
+const votingPowerApiSource = readFileSync(
+  resolve(process.cwd(), "pages/api/rounds/[slug]/voting-power.ts"),
+  "utf8"
+);
 const roundPageSource = readFileSync(
   resolve(process.cwd(), "pages/rounds/[slug].tsx"),
   "utf8"
@@ -86,6 +100,99 @@ test("rejects overwrite-style zero or negative submissions", () => {
   );
 });
 
+test("round voting power reads getVotes from the Collective Noun contract", async () => {
+  const calls = [];
+  const votingPowerModule = loadTsModule(
+    resolve(process.cwd(), "utils/rounds/getCollectiveNounVotingPower.ts"),
+    {
+      "data/nouns-builder/token": {
+        getBalanceOf: async () => {
+          throw new Error("balanceOf must not gate round voting power");
+        },
+      },
+      "@/utils/DefaultProvider": { default: {} },
+      "@/utils/ethers-compat": {
+        Contract: function Contract(address, abi) {
+          calls.push({ type: "constructor", address, abi });
+          return {
+            getVotes: async (walletAddress, options) => {
+              calls.push({ type: "getVotes", walletAddress, options });
+              return { toString: () => "7" };
+            },
+          };
+        },
+      },
+      viem: {
+        getAddress: (address) => address,
+        isAddress: () => true,
+      },
+    }
+  );
+
+  const votingPower = await votingPowerModule.getCollectiveNounVotingPower(
+    "0x0000000000000000000000000000000000000001",
+    123
+  );
+
+  assert.equal(votingPower, 7);
+  assert.equal(
+    calls[0].address,
+    "0x220e41499CF4d93a3629a5509410CBf9E6E0B109"
+  );
+  assert.match(calls[0].abi.join(" "), /getVotes/);
+  assert.equal(calls[1].type, "getVotes");
+  assert.equal(
+    calls[1].walletAddress,
+    "0x0000000000000000000000000000000000000001"
+  );
+  assert.equal(calls[1].options.blockTag, 123);
+});
+
+test("fixed votes per wallet still return zero without delegated Collective Noun votes", async () => {
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(0);
+
+  const votingPower = await getRoundVotingPower(
+    {
+      votingStrategy: "fixed_per_wallet",
+      votesPerWallet: 5,
+      votingSnapshotBlock: null,
+    },
+    "0x0000000000000000000000000000000000000001"
+  );
+
+  assert.equal(votingPower, 0);
+});
+
+test("one vote per wallet still requires delegated Collective Noun votes", async () => {
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(0);
+
+  const votingPower = await getRoundVotingPower(
+    {
+      votingStrategy: "one_per_wallet",
+      votesPerWallet: 1,
+      votingSnapshotBlock: null,
+    },
+    "0x0000000000000000000000000000000000000001"
+  );
+
+  assert.equal(votingPower, 0);
+});
+
+test("token-weighted rounds use delegated Collective Noun votes", async () => {
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(4);
+
+  const votingPower = await getRoundVotingPower(
+    {
+      votingStrategy: "one_per_nft",
+      votesPerWallet: 1,
+      votingSnapshotBlock: 123,
+    },
+    "0x0000000000000000000000000000000000000001"
+  );
+
+  assert.equal(votingPower, 4);
+});
+
 test("round vote persistence is additive and never deletes prior wallet votes", () => {
   const start = roundsSource.indexOf("export const castRoundVotes");
   const section = roundsSource.slice(start);
@@ -109,6 +216,22 @@ test("round tally queries continue summing all additive vote rows", () => {
   );
 });
 
+test("existing round votes remain reported even when current voting power is zero", () => {
+  assert.match(
+    votingPowerApiSource,
+    /const \[votingPower, usedVotes\] = await Promise\.all\(\[[\s\S]*getRoundVotingPower\(roundForVoting, walletAddress\),[\s\S]*getRoundVoteUsage\(\{ roundId: round\.id, walletAddress \}\),[\s\S]*\]\);/
+  );
+  assert.match(
+    votingPowerApiSource,
+    /usedVotes,[\s\S]*remainingVotes:\s*Math\.max\(votingPower - usedVotes, 0\)/
+  );
+  assert.match(
+    roundPageSource,
+    /const alreadySubmittedVotes = votingPowerData\?\.usedVotes \|\| 0;/
+  );
+  assert.match(roundPageSource, /votes already submitted/);
+});
+
 test("round voting UI separates locked votes, draft votes, and remaining votes", () => {
   assert.match(roundPageSource, /votes already submitted/);
   assert.match(roundPageSource, /Previously submitted votes cannot be changed/);
@@ -117,11 +240,16 @@ test("round voting UI separates locked votes, draft votes, and remaining votes",
   assert.match(roundPageSource, /New votes/);
 });
 
+test("round voting copy describes delegated Collective Noun voting power", () => {
+  assert.doesNotMatch(roundPageSource, /Collective Noun held/);
+  assert.match(roundPageSource, /delegated Collective Noun vote/);
+});
+
 let failures = 0;
 
 for (const { name, run } of tests) {
   try {
-    run();
+    await run();
     console.log(`ok - ${name}`);
   } catch (error) {
     failures += 1;

@@ -40,7 +40,7 @@ export const validateRoundVoteAllocation = ({
   }, 0);
 
   if (votingPower <= 0) {
-    return "This wallet does not own a Collective Noun.";
+    return "This wallet has no Collective Noun voting power.";
   }
 
   if (totalVotes > votingPower) {

@@ -1,4 +1,3 @@
-import { getBalanceOf } from "data/nouns-builder/token";
 import DefaultProvider from "@/utils/DefaultProvider";
 import { Contract } from "@/utils/ethers-compat";
 import { getAddress, isAddress } from "viem";
@@ -6,7 +5,9 @@ import { getAddress, isAddress } from "viem";
 export const ROUND_VOTING_TOKEN_CONTRACT =
   "0x220e41499CF4d93a3629a5509410CBf9E6E0B109" as const;
 
-const balanceAbi = ["function balanceOf(address owner) view returns (uint256)"];
+const votingPowerAbi = [
+  "function getVotes(address account) view returns (uint256)",
+];
 
 export const getCollectiveNounVotingPower = async (
   walletAddress: string,
@@ -16,25 +17,18 @@ export const getCollectiveNounVotingPower = async (
     throw new Error("Invalid wallet address.");
   }
 
-  if (blockTag) {
-    const contract = new Contract(
-      ROUND_VOTING_TOKEN_CONTRACT,
-      balanceAbi,
-      DefaultProvider
-    );
-    const balance = await contract.balanceOf(getAddress(walletAddress), {
-      blockTag,
-    });
+  const contract = new Contract(
+    ROUND_VOTING_TOKEN_CONTRACT,
+    votingPowerAbi,
+    DefaultProvider
+  );
+  const normalizedWallet = getAddress(walletAddress);
+  const votes =
+    blockTag !== undefined
+      ? await contract.getVotes(normalizedWallet, { blockTag })
+      : await contract.getVotes(normalizedWallet);
 
-    return Number(balance.toString());
-  }
-
-  const balance = await getBalanceOf({
-    address: ROUND_VOTING_TOKEN_CONTRACT,
-    user: getAddress(walletAddress),
-  });
-
-  return Number(balance.toString());
+  return Number(votes.toString());
 };
 
 export const getBlockNumberAtOrBeforeTimestamp = async (timestamp: string) => {

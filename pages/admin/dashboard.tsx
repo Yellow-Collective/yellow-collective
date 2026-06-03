@@ -319,7 +319,7 @@ const formatVotingStrategy = (
     ? "1 vote per wallet"
     : strategy === "fixed_per_wallet"
       ? `${votesPerWallet} votes per wallet`
-      : "1 vote per Collective Noun";
+      : "1 vote per delegated Collective Noun vote";
 
 const getQueryValue = (value: string | string[] | undefined) =>
   typeof value === "string" ? value : value?.[0];
@@ -2183,7 +2183,9 @@ const RoundEditor = ({
             }
             className={`${fieldClass} mt-2`}
           >
-            <option value="one_per_nft">1 vote per Collective Noun</option>
+            <option value="one_per_nft">
+              1 vote per delegated Collective Noun vote
+            </option>
             <option value="one_per_wallet">1 vote per wallet</option>
             <option value="fixed_per_wallet">Fixed votes per wallet</option>
           </select>

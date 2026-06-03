@@ -1367,7 +1367,7 @@ const getVotingStrategyLabel = (round: RoundWithSubmissions | null) => {
     return `${round.votesPerWallet} votes per wallet`;
   }
 
-  return "1 vote per Collective Noun held";
+  return "1 vote per delegated Collective Noun vote";
 };
 
 const getRoundNoundrySubmission = (

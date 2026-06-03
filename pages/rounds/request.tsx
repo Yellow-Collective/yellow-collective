@@ -90,7 +90,7 @@ type MessageState = {
 const votingStrategyOptions = [
   {
     value: "one_per_nft",
-    label: "1 vote per Collective Noun held",
+    label: "1 vote per delegated Collective Noun vote",
   },
   {
     value: "one_per_wallet",
