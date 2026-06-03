@@ -1,4 +1,3 @@
-import CustomConnectButton from "@/components/CustomConnectButton";
 import Layout from "@/components/Layout";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import { RoundStatusPill } from "@/components/rounds/RoundCard";
@@ -39,6 +38,7 @@ import type {
   GetServerSidePropsResult,
   InferGetServerSidePropsType,
 } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -46,6 +46,11 @@ import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
+
+const CustomConnectButton = dynamic(
+  () => import("@/components/CustomConnectButton"),
+  { ssr: false }
+);
 
 type RoundDetailProps = {
   round: RoundWithSubmissions | null;

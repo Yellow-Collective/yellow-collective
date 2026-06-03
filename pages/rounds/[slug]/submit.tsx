@@ -1,4 +1,3 @@
-import CustomConnectButton from "@/components/CustomConnectButton";
 import Layout from "@/components/Layout";
 import type { Round } from "data/rounds";
 import { getPublicRoundBySlug } from "data/rounds";
@@ -16,11 +15,17 @@ import type {
   GetServerSidePropsResult,
   InferGetServerSidePropsType,
 } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
+
+const CustomConnectButton = dynamic(
+  () => import("@/components/CustomConnectButton"),
+  { ssr: false }
+);
 
 type SubmitRoundProps = {
   round: Round | null;
