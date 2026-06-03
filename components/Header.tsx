@@ -220,7 +220,10 @@ export default function Header() {
           <div className="flex items-center gap-2 border-t border-skin-stroke pt-3">
             <div className="min-w-0 flex-1">
               {isMounted ? (
-                <CustomConnectButton className="h-11 w-full overflow-hidden rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base transition ease-in-out" />
+                <CustomConnectButton
+                  className="h-11 w-full overflow-hidden rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base transition ease-in-out"
+                  menuPlacement="top"
+                />
               ) : null}
             </div>
             <ThemeToggle className="h-11 w-11" />
