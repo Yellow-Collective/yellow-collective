@@ -237,15 +237,15 @@ const PropdateForm = ({
         schema: PROPDATE_SCHEMA_UID,
         data: {
           recipient: tokenAddress,
-          expirationTime: 0n,
+          expirationTime: BigNumber.from(0),
           revocable: true,
           refUID: zeroHash,
           data: encodedData as `0x${string}`,
-          value: 0n,
+          value: BigNumber.from(0),
         },
       },
     ],
-    overrides: { value: 0n },
+    overrides: { value: BigNumber.from(0) },
     enabled,
   });
   const { write, data, isLoading: writeLoading } = useContractWrite(config);

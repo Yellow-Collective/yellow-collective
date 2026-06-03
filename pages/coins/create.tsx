@@ -328,7 +328,7 @@ export default function CreateCoinPage() {
     const factory = new ethers.Contract(
       ZORA_COIN_FACTORY_ADDRESS,
       zoraCoinFactoryAbi,
-      provider
+      provider as any
     );
 
     return factory.coinAddress(
@@ -361,7 +361,7 @@ export default function CreateCoinPage() {
     const factory = new ethers.Contract(
       ZORA_COIN_FACTORY_ADDRESS,
       zoraCoinFactoryAbi,
-      signer
+      signer as any
     );
 
     await (factory as any).deploy.staticCall(...getDeployArgs(deployParams), {
@@ -470,7 +470,7 @@ export default function CreateCoinPage() {
     const governor = new ethers.Contract(
       addresses.governor,
       GovernorABI,
-      signer
+      signer as any
     );
 
     setSubmitStatus({

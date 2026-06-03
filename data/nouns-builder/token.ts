@@ -109,7 +109,7 @@ export const getFounder = async ({
   });
 
   const { wallet, ownershipPct, vestExpiry } = await tokenContract.getFounder(
-    BigInt(founderId)
+    BigNumber.from(founderId)
   );
   return { wallet, ownershipPct, vestExpiry } as Founder;
 };
@@ -170,6 +170,6 @@ export const getUserVotes = async ({
   });
 
   return timestamp
-    ? tokenContract.getPastVotes(user, BigInt(timestamp))
+    ? tokenContract.getPastVotes(user, BigNumber.from(timestamp))
     : tokenContract.getVotes(user);
 };

@@ -45,7 +45,7 @@
     "eslint": "^8.56.0",
     "eslint-config-next": "15.5.18",
     "eslint-config-prettier": "^9.1.0",
-    "ethers": "file:vendor/ethers-compat",
+    "ethers": "^5.8.0",
     "ethers6": "npm:ethers@^6.16.0",
     "formik": "^2.2.9",
     "graphql": "^16.8.1",

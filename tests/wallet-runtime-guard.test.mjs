@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
+import { providers } from "ethers";
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
@@ -18,4 +19,14 @@ test("CSP allows the imported Google font stylesheet and font files", () => {
 
   assert.match(nextConfig, /style-src[\s\S]*https:\/\/fonts\.googleapis\.com/);
   assert.match(nextConfig, /font-src[\s\S]*https:\/\/fonts\.gstatic\.com/);
+  assert.match(nextConfig, /img-src[\s\S]*https:\/\/explorer-api\.walletconnect\.com/);
+});
+
+test("Wagmi receives an ethers v5 provider with synchronous network chainId", () => {
+  const provider = new providers.StaticJsonRpcProvider("https://mainnet.base.org", {
+    chainId: 8453,
+    name: "base",
+  });
+
+  assert.equal(provider.network.chainId, 8453);
 });

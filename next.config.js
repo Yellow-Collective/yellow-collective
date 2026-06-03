@@ -92,6 +92,7 @@ const contentSecurityPolicy = [
     "https://farcaster.xyz",
     "https://*.twimg.com",
     "https://metadata.ens.domains",
+    "https://explorer-api.walletconnect.com",
   ].join(" "),
   [
     "font-src",

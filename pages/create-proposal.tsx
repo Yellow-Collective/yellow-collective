@@ -850,7 +850,9 @@ const SubmitButton = () => {
   );
 
   const targets = validTransactions.map((transaction) => transaction.target);
-  const values = validTransactions.map((transaction) => transaction.value);
+  const values = validTransactions.map((transaction) =>
+    ethers.BigNumber.from(transaction.value.toString())
+  );
   const callDatas = validTransactions.map(
     (transaction) => transaction.calldata
   );

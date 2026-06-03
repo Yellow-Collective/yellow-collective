@@ -134,7 +134,7 @@ export const PlaceBid = ({
       return "Error invalid bid";
   };
   const showBridgeToBase =
-    isConnected && baseBalance?.value !== undefined && baseBalance.value === 0n;
+    isConnected && baseBalance?.value !== undefined && baseBalance.value.isZero();
 
   return (
     <div

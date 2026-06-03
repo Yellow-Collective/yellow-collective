@@ -146,7 +146,7 @@ export class FarcasterMiniAppConnector extends Connector<
     ]);
     if (!provider) throw new ConnectorNotFoundError();
 
-    const { BrowserProvider } = require("ethers");
+    const { BrowserProvider } = require("ethers6");
     return new BrowserProvider(provider as any, chainId).getSigner(account);
   }
 
