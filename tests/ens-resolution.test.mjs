@@ -62,6 +62,37 @@ test("mainnet ENS fallback RPCs exclude providers that fail universal resolver g
 
   assert.equal(walletConfig.includes("https://cloudflare-eth.com"), false);
   assert.match(walletConfig, /ENS_MAINNET_RPC_URLS/);
+  assert.match(walletConfig, /!url\.includes\("llamarpc\.com"\)/);
+});
+
+test("ENS data resolver avoids weak fallback winners for forward lookups", () => {
+  const ensData = readFileSync(resolve(process.cwd(), "data/ens.ts"), "utf8");
+
+  assert.match(ensData, /ENS_MAINNET_RPC_URLS/);
+  assert.match(ensData, /createPublicClient/);
+  assert.match(ensData, /getEnsAddress\(\{ name: ensName \}\)/);
+  assert.match(ensData, /resolveEnsAddress\(normalizedEnsName\)/);
+  assert.equal(ensData.includes(".resolveName("), false);
+  assert.equal(ensData.includes("viemMainnetClient"), false);
+});
+
+test("ENS reverse lookup avoids viem universal resolver gateways", () => {
+  const ensData = readFileSync(resolve(process.cwd(), "data/ens.ts"), "utf8");
+
+  assert.match(ensData, /ensMainnetProvider/);
+  assert.match(ensData, /\.lookupAddress\(/);
+  assert.equal(ensData.includes(".getEnsName("), false);
+  assert.equal(ensData.includes("viemMainnetClient"), false);
+});
+
+test("ENS reverse lookup falls back to raw reverse record reads", () => {
+  const ensData = readFileSync(resolve(process.cwd(), "data/ens.ts"), "utf8");
+
+  assert.match(ensData, /getRawReverseEnsName/);
+  assert.match(ensData, /namehash/);
+  assert.match(ensData, /resolver\(bytes32 node\)/);
+  assert.match(ensData, /name\(bytes32 node\)/);
+  assert.match(ensData, /resolvedAddress\?\.toLowerCase\(\) === address\.toLowerCase\(\)/);
 });
 
 let failures = 0;

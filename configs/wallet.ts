@@ -115,7 +115,9 @@ const MAINNET_FALLBACK_RPC_URLS = Array.from(
 export const MAINNET_RPC_URLS = Array.from(
   new Set([getPublicRpcAggregatorUrl("1"), ...MAINNET_FALLBACK_RPC_URLS])
 );
-export const ENS_MAINNET_RPC_URLS = MAINNET_RPC_URLS;
+export const ENS_MAINNET_RPC_URLS = MAINNET_RPC_URLS.filter(
+  (url) => !url.includes("llamarpc.com")
+);
 
 export const RPC_URLS: { [chainId in ChainId]: string } = {
   "1": MAINNET_RPC_URLS[0],
