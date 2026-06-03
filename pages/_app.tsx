@@ -9,7 +9,6 @@ import localFont from "next/font/local";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 import MiniAppReady from "@/components/MiniApp/MiniAppReady";
-import MiniAppWalletAutoConnect from "@/components/MiniApp/MiniAppWalletAutoConnect";
 import PWARegister from "@/components/PWARegister";
 import {
   LEGACY_FRAME_EMBED_JSON,
@@ -83,7 +82,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       }}
     >
       <WagmiConfig client={wagmiClient}>
-        <MiniAppWalletAutoConnect />
         {isMounted ? (
           <RainbowKitProvider chains={chains}>{appContent}</RainbowKitProvider>
         ) : (

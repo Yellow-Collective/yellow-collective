@@ -13,17 +13,14 @@ test("Farcaster Mini App connector stays out of the normal wallet config", () =>
   assert.equal(walletConfig.includes("farcaster-mini-app-connector"), false);
 });
 
-test("Mini App wallet connection is mounted but gated by runtime detection", () => {
+test("Mini App wallet connection is explicit and gated by runtime detection", () => {
   const appConfig = read("pages/_app.tsx");
-  const miniAppAutoConnect = read("components/MiniApp/MiniAppWalletAutoConnect.tsx");
   const customConnectButton = read("components/CustomConnectButton.tsx");
   const miniAppWalletHook = read("hooks/useMiniAppWalletConnect.ts");
   const placeBid = read("components/Hero/PlaceBid.tsx");
   const settleAuction = read("components/Hero/SettleAuction.tsx");
 
-  assert.match(appConfig, /<MiniAppWalletAutoConnect \/>/);
-  assert.match(miniAppAutoConnect, /await isInMiniApp\(\)/);
-  assert.match(miniAppAutoConnect, /await import\(\s*["']\.\.\/\.\.\/configs\/farcaster-mini-app-connector["']\s*\)/);
+  assert.equal(appConfig.includes("MiniAppWalletAutoConnect"), false);
   assert.match(miniAppWalletHook, /await isInMiniApp\(\)/);
   assert.match(miniAppWalletHook, /await import\(\s*["']\.\.\/configs\/farcaster-mini-app-connector["']\s*\)/);
   assert.match(miniAppWalletHook, /https:\/\/rnbwapp\.com\/dapp\?url=/);
