@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { providers } from "ethers";
+import { Interface } from "ethers6";
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
@@ -29,4 +30,34 @@ test("Wagmi receives an ethers v5 provider with synchronous network chainId", ()
   });
 
   assert.equal(provider.network.chainId, 8453);
+});
+
+test("bid calldata uses ethers6-compatible token id values", () => {
+  const placeBid = read("components/Hero/PlaceBid.tsx");
+
+  assert.equal(placeBid.includes("BigNumber.from(tokenId || 1)"), false);
+  assert.match(
+    placeBid,
+    /createBidWithReferral[\s\S]*\[tokenId \|\| "1", COLLECTIVE_NOUNS_TREASURY\]/
+  );
+
+  const auctionInterface = new Interface([
+    {
+      inputs: [
+        { internalType: "uint256", name: "_tokenId", type: "uint256" },
+        { internalType: "address", name: "_referral", type: "address" },
+      ],
+      name: "createBidWithReferral",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+  ]);
+
+  assert.doesNotThrow(() =>
+    auctionInterface.encodeFunctionData("createBidWithReferral", [
+      "0x00",
+      "0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+    ])
+  );
 });

@@ -69,7 +69,7 @@ export const PlaceBid = ({
 
     const baseCalldata = auctionInterface.encodeFunctionData(
       "createBidWithReferral",
-      [BigNumber.from(tokenId || 1), COLLECTIVE_NOUNS_TREASURY]
+      [tokenId || "1", COLLECTIVE_NOUNS_TREASURY]
     );
 
     return appendBidCommentDataSuffix(
