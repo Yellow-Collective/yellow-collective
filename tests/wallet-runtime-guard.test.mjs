@@ -43,6 +43,25 @@ test("BuilderSDK server providers stay on ethers v5", () => {
   }
 });
 
+test("treasury API returns a primitive balance string", () => {
+  const treasuryApi = read("pages/api/treasury/[address].tsx");
+  const treasuryHook = read("hooks/fetch/useTreasuryBalance.tsx");
+
+  assert.match(treasuryApi, /res\.json\(treasuryBalance\.toString\(\)\)/);
+  assert.match(treasuryHook, /useSWR<string>/);
+  assert.equal(treasuryApi.includes("res.send(treasuryBalance);"), false);
+});
+
+test("previous auction fetch waits for auction contract and token id", () => {
+  const previousAuctionHook = read("hooks/fetch/usePreviousAuctions.tsx");
+  const hero = read("components/Hero/Hero.tsx");
+
+  assert.equal(previousAuctionHook.includes("TOKEN_CONTRACT"), false);
+  assert.match(previousAuctionHook, /enabled && auctionContract && tokenId/);
+  assert.match(previousAuctionHook, /\/api\/auction\/\$\{auctionContract\}\/previous\/\$\{tokenId\}/);
+  assert.match(hero, /usePreviousAuction\(\{\s*auctionContract,\s*enabled: !hidden,\s*tokenId,/);
+});
+
 test("bid calldata uses ethers6-compatible token id values", () => {
   const placeBid = read("components/Hero/PlaceBid.tsx");
 

@@ -155,6 +155,8 @@ const EndedAuction = ({
   hidden: boolean;
 }) => {
   const { data: auctionData } = usePreviousAuction({
+    auctionContract,
+    enabled: !hidden,
     tokenId,
   });
   const featuredBidComment = auctionData?.bids?.find(

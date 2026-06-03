@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     "Cache-Control",
     `s-maxage=60, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`
   );
-  res.send(previousAuction);
+  res.json(previousAuction ?? null);
 };
 
 export default handler;
