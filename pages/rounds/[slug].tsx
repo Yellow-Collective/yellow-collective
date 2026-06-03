@@ -37,6 +37,7 @@ import type {
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
@@ -87,6 +88,29 @@ const getLockedVotesBySubmission = (
       (lockedVotes[activity.submissionId] || 0) + activity.voteCount;
     return lockedVotes;
   }, {});
+};
+
+const isInlineDataImage = (src: string) => src.startsWith("data:image/");
+
+const DeferredInlineImage = ({
+  src,
+  alt,
+  className,
+  fallback,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+  fallback: ReactNode;
+}) => {
+  const isMounted = useIsMounted();
+
+  if (isInlineDataImage(src) && !isMounted) {
+    return <>{fallback}</>;
+  }
+
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={alt} className={className} />;
 };
 
 export const getServerSideProps = async ({
@@ -319,11 +343,15 @@ export default function RoundDetailPage({
             </div>
             <div className="flex min-h-[230px] overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]">
               {round.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <DeferredInlineImage
                   src={round.image}
                   alt={round.title}
                   className="h-full min-h-[230px] w-full object-cover"
+                  fallback={
+                    <div className="flex min-h-[230px] w-full items-center justify-center p-8 text-center font-heading text-3xl">
+                      {round.title}
+                    </div>
+                  }
                 />
               ) : (
                 <div className="flex min-h-[230px] w-full items-center justify-center p-8 text-center font-heading text-3xl">
@@ -626,11 +654,17 @@ const SubmissionCard = ({
             />
           </div>
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <DeferredInlineImage
             src={submission.image}
             alt={submission.title}
             className={`aspect-square w-full object-cover ${imageClass}`}
+            fallback={
+              <div
+                className={`flex aspect-square w-full items-center justify-center p-6 text-center font-heading text-2xl ${imageClass}`}
+              >
+                {submission.title}
+              </div>
+            }
           />
         )}
       </button>
@@ -884,11 +918,15 @@ const SubmissionModal = ({
                   fullBleed
                 />
               ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <DeferredInlineImage
                   src={submission.image}
                   alt={submission.title}
                   className="max-h-[520px] w-full object-contain"
+                  fallback={
+                    <div className="flex aspect-square w-full items-center justify-center bg-[#fff7bf] p-6 text-center font-heading text-2xl text-skin-base">
+                      {submission.title}
+                    </div>
+                  }
                 />
               )}
             </div>
@@ -1147,11 +1185,15 @@ const RoundAwardsPanel = ({ round }: { round: RoundWithSubmissions }) => (
           <div key={award.id} className="flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-accent">
               {round.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <DeferredInlineImage
                   src={round.image}
                   alt=""
                   className="h-full w-full object-cover"
+                  fallback={
+                    <span className="font-heading text-sm text-skin-base">
+                      YC
+                    </span>
+                  }
                 />
               ) : (
                 <span className="font-heading text-sm text-skin-base">YC</span>
