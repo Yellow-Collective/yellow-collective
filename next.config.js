@@ -41,7 +41,12 @@ const contentSecurityPolicy = [
     "'unsafe-inline'",
     ...(isDevelopment ? ["'unsafe-eval'"] : []),
   ].join(" "),
-  "style-src 'self' 'unsafe-inline'",
+  [
+    "style-src",
+    "'self'",
+    "'unsafe-inline'",
+    "https://fonts.googleapis.com",
+  ].join(" "),
   [
     "connect-src",
     "'self'",
@@ -88,7 +93,12 @@ const contentSecurityPolicy = [
     "https://*.twimg.com",
     "https://metadata.ens.domains",
   ].join(" "),
-  "font-src 'self' data:",
+  [
+    "font-src",
+    "'self'",
+    "data:",
+    "https://fonts.gstatic.com",
+  ].join(" "),
   "frame-src 'self' https://*.walletconnect.com https://*.walletconnect.org",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
