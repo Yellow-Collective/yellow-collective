@@ -108,7 +108,6 @@ const MAINNET_FALLBACK_RPC_URLS = Array.from(
       ALCHEMY_KEY ? `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}` : "",
       "https://eth.llamarpc.com",
       "https://ethereum.publicnode.com",
-      "https://cloudflare-eth.com",
     ].filter((url): url is string => Boolean(url))
   )
 );
@@ -116,6 +115,7 @@ const MAINNET_FALLBACK_RPC_URLS = Array.from(
 export const MAINNET_RPC_URLS = Array.from(
   new Set([getPublicRpcAggregatorUrl("1"), ...MAINNET_FALLBACK_RPC_URLS])
 );
+export const ENS_MAINNET_RPC_URLS = MAINNET_RPC_URLS;
 
 export const RPC_URLS: { [chainId in ChainId]: string } = {
   "1": MAINNET_RPC_URLS[0],
@@ -187,7 +187,7 @@ const wagmiClient = createClient({
 const viemMainnetClient = createPublicClient({
   chain: mainnetViem,
   transport: fallback(
-    MAINNET_RPC_URLS.map((url) =>
+    ENS_MAINNET_RPC_URLS.map((url) =>
       http(url, {
         timeout: 4000,
       })
