@@ -6,13 +6,34 @@ import { Interface } from "ethers6";
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
-test("wallet config does not register the Farcaster Mini App connector globally", () => {
+test("Farcaster Mini App connector stays out of the normal wallet config", () => {
   const walletConfig = read("configs/wallet.ts");
-  const appConfig = read("pages/_app.tsx");
 
   assert.equal(walletConfig.includes("FarcasterMiniAppConnector"), false);
   assert.equal(walletConfig.includes("farcaster-mini-app-connector"), false);
-  assert.equal(appConfig.includes("MiniAppWalletAutoConnect"), false);
+});
+
+test("Mini App wallet connection is mounted but gated by runtime detection", () => {
+  const appConfig = read("pages/_app.tsx");
+  const miniAppAutoConnect = read("components/MiniApp/MiniAppWalletAutoConnect.tsx");
+  const customConnectButton = read("components/CustomConnectButton.tsx");
+  const miniAppWalletHook = read("hooks/useMiniAppWalletConnect.ts");
+  const placeBid = read("components/Hero/PlaceBid.tsx");
+  const settleAuction = read("components/Hero/SettleAuction.tsx");
+
+  assert.match(appConfig, /<MiniAppWalletAutoConnect \/>/);
+  assert.match(miniAppAutoConnect, /await isInMiniApp\(\)/);
+  assert.match(miniAppAutoConnect, /await import\(\s*["']\.\.\/\.\.\/configs\/farcaster-mini-app-connector["']\s*\)/);
+  assert.match(miniAppWalletHook, /await isInMiniApp\(\)/);
+  assert.match(miniAppWalletHook, /await import\(\s*["']\.\.\/configs\/farcaster-mini-app-connector["']\s*\)/);
+  assert.match(miniAppWalletHook, /https:\/\/rnbwapp\.com\/dapp\?url=/);
+  assert.match(miniAppWalletHook, /sdk\?\.actions\.openUrl/);
+  assert.match(customConnectButton, /useMiniAppWalletConnect/);
+  assert.match(customConnectButton, /Open in Rainbow/);
+  assert.match(customConnectButton, /Open in browser/);
+  assert.match(customConnectButton, /Continue with Farcaster Wallet/);
+  assert.match(placeBid, /isMiniApp[\s\S]*connectMiniAppWallet\(\)[\s\S]*openConnectModal\?\.\(\)/);
+  assert.match(settleAuction, /isMiniApp[\s\S]*connectMiniAppWallet\(\)[\s\S]*openConnectModal\?\.\(\)/);
 });
 
 test("CSP allows the imported Google font stylesheet and font files", () => {

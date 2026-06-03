@@ -5,6 +5,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import WalletInfo from "./WalletInfo";
 import { useEffect, useRef, useState } from "react";
+import { useMiniAppWalletConnect } from "@/hooks/useMiniAppWalletConnect";
 
 export type CustomConnectButtonProps = {
   className: string;
@@ -12,7 +13,15 @@ export type CustomConnectButtonProps = {
 
 const CustomConnectButton = ({ className }: CustomConnectButtonProps) => {
   const { disconnect } = useDisconnect();
+  const {
+    connectMiniAppWallet,
+    isConnectingMiniApp,
+    isMiniApp,
+    openInBrowser,
+    openInRainbow,
+  } = useMiniAppWalletConnect();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMiniAppOptionsOpen, setIsMiniAppOptionsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const connectButtonClassName = clsx("yc-connect-wallet-button", className);
 
@@ -20,6 +29,7 @@ const CustomConnectButton = ({ className }: CustomConnectButtonProps) => {
     const closeMenu = (event: MouseEvent) => {
       if (!menuRef.current?.contains(event.target as Node)) {
         setIsMenuOpen(false);
+        setIsMiniAppOptionsOpen(false);
       }
     };
 
@@ -46,6 +56,68 @@ const CustomConnectButton = ({ className }: CustomConnectButtonProps) => {
           >
             {(() => {
               if (!mounted || !account || !chain) {
+                if (isMiniApp) {
+                  return (
+                    <div className="relative" ref={menuRef}>
+                      <Button
+                        variant="secondary"
+                        onClick={() =>
+                          setIsMiniAppOptionsOpen((isOpen) => !isOpen)
+                        }
+                        className={connectButtonClassName}
+                        aria-haspopup="menu"
+                        aria-expanded={isMiniAppOptionsOpen}
+                      >
+                        Connect
+                      </Button>
+                      <div
+                        className={clsx(
+                          "absolute right-0 top-full z-50 mt-2 flex w-[250px] flex-col gap-2 rounded-2xl border border-skin-stroke bg-skin-muted p-2 shadow-lg",
+                          isMiniAppOptionsOpen ? "visible" : "invisible"
+                        )}
+                        role="menu"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsMiniAppOptionsOpen(false);
+                            openInRainbow();
+                          }}
+                          className="rounded-xl px-4 py-3 text-left font-bold text-primary transition hover:bg-[#fff7bf]"
+                          role="menuitem"
+                        >
+                          Open in Rainbow
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsMiniAppOptionsOpen(false);
+                            openInBrowser();
+                          }}
+                          className="rounded-xl px-4 py-3 text-left font-bold text-primary transition hover:bg-[#fff7bf]"
+                          role="menuitem"
+                        >
+                          Open in browser
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsMiniAppOptionsOpen(false);
+                            connectMiniAppWallet();
+                          }}
+                          disabled={isConnectingMiniApp}
+                          className="rounded-xl bg-skin-button-accent px-4 py-3 text-left font-bold text-skin-inverted transition hover:bg-skin-button-accent-hover disabled:opacity-60"
+                          role="menuitem"
+                        >
+                          {isConnectingMiniApp
+                            ? "Connecting..."
+                            : "Continue with Farcaster Wallet"}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                }
+
                 return (
                   <Button
                     variant="secondary"

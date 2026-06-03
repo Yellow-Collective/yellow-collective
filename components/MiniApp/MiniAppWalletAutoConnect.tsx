@@ -1,7 +1,3 @@
-import {
-  FARCASTER_MINI_APP_CONNECTOR_ID,
-  FarcasterMiniAppConnector,
-} from "../../configs/farcaster-mini-app-connector";
 import { isInMiniApp } from "@/utils/farcasterMiniApp";
 import { useEffect } from "react";
 import { useAccount, useConnect } from "wagmi";
@@ -20,14 +16,15 @@ export default function MiniAppWalletAutoConnect() {
       const inMiniApp = await isInMiniApp();
       if (!inMiniApp || cancelled) return;
 
-      const connector = connectors.find(
-        (availableConnector) =>
-          availableConnector.id === FARCASTER_MINI_APP_CONNECTOR_ID
-      );
-
-      if (!(connector instanceof FarcasterMiniAppConnector)) return;
-
       try {
+        const { FarcasterMiniAppConnector } = await import(
+          "../../configs/farcaster-mini-app-connector"
+        );
+        const connector =
+          connectors.find(
+            (availableConnector) => availableConnector.id === "farcasterMiniApp"
+          ) ?? new FarcasterMiniAppConnector({ chains });
+
         await connectAsync({
           connector,
           chainId: chains[0]?.id,

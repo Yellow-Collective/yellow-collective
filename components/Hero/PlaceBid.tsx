@@ -25,6 +25,7 @@ import {
   truncateBidCommentToByteLimit,
   validateBidCommentText,
 } from "@/utils/bid-comments";
+import { useMiniAppWalletConnect } from "@/hooks/useMiniAppWalletConnect";
 
 const auctionInterface = new utils.Interface(auctionAbi as any);
 const BASE_CHAIN_ID = 8453;
@@ -62,6 +63,7 @@ export const PlaceBid = ({
   const debouncedBid = useDebounce(bid, 500);
 
   const { openConnectModal } = useConnectModal();
+  const { connectMiniAppWallet, isMiniApp } = useMiniAppWalletConnect();
   const bidCommentDataSuffix = getBidCommentDataSuffix(bidComment);
   const parsedBid = useMemo(() => parseBidAmount(debouncedBid), [debouncedBid]);
   const finalBidCalldata = useMemo(() => {
@@ -176,7 +178,11 @@ export const PlaceBid = ({
                 track("placeBidTriggered");
                 write?.();
               } else {
-                openConnectModal?.();
+                if (isMiniApp) {
+                  connectMiniAppWallet();
+                } else {
+                  openConnectModal?.();
+                }
               }
             }}
           >
