@@ -32,6 +32,17 @@ test("Wagmi receives an ethers v5 provider with synchronous network chainId", ()
   assert.equal(provider.network.chainId, 8453);
 });
 
+test("BuilderSDK server providers stay on ethers v5", () => {
+  const defaultProvider = read("utils/DefaultProvider.ts");
+  const mainnetProvider = read("utils/MainnetProvider.ts");
+
+  for (const providerFile of [defaultProvider, mainnetProvider]) {
+    assert.match(providerFile, /import \{ providers \} from "ethers"/);
+    assert.equal(providerFile.includes("@/utils/ethers-compat"), false);
+    assert.match(providerFile, /new providers\.FallbackProvider/);
+  }
+});
+
 test("bid calldata uses ethers6-compatible token id values", () => {
   const placeBid = read("components/Hero/PlaceBid.tsx");
 
