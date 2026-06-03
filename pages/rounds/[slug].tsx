@@ -424,8 +424,8 @@ export default function RoundDetailPage({
 
         {state === "voting_open" && (
           <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
+            <div className="flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between">
+              <div className="min-w-0 2xl:max-w-[calc(100%-42rem)]">
                 <h2 className="font-heading text-3xl leading-none text-skin-base">
                   Voting
                 </h2>
@@ -437,24 +437,30 @@ export default function RoundDetailPage({
                 </p>
               </div>
               {isConnected ? (
-                <div className="grid gap-2 rounded-xl bg-[#fff7bf] px-4 py-3 text-center text-sm text-[#212529] sm:grid-cols-3">
-                  <div className="whitespace-nowrap">
+                <div className="flex w-full flex-wrap justify-center gap-3 rounded-xl bg-[#fff7bf] px-4 py-3 text-center text-[#212529] sm:gap-4 2xl:w-[640px] 2xl:shrink-0 2xl:px-6">
+                  <div className="min-w-[9.75rem] flex-1 whitespace-nowrap px-2 2xl:flex-none">
                     <span className="block font-heading text-lg leading-none text-[#212529]">
                       {remainingVotes}
                     </span>
-                    votes remaining
+                    <span className="block text-sm leading-tight text-[#212529]">
+                      votes remaining
+                    </span>
                   </div>
-                  <div className="whitespace-nowrap">
+                  <div className="min-w-[9.75rem] flex-1 whitespace-nowrap px-2 2xl:flex-none">
                     <span className="block font-heading text-lg leading-none text-[#212529]">
                       {alreadySubmittedVotes}
                     </span>
-                    votes submitted
+                    <span className="block text-sm leading-tight text-[#212529]">
+                      votes submitted
+                    </span>
                   </div>
-                  <div className="whitespace-nowrap">
+                  <div className="min-w-[9.75rem] flex-1 whitespace-nowrap px-2 2xl:flex-none">
                     <span className="block font-heading text-lg leading-none text-[#212529]">
                       {allocatedVotes}
                     </span>
-                    pending votes
+                    <span className="block text-sm leading-tight text-[#212529]">
+                      pending votes
+                    </span>
                   </div>
                 </div>
               ) : (
@@ -669,7 +675,7 @@ const SubmissionCard = ({
               className={`font-heading text-base underline ${primaryTextClass}`}
             />
             {lockedVotes > 0 && (
-              <div className="rounded-full bg-white/95 px-3 py-1 font-heading text-sm text-[#212529] shadow-[0px_3px_0px_0px_rgba(0,0,0,0.28)]">
+              <div className="yc-round-locked-vote-pill rounded-full bg-white/95 px-3 py-1 font-heading text-sm !text-[#212529] shadow-[0px_3px_0px_0px_rgba(0,0,0,0.28)]">
                 {lockedVotes} locked
               </div>
             )}

@@ -49,6 +49,10 @@ const roundPageSource = readFileSync(
   resolve(process.cwd(), "pages/rounds/[slug].tsx"),
   "utf8"
 );
+const globalsSource = readFileSync(
+  resolve(process.cwd(), "styles/globals.css"),
+  "utf8"
+);
 
 const tests = [];
 const test = (name, run) => tests.push({ name, run });
@@ -240,7 +244,10 @@ test("round voting UI separates locked votes, pending votes, and remaining votes
   assert.match(roundPageSource, /Previously submitted votes cannot be changed/);
   assert.match(roundPageSource, /votes remaining/);
   assert.match(roundPageSource, /lockedVotesBySubmission/);
-  assert.match(roundPageSource, /text-\[#212529\][\s\S]*\{lockedVotes\} locked/);
+  assert.match(roundPageSource, /yc-round-locked-vote-pill[\s\S]*\{lockedVotes\} locked/);
+  assert.match(globalsSource, /yc-round-locked-vote-pill[\s\S]*color: #212529 !important/);
+  assert.match(roundPageSource, /2xl:w-\[640px\][\s\S]*votes submitted/);
+  assert.match(roundPageSource, /min-w-\[9\.75rem\][\s\S]*pending votes/);
   assert.match(roundPageSource, /whitespace-nowrap[\s\S]*\{submission\.voteCount\} votes/);
   assert.match(roundPageSource, /New votes/);
 });
