@@ -10,6 +10,12 @@ const farcasterMiniAppSdkPath = path.join(
   "@farcaster",
   "miniapp-sdk"
 );
+const nobleHashesPath = path.join(
+  __dirname,
+  "node_modules",
+  "@noble",
+  "hashes"
+);
 
 // CSP external domains:
 // api.goldsky.com: Builder/Nouns subgraph reads.
@@ -240,15 +246,22 @@ const nextConfig = {
   },
 };
 
-if (!fs.existsSync(farcasterMiniAppSdkPath)) {
-  nextConfig.webpack = (config) => {
+nextConfig.webpack = (config) => {
+  config.resolve = config.resolve || {};
+  config.resolve.alias = {
+    ...(config.resolve.alias || {}),
+    // Keep viem's noble-curve imports paired with the root hashes version.
+    "@noble/hashes": nobleHashesPath,
+  };
+
+  if (!fs.existsSync(farcasterMiniAppSdkPath)) {
     config.resolve.alias["@farcaster/miniapp-sdk"] = path.resolve(
       __dirname,
       "utils/farcasterMiniAppSdkShim.ts"
     );
+  }
 
-    return config;
-  };
-}
+  return config;
+};
 
 module.exports = nextConfig;
