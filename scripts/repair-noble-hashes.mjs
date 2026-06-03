@@ -9,18 +9,8 @@ const rootHashesPath = path.join(
   "hashes"
 );
 const rootHashesPackagePath = path.join(rootHashesPath, "package.json");
-const viemNestedNoblePath = path.join(
-  projectRoot,
-  "node_modules",
-  "viem",
-  "node_modules",
-  "@noble"
-);
-const viemNestedHashesPath = path.join(viemNestedNoblePath, "hashes");
-const viemNestedHashesPackagePath = path.join(
-  viemNestedHashesPath,
-  "package.json"
-);
+const nodeModulesPath = path.join(projectRoot, "node_modules");
+const requiredExports = ["./sha2", "./utils", "./utils.js"];
 
 const readPackage = (packagePath) => {
   try {
@@ -30,35 +20,93 @@ const readPackage = (packagePath) => {
   }
 };
 
-const hasSha2Export = (packageJson) =>
-  Boolean(packageJson?.exports?.["./sha2"]);
+const hasRequiredExports = (packageJson) =>
+  requiredExports.every((exportPath) =>
+    Boolean(packageJson?.exports?.[exportPath])
+  );
 
-const assertSafeNestedPath = () => {
-  const nestedPath = path.resolve(viemNestedHashesPath);
-  const allowedParent = path.resolve(viemNestedNoblePath);
+const assertSafeNestedPath = (hashesPath) => {
+  const nestedPath = path.resolve(hashesPath);
+  const allowedParent = path.resolve(nodeModulesPath);
   const relative = path.relative(allowedParent, nestedPath);
 
   if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) {
     throw new Error(`Refusing to repair unexpected path: ${nestedPath}`);
   }
+
+  if (
+    !nestedPath.endsWith(
+      `${path.sep}node_modules${path.sep}@noble${path.sep}hashes`
+    )
+  ) {
+    throw new Error(`Refusing to repair non-package path: ${nestedPath}`);
+  }
+};
+
+const findNestedHashesPackages = (searchRoot) => {
+  const packagePaths = [];
+
+  if (!fs.existsSync(searchRoot)) {
+    return packagePaths;
+  }
+
+  const walk = (directory) => {
+    const entries = fs.readdirSync(directory, { withFileTypes: true });
+
+    for (const entry of entries) {
+      if (!entry.isDirectory()) {
+        continue;
+      }
+
+      const entryPath = path.join(directory, entry.name);
+
+      if (entry.name === ".cache" || entry.name === ".next") {
+        continue;
+      }
+
+      if (
+        entry.name === "hashes" &&
+        path.basename(path.dirname(entryPath)) === "@noble"
+      ) {
+        packagePaths.push(path.join(entryPath, "package.json"));
+        continue;
+      }
+
+      walk(entryPath);
+    }
+  };
+
+  walk(searchRoot);
+  return packagePaths;
 };
 
 const rootHashesPackage = readPackage(rootHashesPackagePath);
 
-if (!hasSha2Export(rootHashesPackage)) {
+if (!hasRequiredExports(rootHashesPackage)) {
   throw new Error(
-    "Root @noble/hashes install does not export ./sha2; run yarn install before building."
+    `Root @noble/hashes install does not export ${requiredExports.join(", ")}; run yarn install before building.`
   );
 }
 
-const nestedHashesPackage = readPackage(viemNestedHashesPackagePath);
+for (const packagePath of findNestedHashesPackages(nodeModulesPath)) {
+  if (path.resolve(packagePath) === path.resolve(rootHashesPackagePath)) {
+    continue;
+  }
 
-if (nestedHashesPackage && !hasSha2Export(nestedHashesPackage)) {
-  assertSafeNestedPath();
-  fs.rmSync(viemNestedHashesPath, { recursive: true, force: true });
-  console.log(
-    "Removed stale viem nested @noble/hashes package without ./sha2 export."
-  );
+  const nestedHashesPackage = readPackage(packagePath);
+
+  if (nestedHashesPackage && !hasRequiredExports(nestedHashesPackage)) {
+    const nestedHashesPath = path.dirname(packagePath);
+    assertSafeNestedPath(nestedHashesPath);
+    fs.rmSync(nestedHashesPath, { recursive: true, force: true });
+    console.log(
+      `Removed stale nested @noble/hashes package without required exports: ${path.relative(
+        projectRoot,
+        nestedHashesPath
+      )}`
+    );
+  }
 }
 
 await import("@noble/hashes/sha2");
+await import("@noble/hashes/utils.js");
