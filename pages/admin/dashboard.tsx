@@ -37,7 +37,8 @@ import { useEffect, useMemo, useState } from "react";
 import useSWR, { type Fetcher, type KeyedMutator } from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 
-type AdminSection = Exclude<AdminPermission, "testing">;
+type AdminPermissionSection = Exclude<AdminPermission, "testing">;
+type AdminSection = AdminPermissionSection | "access";
 type CommunityListMode = "queue" | "existing";
 type ProjectEditorMode = "edit" | "preview";
 type RoundListMode = "draft" | "published" | "archived";
@@ -57,6 +58,10 @@ type AdminAccessResponse = {
 };
 
 const adminSections: { id: AdminSection; label: string }[] = [
+  {
+    id: "access",
+    label: "Admin Access",
+  },
   {
     id: "community",
     label: "Community Projects",
@@ -341,10 +346,15 @@ export default function AdminDashboardPage() {
   const activeSection = getAdminSectionFromQuery(router.query.section);
   const hasPermission = (permission: AdminPermission) =>
     Boolean(adminAuth?.permissions.includes(permission));
+  const canAccessSection = (section: AdminSection) =>
+    Boolean(
+      adminAuth &&
+        (section === "access" ? adminAuth.isGlobal : hasPermission(section))
+    );
   const visibleAdminSections = adminAuth
-    ? adminSections.filter((section) => hasPermission(section.id))
+    ? adminSections.filter((section) => canAccessSection(section.id))
     : adminSections;
-  const activeSectionAllowed = Boolean(adminAuth && hasPermission(activeSection));
+  const activeSectionAllowed = canAccessSection(activeSection);
 
   const communityKey = adminAuth && hasPermission("community")
     ? (["/api/admin/community-projects", adminAuth] as const)
@@ -610,7 +620,7 @@ export default function AdminDashboardPage() {
               </AdminNotice>
             ) : (
               <>
-                {adminAuth.isGlobal && (
+                {activeSection === "access" ? (
                   <AdminAccessPanel
                     adminAuth={adminAuth}
                     admins={adminAccessData?.admins || []}
@@ -622,77 +632,80 @@ export default function AdminDashboardPage() {
                     isLoading={!adminAccessData && !adminAccessError}
                     mutate={mutateAdminAccess}
                   />
-                )}
-                {hasPermission("testing") && (
-                <TestingSettingsPanel
-                  adminAuth={adminAuth}
-                  dummyContentEnabled={
-                    testingSettingsData?.dummyContentEnabled || false
-                  }
-                  error={testingSettingsError?.message}
-                  isLoading={!testingSettingsData && !testingSettingsError}
-                  mutate={mutateTestingSettings}
-                />
-                )}
-                {activeSection === "community" ? (
-                  <CommunityAdminPanel
-                    adminAuth={adminAuth}
-                    projects={communityData?.projects || []}
-                    error={communityError?.message}
-                    isLoading={!communityData && !communityError}
-                    mutate={mutateCommunity}
-                  />
-                ) : activeSection === "noundry" ? (
-                  <NoundryAdminPanel
-                    adminAuth={adminAuth}
-                    submissions={noundryData?.submissions || []}
-                    error={noundryError?.message}
-                    isLoading={!noundryData && !noundryError}
-                    mutate={mutateNoundry}
-                  />
-                ) : activeSection === "gallery" ? (
-                  <GalleryAdminPanel
-                    adminAuth={adminAuth}
-                    coins={galleryData?.coins || []}
-                    galleryPublicEnabled={
-                      galleryData?.galleryPublicEnabled ?? true
-                    }
-                    error={galleryError?.message}
-                    isLoading={!galleryData && !galleryError}
-                    mutate={mutateGallery}
-                  />
-                ) : activeSection === "nouns" ? (
-                  <NounsMetagovAdminPanel
-                    adminAuth={adminAuth}
-                    nounsMetagovEnabled={
-                      nounsSettingsData?.nounsMetagovEnabled ?? true
-                    }
-                    error={nounsSettingsError?.message}
-                    isLoading={!nounsSettingsData && !nounsSettingsError}
-                    mutate={mutateNounsSettings}
-                  />
                 ) : (
-                  <RoundsAdminPanel
-                    adminAuth={adminAuth}
-                    rounds={roundsData?.rounds || []}
-                    requests={roundRequestsData?.requests || []}
-                    roundsPublicEnabled={
-                      roundsSettingsData?.roundsPublicEnabled || false
-                    }
-                    error={
-                      roundsError?.message ||
-                      roundsSettingsError?.message ||
-                      roundRequestsError?.message
-                    }
-                    isLoading={
-                      (!roundsData && !roundsError) ||
-                      (!roundsSettingsData && !roundsSettingsError) ||
-                      (!roundRequestsData && !roundRequestsError)
-                    }
-                    mutate={mutateRounds}
-                    mutateSettings={mutateRoundsSettings}
-                    mutateRequests={mutateRoundRequests}
-                  />
+                  <>
+                    {hasPermission("testing") && (
+                      <TestingSettingsPanel
+                        adminAuth={adminAuth}
+                        dummyContentEnabled={
+                          testingSettingsData?.dummyContentEnabled || false
+                        }
+                        error={testingSettingsError?.message}
+                        isLoading={!testingSettingsData && !testingSettingsError}
+                        mutate={mutateTestingSettings}
+                      />
+                    )}
+                    {activeSection === "community" ? (
+                      <CommunityAdminPanel
+                        adminAuth={adminAuth}
+                        projects={communityData?.projects || []}
+                        error={communityError?.message}
+                        isLoading={!communityData && !communityError}
+                        mutate={mutateCommunity}
+                      />
+                    ) : activeSection === "noundry" ? (
+                      <NoundryAdminPanel
+                        adminAuth={adminAuth}
+                        submissions={noundryData?.submissions || []}
+                        error={noundryError?.message}
+                        isLoading={!noundryData && !noundryError}
+                        mutate={mutateNoundry}
+                      />
+                    ) : activeSection === "gallery" ? (
+                      <GalleryAdminPanel
+                        adminAuth={adminAuth}
+                        coins={galleryData?.coins || []}
+                        galleryPublicEnabled={
+                          galleryData?.galleryPublicEnabled ?? true
+                        }
+                        error={galleryError?.message}
+                        isLoading={!galleryData && !galleryError}
+                        mutate={mutateGallery}
+                      />
+                    ) : activeSection === "nouns" ? (
+                      <NounsMetagovAdminPanel
+                        adminAuth={adminAuth}
+                        nounsMetagovEnabled={
+                          nounsSettingsData?.nounsMetagovEnabled ?? true
+                        }
+                        error={nounsSettingsError?.message}
+                        isLoading={!nounsSettingsData && !nounsSettingsError}
+                        mutate={mutateNounsSettings}
+                      />
+                    ) : (
+                      <RoundsAdminPanel
+                        adminAuth={adminAuth}
+                        rounds={roundsData?.rounds || []}
+                        requests={roundRequestsData?.requests || []}
+                        roundsPublicEnabled={
+                          roundsSettingsData?.roundsPublicEnabled || false
+                        }
+                        error={
+                          roundsError?.message ||
+                          roundsSettingsError?.message ||
+                          roundRequestsError?.message
+                        }
+                        isLoading={
+                          (!roundsData && !roundsError) ||
+                          (!roundsSettingsData && !roundsSettingsError) ||
+                          (!roundRequestsData && !roundRequestsError)
+                        }
+                        mutate={mutateRounds}
+                        mutateSettings={mutateRoundsSettings}
+                        mutateRequests={mutateRoundRequests}
+                      />
+                    )}
+                  </>
                 )}
               </>
             )}
