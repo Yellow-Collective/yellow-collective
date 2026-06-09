@@ -15,8 +15,12 @@ test("treasury page keeps Pages Router data flow and portfolio components", () =
   assert.match(treasuryPage, /revalidate:\s*60/);
   assert.match(treasuryPage, /from "components\/treasury\/TreasuryDonut"/);
   assert.match(treasuryPage, /from "components\/treasury\/TokenLogo"/);
-  assert.match(treasuryPage, /from "components\/treasury\/TreasuryNftGrid"/);
   assert.match(treasuryPage, /from "components\/treasury\/TreasuryTransactions"/);
+});
+
+test("treasury page does not render the NFT placeholder panel", () => {
+  assert.doesNotMatch(treasuryPage, /TreasuryNftGrid/);
+  assert.doesNotMatch(treasuryPage, /TreasuryNftItem/);
 });
 
 test("treasury token type includes raw balance metadata for the new UI", () => {
@@ -33,11 +37,30 @@ test("treasury page uses existing explorer and env boundaries", () => {
   assert.doesNotMatch(treasuryPage, /components\/ui/);
 });
 
+test("treasury header starts directly with the page title", () => {
+  assert.doesNotMatch(treasuryPage, /Allocation \/ live/i);
+  assert.doesNotMatch(treasuryPage, /<h1 className="mt-2/);
+});
+
+test("treasury light cards force readable text in dark mode", () => {
+  const lightSurfaceSources = [
+    treasuryPage,
+    readSource("components/treasury/TreasuryDonut.tsx"),
+    readSource("components/treasury/TreasuryTransactions.tsx"),
+  ];
+
+  for (const source of lightSurfaceSources) {
+    for (const [, className] of source.matchAll(/className="([^"]*)"/g)) {
+      if (!className.includes("bg-white")) continue;
+      assert.match(className, /yc-force-white/);
+    }
+  }
+});
+
 test("treasury components exist with expected implementation details", () => {
   const componentPaths = [
     "components/treasury/TreasuryDonut.tsx",
     "components/treasury/TokenLogo.tsx",
-    "components/treasury/TreasuryNftGrid.tsx",
     "components/treasury/TreasuryTransactions.tsx",
   ];
 

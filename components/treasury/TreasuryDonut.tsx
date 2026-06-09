@@ -148,7 +148,7 @@ export default function TreasuryDonut({
                 type="button"
                 onMouseEnter={() => setActiveId(segment.id)}
                 onFocus={() => setActiveId(segment.id)}
-                className="flex w-full items-center justify-between gap-3 rounded-xl border border-skin-stroke bg-white px-3 py-2 text-left transition hover:bg-[#fff7bf]"
+                className="yc-force-white flex w-full items-center justify-between gap-3 rounded-xl border border-skin-stroke bg-white px-3 py-2 text-left transition hover:bg-[#fff7bf]"
               >
                 <span className="flex min-w-0 items-center gap-3">
                   <span
@@ -163,7 +163,7 @@ export default function TreasuryDonut({
               </button>
             ))
           ) : (
-            <div className="rounded-xl border border-dashed border-skin-stroke bg-white p-4 text-center text-sm leading-snug text-secondary">
+            <div className="yc-force-white rounded-xl border border-dashed border-skin-stroke bg-white p-4 text-center text-sm leading-snug text-secondary">
               Allocation appears once live USD pricing is available.
             </div>
           )}

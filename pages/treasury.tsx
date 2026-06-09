@@ -6,9 +6,6 @@ import TokenLogo from "components/treasury/TokenLogo";
 import TreasuryDonut, {
   type TreasuryDonutItem,
 } from "components/treasury/TreasuryDonut";
-import TreasuryNftGrid, {
-  type TreasuryNftItem,
-} from "components/treasury/TreasuryNftGrid";
 import TreasuryTransactions, {
   type TreasuryTransaction,
 } from "components/treasury/TreasuryTransactions";
@@ -288,7 +285,6 @@ export default function TreasuryPage({
   const portfolioUsd = (ethBalanceUsd || 0) + tokenTotalUsd;
   const hasUsdData = portfolioUsd > 0;
   const explorerAddressUrl = getExplorerAddressUrl(treasuryAddress);
-  const nfts: TreasuryNftItem[] = [];
   const recentTransactions: TreasuryTransaction[] = [];
 
   const allocationItems: TreasuryDonutItem[] = [
@@ -334,10 +330,7 @@ export default function TreasuryPage({
         <header className="flex flex-col gap-5 rounded-2xl border border-skin-stroke bg-skin-muted p-5 shadow-sm md:p-7">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl">
-              <div className="font-heading text-sm uppercase tracking-[0.14em] text-secondary">
-                Allocation / live
-              </div>
-              <h1 className="mt-2 text-[42px] leading-none md:text-[58px]">
+              <h1 className="text-[42px] leading-none md:text-[58px]">
                 Treasury
               </h1>
               <p className="mt-4 text-base leading-snug text-secondary md:text-lg">
@@ -349,7 +342,7 @@ export default function TreasuryPage({
               </p>
             </div>
 
-            <div className="flex w-full min-w-0 items-center justify-between gap-3 rounded-2xl border border-skin-stroke bg-white px-4 py-3 text-sm shadow-sm sm:w-auto sm:justify-start md:px-5 md:py-4 md:text-lg">
+            <div className="yc-force-white flex w-full min-w-0 items-center justify-between gap-3 rounded-2xl border border-skin-stroke bg-white px-4 py-3 text-sm shadow-sm sm:w-auto sm:justify-start md:px-5 md:py-4 md:text-lg">
               <AddressLink
                 address={treasuryAddress}
                 fallbackAmount={8}
@@ -385,7 +378,6 @@ export default function TreasuryPage({
               items={allocationItems}
               totalLabel={formatUsd(portfolioUsd)}
             />
-            <TreasuryNftGrid nfts={nfts} />
           </aside>
 
           <main className="flex min-w-0 flex-col gap-6">
@@ -404,7 +396,7 @@ export default function TreasuryPage({
                 </div>
               </div>
 
-              <div className="mt-5 overflow-hidden rounded-xl border border-skin-stroke bg-white">
+              <div className="yc-force-white mt-5 overflow-hidden rounded-xl border border-skin-stroke bg-white">
                 {assetRows.map((asset) => (
                   <div
                     key={asset.id}
@@ -460,7 +452,7 @@ export default function TreasuryPage({
 
 function TreasuryStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-skin-stroke bg-white p-4">
+    <div className="yc-force-white rounded-xl border border-skin-stroke bg-white p-4">
       <div className="font-heading text-2xl leading-none">{value}</div>
       <div className="mt-2 text-sm leading-snug text-secondary">{label}</div>
     </div>

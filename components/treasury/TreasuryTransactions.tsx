@@ -30,13 +30,13 @@ export default function TreasuryTransactions({
           href={explorerUrl}
           target="_blank"
           rel="noreferrer"
-          className="w-fit rounded-xl border border-skin-stroke bg-white px-3 py-2 font-heading text-sm leading-none transition hover:bg-[#fff7bf]"
+          className="yc-force-white w-fit rounded-xl border border-skin-stroke bg-white px-3 py-2 font-heading text-sm leading-none transition hover:bg-[#fff7bf]"
         >
           View all on explorer
         </a>
       </div>
 
-      <div className="mt-5 overflow-hidden rounded-xl border border-skin-stroke bg-white">
+      <div className="yc-force-white mt-5 overflow-hidden rounded-xl border border-skin-stroke bg-white">
         {transactions.length > 0 ? (
           transactions.map((transaction) => (
             <a
