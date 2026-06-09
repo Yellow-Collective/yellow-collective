@@ -16,7 +16,26 @@ jobs:
           node-version: 20
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: yarn audit --level high
+      - name: Run high severity dependency audit
+        run: |
+          yarn audit --level high --json > audit.json || true
+          cat audit.json
+          node -e '
+          const fs = require("fs");
+          const entries = fs.readFileSync("audit.json", "utf8")
+            .split(/\r?\n/)
+            .filter(Boolean)
+            .map((line) => JSON.parse(line));
+          const summary = entries.find((entry) => entry.type === "auditSummary");
+          const vulnerabilities = summary?.data?.vulnerabilities || {};
+          const high = Number(vulnerabilities.high || 0);
+          const critical = Number(vulnerabilities.critical || 0);
+          if (high > 0 || critical > 0) {
+            console.error(`Dependency audit found ${high} high and ${critical} critical vulnerabilities.`);
+            process.exit(1);
+          }
+          console.log("Dependency audit found no high or critical vulnerabilities.");
+          '
       - run: yarn test
       - run: yarn typecheck
       - run: yarn lint

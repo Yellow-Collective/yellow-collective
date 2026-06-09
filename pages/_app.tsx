@@ -9,6 +9,7 @@ import localFont from "next/font/local";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 import MiniAppReady from "@/components/MiniApp/MiniAppReady";
+import MiniAppNotificationsPrompt from "@/components/MiniApp/MiniAppNotificationsPrompt";
 import PWARegister from "@/components/PWARegister";
 import {
   LEGACY_FRAME_EMBED_JSON,
@@ -67,6 +68,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
       <main className={pally.variable}>
         <MiniAppReady />
+        <MiniAppNotificationsPrompt />
         <PWARegister />
         <Component {...pageProps} />
         <Analytics />
