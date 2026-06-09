@@ -2,7 +2,7 @@ import { TOKEN_CONTRACT } from "constants/addresses";
 import { IPFS_GATEWAY, SUBGRAPH_ENDPOINT } from "constants/urls";
 import DefaultProvider from "@/utils/DefaultProvider";
 import getNormalizedURI from "@/utils/getNormalizedURI";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ethers } from "@/utils/ethers-compat";
 import { GraphQLClient, gql } from "graphql-request";
 
 type TokenAttribute = {

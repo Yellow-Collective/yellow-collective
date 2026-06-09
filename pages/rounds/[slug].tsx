@@ -1,4 +1,3 @@
-import CustomConnectButton from "@/components/CustomConnectButton";
 import Layout from "@/components/Layout";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import { RoundStatusPill } from "@/components/rounds/RoundCard";
@@ -25,6 +24,11 @@ import {
   getRoundStateLabel,
   type RoundState,
 } from "@/utils/rounds/state";
+import {
+  hydrateRoundInlineMedia,
+  stripRoundInlineMediaForSsr,
+  type RoundMediaPayload,
+} from "@/utils/rounds/roundMediaPayload";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
@@ -34,12 +38,19 @@ import type {
   GetServerSidePropsResult,
   InferGetServerSidePropsType,
 } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
+
+const CustomConnectButton = dynamic(
+  () => import("@/components/CustomConnectButton"),
+  { ssr: false }
+);
 
 type RoundDetailProps = {
   round: RoundWithSubmissions | null;
@@ -71,6 +82,45 @@ const fetcher = async (url: string) => {
   return data;
 };
 
+const getLockedVotesBySubmission = (
+  voteActivity: RoundVoteActivity[],
+  walletAddress?: string
+) => {
+  if (!walletAddress) return {} as Record<string, number>;
+
+  const normalizedWallet = walletAddress.toLowerCase();
+  return voteActivity.reduce<Record<string, number>>((lockedVotes, activity) => {
+    if (activity.walletAddress.toLowerCase() !== normalizedWallet) {
+      return lockedVotes;
+    }
+
+    lockedVotes[activity.submissionId] =
+      (lockedVotes[activity.submissionId] || 0) + activity.voteCount;
+    return lockedVotes;
+  }, {});
+};
+
+const DeferredInlineImage = ({
+  src,
+  alt,
+  className,
+  fallback,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+  fallback: ReactNode;
+}) => {
+  const isMounted = useIsMounted();
+
+  if (!src || (src.startsWith("data:image/") && !isMounted)) {
+    return <>{fallback}</>;
+  }
+
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={alt} className={className} />;
+};
+
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext): Promise<
@@ -85,7 +135,12 @@ export const getServerSideProps = async ({
     ]);
     if (!round) return { notFound: true };
 
-    return { props: { round, roundsPublicEnabled } };
+    return {
+      props: {
+        round: stripRoundInlineMediaForSsr(round),
+        roundsPublicEnabled,
+      },
+    };
   } catch (error) {
     console.error("Unable to load round detail", error);
     return {
@@ -99,7 +154,7 @@ export const getServerSideProps = async ({
 };
 
 export default function RoundDetailPage({
-  round,
+  round: initialRound,
   roundsPublicEnabled,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -113,6 +168,14 @@ export default function RoundDetailPage({
     useState<RoundSubmission | null>(null);
   const [message, setMessage] = useState("");
   const [isVoting, setIsVoting] = useState(false);
+  const mediaKey = initialRound
+    ? `/api/rounds/${initialRound.slug}/media`
+    : null;
+  const { data: roundMedia } = useSWR<RoundMediaPayload>(mediaKey, fetcher);
+  const round = useMemo(
+    () => hydrateRoundInlineMedia(initialRound, roundMedia),
+    [initialRound, roundMedia]
+  );
   const state = round ? getRoundState(round) : "draft";
   const hasTraitSubmissions = Boolean(
     round?.submissions.some(
@@ -135,7 +198,15 @@ export default function RoundDetailPage({
     [allocations]
   );
   const votingPower = votingPowerData?.votingPower || 0;
-  const remainingVotes = Math.max(votingPower - allocatedVotes, 0);
+  const alreadySubmittedVotes = votingPowerData?.usedVotes || 0;
+  const availableVotes =
+    votingPowerData?.remainingVotes ??
+    Math.max(votingPower - alreadySubmittedVotes, 0);
+  const remainingVotes = Math.max(availableVotes - allocatedVotes, 0);
+  const lockedVotesBySubmission = useMemo(
+    () => getLockedVotesBySubmission(round?.voteActivity || [], address),
+    [round?.voteActivity, address]
+  );
   const votingStrategyLabel = getVotingStrategyLabel(round);
   const winners =
     round && state === "ended"
@@ -172,7 +243,7 @@ export default function RoundDetailPage({
         0
       );
       const maxForSubmission = Math.max(
-        votingPower - usedByOtherSubmissions,
+        availableVotes - usedByOtherSubmissions,
         0
       );
       const normalizedValue = Number.isFinite(nextValue)
@@ -293,11 +364,15 @@ export default function RoundDetailPage({
             </div>
             <div className="flex min-h-[230px] overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]">
               {round.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <DeferredInlineImage
                   src={round.image}
                   alt={round.title}
                   className="h-full min-h-[230px] w-full object-cover"
+                  fallback={
+                    <div className="flex min-h-[230px] w-full items-center justify-center p-8 text-center font-heading text-3xl">
+                      {round.title}
+                    </div>
+                  }
                 />
               ) : (
                 <div className="flex min-h-[230px] w-full items-center justify-center p-8 text-center font-heading text-3xl">
@@ -378,7 +453,7 @@ export default function RoundDetailPage({
                         </div>
                       </div>
                       <div className="flex shrink-0 flex-col gap-2 md:items-end">
-                        <span className="w-fit rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+                        <span className="w-fit whitespace-nowrap rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
                           {submission.voteCount} votes
                         </span>
                         {award && (
@@ -398,22 +473,44 @@ export default function RoundDetailPage({
 
         {state === "voting_open" && (
           <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
+            <div className="flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between">
+              <div className="min-w-0 2xl:max-w-[calc(100%-42rem)]">
                 <h2 className="font-heading text-3xl leading-none text-skin-base">
                   Voting
                 </h2>
                 <p className="mt-2 text-base text-secondary">
-                  {votingStrategyLabel}. Server verification happens when votes
-                  are submitted.
+                  {votingStrategyLabel}.{" "}
+                  {
+                    "Previously submitted votes cannot be changed. You can still allocate your remaining votes until voting ends."
+                  }
                 </p>
               </div>
               {isConnected ? (
-                <div className="rounded-xl bg-[#fff7bf] px-4 py-3 text-sm text-secondary">
-                  <span className="font-heading text-lg text-skin-base">
-                    {votingPower}
-                  </span>{" "}
-                  votes available
+                <div className="flex w-full flex-wrap justify-center gap-3 rounded-xl bg-[#fff7bf] px-4 py-3 text-center text-[#212529] sm:gap-4 2xl:w-[640px] 2xl:shrink-0 2xl:px-6">
+                  <div className="min-w-[9.75rem] flex-1 whitespace-nowrap px-2 2xl:flex-none">
+                    <span className="block font-heading text-lg leading-none text-[#212529]">
+                      {remainingVotes}
+                    </span>
+                    <span className="block text-sm leading-tight text-[#212529]">
+                      votes remaining
+                    </span>
+                  </div>
+                  <div className="min-w-[9.75rem] flex-1 whitespace-nowrap px-2 2xl:flex-none">
+                    <span className="block font-heading text-lg leading-none text-[#212529]">
+                      {alreadySubmittedVotes}
+                    </span>
+                    <span className="block text-sm leading-tight text-[#212529]">
+                      votes submitted
+                    </span>
+                  </div>
+                  <div className="min-w-[9.75rem] flex-1 whitespace-nowrap px-2 2xl:flex-none">
+                    <span className="block font-heading text-lg leading-none text-[#212529]">
+                      {allocatedVotes}
+                    </span>
+                    <span className="block text-sm leading-tight text-[#212529]">
+                      pending votes
+                    </span>
+                  </div>
                 </div>
               ) : (
                 <CustomConnectButton className="h-11 rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base" />
@@ -445,8 +542,9 @@ export default function RoundDetailPage({
                   rank={index + 1}
                   isWinner={state === "ended" && index < round.winnerCount}
                   isRoundEnded={isRoundEnded}
-                  canVote={state === "voting_open" && votingPower > 0}
+                  canVote={state === "voting_open" && availableVotes > 0}
                   allocation={allocations[submission.id] || 0}
+                  lockedVotes={lockedVotesBySubmission[submission.id] || 0}
                   remainingVotes={remainingVotes}
                   onChange={(value) => updateAllocation(submission.id, value)}
                   onOpen={() => setSelectedSubmission(submission)}
@@ -463,7 +561,7 @@ export default function RoundDetailPage({
           )}
         </section>
 
-        {state === "voting_open" && votingPower > 0 && (
+        {state === "voting_open" && availableVotes > 0 && (
           <div className="yc-dark-yellow-form-surface sticky bottom-[calc(1rem+env(safe-area-inset-bottom)+var(--miniapp-safe-area-bottom))] z-30 rounded-2xl border border-skin-stroke bg-accent p-4 shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))]">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div className="text-base text-secondary">
@@ -471,14 +569,15 @@ export default function RoundDetailPage({
                 <span className="font-heading text-xl text-skin-base">
                   {allocatedVotes}
                 </span>{" "}
-                of {votingPower} votes
+                new vote{allocatedVotes === 1 ? "" : "s"} · {remainingVotes}{" "}
+                vote{remainingVotes === 1 ? "" : "s"} remaining
               </div>
               <button
                 type="button"
                 onClick={submitVotes}
                 disabled={
                   allocatedVotes <= 0 ||
-                  allocatedVotes > votingPower ||
+                  allocatedVotes > availableVotes ||
                   isVoting ||
                   isSigning
                 }
@@ -510,6 +609,7 @@ const SubmissionCard = ({
   isRoundEnded,
   canVote,
   allocation,
+  lockedVotes,
   remainingVotes,
   onChange,
   onOpen,
@@ -523,6 +623,7 @@ const SubmissionCard = ({
   isRoundEnded: boolean;
   canVote: boolean;
   allocation: number;
+  lockedVotes: number;
   remainingVotes: number;
   onChange: (value: number) => void;
   onOpen: () => void;
@@ -574,11 +675,17 @@ const SubmissionCard = ({
             />
           </div>
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <DeferredInlineImage
             src={submission.image}
             alt={submission.title}
             className={`aspect-square w-full object-cover ${imageClass}`}
+            fallback={
+              <div
+                className={`flex aspect-square w-full items-center justify-center p-6 text-center font-heading text-2xl ${imageClass}`}
+              >
+                {submission.title}
+              </div>
+            }
           />
         )}
       </button>
@@ -606,7 +713,7 @@ const SubmissionCard = ({
             </button>
           </div>
           {showVoteCount && (
-            <div className="rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+            <div className="whitespace-nowrap rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
               {submission.voteCount} votes
             </div>
           )}
@@ -616,41 +723,51 @@ const SubmissionCard = ({
           className={secondaryTextClass}
           compact
         />
-        <div className="mt-auto flex items-center justify-between gap-3">
-          <WalletIdentityLink
-            address={submission.walletAddress}
-            className={`font-heading text-base underline ${primaryTextClass}`}
-          />
+        <div className="mt-auto flex flex-col gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <WalletIdentityLink
+              address={submission.walletAddress}
+              className={`font-heading text-base underline ${primaryTextClass}`}
+            />
+            {lockedVotes > 0 && (
+              <div className="yc-round-locked-vote-pill rounded-full bg-white/95 px-3 py-1 font-heading text-sm !text-[#212529] shadow-[0px_3px_0px_0px_rgba(0,0,0,0.28)]">
+                {lockedVotes} locked
+              </div>
+            )}
+          </div>
           {canVote && (
-            <div className="yc-round-vote-controls flex items-center gap-2 rounded-xl border border-skin-stroke bg-[#f1f1f1] p-1">
-              <button
-                type="button"
-                onClick={() => onChange(allocation - 1)}
-                disabled={allocation <= 0}
-                className="yc-round-vote-remove h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
-                aria-label={`Remove vote from ${submission.title}`}
-              >
-                -
-              </button>
-              <input
-                type="number"
-                inputMode="numeric"
-                min={0}
-                max={maxAllocation}
-                value={allocation}
-                onChange={(event) => onChange(Number(event.target.value))}
-                aria-label={`Votes for ${submission.title}`}
-                className="h-9 w-16 rounded-lg border border-skin-stroke bg-white text-center font-heading text-lg text-skin-base focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
-              />
-              <button
-                type="button"
-                onClick={() => onChange(allocation + 1)}
-                disabled={remainingVotes <= 0}
-                className="yc-round-vote-add h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
-                aria-label={`Add vote to ${submission.title}`}
-              >
-                +
-              </button>
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/20 bg-black/20 p-2">
+              <span className="font-heading text-sm text-white">New votes</span>
+              <div className="yc-round-vote-controls flex items-center gap-2 rounded-xl border border-skin-stroke bg-[#f1f1f1] p-1">
+                <button
+                  type="button"
+                  onClick={() => onChange(allocation - 1)}
+                  disabled={allocation <= 0}
+                  className="yc-round-vote-remove h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
+                  aria-label={`Remove draft vote from ${submission.title}`}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  max={maxAllocation}
+                  value={allocation}
+                  onChange={(event) => onChange(Number(event.target.value))}
+                  aria-label={`New votes for ${submission.title}`}
+                  className="h-9 w-16 rounded-lg border border-skin-stroke bg-white text-center font-heading text-lg text-skin-base focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+                />
+                <button
+                  type="button"
+                  onClick={() => onChange(allocation + 1)}
+                  disabled={remainingVotes <= 0}
+                  className="yc-round-vote-add h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
+                  aria-label={`Add draft vote to ${submission.title}`}
+                >
+                  +
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -822,11 +939,15 @@ const SubmissionModal = ({
                   fullBleed
                 />
               ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <DeferredInlineImage
                   src={submission.image}
                   alt={submission.title}
                   className="max-h-[520px] w-full object-contain"
+                  fallback={
+                    <div className="flex aspect-square w-full items-center justify-center bg-[#fff7bf] p-6 text-center font-heading text-2xl text-skin-base">
+                      {submission.title}
+                    </div>
+                  }
                 />
               )}
             </div>
@@ -1085,11 +1206,15 @@ const RoundAwardsPanel = ({ round }: { round: RoundWithSubmissions }) => (
           <div key={award.id} className="flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-accent">
               {round.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <DeferredInlineImage
                   src={round.image}
                   alt=""
                   className="h-full w-full object-cover"
+                  fallback={
+                    <span className="font-heading text-sm text-skin-base">
+                      YC
+                    </span>
+                  }
                 />
               ) : (
                 <span className="font-heading text-sm text-skin-base">YC</span>
@@ -1311,7 +1436,7 @@ const getVotingStrategyLabel = (round: RoundWithSubmissions | null) => {
     return `${round.votesPerWallet} votes per wallet`;
   }
 
-  return "1 vote per Collective Noun held";
+  return "1 vote per delegated Collective Noun vote";
 };
 
 const getRoundNoundrySubmission = (

@@ -40,7 +40,7 @@ export const validateRoundVoteAllocation = ({
   }, 0);
 
   if (votingPower <= 0) {
-    return "This wallet does not own a Collective Noun.";
+    return "This wallet has no Collective Noun voting power.";
   }
 
   if (totalVotes > votingPower) {
@@ -49,8 +49,21 @@ export const validateRoundVoteAllocation = ({
     }.`;
   }
 
-  if (usedVotes !== undefined && usedVotes > votingPower) {
-    return "Existing vote usage exceeds voting power.";
+  if (usedVotes !== undefined) {
+    if (!Number.isInteger(usedVotes) || usedVotes < 0) {
+      return "Existing vote usage is invalid.";
+    }
+
+    if (usedVotes > votingPower) {
+      return "Existing vote usage exceeds voting power.";
+    }
+
+    const remainingVotes = votingPower - usedVotes;
+    if (totalVotes > remainingVotes) {
+      return `You have ${remainingVotes} vote${
+        remainingVotes === 1 ? "" : "s"
+      } remaining.`;
+    }
   }
 
   return undefined;

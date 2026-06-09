@@ -72,4 +72,14 @@ export type MetagovState = {
   updatedAt: string;
   proposals: Record<string, TrackedProposal>;
   executedVotes: ExecutionRecord[];
+  notifications: Record<
+    string,
+    {
+      eventType: string;
+      sourceId: string;
+      targetUrl: string;
+      response?: unknown;
+      sentAt: string;
+    }
+  >;
 };

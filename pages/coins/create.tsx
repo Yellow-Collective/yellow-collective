@@ -41,7 +41,8 @@ import {
   ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/20/solid";
 import { TOKEN_CONTRACT } from "constants/addresses";
-import { ethers } from "ethers";
+import { ethers } from "@/utils/ethers-compat";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import type { ChangeEvent, ReactNode } from "react";
@@ -58,6 +59,10 @@ import {
 } from "wagmi";
 
 type SubmitMode = "direct" | "droposal";
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 type PairStatus =
   | { state: "missing"; message: string }
@@ -323,7 +328,7 @@ export default function CreateCoinPage() {
     const factory = new ethers.Contract(
       ZORA_COIN_FACTORY_ADDRESS,
       zoraCoinFactoryAbi,
-      provider
+      provider as any
     );
 
     return factory.coinAddress(
@@ -356,15 +361,15 @@ export default function CreateCoinPage() {
     const factory = new ethers.Contract(
       ZORA_COIN_FACTORY_ADDRESS,
       zoraCoinFactoryAbi,
-      signer
+      signer as any
     );
 
-    await factory.callStatic.deploy(...getDeployArgs(deployParams), {
-      value: 0,
+    await (factory as any).deploy.staticCall(...getDeployArgs(deployParams), {
+      value: 0n,
     });
 
-    const tx = await factory.deploy(...getDeployArgs(deployParams), {
-      value: 0,
+    const tx = await (factory as any).deploy(...getDeployArgs(deployParams), {
+      value: 0n,
     });
 
     setSubmitStatus({
@@ -465,7 +470,7 @@ export default function CreateCoinPage() {
     const governor = new ethers.Contract(
       addresses.governor,
       GovernorABI,
-      signer
+      signer as any
     );
 
     setSubmitStatus({

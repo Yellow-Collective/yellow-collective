@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getCollectiveNounVotingPower } from "@/utils/rounds/getCollectiveNounVotingPower";
-import { ethers } from "ethers";
+import { ethers } from "@/utils/ethers-compat";
 import { getSnapshotProposalForNouns } from "data/snapshot";
 import { SNAPSHOT_SEQUENCER_URL, SNAPSHOT_SPACE_ID } from "constants/metagov";
 

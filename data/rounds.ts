@@ -442,6 +442,8 @@ const ensureTables = async () => {
           CREATE INDEX IF NOT EXISTS round_submissions_wallet_idx ON round_submissions(round_id, wallet_address);
           CREATE INDEX IF NOT EXISTS round_votes_round_submission_idx ON round_votes(round_id, submission_id);
           CREATE INDEX IF NOT EXISTS round_votes_round_wallet_idx ON round_votes(round_id, wallet_address);
+          CREATE UNIQUE INDEX IF NOT EXISTS round_votes_round_submission_wallet_idx
+            ON round_votes(round_id, submission_id, wallet_address);
           CREATE INDEX IF NOT EXISTS round_awards_round_position_idx ON round_awards(round_id, award_position);
           CREATE INDEX IF NOT EXISTS round_winners_round_position_idx ON round_winners(round_id, winner_position);
           CREATE INDEX IF NOT EXISTS round_requests_status_idx ON round_requests(status);
@@ -2876,10 +2878,17 @@ export const castRoundVotes = async ({
       throw new Error("Votes can only be cast for approved submissions.");
     }
 
-    await client.query(
-      `DELETE FROM round_votes WHERE round_id = $1 AND lower(wallet_address) = lower($2)`,
-      [round.id, normalizedWallet]
+    const usedVotes = await getRoundVoteUsage(
+      round.id,
+      normalizedWallet,
+      client
     );
+    const remainingValidationError = validateRoundVoteAllocation({
+      votingPower,
+      usedVotes,
+      votes,
+    });
+    if (remainingValidationError) throw new Error(remainingValidationError);
 
     for (const vote of votes) {
       await client.query(
@@ -2892,6 +2901,10 @@ export const castRoundVotes = async ({
             vote_count
           )
           VALUES ($1, $2, $3, $4, $5)
+          ON CONFLICT (round_id, submission_id, wallet_address)
+          DO UPDATE SET
+            vote_count = round_votes.vote_count + EXCLUDED.vote_count,
+            updated_at = now()
         `,
         [
           randomUUID(),
@@ -2903,12 +2916,12 @@ export const castRoundVotes = async ({
       );
     }
 
-    const usedVotes = await getRoundVoteUsage(
+    const totalUsedVotes = await getRoundVoteUsage(
       round.id,
       normalizedWallet,
       client
     );
-    if (usedVotes > votingPower) {
+    if (totalUsedVotes > votingPower) {
       throw new Error("Vote allocation exceeds available voting power.");
     }
 

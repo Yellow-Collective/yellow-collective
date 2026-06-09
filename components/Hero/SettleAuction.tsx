@@ -11,6 +11,7 @@ import Button from "../Button";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useRouter } from "next/router";
 import { track } from "@vercel/analytics";
+import { useMiniAppWalletConnect } from "@/hooks/useMiniAppWalletConnect";
 
 export const SettleAuction = ({
   auction,
@@ -24,6 +25,7 @@ export const SettleAuction = ({
   const router = useRouter();
   const { isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
+  const { connectMiniAppWallet, isMiniApp } = useMiniAppWalletConnect();
 
   const { config } = usePrepareContractWrite({
     address: auction as Address,
@@ -55,7 +57,11 @@ export const SettleAuction = ({
           track("settleAuctionTriggered");
           write?.();
         } else {
-          openConnectModal?.();
+          if (isMiniApp) {
+            connectMiniAppWallet();
+          } else {
+            openConnectModal?.();
+          }
         }
       }}
       disabled={isLoading}

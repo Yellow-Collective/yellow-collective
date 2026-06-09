@@ -22,6 +22,7 @@ import {
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
 import { getEnsAddress } from "data/ens";
+import { normalizeEnsNameInput } from "@/utils/ens";
 import {
   getPublicProfileData,
   type PublicProfileData,
@@ -57,7 +58,7 @@ import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 import { getAddress, isAddress, zeroAddress } from "viem";
-import { utils as ethersUtils } from "ethers";
+import { utils as ethersUtils } from "@/utils/ethers-compat";
 
 type ProfilePageProps = {
   profile: PublicProfileData | null;
@@ -147,8 +148,7 @@ export const getServerSideProps = async ({
 > => {
   const lookup =
     typeof params?.addressOrEns === "string" ? params.addressOrEns.trim() : "";
-  const lookupIsEnsName =
-    !isAddress(lookup) && lookup.toLowerCase().endsWith(".eth");
+  const normalizedEnsName = normalizeEnsNameInput(lookup);
 
   if (!lookup) {
     return {
@@ -163,8 +163,8 @@ export const getServerSideProps = async ({
 
   const resolvedAddress = isAddress(lookup)
     ? getAddress(lookup)
-    : lookupIsEnsName
-      ? (await getEnsAddress({ ensName: lookup })).address
+    : normalizedEnsName
+      ? (await getEnsAddress({ ensName: normalizedEnsName })).address
       : undefined;
 
   if (!resolvedAddress) {
@@ -173,7 +173,7 @@ export const getServerSideProps = async ({
         lookup,
         artwork: null,
         profile: null,
-        error: lookupIsEnsName
+        error: normalizedEnsName
           ? "That ENS name did not resolve to a wallet address."
           : "That profile identifier is not a valid wallet address or ENS name.",
       },

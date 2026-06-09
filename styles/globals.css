@@ -586,6 +586,13 @@
     color: #212529 !important;
   }
 
+  .yc-round-submission-card .yc-round-locked-vote-pill,
+  .yc-round-submission-card .yc-round-locked-vote-pill *,
+  [data-theme="dark"] .yc-round-submission-card .yc-round-locked-vote-pill,
+  [data-theme="dark"] .yc-round-submission-card .yc-round-locked-vote-pill * {
+    color: #212529 !important;
+  }
+
   .yc-connect-wallet-button {
     --color-text-base: 33, 37, 41;
     --color-text-muted: 69, 74, 78;

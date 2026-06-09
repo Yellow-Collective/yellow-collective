@@ -13,6 +13,7 @@ export const ADMIN_PERMISSION_DEFINITIONS = [
   { id: "gallery", label: "Gallery" },
   { id: "rounds", label: "Rounds" },
   { id: "nouns", label: "Nouns + Metagov" },
+  { id: "notifications", label: "Notifications" },
   { id: "testing", label: "Testing content" },
 ] as const;
 
@@ -36,9 +37,12 @@ export const normalizeAdminWalletAddress = (address?: string | null) => {
   if (!address) return null;
 
   const normalizedInput = normalizeAddressPrefix(address.trim());
-  if (!isAddress(normalizedInput)) return null;
+  const addressInput = isAddress(normalizedInput)
+    ? normalizedInput
+    : normalizedInput.toLowerCase();
+  if (!isAddress(addressInput)) return null;
 
-  return getAddress(normalizedInput);
+  return getAddress(addressInput);
 };
 
 export const isGlobalAdminAddress = (address?: string | null) => {

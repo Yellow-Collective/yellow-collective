@@ -12,7 +12,7 @@ import TreasuryTransactions, {
 import { TOKEN_CONTRACT } from "constants/addresses";
 import { ETHERSCAN_BASEURL, SUBGRAPH_ENDPOINT } from "constants/urls";
 import { YELLOW_COLLECTIVE_CONTRACTS } from "data/contracts";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, Contract, utils } from "@/utils/ethers-compat";
 import { GraphQLClient, gql } from "graphql-request";
 import type { GetStaticPropsResult, InferGetStaticPropsType } from "next";
 import Head from "next/head";

@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     timestamp: timestamp ? (timestamp as string) : undefined,
   });
 
-  res.status(200).send(data.toNumber());
+  res.status(200).send(Number(data.toString()));
 };
 
 export default handler;

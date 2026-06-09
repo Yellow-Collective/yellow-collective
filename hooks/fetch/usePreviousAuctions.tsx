@@ -1,14 +1,18 @@
 import useSWR from "swr";
 import { PreviousAuction } from "@/services/nouns-builder/auction";
-import { TOKEN_CONTRACT } from "constants/addresses";
 
 export const usePreviousAuction = ({
+  auctionContract,
+  enabled = true,
   tokenId,
 }: {
   auctionContract?: string;
+  enabled?: boolean;
   tokenId: string;
 }) => {
   return useSWR<PreviousAuction>(
-    `/api/auction/${TOKEN_CONTRACT}/previous/${tokenId}`
+    enabled && auctionContract && tokenId
+      ? `/api/auction/${auctionContract}/previous/${tokenId}`
+      : undefined
   );
 };

@@ -22,12 +22,22 @@ import type { CommunityProjectRecord } from "data/community-project-submissions"
 import type { GalleryCoin } from "data/coins";
 import type { DaoMemberSummary } from "data/members";
 import type { NoundrySubmission } from "data/noundry/submissions";
+import {
+  DEFAULT_NOTIFICATION_SETTINGS,
+  NOTIFICATION_ALERT_GROUPS,
+  buildNotificationCopy,
+  validateNotificationSettings,
+  validateNotificationCopy,
+  type NotificationAlertKey,
+  type NotificationSettings,
+} from "@/utils/notifications/settings";
 import type {
   Round,
   RoundSubmission,
   RoundInput,
   RoundRequest,
 } from "data/rounds";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -36,7 +46,8 @@ import { useEffect, useMemo, useState } from "react";
 import useSWR, { type Fetcher, type KeyedMutator } from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 
-type AdminSection = Exclude<AdminPermission, "testing">;
+type AdminPermissionSection = Exclude<AdminPermission, "testing">;
+type AdminSection = AdminPermissionSection | "access";
 type CommunityListMode = "queue" | "existing";
 type ProjectEditorMode = "edit" | "preview";
 type RoundListMode = "draft" | "published" | "archived";
@@ -50,12 +61,51 @@ type AdminAuth = {
 type AdminRequestBody = Record<string, unknown>;
 type AdminSWRKey = readonly [string, AdminAuth];
 type AdminAccessResponseRecord = AdminAccessRecord & { isGlobal: boolean };
+type NotificationEventRecord = {
+  id: string;
+  eventType: string;
+  sourceId: string;
+  title: string;
+  body: string;
+  targetUrl: string;
+  targetFids: number[];
+  dryRun: boolean;
+  response: {
+    campaign_id?: string;
+    success_count?: number;
+    failure_count?: number;
+    not_attempted_count?: number;
+    retryable_fids?: number[];
+  } | null;
+  sentAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+type NotificationAudienceRecord = {
+  fid: number;
+  username: string | null;
+  displayName: string | null;
+  pfpUrl: string | null;
+  walletAddress: string | null;
+  notificationsEnabled: boolean;
+  notificationUrl: string | null;
+  tokenCreatedAt: string | null;
+  tokenUpdatedAt: string | null;
+  lastSyncedAt: string | null;
+  lastSeenAt: string;
+  createdAt: string;
+  updatedAt: string;
+};
 type AdminAccessResponse = {
   admins: AdminAccessResponseRecord[];
   permissionDefinitions: typeof ADMIN_PERMISSION_DEFINITIONS;
 };
 
 const adminSections: { id: AdminSection; label: string }[] = [
+  {
+    id: "access",
+    label: "Admin Access",
+  },
   {
     id: "community",
     label: "Community Projects",
@@ -75,6 +125,10 @@ const adminSections: { id: AdminSection; label: string }[] = [
   {
     id: "nouns",
     label: "Nouns + Metagov",
+  },
+  {
+    id: "notifications",
+    label: "Notifications",
   },
 ];
 
@@ -202,6 +256,19 @@ const nounsSettingsFetcher = createAdminFetcher<{
   nounsMetagovEnabled: boolean;
 }>();
 
+const notificationsSettingsFetcher = createAdminFetcher<{
+  settings: NotificationSettings;
+}>();
+
+const notificationsEventsFetcher = createAdminFetcher<{
+  events: NotificationEventRecord[];
+}>();
+
+const notificationsAudienceFetcher = createAdminFetcher<{
+  audience: NotificationAudienceRecord[];
+  syncedCount?: number;
+}>();
+
 const adminAccessFetcher = createAdminFetcher<AdminAccessResponse>();
 
 const roundSubmissionsFetcher = createAdminFetcher<{
@@ -211,6 +278,10 @@ const roundSubmissionsFetcher = createAdminFetcher<{
 const roundRequestsFetcher = createAdminFetcher<{
   requests: RoundRequest[];
 }>();
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 const sendAdminRequest = async (
   path: string,
@@ -314,7 +385,7 @@ const formatVotingStrategy = (
     ? "1 vote per wallet"
     : strategy === "fixed_per_wallet"
       ? `${votesPerWallet} votes per wallet`
-      : "1 vote per Collective Noun";
+      : "1 vote per delegated Collective Noun vote";
 
 const getQueryValue = (value: string | string[] | undefined) =>
   typeof value === "string" ? value : value?.[0];
@@ -336,10 +407,15 @@ export default function AdminDashboardPage() {
   const activeSection = getAdminSectionFromQuery(router.query.section);
   const hasPermission = (permission: AdminPermission) =>
     Boolean(adminAuth?.permissions.includes(permission));
+  const canAccessSection = (section: AdminSection) =>
+    Boolean(
+      adminAuth &&
+        (section === "access" ? adminAuth.isGlobal : hasPermission(section))
+    );
   const visibleAdminSections = adminAuth
-    ? adminSections.filter((section) => hasPermission(section.id))
+    ? adminSections.filter((section) => canAccessSection(section.id))
     : adminSections;
-  const activeSectionAllowed = Boolean(adminAuth && hasPermission(activeSection));
+  const activeSectionAllowed = canAccessSection(activeSection);
 
   const communityKey = adminAuth && hasPermission("community")
     ? (["/api/admin/community-projects", adminAuth] as const)
@@ -361,6 +437,15 @@ export default function AdminDashboardPage() {
     : null;
   const nounsSettingsKey = adminAuth && hasPermission("nouns")
     ? (["/api/admin/nouns/settings", adminAuth] as const)
+    : null;
+  const notificationsSettingsKey = adminAuth && hasPermission("notifications")
+    ? (["/api/admin/notifications/settings", adminAuth] as const)
+    : null;
+  const notificationsEventsKey = adminAuth && hasPermission("notifications")
+    ? (["/api/admin/notifications/events", adminAuth] as const)
+    : null;
+  const notificationsAudienceKey = adminAuth && hasPermission("notifications")
+    ? (["/api/admin/notifications/audience", adminAuth] as const)
     : null;
   const roundRequestsKey = adminAuth && hasPermission("rounds")
     ? (["/api/admin/rounds/requests", adminAuth] as const)
@@ -427,6 +512,31 @@ export default function AdminDashboardPage() {
     nounsSettingsKey,
     nounsSettingsFetcher
   );
+  const {
+    data: notificationsSettingsData,
+    error: notificationsSettingsError,
+    mutate: mutateNotificationsSettings,
+  } = useSWR<{ settings: NotificationSettings }, Error, AdminSWRKey | null>(
+    notificationsSettingsKey,
+    notificationsSettingsFetcher
+  );
+  const {
+    data: notificationsEventsData,
+    error: notificationsEventsError,
+    mutate: mutateNotificationsEvents,
+  } = useSWR<{ events: NotificationEventRecord[] }, Error, AdminSWRKey | null>(
+    notificationsEventsKey,
+    notificationsEventsFetcher
+  );
+  const {
+    data: notificationsAudienceData,
+    error: notificationsAudienceError,
+    mutate: mutateNotificationsAudience,
+  } = useSWR<
+    { audience: NotificationAudienceRecord[]; syncedCount?: number },
+    Error,
+    AdminSWRKey | null
+  >(notificationsAudienceKey, notificationsAudienceFetcher);
   const {
     data: adminAccessData,
     error: adminAccessError,
@@ -605,7 +715,7 @@ export default function AdminDashboardPage() {
               </AdminNotice>
             ) : (
               <>
-                {adminAuth.isGlobal && (
+                {activeSection === "access" ? (
                   <AdminAccessPanel
                     adminAuth={adminAuth}
                     admins={adminAccessData?.admins || []}
@@ -617,77 +727,107 @@ export default function AdminDashboardPage() {
                     isLoading={!adminAccessData && !adminAccessError}
                     mutate={mutateAdminAccess}
                   />
-                )}
-                {hasPermission("testing") && (
-                <TestingSettingsPanel
-                  adminAuth={adminAuth}
-                  dummyContentEnabled={
-                    testingSettingsData?.dummyContentEnabled || false
-                  }
-                  error={testingSettingsError?.message}
-                  isLoading={!testingSettingsData && !testingSettingsError}
-                  mutate={mutateTestingSettings}
-                />
-                )}
-                {activeSection === "community" ? (
-                  <CommunityAdminPanel
-                    adminAuth={adminAuth}
-                    projects={communityData?.projects || []}
-                    error={communityError?.message}
-                    isLoading={!communityData && !communityError}
-                    mutate={mutateCommunity}
-                  />
-                ) : activeSection === "noundry" ? (
-                  <NoundryAdminPanel
-                    adminAuth={adminAuth}
-                    submissions={noundryData?.submissions || []}
-                    error={noundryError?.message}
-                    isLoading={!noundryData && !noundryError}
-                    mutate={mutateNoundry}
-                  />
-                ) : activeSection === "gallery" ? (
-                  <GalleryAdminPanel
-                    adminAuth={adminAuth}
-                    coins={galleryData?.coins || []}
-                    galleryPublicEnabled={
-                      galleryData?.galleryPublicEnabled ?? true
-                    }
-                    error={galleryError?.message}
-                    isLoading={!galleryData && !galleryError}
-                    mutate={mutateGallery}
-                  />
-                ) : activeSection === "nouns" ? (
-                  <NounsMetagovAdminPanel
-                    adminAuth={adminAuth}
-                    nounsMetagovEnabled={
-                      nounsSettingsData?.nounsMetagovEnabled ?? true
-                    }
-                    error={nounsSettingsError?.message}
-                    isLoading={!nounsSettingsData && !nounsSettingsError}
-                    mutate={mutateNounsSettings}
-                  />
                 ) : (
-                  <RoundsAdminPanel
-                    adminAuth={adminAuth}
-                    rounds={roundsData?.rounds || []}
-                    requests={roundRequestsData?.requests || []}
-                    roundsPublicEnabled={
-                      roundsSettingsData?.roundsPublicEnabled || false
-                    }
-                    error={
-                      roundsError?.message ||
-                      roundsSettingsError?.message ||
-                      roundRequestsError?.message
-                    }
-                    isLoading={
-                      (!roundsData && !roundsError) ||
-                      (!roundsSettingsData && !roundsSettingsError) ||
-                      (!roundRequestsData && !roundRequestsError)
-                    }
-                    mutate={mutateRounds}
-                    mutateSettings={mutateRoundsSettings}
-                    mutateRequests={mutateRoundRequests}
-                  />
+                  <>
+                    {hasPermission("testing") && (
+                      <TestingSettingsPanel
+                        adminAuth={adminAuth}
+                        dummyContentEnabled={
+                          testingSettingsData?.dummyContentEnabled || false
+                        }
+                        error={testingSettingsError?.message}
+                        isLoading={!testingSettingsData && !testingSettingsError}
+                        mutate={mutateTestingSettings}
+                      />
+                    )}
+                    {activeSection === "community" ? (
+                      <CommunityAdminPanel
+                        adminAuth={adminAuth}
+                        projects={communityData?.projects || []}
+                        error={communityError?.message}
+                        isLoading={!communityData && !communityError}
+                        mutate={mutateCommunity}
+                      />
+                    ) : activeSection === "noundry" ? (
+                      <NoundryAdminPanel
+                        adminAuth={adminAuth}
+                        submissions={noundryData?.submissions || []}
+                        error={noundryError?.message}
+                        isLoading={!noundryData && !noundryError}
+                        mutate={mutateNoundry}
+                      />
+                    ) : activeSection === "gallery" ? (
+                      <GalleryAdminPanel
+                        adminAuth={adminAuth}
+                        coins={galleryData?.coins || []}
+                        galleryPublicEnabled={
+                          galleryData?.galleryPublicEnabled ?? true
+                        }
+                        error={galleryError?.message}
+                        isLoading={!galleryData && !galleryError}
+                        mutate={mutateGallery}
+                      />
+                    ) : activeSection === "nouns" ? (
+                      <NounsMetagovAdminPanel
+                        adminAuth={adminAuth}
+                        nounsMetagovEnabled={
+                          nounsSettingsData?.nounsMetagovEnabled ?? true
+                        }
+                        error={nounsSettingsError?.message}
+                        isLoading={!nounsSettingsData && !nounsSettingsError}
+                        mutate={mutateNounsSettings}
+                      />
+                    ) : activeSection === "notifications" ? (
+                      <NotificationsAdminPanel
+                        adminAuth={adminAuth}
+                        settings={
+                          notificationsSettingsData?.settings ||
+                          DEFAULT_NOTIFICATION_SETTINGS
+                        }
+                        error={notificationsSettingsError?.message}
+                        logError={notificationsEventsError?.message}
+                        audienceError={notificationsAudienceError?.message}
+                        isLoading={
+                          !notificationsSettingsData &&
+                          !notificationsSettingsError
+                        }
+                        isLogLoading={
+                          !notificationsEventsData && !notificationsEventsError
+                        }
+                        isAudienceLoading={
+                          !notificationsAudienceData &&
+                          !notificationsAudienceError
+                        }
+                        events={notificationsEventsData?.events || []}
+                        audience={notificationsAudienceData?.audience || []}
+                        mutate={mutateNotificationsSettings}
+                        mutateEvents={mutateNotificationsEvents}
+                        mutateAudience={mutateNotificationsAudience}
+                      />
+                    ) : (
+                      <RoundsAdminPanel
+                        adminAuth={adminAuth}
+                        rounds={roundsData?.rounds || []}
+                        requests={roundRequestsData?.requests || []}
+                        roundsPublicEnabled={
+                          roundsSettingsData?.roundsPublicEnabled || false
+                        }
+                        error={
+                          roundsError?.message ||
+                          roundsSettingsError?.message ||
+                          roundRequestsError?.message
+                        }
+                        isLoading={
+                          (!roundsData && !roundsError) ||
+                          (!roundsSettingsData && !roundsSettingsError) ||
+                          (!roundRequestsData && !roundRequestsError)
+                        }
+                        mutate={mutateRounds}
+                        mutateSettings={mutateRoundsSettings}
+                        mutateRequests={mutateRoundRequests}
+                      />
+                    )}
+                  </>
                 )}
               </>
             )}
@@ -1062,9 +1202,615 @@ const NounsMetagovAdminPanel = ({
   );
 };
 
+const NotificationsAdminPanel = ({
+  adminAuth,
+  settings,
+  events,
+  audience,
+  error,
+  logError,
+  audienceError,
+  isLoading,
+  isLogLoading,
+  isAudienceLoading,
+  mutate,
+  mutateEvents,
+  mutateAudience,
+}: {
+  adminAuth: AdminAuth;
+  settings: NotificationSettings;
+  events: NotificationEventRecord[];
+  audience: NotificationAudienceRecord[];
+  error?: string;
+  logError?: string;
+  audienceError?: string;
+  isLoading: boolean;
+  isLogLoading: boolean;
+  isAudienceLoading: boolean;
+  mutate: KeyedMutator<{ settings: NotificationSettings }>;
+  mutateEvents: KeyedMutator<{ events: NotificationEventRecord[] }>;
+  mutateAudience: KeyedMutator<{
+    audience: NotificationAudienceRecord[];
+    syncedCount?: number;
+  }>;
+}) => {
+  const [draft, setDraft] = useState(settings);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isTesting, setIsTesting] = useState(false);
+  const [testFid, setTestFid] = useState("");
+  const [testMessage, setTestMessage] = useState("");
+  const [settingsMessage, setSettingsMessage] = useState("");
+
+  useEffect(() => {
+    setDraft(settings);
+  }, [settings]);
+
+  const updateAlert = (
+    key: NotificationAlertKey,
+    next: Partial<NotificationSettings["alerts"][NotificationAlertKey]>
+  ) => {
+    setDraft((current) => ({
+      ...current,
+      alerts: {
+        ...current.alerts,
+        [key]: {
+          ...current.alerts[key],
+          ...next,
+        },
+      },
+    }));
+  };
+
+  const saveSettings = async () => {
+    const errors = validateNotificationSettings(draft);
+    if (errors.length) {
+      setSettingsMessage(errors.join(" "));
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      setSettingsMessage("");
+      await sendAdminRequest(
+        "/api/admin/notifications/settings",
+        adminAuth,
+        "PATCH",
+        { settings: draft }
+      );
+      await mutate();
+      setSettingsMessage("Notification settings saved.");
+    } catch (saveError) {
+      setSettingsMessage(
+        saveError instanceof Error
+          ? saveError.message
+          : "Unable to save notification settings."
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const sendTest = async () => {
+    const fid = Number(testFid);
+    if (!Number.isInteger(fid) || fid <= 0) {
+      setTestMessage("Enter a valid FID.");
+      return;
+    }
+
+    try {
+      setIsTesting(true);
+      setTestMessage("");
+      const firstAlert = draft.alerts.round_published;
+      const copy = buildNotificationCopy({
+        alert: firstAlert,
+        variables: {
+          roundTitle: "Test Round",
+          roundSlug: "test-round",
+        },
+      });
+      const errors = validateNotificationCopy({
+        ...copy,
+        targetUrl: "https://yellowcollective.art/rounds",
+      });
+      if (errors.length) {
+        setTestMessage(errors.join(" "));
+        return;
+      }
+
+      const response = await sendAdminRequest(
+        "/api/notifications/test",
+        adminAuth,
+        "POST",
+        {
+          title: copy.title,
+          body: copy.body,
+          targetUrl: "/rounds",
+          targetFids: [fid],
+          dryRun: draft.dryRun,
+        }
+      );
+      setTestMessage(
+        `Test sent. Success: ${Number(
+          (response as { success_count?: number }).success_count || 0
+        )}`
+      );
+      await mutateEvents();
+    } catch (testError) {
+      setTestMessage(
+        testError instanceof Error
+          ? testError.message
+          : "Unable to send test notification."
+      );
+    } finally {
+      setIsTesting(false);
+    }
+  };
+
+  return (
+    <section className="yc-dark-yellow-form-surface flex flex-col gap-6 rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <h2 className="font-heading text-3xl leading-none text-skin-base">
+            Notifications
+          </h2>
+          <p className="mt-3 max-w-3xl text-base leading-snug text-secondary">
+            Control which Mini App alerts are sent and edit the copy used for
+            broadcasts. Test sends always require a specific FID.
+          </p>
+          {error && (
+            <p className="mt-3 text-sm font-semibold text-skin-proposal-danger">
+              {error}
+            </p>
+          )}
+          {settingsMessage && (
+            <p className="mt-3 text-sm font-semibold text-secondary">
+              {settingsMessage}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <label className="flex items-center gap-2 rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-3 text-sm font-semibold text-skin-base">
+            <input
+              type="checkbox"
+              checked={draft.enabled}
+              onChange={(event) =>
+                setDraft((current) => ({
+                  ...current,
+                  enabled: event.target.checked,
+                }))
+              }
+            />
+            Enabled
+          </label>
+          <label className="flex items-center gap-2 rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-3 text-sm font-semibold text-skin-base">
+            <input
+              type="checkbox"
+              checked={draft.dryRun}
+              onChange={(event) =>
+                setDraft((current) => ({
+                  ...current,
+                  dryRun: event.target.checked,
+                }))
+              }
+            />
+            Dry run
+          </label>
+          <button
+            type="button"
+            onClick={saveSettings}
+            disabled={isSaving || isLoading}
+            className={saveButtonClass}
+          >
+            {isSaving ? "Saving..." : "Save settings"}
+          </button>
+        </div>
+      </div>
+
+      <NotificationLogPanel
+        events={events}
+        error={logError}
+        isLoading={isLogLoading}
+        mutate={mutateEvents}
+      />
+
+      <NotificationAudiencePanel
+        adminAuth={adminAuth}
+        audience={audience}
+        error={audienceError}
+        isLoading={isAudienceLoading}
+        mutate={mutateAudience}
+      />
+
+      <div className="grid gap-5">
+        {NOTIFICATION_ALERT_GROUPS.map((group) => (
+          <section
+            key={group.id}
+            className="rounded-2xl border border-skin-stroke bg-[#fff7bf] p-4"
+          >
+            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h3 className="font-heading text-2xl leading-none text-skin-base">
+                  {group.label}
+                </h3>
+                <p className="mt-2 text-sm text-secondary">
+                  Variables: {group.variables.map((item) => `{${item}}`).join(", ")}
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 grid gap-4">
+              {group.alerts.map((key) => {
+                const alert = draft.alerts[key];
+
+                return (
+                  <div
+                    key={key}
+                    className="grid gap-3 rounded-xl border border-skin-stroke bg-white p-4 md:grid-cols-[180px_1fr_1fr]"
+                  >
+                    <label className="flex items-center gap-2 text-sm font-semibold text-skin-base">
+                      <input
+                        type="checkbox"
+                        checked={alert.enabled}
+                        onChange={(event) =>
+                          updateAlert(key, { enabled: event.target.checked })
+                        }
+                      />
+                      {key.replaceAll("_", " ")}
+                    </label>
+                    <label className="flex flex-col gap-1 text-sm font-semibold text-secondary">
+                      Title
+                      <input
+                        value={alert.titleTemplate}
+                        onChange={(event) =>
+                          updateAlert(key, {
+                            titleTemplate: event.target.value,
+                          })
+                        }
+                        className={fieldClass}
+                      />
+                    </label>
+                    <label className="flex flex-col gap-1 text-sm font-semibold text-secondary">
+                      Body
+                      <input
+                        value={alert.bodyTemplate}
+                        onChange={(event) =>
+                          updateAlert(key, { bodyTemplate: event.target.value })
+                        }
+                        className={fieldClass}
+                      />
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-3 rounded-2xl border border-skin-stroke bg-white p-4 md:flex-row md:items-end">
+        <label className="flex flex-1 flex-col gap-1 text-sm font-semibold text-secondary">
+          Test FID
+          <input
+            value={testFid}
+            onChange={(event) => setTestFid(event.target.value)}
+            className={fieldClass}
+            inputMode="numeric"
+            placeholder="13870"
+          />
+        </label>
+        <button
+          type="button"
+          onClick={sendTest}
+          disabled={isTesting}
+          className={blueButtonClass}
+        >
+          {isTesting ? "Sending..." : "Send test"}
+        </button>
+        {testMessage && (
+          <p className="text-sm font-semibold text-secondary">{testMessage}</p>
+        )}
+      </div>
+    </section>
+  );
+};
+
+const formatNotificationDate = (value?: string | null) => {
+  if (!value) return "Not sent";
+
+  return new Date(value).toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+};
+
+const NotificationLogPanel = ({
+  events,
+  error,
+  isLoading,
+  mutate,
+}: {
+  events: NotificationEventRecord[];
+  error?: string;
+  isLoading: boolean;
+  mutate: KeyedMutator<{ events: NotificationEventRecord[] }>;
+}) => (
+  <section className="rounded-2xl border border-skin-stroke bg-white p-4">
+    <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+      <div>
+        <h3 className="font-heading text-2xl leading-none text-skin-base">
+          Sent notification log
+        </h3>
+        <p className="mt-2 max-w-3xl text-sm leading-snug text-secondary">
+          This shows every notification recorded by Yellow. It can show the
+          list of who received targeted notifications. Broadcast recipient lists
+          are not returned by Neynar, so broadcasts show aggregate delivery
+          counts and retryable FIDs only.
+        </p>
+        {error && (
+          <p className="mt-2 text-sm font-semibold text-skin-proposal-danger">
+            {error}
+          </p>
+        )}
+      </div>
+      <button
+        type="button"
+        onClick={() => void mutate()}
+        disabled={isLoading}
+        className={secondaryButtonClass}
+      >
+        Refresh log
+      </button>
+    </div>
+
+    <div className="mt-4 overflow-x-auto">
+      {isLoading ? (
+        <p className="text-base text-secondary">Loading notification log...</p>
+      ) : events.length === 0 ? (
+        <p className="text-base text-secondary">
+          No notifications have been recorded yet.
+        </p>
+      ) : (
+        <table className="w-full min-w-[920px] border-separate border-spacing-y-2 text-left">
+          <thead>
+            <tr className="text-sm text-secondary">
+              <th className="px-3 py-2">Sent</th>
+              <th className="px-3 py-2">Alert</th>
+              <th className="px-3 py-2">Copy</th>
+              <th className="px-3 py-2">Recipients</th>
+              <th className="px-3 py-2">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            {events.map((event) => {
+              const response = event.response || {};
+              const retryableFids = response.retryable_fids || [];
+
+              return (
+                <tr key={event.id} className="bg-[#fff7bf] align-top">
+                  <td className="rounded-l-2xl px-3 py-4 text-sm text-secondary">
+                    {formatNotificationDate(event.sentAt)}
+                    {event.dryRun && (
+                      <span className="mt-1 block font-semibold">Dry run</span>
+                    )}
+                  </td>
+                  <td className="px-3 py-4">
+                    <div className="font-semibold text-skin-base">
+                      {event.eventType.replaceAll("_", " ")}
+                    </div>
+                    <a
+                      href={event.targetUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-1 block break-all text-sm text-secondary underline"
+                    >
+                      {event.targetUrl}
+                    </a>
+                  </td>
+                  <td className="px-3 py-4">
+                    <div className="font-semibold text-skin-base">
+                      {event.title}
+                    </div>
+                    <div className="mt-1 text-sm text-secondary">
+                      {event.body}
+                    </div>
+                  </td>
+                  <td className="px-3 py-4 text-sm text-secondary">
+                    {event.targetFids.length > 0 ? (
+                      <span>FIDs: {event.targetFids.join(", ")}</span>
+                    ) : (
+                      <span>Broadcast to all enabled Mini App users</span>
+                    )}
+                    {retryableFids.length > 0 && (
+                      <span className="mt-1 block">
+                        Retryable: {retryableFids.join(", ")}
+                      </span>
+                    )}
+                  </td>
+                  <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
+                    <div>Success: {Number(response.success_count || 0)}</div>
+                    <div>Failed: {Number(response.failure_count || 0)}</div>
+                    <div>
+                      Not attempted:{" "}
+                      {Number(response.not_attempted_count || 0)}
+                    </div>
+                    {response.campaign_id && (
+                      <div className="mt-1 break-all">
+                        Campaign: {response.campaign_id}
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+    </div>
+  </section>
+);
+
+const NotificationAudiencePanel = ({
+  adminAuth,
+  audience,
+  error,
+  isLoading,
+  mutate,
+}: {
+  adminAuth: AdminAuth;
+  audience: NotificationAudienceRecord[];
+  error?: string;
+  isLoading: boolean;
+  mutate: KeyedMutator<{
+    audience: NotificationAudienceRecord[];
+    syncedCount?: number;
+  }>;
+}) => {
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [message, setMessage] = useState("");
+  const enabledCount = audience.filter((user) => user.notificationsEnabled)
+    .length;
+
+  const syncAudience = async () => {
+    try {
+      setIsSyncing(true);
+      setMessage("");
+      const response = await sendAdminRequest(
+        "/api/admin/notifications/audience",
+        adminAuth,
+        "POST",
+        {}
+      );
+      await mutate(response as {
+        audience: NotificationAudienceRecord[];
+        syncedCount?: number;
+      }, { revalidate: false });
+      setMessage(
+        `Synced ${Number(
+          (response as { syncedCount?: number }).syncedCount || 0
+        )} enabled Mini App users from Neynar.`
+      );
+    } catch (syncError) {
+      setMessage(
+        syncError instanceof Error
+          ? syncError.message
+          : "Unable to sync Neynar audience."
+      );
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  return (
+    <section className="rounded-2xl border border-skin-stroke bg-white p-4">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <h3 className="font-heading text-2xl leading-none text-skin-base">
+            Mini App notification audience
+          </h3>
+          <p className="mt-2 max-w-3xl text-sm leading-snug text-secondary">
+            Sync the current Neynar notification tokens to see who has enabled
+            Mini App notifications. Token secrets are not stored or shown.
+          </p>
+          <p className="mt-2 text-sm font-semibold text-secondary">
+            {enabledCount} enabled / {audience.length} known Mini App users
+          </p>
+          {(error || message) && (
+            <p
+              className={`mt-2 text-sm font-semibold ${
+                error ? "text-skin-proposal-danger" : "text-secondary"
+              }`}
+            >
+              {error || message}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <button
+            type="button"
+            onClick={() => void mutate()}
+            disabled={isLoading || isSyncing}
+            className={secondaryButtonClass}
+          >
+            Refresh audience
+          </button>
+          <button
+            type="button"
+            onClick={syncAudience}
+            disabled={isLoading || isSyncing}
+            className={blueButtonClass}
+          >
+            {isSyncing ? "Syncing..." : "Sync Neynar audience"}
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-4 overflow-x-auto">
+        {isLoading ? (
+          <p className="text-base text-secondary">Loading audience...</p>
+        ) : audience.length === 0 ? (
+          <p className="text-base text-secondary">
+            No Mini App notification users have been synced yet.
+          </p>
+        ) : (
+          <table className="w-full min-w-[820px] border-separate border-spacing-y-2 text-left">
+            <thead>
+              <tr className="text-sm text-secondary">
+                <th className="px-3 py-2">FID</th>
+                <th className="px-3 py-2">User</th>
+                <th className="px-3 py-2">Status</th>
+                <th className="px-3 py-2">Token updated</th>
+                <th className="px-3 py-2">Last synced</th>
+              </tr>
+            </thead>
+            <tbody>
+              {audience.map((user) => (
+                <tr key={user.fid} className="bg-[#fff7bf] align-top">
+                  <td className="rounded-l-2xl px-3 py-4 font-semibold text-skin-base">
+                    {user.fid}
+                  </td>
+                  <td className="px-3 py-4 text-sm text-secondary">
+                    <div className="font-semibold text-skin-base">
+                      {user.displayName || user.username || "Unknown"}
+                    </div>
+                    {user.username && (
+                      <div className="mt-1">@{user.username}</div>
+                    )}
+                    {user.walletAddress && (
+                      <div className="mt-1 break-all">
+                        {user.walletAddress}
+                      </div>
+                    )}
+                  </td>
+                  <td className="px-3 py-4">
+                    <StatusPill
+                      status={
+                        user.notificationsEnabled ? "enabled" : "disabled"
+                      }
+                    />
+                  </td>
+                  <td className="px-3 py-4 text-sm text-secondary">
+                    {formatNotificationDate(user.tokenUpdatedAt)}
+                  </td>
+                  <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
+                    {formatNotificationDate(user.lastSyncedAt)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </section>
+  );
+};
+
 const StatusPill = ({ status }: { status: string }) => {
   const color =
-    status === "approved" || status === "published" || status === "visible"
+    status === "approved" ||
+    status === "published" ||
+    status === "visible" ||
+    status === "enabled"
       ? "bg-[#e7f7df] text-[#276514]"
       : status === "removed" ||
           status === "archived" ||
@@ -2178,7 +2924,9 @@ const RoundEditor = ({
             }
             className={`${fieldClass} mt-2`}
           >
-            <option value="one_per_nft">1 vote per Collective Noun</option>
+            <option value="one_per_nft">
+              1 vote per delegated Collective Noun vote
+            </option>
             <option value="one_per_wallet">1 vote per wallet</option>
             <option value="fixed_per_wallet">Fixed votes per wallet</option>
           </select>

@@ -1,4 +1,4 @@
-import { BigNumber, utils } from "ethers";
+import { BigNumber, utils } from "@/utils/ethers-compat";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import {
@@ -25,6 +25,7 @@ import {
   truncateBidCommentToByteLimit,
   validateBidCommentText,
 } from "@/utils/bid-comments";
+import { useMiniAppWalletConnect } from "@/hooks/useMiniAppWalletConnect";
 
 const auctionInterface = new utils.Interface(auctionAbi as any);
 const BASE_CHAIN_ID = 8453;
@@ -62,6 +63,7 @@ export const PlaceBid = ({
   const debouncedBid = useDebounce(bid, 500);
 
   const { openConnectModal } = useConnectModal();
+  const { connectMiniAppWallet, isMiniApp } = useMiniAppWalletConnect();
   const bidCommentDataSuffix = getBidCommentDataSuffix(bidComment);
   const parsedBid = useMemo(() => parseBidAmount(debouncedBid), [debouncedBid]);
   const finalBidCalldata = useMemo(() => {
@@ -69,7 +71,7 @@ export const PlaceBid = ({
 
     const baseCalldata = auctionInterface.encodeFunctionData(
       "createBidWithReferral",
-      [BigNumber.from(tokenId || 1), COLLECTIVE_NOUNS_TREASURY]
+      [tokenId || "1", COLLECTIVE_NOUNS_TREASURY]
     );
 
     return appendBidCommentDataSuffix(
@@ -117,7 +119,10 @@ export const PlaceBid = ({
   const getError = () => {
     const minNextBid = utils.formatEther(nextBidAmount);
     const bidAmount = parseBidAmount(bid);
-    if (bid && (!bidAmount || bidAmount.lt(nextBidAmount))) {
+    if (
+      bid &&
+      (!bidAmount || BigNumber.from(bidAmount.toString()).lt(nextBidAmount))
+    ) {
       return `Bid must be at least ${minNextBid}`;
     }
 
@@ -127,11 +132,11 @@ export const PlaceBid = ({
     if (reason.includes("insufficient funds"))
       return "Error insufficient funds for bid";
 
-    if (parsedBid && parsedBid.lt(nextBidAmount))
+    if (parsedBid && BigNumber.from(parsedBid.toString()).lt(nextBidAmount))
       return "Error invalid bid";
   };
   const showBridgeToBase =
-    isConnected && baseBalance?.value && baseBalance.value.isZero();
+    isConnected && baseBalance?.value !== undefined && baseBalance.value.isZero();
 
   return (
     <div
@@ -173,7 +178,11 @@ export const PlaceBid = ({
                 track("placeBidTriggered");
                 write?.();
               } else {
-                openConnectModal?.();
+                if (isMiniApp) {
+                  connectMiniAppWallet();
+                } else {
+                  openConnectModal?.();
+                }
               }
             }}
           >

@@ -53,6 +53,13 @@ export const config = {
   gasBufferPercent: numberFromEnv("GAS_BUFFER_PERCENT", 30),
   dryRun: process.env.DRY_RUN === "true",
   port: numberFromEnv("PORT", 3000),
+  neynarApiKey: process.env.NEYNAR_API_KEY || "",
+  notificationsDryRun: process.env.NOTIFICATIONS_DRY_RUN === "true",
+  notificationsTargetOrigin:
+    process.env.NOTIFICATIONS_TARGET_ORIGIN ||
+    "https://yellowcollective.art",
+  notificationsSettingsUrl: process.env.NOTIFICATIONS_SETTINGS_URL || "",
+  notificationsCronSecret: process.env.NOTIFICATIONS_CRON_SECRET || "",
 };
 
 export const snapshotVotingDuration = () =>

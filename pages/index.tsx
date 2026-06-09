@@ -1,23 +1,42 @@
 import Header from "../components/Header";
 import { useIsMounted } from "hooks/useIsMounted";
-import { Fragment } from "react";
 import Hero from "../components/Hero/Hero";
 import { GetStaticPropsResult, InferGetStaticPropsType } from "next";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { SWRConfig } from "swr";
-import {
-  ContractInfo,
-  getContractInfo,
-  getTokenInfo,
-  TokenInfo,
-} from "data/nouns-builder/token";
-import { AuctionInfo, getCurrentAuction } from "data/nouns-builder/auction";
+import { ContractInfo, TokenInfo } from "data/nouns-builder/token";
+import { AuctionInfo } from "data/nouns-builder/auction";
 import Footer from "@/components/Footer";
-import { getAddresses } from "@/services/nouns-builder/manager";
 import Banner from "@/components/Banner";
 import Faq from "@/components/Faq";
 import Description from "@/components/Description";
 import { TOKEN_CONTRACT } from "constants/addresses";
+import { YELLOW_COLLECTIVE_CONTRACTS } from "data/contracts";
+import { zeroAddress } from "viem";
+
+const fallbackContract: ContractInfo = {
+  name: "Collective Nouns",
+  description: "ERC-721 membership and artwork contract for Collective Nouns.",
+  image: "",
+  external_url: "",
+  total_supply: "0x00",
+  auction: YELLOW_COLLECTIVE_CONTRACTS.auctionHouse.address,
+};
+
+const fallbackAuction: AuctionInfo = {
+  tokenId: "0x00",
+  highestBid: "0x00",
+  highestBidder: zeroAddress,
+  startTime: 0,
+  endTime: 0,
+  settled: true,
+  bids: [],
+};
+
+const fallbackToken: TokenInfo = {
+  name: "Collective Noun #0",
+  image: "",
+  owner: zeroAddress,
+};
 
 export const getStaticProps = async (): Promise<
   GetStaticPropsResult<{
@@ -28,20 +47,11 @@ export const getStaticProps = async (): Promise<
     auction: AuctionInfo;
   }>
 > => {
-  // Get token and auction info
   const tokenContract = TOKEN_CONTRACT as `0x${string}`;
-
-  const [addresses, contract] = await Promise.all([
-    getAddresses({ tokenAddress: tokenContract }),
-    getContractInfo({ address: tokenContract }),
-  ]);
-
-  const auction = await getCurrentAuction({ address: addresses.auction });
+  const contract = fallbackContract;
+  const auction = fallbackAuction;
   const tokenId = auction.tokenId;
-  const token = await getTokenInfo({
-    address: tokenContract,
-    tokenid: tokenId,
-  });
+  const token = fallbackToken;
 
   if (!contract.image) contract.image = "";
 

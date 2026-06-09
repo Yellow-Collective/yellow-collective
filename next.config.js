@@ -10,6 +10,12 @@ const farcasterMiniAppSdkPath = path.join(
   "@farcaster",
   "miniapp-sdk"
 );
+const nobleHashesPath = path.join(
+  __dirname,
+  "node_modules",
+  "@noble",
+  "hashes"
+);
 
 // CSP external domains:
 // api.goldsky.com: Builder/Nouns subgraph reads.
@@ -35,7 +41,12 @@ const contentSecurityPolicy = [
     "'unsafe-inline'",
     ...(isDevelopment ? ["'unsafe-eval'"] : []),
   ].join(" "),
-  "style-src 'self' 'unsafe-inline'",
+  [
+    "style-src",
+    "'self'",
+    "'unsafe-inline'",
+    "https://fonts.googleapis.com",
+  ].join(" "),
   [
     "connect-src",
     "'self'",
@@ -81,8 +92,14 @@ const contentSecurityPolicy = [
     "https://farcaster.xyz",
     "https://*.twimg.com",
     "https://metadata.ens.domains",
+    "https://explorer-api.walletconnect.com",
   ].join(" "),
-  "font-src 'self' data:",
+  [
+    "font-src",
+    "'self'",
+    "data:",
+    "https://fonts.gstatic.com",
+  ].join(" "),
   "frame-src 'self' https://*.walletconnect.com https://*.walletconnect.org",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
@@ -117,7 +134,10 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  experimental: {
+    staticGenerationMaxConcurrency: 1,
+    staticGenerationMinPagesPerWorker: 1000,
+  },
   images: {
     remotePatterns: [
       // Zora renderer URLs used by token and Builder media.
@@ -235,16 +255,24 @@ const nextConfig = {
       },
     ];
   },
-  webpack(config) {
-    if (!fs.existsSync(farcasterMiniAppSdkPath)) {
-      config.resolve.alias["@farcaster/miniapp-sdk"] = path.resolve(
-        __dirname,
-        "utils/farcasterMiniAppSdkShim.ts"
-      );
-    }
+};
 
-    return config;
-  },
+nextConfig.webpack = (config) => {
+  config.resolve = config.resolve || {};
+  config.resolve.alias = {
+    ...(config.resolve.alias || {}),
+    // Keep viem's noble-curve imports paired with the root hashes version.
+    "@noble/hashes": nobleHashesPath,
+  };
+
+  if (!fs.existsSync(farcasterMiniAppSdkPath)) {
+    config.resolve.alias["@farcaster/miniapp-sdk"] = path.resolve(
+      __dirname,
+      "utils/farcasterMiniAppSdkShim.ts"
+    );
+  }
+
+  return config;
 };
 
 module.exports = nextConfig;

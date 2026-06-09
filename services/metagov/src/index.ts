@@ -17,6 +17,7 @@ import {
   hasConfiguredVoterAlreadyVoted,
 } from "./services/safe-voting";
 import { StateStore } from "./services/state-store";
+import { sendMetagovNotification } from "./services/notifications";
 import { startHttpServer } from "./server/http-server";
 import { TrackedProposal } from "./types";
 import { getWalletAddress } from "./utils/wallet";
@@ -123,6 +124,16 @@ const checkForNewProposals = async () => {
     store.upsertProposal(trackedProposal);
     processedProposals.add(proposal.id);
     pendingVotes.set(receipt.id, proposal.id);
+    await sendMetagovNotification({
+      store,
+      eventType: "nouns_snapshot_created",
+      sourceId: `${proposal.id}:${receipt.id}`,
+      targetPath: `/proposals/nouns/${proposal.id}`,
+      variables: {
+        proposalNumber: proposal.id,
+        proposalTitle: proposal.title,
+      },
+    }).catch(console.error);
 
     const createdTimestamp = Number(proposal.createdTimestamp);
     if (createdTimestamp > lastCheckedTimestamp) {
@@ -154,6 +165,17 @@ const checkForClosedVotes = async () => {
 
       const { scores, scoresTotal } = await getSnapshotScores(snapshotId);
       store.markWinningChoice(nounsId, result, scores, scoresTotal);
+      await sendMetagovNotification({
+        store,
+        eventType: "nouns_snapshot_closed",
+        sourceId: `${nounsId}:${snapshotId}`,
+        targetPath: `/proposals/nouns/${nounsId}`,
+        variables: {
+          proposalNumber: nounsId,
+          proposalTitle: store.load().proposals[nounsId]?.nounsTitle || "",
+          winningChoice: result || "NO_VOTES",
+        },
+      }).catch(console.error);
 
       if (result === "NO_VOTES" && config.noVotesAction === "skip") {
         store.markProposal(nounsId, "skipped", {
@@ -200,6 +222,17 @@ const checkForClosedVotes = async () => {
         gasUsed: execution.gasUsed,
         executedAt: new Date().toISOString(),
       });
+      await sendMetagovNotification({
+        store,
+        eventType: "nouns_vote_executed",
+        sourceId: `${nounsId}:${snapshotId}`,
+        targetPath: `/proposals/nouns/${nounsId}`,
+        variables: {
+          proposalNumber: nounsId,
+          proposalTitle: store.load().proposals[nounsId]?.nounsTitle || "",
+          winningChoice: voteData.choice,
+        },
+      }).catch(console.error);
       submittedVotes.add(snapshotId);
       pendingVotes.delete(snapshotId);
     }
@@ -219,6 +252,17 @@ const checkForCancelledProposals = async () => {
       const cancelled = await cancelSnapshotProposal(proposal.snapshotId);
       if (cancelled) {
         store.markProposal(proposal.nounsId, "cancelled");
+        await sendMetagovNotification({
+          store,
+          eventType: "nouns_snapshot_cancelled",
+          sourceId: `${proposal.nounsId}:${proposal.snapshotId}`,
+          targetPath: `/proposals/nouns/${proposal.nounsId}`,
+          variables: {
+            proposalNumber: proposal.nounsId,
+            proposalTitle:
+              store.load().proposals[proposal.nounsId]?.nounsTitle || "",
+          },
+        }).catch(console.error);
         pendingVotes.delete(proposal.snapshotId);
       }
     }

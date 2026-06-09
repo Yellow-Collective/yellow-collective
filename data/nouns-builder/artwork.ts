@@ -2,7 +2,7 @@ import { getAddresses } from "data/nouns-builder/manager";
 import { TOKEN_CONTRACT, TOKEN_NETWORK } from "constants/addresses";
 import { IPFS_GATEWAY } from "constants/urls";
 import DefaultProvider from "@/utils/DefaultProvider";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ethers } from "@/utils/ethers-compat";
 import fs from "fs/promises";
 import path from "path";
 

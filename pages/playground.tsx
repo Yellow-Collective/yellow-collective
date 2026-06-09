@@ -3,13 +3,15 @@ import type {
   PlaygroundArtwork,
   PlaygroundImage,
 } from "data/nouns-builder/artwork";
+import { isInMiniApp } from "@/utils/farcasterMiniApp";
 import Head from "next/head";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 
 type GeneratedToken = {
   id: string;
   layers: PlaygroundImage[];
+  previewUrl: string;
 };
 
 const RANDOM_VALUE = "random";
@@ -39,6 +41,7 @@ const getRandomItem = <T,>(items: T[]) =>
 const loadImage = (src: string) =>
   new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
+    image.crossOrigin = "anonymous";
     image.onload = () => resolve(image);
     image.onerror = () => reject(new Error(`Unable to load ${src}`));
     image.src = src;
@@ -68,6 +71,59 @@ const getLayerDataUri = async (src: string) => {
 const getDownloadFileName = (generation: GeneratedToken, extension: string) =>
   `yellow-${generation.id}.${extension}`;
 
+const createComposedCanvas = async (layers: PlaygroundImage[]) => {
+  const loadedLayers = await Promise.all(
+    layers.map((layer) => loadImage(layer.uri))
+  );
+  const size = loadedLayers[0]?.naturalWidth || 1024;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("Unable to create canvas.");
+
+  context.imageSmoothingEnabled = false;
+  loadedLayers.forEach((image) => {
+    context.drawImage(image, 0, 0, size, size);
+  });
+
+  return canvas;
+};
+
+const canvasToPngBlob = (canvas: HTMLCanvasElement) =>
+  new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) {
+        resolve(blob);
+      } else {
+        reject(new Error("Unable to create PNG image."));
+      }
+    }, "image/png");
+  });
+
+const createPngBlob = async (layers: PlaygroundImage[]) =>
+  canvasToPngBlob(await createComposedCanvas(layers));
+
+const createPngFile = async (generation: GeneratedToken) =>
+  new File(
+    [await createPngBlob(generation.layers)],
+    getDownloadFileName(generation, "png"),
+    {
+      type: "image/png",
+    }
+  );
+
+const canShareFile = (file: File) =>
+  typeof navigator !== "undefined" &&
+  typeof navigator.share === "function" &&
+  typeof navigator.canShare === "function" &&
+  navigator.canShare({ files: [file] });
+
+const isLikelyMobileDevice = () =>
+  typeof window !== "undefined" &&
+  (window.matchMedia("(pointer: coarse)").matches ||
+    /Android|iPad|iPhone|iPod/i.test(navigator.userAgent));
+
 export default function PlaygroundPage() {
   const { data, error, isLoading } = useSWR<PlaygroundArtwork>(
     "/api/playground/artwork",
@@ -80,6 +136,7 @@ export default function PlaygroundPage() {
   const [selectedGeneration, setSelectedGeneration] =
     useState<GeneratedToken | null>(null);
   const [downloadError, setDownloadError] = useState("");
+  const galleryRef = useRef<GeneratedToken[]>([]);
   const controlLayers = useMemo(() => {
     if (!data) return [];
 
@@ -137,41 +194,81 @@ export default function PlaygroundPage() {
       })
       .filter((image): image is PlaygroundImage => Boolean(image));
   };
-  const generate = () => {
+  useEffect(() => {
+    galleryRef.current = gallery;
+  }, [gallery]);
+
+  useEffect(
+    () => () => {
+      galleryRef.current.forEach((generation) =>
+        URL.revokeObjectURL(generation.previewUrl)
+      );
+    },
+    []
+  );
+
+  const generate = async () => {
+    setDownloadError("");
     const layers = resolveLayers();
     if (!layers.length) return;
 
-    const generation = {
-      id: `${Date.now().toString(36)}-${Math.random()
+    try {
+      const id = `${Date.now().toString(36)}-${Math.random()
         .toString(36)
-        .slice(2, 7)}`,
-      layers,
-    };
+        .slice(2, 7)}`;
+      const previewUrl = URL.createObjectURL(await createPngBlob(layers));
 
-    setGallery((currentGallery) => [generation, ...currentGallery]);
+      setGallery((currentGallery) => [
+        {
+          id,
+          layers,
+          previewUrl,
+        },
+        ...currentGallery,
+      ]);
+    } catch (generationError) {
+      setDownloadError(
+        generationError instanceof Error
+          ? generationError.message
+          : "Unable to generate preview."
+      );
+    }
   };
   const downloadPng = async (generation: GeneratedToken) => {
     setDownloadError("");
 
     try {
-      const loadedLayers = await Promise.all(
-        generation.layers.map((layer) => loadImage(layer.uri))
-      );
-      const size = loadedLayers[0]?.naturalWidth || 1024;
-      const canvas = document.createElement("canvas");
-      canvas.width = size;
-      canvas.height = size;
-      const context = canvas.getContext("2d");
-      if (!context) throw new Error("Unable to create canvas.");
+      const file = await createPngFile(generation);
+      const inMiniApp = await isInMiniApp();
 
-      loadedLayers.forEach((image) => {
-        context.drawImage(image, 0, 0, size, size);
-      });
+      if ((inMiniApp || isLikelyMobileDevice()) && canShareFile(file)) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: "Yellow Collective preview",
+          });
+          return;
+        } catch (shareError) {
+          if (
+            shareError instanceof DOMException &&
+            shareError.name === "AbortError"
+          ) {
+            return;
+          }
 
-      downloadUrl(
-        canvas.toDataURL("image/png"),
-        getDownloadFileName(generation, "png")
-      );
+          console.error("Unable to share PNG", shareError);
+        }
+      }
+
+      const url = URL.createObjectURL(file);
+      downloadUrl(url, file.name);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      if (inMiniApp) {
+        setDownloadError(
+          "This Farcaster client does not support sharing generated image files. Open the app in Safari to save the PNG."
+        );
+      }
     } catch (downloadError) {
       setDownloadError(
         downloadError instanceof Error
@@ -297,7 +394,7 @@ export default function PlaygroundPage() {
                       onClick={() => setSelectedGeneration(generation)}
                       className="group overflow-hidden rounded-2xl border border-skin-stroke bg-[#ffcc00] shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                     >
-                      <LayerStack layers={generation.layers} />
+                      <LayerStack generation={generation} />
                     </button>
                   ))}
                 </div>
@@ -317,7 +414,7 @@ export default function PlaygroundPage() {
             className="yc-dark-yellow-surface w-full max-w-xl rounded-2xl border border-skin-stroke bg-white p-5 shadow-xl"
             onClick={(event) => event.stopPropagation()}
           >
-            <LayerStack layers={selectedGeneration.layers} />
+            <LayerStack generation={selectedGeneration} />
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <button
                 type="button"
@@ -346,18 +443,13 @@ export default function PlaygroundPage() {
   );
 }
 
-const LayerStack = ({ layers }: { layers: PlaygroundImage[] }) => (
+const LayerStack = ({ generation }: { generation: GeneratedToken }) => (
   <div className="aspect-square w-full overflow-hidden rounded-2xl">
-    <div className="relative h-full w-full">
-      {layers.map((image) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={`${image.trait}-${image.name}`}
-          src={image.uri}
-          alt={`${image.trait} ${image.name}`}
-          className="absolute inset-0 h-full w-full object-contain"
-        />
-      ))}
-    </div>
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img
+      src={generation.previewUrl}
+      alt="Generated Yellow Collective preview"
+      className="block h-full w-full object-contain [image-rendering:pixelated]"
+    />
   </div>
 );

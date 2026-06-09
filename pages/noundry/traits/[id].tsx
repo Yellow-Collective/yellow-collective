@@ -16,6 +16,7 @@ import type { Round } from "data/rounds";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -24,6 +25,10 @@ import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 
 const ROUND_SIGNED_REQUEST_CHAIN_ID = Number(TOKEN_NETWORK);
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  props: {},
+});
 
 const fetcher = async (url: string) => {
   const response = await fetch(url);

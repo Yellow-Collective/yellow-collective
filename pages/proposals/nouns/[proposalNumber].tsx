@@ -1,7 +1,6 @@
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import Layout from "@/components/Layout";
 import MetagovStatusCard from "@/components/MetagovStatusCard";
-import NounsSnapshotVoteCard from "@/components/NounsSnapshotVoteCard";
 import ProposalTabs from "@/components/ProposalTabs";
 import ProposalTransactions from "@/components/ProposalTransactions";
 import ProposalVoteList, { ProposalVote } from "@/components/ProposalVoteList";
@@ -10,7 +9,6 @@ import { isAdminAddress } from "@/utils/admin";
 import { getNounsMetagovEnabled } from "data/nouns-metagov";
 import {
   getNounsDaoProposalByNumber,
-  getNounsDaoProposals,
   type NounsDaoProposal,
 } from "data/nouns-dao/proposals";
 import ArrowLeftIcon from "@heroicons/react/20/solid/ArrowLeftIcon";
@@ -19,12 +17,18 @@ import type {
   GetStaticPropsResult,
   InferGetStaticPropsType,
 } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import useSWR from "swr";
 import { useAccount } from "wagmi";
+
+const NounsSnapshotVoteCard = dynamic(
+  () => import("@/components/NounsSnapshotVoteCard"),
+  { ssr: false }
+);
 
 type NounsProposalDetailProps = {
   proposal: NounsDaoProposal;
@@ -72,21 +76,10 @@ const getStatus = (state: number) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const proposals = await getNounsDaoProposals();
-
-    return {
-      paths: proposals.map((proposal) => ({
-        params: { proposalNumber: String(proposal.proposalNumber) },
-      })),
-      fallback: "blocking",
-    };
-  } catch {
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
 };
 
 export const getStaticProps = async ({

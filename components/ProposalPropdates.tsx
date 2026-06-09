@@ -1,7 +1,7 @@
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import { TOKEN_CONTRACT, TOKEN_NETWORK } from "constants/addresses";
 import { ETHERSCAN_BASEURL } from "constants/urls";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ethers } from "@/utils/ethers-compat";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";

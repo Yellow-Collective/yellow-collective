@@ -18,8 +18,34 @@ import { publicProvider } from "wagmi/providers/public";
 import { zoraTestnet, zora, base, baseGoerli } from "@wagmi/chains";
 
 import { createPublicClient, fallback, http } from "viem";
-import { baseSepolia, mainnet as mainnetViem } from "viem/chains";
 import { TOKEN_NETWORK } from "constants/addresses";
+
+const mainnetViem = mainnet as any;
+const baseSepolia = {
+  id: 84532,
+  name: "Base Sepolia",
+  network: "base-sepolia",
+  nativeCurrency: {
+    name: "Sepolia Ether",
+    symbol: "ETH",
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://sepolia.base.org"],
+    },
+    public: {
+      http: ["https://sepolia.base.org"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Basescan",
+      url: "https://sepolia.basescan.org",
+    },
+  },
+  testnet: true,
+} as const;
 
 const selectedChain = {
   "1": mainnet,
@@ -82,13 +108,15 @@ const MAINNET_FALLBACK_RPC_URLS = Array.from(
       ALCHEMY_KEY ? `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}` : "",
       "https://eth.llamarpc.com",
       "https://ethereum.publicnode.com",
-      "https://cloudflare-eth.com",
     ].filter((url): url is string => Boolean(url))
   )
 );
 
 export const MAINNET_RPC_URLS = Array.from(
   new Set([getPublicRpcAggregatorUrl("1"), ...MAINNET_FALLBACK_RPC_URLS])
+);
+export const ENS_MAINNET_RPC_URLS = MAINNET_RPC_URLS.filter(
+  (url) => !url.includes("llamarpc.com")
 );
 
 export const RPC_URLS: { [chainId in ChainId]: string } = {
@@ -161,7 +189,7 @@ const wagmiClient = createClient({
 const viemMainnetClient = createPublicClient({
   chain: mainnetViem,
   transport: fallback(
-    MAINNET_RPC_URLS.map((url) =>
+    ENS_MAINNET_RPC_URLS.map((url) =>
       http(url, {
         timeout: 4000,
       })

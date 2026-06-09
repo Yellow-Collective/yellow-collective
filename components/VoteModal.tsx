@@ -10,7 +10,7 @@ import {
 } from "wagmi";
 import { useDAOAddresses } from "../hooks";
 import { GovernorABI } from "@buildersdk/sdk";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@/utils/ethers-compat";
 import { useState } from "react";
 import Image from "next/image";
 import { CheckIcon, MinusIcon, XMarkIcon } from "@heroicons/react/20/solid";

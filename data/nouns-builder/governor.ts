@@ -1,6 +1,6 @@
 import { BuilderSDK } from "@buildersdk/sdk";
 import DefaultProvider from "@/utils/DefaultProvider";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@/utils/ethers-compat";
 import { GraphQLClient, gql } from "graphql-request";
 import { SUBGRAPH_ENDPOINT } from "constants/urls";
 

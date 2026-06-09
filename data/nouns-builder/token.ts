@@ -2,7 +2,7 @@ import { BuilderSDK } from "@buildersdk/sdk";
 import DefaultProvider from "@/utils/DefaultProvider";
 import parseBase64String from "@/utils/parseBase64String";
 import getNormalizedURI from "@/utils/getNormalizedURI";
-import { BigNumber, BigNumberish, constants } from "ethers";
+import { BigNumber } from "@/utils/ethers-compat";
 import { IPFS_GATEWAY, SUBGRAPH_ENDPOINT } from "constants/urls";
 import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { parse } from "graphql";
@@ -14,6 +14,8 @@ const { token } = BuilderSDK.connect({ signerOrProvider: DefaultProvider });
 const { token: mainnetToken } = BuilderSDK.connect({
   signerOrProvider: MainnetProvider,
 });
+
+const toBigNumber = (value: unknown) => BigNumber.from(value?.toString() || 0);
 
 export type ContractInfo = {
   name: string;
@@ -54,7 +56,7 @@ export const getContractInfo = async ({ address }: { address: string }) => {
     image: getNormalizedURI(contractJSON.image, {
       preferredIPFSGateway: IPFS_GATEWAY,
     }),
-    total_supply: total_supply.toHexString(),
+    total_supply: toBigNumber(total_supply).toHexString(),
     auction,
   } as ContractInfo;
 };
@@ -119,10 +121,10 @@ export const getFounders = async ({ address }: { address: string }) => {
 
   const founders = await tokenContract.getFounders();
 
-  return founders.map(({ wallet, ownershipPct, vestExpiry }) => ({
-    wallet,
-    ownershipPct: Number(ownershipPct),
-    vestExpiry: Number(vestExpiry),
+  return founders.map((founder: Founder) => ({
+    wallet: founder.wallet,
+    ownershipPct: Number(founder.ownershipPct),
+    vestExpiry: Number(founder.vestExpiry),
   })) as Founder[];
 };
 

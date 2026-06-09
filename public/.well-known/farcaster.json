@@ -23,6 +23,7 @@
     "ogDescription": "An onchain Collective supporting artists and creatives.",
     "ogImageUrl": "https://yellowcollective.art/miniapp-hero.png",
     "canonicalDomain": "yellowcollective.art",
-    "requiredChains": ["eip155:8453"]
+    "requiredChains": ["eip155:8453"],
+    "webhookUrl": "https://api.neynar.com/f/app/yellow-collective/event"
   }
 }
