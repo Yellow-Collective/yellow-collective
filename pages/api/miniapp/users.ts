@@ -16,13 +16,18 @@ export default async function handler(
       return res.status(400).json({ error: "A valid Farcaster FID is required." });
     }
 
+    const notificationsEnabled =
+      typeof req.body?.notificationsEnabled === "boolean"
+        ? req.body.notificationsEnabled
+        : undefined;
+
     const result = await upsertMiniAppUser({
       fid,
       username: req.body?.username,
       displayName: req.body?.displayName,
       pfpUrl: req.body?.pfpUrl,
       walletAddress: req.body?.walletAddress,
-      notificationsEnabled: Boolean(req.body?.notificationsEnabled),
+      notificationsEnabled,
     });
 
     return res.status(200).json(result);
