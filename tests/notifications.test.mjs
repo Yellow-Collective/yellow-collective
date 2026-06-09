@@ -256,6 +256,14 @@ test("admin dashboard exposes Mini App audience sync", () => {
   assert.match(dashboard, /notification tokens[\s\S]*not stored or shown/i);
 });
 
+test("notification test sends use an admin-scoped endpoint", () => {
+  const dashboard = read("pages/admin/dashboard.tsx");
+  assert.match(dashboard, /"\/api\/admin\/notifications\/test"/);
+
+  const endpoint = read("pages/api/admin/notifications/test.ts");
+  assert.match(endpoint, /pages\/api\/notifications\/test/);
+});
+
 test("Vercel cron is configured for the authenticated notification poll route", () => {
   const vercelConfig = JSON.parse(read("vercel.json"));
   assert.deepEqual(vercelConfig.crons, [
