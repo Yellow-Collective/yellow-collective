@@ -1318,7 +1318,7 @@ const NotificationsAdminPanel = ({
       }
 
       const response = await sendAdminRequest(
-        "/api/notifications/test",
+        "/api/admin/notifications/test",
         adminAuth,
         "POST",
         {
