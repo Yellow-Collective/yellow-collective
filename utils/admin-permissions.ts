@@ -13,6 +13,7 @@ export const ADMIN_PERMISSION_DEFINITIONS = [
   { id: "gallery", label: "Gallery" },
   { id: "rounds", label: "Rounds" },
   { id: "nouns", label: "Nouns + Metagov" },
+  { id: "notifications", label: "Notifications" },
   { id: "testing", label: "Testing content" },
 ] as const;
 

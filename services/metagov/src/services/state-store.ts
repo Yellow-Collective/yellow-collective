@@ -14,6 +14,7 @@ const emptyState = (): MetagovState => ({
   updatedAt: new Date().toISOString(),
   proposals: {},
   executedVotes: [],
+  notifications: {},
 });
 
 export class StateStore {
@@ -39,6 +40,8 @@ export class StateStore {
       updatedAt: parsed.updatedAt || new Date().toISOString(),
       proposals: parsed.proposals || {},
       executedVotes: parsed.executedVotes || [],
+      notifications:
+        (parsed as Partial<MetagovState>).notifications || {},
     };
   }
 
@@ -121,5 +124,32 @@ export class StateStore {
       scores,
       scoresTotal,
     });
+  }
+
+  hasNotification(eventType: string, sourceId: string) {
+    const state = this.load();
+    return Boolean(state.notifications[`${eventType}:${sourceId}`]);
+  }
+
+  markNotification({
+    eventType,
+    sourceId,
+    targetUrl,
+    response,
+  }: {
+    eventType: string;
+    sourceId: string;
+    targetUrl: string;
+    response?: unknown;
+  }) {
+    const state = this.load();
+    state.notifications[`${eventType}:${sourceId}`] = {
+      eventType,
+      sourceId,
+      targetUrl,
+      response,
+      sentAt: new Date().toISOString(),
+    };
+    this.save(state);
   }
 }

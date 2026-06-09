@@ -9,6 +9,11 @@ export type MiniAppContext = {
   client?: {
     safeAreaInsets?: MiniAppSafeAreaInsets;
   };
+  added?: boolean;
+  notificationDetails?: {
+    token?: string;
+    url?: string;
+  };
   user?: {
     fid?: number;
     username?: string;
@@ -26,6 +31,14 @@ export type MiniAppSdk = {
   };
   actions: {
     ready: () => Promise<void>;
+    addMiniApp?: () => Promise<{
+      added?: boolean;
+      notificationDetails?: { token?: string; url?: string };
+    }>;
+    addFrame?: () => Promise<{
+      added?: boolean;
+      notificationDetails?: { token?: string; url?: string };
+    }>;
     composeCast?: (options: {
       text?: string;
       embeds?: string[];
@@ -33,6 +46,8 @@ export type MiniAppSdk = {
     }) => Promise<unknown>;
     openUrl?: (url: string) => Promise<void>;
   };
+  on?: (event: string, listener: (...args: any[]) => void) => void;
+  removeListener?: (event: string, listener: (...args: any[]) => void) => void;
 };
 
 export type MiniAppEthereumProvider = {
@@ -104,5 +119,19 @@ export const getMiniAppEthereumProvider = async () => {
   } catch (error) {
     console.warn("Unable to read Farcaster Mini App wallet provider", error);
     return undefined;
+  }
+};
+
+export const addMiniAppWithNotifications = async () => {
+  const sdk = await loadMiniAppSdk();
+  if (!sdk?.actions) return null;
+
+  try {
+    if (sdk.actions.addMiniApp) return await sdk.actions.addMiniApp();
+    if (sdk.actions.addFrame) return await sdk.actions.addFrame();
+    return null;
+  } catch (error) {
+    console.warn("Unable to add Farcaster Mini App", error);
+    return null;
   }
 };
