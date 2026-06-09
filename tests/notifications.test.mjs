@@ -261,7 +261,7 @@ test("Vercel cron is configured for the authenticated notification poll route", 
   assert.deepEqual(vercelConfig.crons, [
     {
       path: "/api/notifications/poll",
-      schedule: "*/5 * * * *",
+      schedule: "0 14 * * *",
     },
   ]);
 
