@@ -256,6 +256,21 @@ test("admin dashboard exposes Mini App audience sync", () => {
   assert.match(dashboard, /notification tokens[\s\S]*not stored or shown/i);
 });
 
+test("Vercel cron is configured for the authenticated notification poll route", () => {
+  const vercelConfig = JSON.parse(read("vercel.json"));
+  assert.deepEqual(vercelConfig.crons, [
+    {
+      path: "/api/notifications/poll",
+      schedule: "0 14 * * *",
+    },
+  ]);
+
+  const pollRoute = read("pages/api/notifications/poll.ts");
+  assert.match(pollRoute, /req\.method !== "GET"/);
+  assert.match(pollRoute, /req\.method !== "POST"/);
+  assert.match(pollRoute, /Authorization.*Bearer|hasNotificationCronAuth/s);
+});
+
 for (const { name, run } of tests) {
   await run();
   console.log(`ok - ${name}`);
