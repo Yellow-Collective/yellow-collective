@@ -1685,10 +1685,13 @@ const NotificationAudiencePanel = ({
         audience: NotificationAudienceRecord[];
         syncedCount?: number;
       }, { revalidate: false });
+      const syncedCount = Number(
+        (response as { syncedCount?: number }).syncedCount || 0
+      );
       setMessage(
-        `Synced ${Number(
-          (response as { syncedCount?: number }).syncedCount || 0
-        )} enabled Mini App users from Neynar.`
+        syncedCount === 0
+          ? "Neynar returned 0 enabled notification tokens. If a user just enabled alerts, remove and re-add the Mini App, then force-refresh the Farcaster domain manifest and sync again."
+          : `Synced ${syncedCount} enabled Mini App users from Neynar.`
       );
     } catch (syncError) {
       setMessage(
@@ -1785,7 +1788,11 @@ const NotificationAudiencePanel = ({
                   <td className="px-3 py-4">
                     <StatusPill
                       status={
-                        user.notificationsEnabled ? "enabled" : "disabled"
+                        user.notificationsEnabled
+                          ? "enabled"
+                          : user.lastSyncedAt
+                            ? "no Neynar token"
+                            : "disabled"
                       }
                     />
                   </td>

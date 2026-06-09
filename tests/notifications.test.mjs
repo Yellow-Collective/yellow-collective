@@ -242,6 +242,27 @@ test("notification token sync fetches Neynar audience without exposing token sec
   assert.equal(Object.prototype.hasOwnProperty.call(result[0], "token"), false);
 });
 
+test("notification test send preflights Neynar tokens before a real send", () => {
+  const endpoint = read("pages/api/notifications/test.ts");
+  assert.match(endpoint, /fetchNeynarNotificationTokens/);
+  assert.match(endpoint, /fetchNeynarNotificationTokens\(\{\s*fids: targetFids\s*\}\)/s);
+  assert.match(endpoint, /missingFids/);
+  assert.match(endpoint, /NoNotificationTokens/);
+  assert.match(endpoint, /status\(422\)/);
+});
+
+test("audience sync clears stale token fields and reports zero-token syncs clearly", () => {
+  const data = read("data/notifications.ts");
+  assert.match(data, /notification_url = null/);
+  assert.match(data, /notification_token_created_at = null/);
+  assert.match(data, /notification_token_updated_at = null/);
+  assert.match(data, /last_synced_at = now\(\)/);
+
+  const dashboard = read("pages/admin/dashboard.tsx");
+  assert.match(dashboard, /Neynar returned 0 enabled notification tokens/);
+  assert.match(dashboard, /no Neynar token/i);
+});
+
 test("admin dashboard exposes a notification log with recipient limitations", () => {
   const dashboard = read("pages/admin/dashboard.tsx");
   assert.match(dashboard, /<NotificationLogPanel/);

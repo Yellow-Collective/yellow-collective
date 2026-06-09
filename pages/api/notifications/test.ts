@@ -1,7 +1,10 @@
 import { requireAdminRequest } from "@/utils/admin-api";
 import { hasNotificationCronAuth } from "@/utils/notifications/auth";
-import { publishNeynarNotification } from "@/utils/notifications/neynar";
-import { createNotificationUuid } from "@/utils/notifications/neynar";
+import {
+  createNotificationUuid,
+  fetchNeynarNotificationTokens,
+  publishNeynarNotification,
+} from "@/utils/notifications/neynar";
 import {
   markNotificationEventSent,
   upsertNotificationEventAttempt,
@@ -45,6 +48,22 @@ export default async function handler(
       req.body?.dryRun === true ||
       req.query.dryRun === "true" ||
       process.env.NOTIFICATIONS_DRY_RUN === "true";
+
+    if (!dryRun) {
+      const tokens = await fetchNeynarNotificationTokens({ fids: targetFids });
+      const tokenFids = new Set(tokens.map((token) => token.fid));
+      const missingFids = targetFids.filter((fid) => !tokenFids.has(fid));
+
+      if (missingFids.length > 0) {
+        return res.status(422).json({
+          code: "NoNotificationTokens",
+          missingFids,
+          error: `No Neynar notification tokens found for FID(s): ${missingFids.join(
+            ", "
+          )}. Remove and re-add the Mini App, enable notifications, then sync the Neynar audience again.`,
+        });
+      }
+    }
 
     await upsertNotificationEventAttempt({
       id: uuid,
