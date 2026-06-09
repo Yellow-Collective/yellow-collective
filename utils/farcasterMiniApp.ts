@@ -8,6 +8,10 @@ export type MiniAppSafeAreaInsets = {
 export type MiniAppContext = {
   client?: {
     safeAreaInsets?: MiniAppSafeAreaInsets;
+    notificationDetails?: {
+      token?: string;
+      url?: string;
+    };
   };
   added?: boolean;
   notificationDetails?: {

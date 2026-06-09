@@ -265,6 +265,30 @@ test("Mini App notification prompt persists a user response", () => {
   assert.match(prompt, /context\?\.user\?\.fid/);
 });
 
+test("Mini App passive saves do not downgrade synced notification status", () => {
+  const endpoint = read("pages/api/miniapp/users.ts");
+  assert.doesNotMatch(endpoint, /Boolean\(req\.body\?\.notificationsEnabled\)/);
+  assert.match(
+    endpoint,
+    /typeof req\.body\?\.notificationsEnabled === "boolean"/
+  );
+
+  const data = read("data/notifications.ts");
+  assert.match(
+    data,
+    /COALESCE\(\$6::boolean, miniapp_users\.notifications_enabled\)/
+  );
+  assert.doesNotMatch(data, /Boolean\(input\.notificationsEnabled\)/);
+});
+
+test("Mini App prompt treats notification details as optional context", () => {
+  const prompt = read("components/MiniApp/MiniAppNotificationsPrompt.tsx");
+  assert.match(prompt, /getNotificationDetails/);
+  assert.match(prompt, /context\?\.client\?\.notificationDetails/);
+  assert.doesNotMatch(prompt, /Boolean\(context\?\.notificationDetails\)/);
+  assert.match(prompt, /notificationsEnabled: notificationDetails \? true : undefined/);
+});
+
 test("notification test sends use an admin-scoped endpoint", () => {
   const dashboard = read("pages/admin/dashboard.tsx");
   assert.match(dashboard, /"\/api\/admin\/notifications\/test"/);

@@ -226,14 +226,14 @@ export const upsertMiniAppUser = async (input: MiniAppUserInput) => {
         last_seen_at,
         updated_at
       )
-      VALUES ($1, $2, $3, $4, $5, $6, now(), now())
+      VALUES ($1, $2, $3, $4, $5, COALESCE($6::boolean, false), now(), now())
       ON CONFLICT (fid)
       DO UPDATE SET
         username = EXCLUDED.username,
         display_name = EXCLUDED.display_name,
         pfp_url = EXCLUDED.pfp_url,
         wallet_address = COALESCE(EXCLUDED.wallet_address, miniapp_users.wallet_address),
-        notifications_enabled = EXCLUDED.notifications_enabled,
+        notifications_enabled = COALESCE($6::boolean, miniapp_users.notifications_enabled),
         last_seen_at = now(),
         updated_at = now()
     `,
@@ -243,7 +243,9 @@ export const upsertMiniAppUser = async (input: MiniAppUserInput) => {
       input.displayName || null,
       input.pfpUrl || null,
       walletAddress,
-      Boolean(input.notificationsEnabled),
+      typeof input.notificationsEnabled === "boolean"
+        ? input.notificationsEnabled
+        : null,
     ]
   );
 

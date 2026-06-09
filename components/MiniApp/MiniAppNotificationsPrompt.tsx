@@ -4,6 +4,7 @@ import {
   isInMiniApp,
   loadMiniAppSdk,
 } from "@/utils/farcasterMiniApp";
+import type { MiniAppContext } from "@/utils/farcasterMiniApp";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
@@ -33,11 +34,14 @@ const markPromptResponded = (fid?: number) => {
   }
 };
 
+const getNotificationDetails = (context?: MiniAppContext | null) =>
+  context?.notificationDetails || context?.client?.notificationDetails;
+
 const saveMiniAppUser = async ({
   notificationsEnabled,
   walletAddress,
 }: {
-  notificationsEnabled: boolean;
+  notificationsEnabled?: boolean;
   walletAddress?: string;
 }) => {
   const context = await getMiniAppContext();
@@ -77,16 +81,17 @@ export default function MiniAppNotificationsPrompt() {
 
       const context = await getMiniAppContext();
       const contextFid = context?.user?.fid;
+      const notificationDetails = getNotificationDetails(context);
       setPromptFid(contextFid);
       await saveMiniAppUser({
-        notificationsEnabled: Boolean(context?.notificationDetails),
+        notificationsEnabled: notificationDetails ? true : undefined,
         walletAddress: address,
       });
 
       if (
         !cancelled &&
         !context?.added &&
-        !context?.notificationDetails &&
+        !notificationDetails &&
         !hasPromptResponded(context?.user?.fid)
       ) {
         setVisible(true);
@@ -132,8 +137,12 @@ export default function MiniAppNotificationsPrompt() {
       setMessage("");
       markPromptResponded(promptFid);
       const result = await addMiniAppWithNotifications();
-      const notificationsEnabled = Boolean(result?.notificationDetails);
-      await saveMiniAppUser({ notificationsEnabled, walletAddress: address });
+      const notificationDetails = result?.notificationDetails;
+      const notificationsEnabled = Boolean(notificationDetails);
+      await saveMiniAppUser({
+        notificationsEnabled: notificationDetails ? true : undefined,
+        walletAddress: address,
+      });
       setMessage(
         notificationsEnabled
           ? "Notifications enabled."
