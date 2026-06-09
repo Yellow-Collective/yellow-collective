@@ -1,21 +1,35 @@
+import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 import AddressLink from "@/components/AddressLink";
 import Layout from "@/components/Layout";
 import DefaultProvider from "@/utils/DefaultProvider";
+import TokenLogo from "components/treasury/TokenLogo";
+import TreasuryDonut, {
+  type TreasuryDonutItem,
+} from "components/treasury/TreasuryDonut";
+import TreasuryNftGrid, {
+  type TreasuryNftItem,
+} from "components/treasury/TreasuryNftGrid";
+import TreasuryTransactions, {
+  type TreasuryTransaction,
+} from "components/treasury/TreasuryTransactions";
 import { TOKEN_CONTRACT } from "constants/addresses";
-import { SUBGRAPH_ENDPOINT } from "constants/urls";
+import { ETHERSCAN_BASEURL, SUBGRAPH_ENDPOINT } from "constants/urls";
 import { YELLOW_COLLECTIVE_CONTRACTS } from "data/contracts";
 import { BigNumber, Contract, utils } from "ethers";
 import { GraphQLClient, gql } from "graphql-request";
 import type { GetStaticPropsResult, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 
 type TreasuryToken = {
+  address: string;
   name: string;
   symbol: string;
   balance: string;
+  balanceRaw: string;
+  decimals: number;
   balanceLabel: string;
   valueUsd: number;
+  logoUrl?: string;
 };
 
 type TreasuryPageProps = {
@@ -26,7 +40,21 @@ type TreasuryPageProps = {
   tokens: TreasuryToken[];
 };
 
+type AssetRow = {
+  id: string;
+  address: string;
+  name: string;
+  symbol: string;
+  subLabel: string;
+  balanceLabel: string;
+  valueUsd: number | null;
+  allocationPercent: number;
+  logoUrl?: string;
+};
+
 const ZORA_TOKEN_ADDRESS = "0x1111111111166b7fe7bd91427724b487980afc69";
+const ZORA_LOGO_URL =
+  "https://assets.coingecko.com/coins/images/32273/standard/zora.png?1696991892";
 const erc20Abi = [
   "function balanceOf(address) view returns (uint256)",
   "function decimals() view returns (uint8)",
@@ -62,39 +90,39 @@ const fetchJson = async <T,>(
   }
 };
 
+const formatUsd = (value: number | null) => {
+  if (value === null || !Number.isFinite(value) || value <= 0) return "$--";
+
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: value >= 1000 ? 0 : 2,
+  });
+};
+
+const formatNumber = (value: number, digits = 4) =>
+  value.toLocaleString("en-US", {
+    maximumFractionDigits: digits,
+  });
+
 const formatEth = (value: string, digits = 5) => {
   try {
-    return Number(utils.formatEther(BigNumber.from(value))).toLocaleString(
-      "en-US",
-      {
-        maximumFractionDigits: digits,
-      }
-    );
+    return formatNumber(Number(utils.formatEther(BigNumber.from(value))), digits);
   } catch {
     return "0";
   }
 };
 
-const formatUsd = (value: number | null) => {
-  if (value === null || !Number.isFinite(value)) return "$--";
-
-  return value.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: value >= 1000 ? 1 : 2,
-  });
-};
-
 const formatTokenBalance = (value: number) => {
-  if (value >= 1000) {
-    return `${(value / 1000).toLocaleString("en-US", {
-      maximumFractionDigits: 2,
-    })}k`;
+  if (value >= 1_000_000) {
+    return `${formatNumber(value / 1_000_000, 2)}m`;
   }
 
-  return value.toLocaleString("en-US", {
-    maximumFractionDigits: 2,
-  });
+  if (value >= 1000) {
+    return `${formatNumber(value / 1000, 2)}k`;
+  }
+
+  return formatNumber(value, 4);
 };
 
 const getTokenPrices = async () => {
@@ -109,6 +137,16 @@ const getTokenPrices = async () => {
     eth: prices?.ethereum?.usd || null,
     zora: prices?.zora?.usd || null,
   };
+};
+
+const getEthBalance = async (treasuryAddress: string) => {
+  try {
+    const balance = await DefaultProvider.getBalance(treasuryAddress);
+    return balance.toString();
+  } catch (error) {
+    console.warn("Unable to load treasury ETH balance", error);
+    return "0";
+  }
 };
 
 const getTrackedTokens = async (
@@ -129,17 +167,29 @@ const getTrackedTokens = async (
 
     return [
       {
+        address: ZORA_TOKEN_ADDRESS,
         name,
         symbol,
         balance: balance.toString(),
+        balanceRaw: rawBalance.toString(),
+        decimals,
         balanceLabel: `${formatTokenBalance(balance)} ${symbol}`,
         valueUsd: zoraPriceUsd ? balance * zoraPriceUsd : 0,
+        logoUrl: ZORA_LOGO_URL,
       },
     ] as TreasuryToken[];
   } catch (error) {
     console.warn("Unable to load tracked treasury tokens", error);
     return [];
   }
+};
+
+const getExplorerAddressUrl = (address: string) => {
+  const explorerBaseUrl = (ETHERSCAN_BASEURL || "https://basescan.org").replace(
+    /\/$/,
+    ""
+  );
+  return `${explorerBaseUrl}/address/${address}`;
 };
 
 export const getStaticProps = async (): Promise<
@@ -164,9 +214,7 @@ export const getStaticProps = async (): Promise<
 
   const [{ eth, zora }, ethBalance] = await Promise.all([
     getTokenPrices(),
-    DefaultProvider.getBalance(treasuryAddress).then((balance) =>
-      balance.toString()
-    ),
+    getEthBalance(treasuryAddress),
   ]);
   const tokens = await getTrackedTokens(treasuryAddress, zora);
 
@@ -182,6 +230,51 @@ export const getStaticProps = async (): Promise<
   };
 };
 
+const buildAssetRows = ({
+  ethBalanceValue,
+  ethBalanceUsd,
+  tokens,
+  portfolioUsd,
+}: {
+  ethBalanceValue: number;
+  ethBalanceUsd: number | null;
+  tokens: TreasuryToken[];
+  portfolioUsd: number;
+}): AssetRow[] => {
+  const rows: AssetRow[] = [
+    {
+      id: "eth",
+      address: "native",
+      name: "Ethereum",
+      symbol: "ETH",
+      subLabel: "Native treasury balance",
+      balanceLabel: `${formatNumber(ethBalanceValue, 5)} ETH`,
+      valueUsd: ethBalanceUsd,
+      allocationPercent:
+        portfolioUsd > 0 && ethBalanceUsd ? (ethBalanceUsd / portfolioUsd) * 100 : 0,
+    },
+  ];
+
+  tokens.forEach((token) => {
+    rows.push({
+      id: token.address,
+      address: token.address,
+      name: token.name,
+      symbol: token.symbol,
+      subLabel: "Tracked ERC-20 holding",
+      balanceLabel: token.balanceLabel,
+      valueUsd: token.valueUsd > 0 ? token.valueUsd : null,
+      allocationPercent:
+        portfolioUsd > 0 && token.valueUsd > 0
+          ? (token.valueUsd / portfolioUsd) * 100
+          : 0,
+      logoUrl: token.logoUrl,
+    });
+  });
+
+  return rows;
+};
+
 export default function TreasuryPage({
   treasuryAddress,
   totalAuctionSales,
@@ -192,6 +285,40 @@ export default function TreasuryPage({
   const ethBalanceValue = Number(utils.formatEther(BigNumber.from(ethBalance)));
   const ethBalanceUsd = ethPriceUsd ? ethBalanceValue * ethPriceUsd : null;
   const tokenTotalUsd = tokens.reduce((sum, token) => sum + token.valueUsd, 0);
+  const portfolioUsd = (ethBalanceUsd || 0) + tokenTotalUsd;
+  const hasUsdData = portfolioUsd > 0;
+  const explorerAddressUrl = getExplorerAddressUrl(treasuryAddress);
+  const nfts: TreasuryNftItem[] = [];
+  const recentTransactions: TreasuryTransaction[] = [];
+
+  const allocationItems: TreasuryDonutItem[] = [
+    ethBalanceUsd && ethBalanceUsd > 0
+      ? {
+          id: "eth",
+          name: "Ethereum",
+          valueUsd: ethBalanceUsd,
+          color: "rgb(var(--color-accent))",
+        }
+      : null,
+    ...tokens
+      .filter((token) => token.valueUsd > 0)
+      .map((token, index) => ({
+        id: token.address,
+        name: token.symbol,
+        valueUsd: token.valueUsd,
+        color:
+          index % 2 === 0
+            ? "rgb(var(--color-action))"
+            : "rgb(var(--color-text-muted))",
+      })),
+  ].filter(Boolean) as TreasuryDonutItem[];
+
+  const assetRows = buildAssetRows({
+    ethBalanceValue,
+    ethBalanceUsd,
+    tokens,
+    portfolioUsd,
+  });
 
   const copyTreasuryAddress = () => {
     navigator.clipboard?.writeText(treasuryAddress);
@@ -203,105 +330,139 @@ export default function TreasuryPage({
         <title>Treasury | Yellow Collective</title>
       </Head>
 
-      <div className="mx-auto flex w-full max-w-[1120px] flex-col gap-10 pb-12">
-        <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left">
-          <h1 className="text-[30px] leading-none sm:text-[36px] md:text-[44px]">
-            Treasury
-          </h1>
+      <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-8 pb-12">
+        <header className="flex flex-col gap-5 rounded-2xl border border-skin-stroke bg-skin-muted p-5 shadow-sm md:p-7">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="font-heading text-sm uppercase tracking-[0.14em] text-secondary">
+                Allocation / live
+              </div>
+              <h1 className="mt-2 text-[42px] leading-none md:text-[58px]">
+                Treasury
+              </h1>
+              <p className="mt-4 text-base leading-snug text-secondary md:text-lg">
+                {hasUsdData
+                  ? `Estimated live value: ${formatUsd(
+                      portfolioUsd
+                    )} across ETH and tracked ERC-20s.`
+                  : "Live balances are shown now. USD composition appears when Coingecko pricing is available."}
+              </p>
+            </div>
 
-          <div className="flex w-full min-w-0 items-center justify-between gap-3 rounded-2xl border border-skin-stroke bg-skin-muted px-4 py-3 text-sm shadow-sm sm:w-auto sm:justify-start md:px-5 md:py-4 md:text-lg">
-            <AddressLink
-              address={treasuryAddress}
-              fallbackAmount={8}
-              link={false}
+            <div className="flex w-full min-w-0 items-center justify-between gap-3 rounded-2xl border border-skin-stroke bg-white px-4 py-3 text-sm shadow-sm sm:w-auto sm:justify-start md:px-5 md:py-4 md:text-lg">
+              <AddressLink
+                address={treasuryAddress}
+                fallbackAmount={8}
+                link={false}
+              />
+              <button
+                type="button"
+                onClick={copyTreasuryAddress}
+                aria-label="Copy treasury address"
+                className="text-secondary transition hover:text-skin-base"
+              >
+                <ClipboardDocumentIcon className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-3">
+            <TreasuryStat
+              label="Total auction sales"
+              value={`${formatEth(totalAuctionSales)} ETH`}
             />
-            <button
-              type="button"
-              onClick={copyTreasuryAddress}
-              aria-label="Copy treasury address"
-              className="text-secondary transition hover:text-skin-base"
-            >
-              <ClipboardDocumentIcon className="h-5 w-5" />
-            </button>
+            <TreasuryStat
+              label="ETH balance"
+              value={`${formatEth(ethBalance)} ETH`}
+            />
+            <TreasuryStat label="Portfolio value" value={formatUsd(portfolioUsd)} />
           </div>
-        </div>
+        </header>
 
-        <section className="grid gap-6 rounded-2xl border border-skin-stroke bg-skin-muted px-6 py-12 text-center shadow-sm md:grid-cols-3">
-          <div>
-            <div className="font-heading text-4xl leading-none">
-              {formatEth(totalAuctionSales)} ETH
-            </div>
-            <div className="mt-4 text-base text-secondary md:text-lg">
-              Total Auction Sales
-            </div>
-          </div>
-          <div>
-            <div className="font-heading text-4xl leading-none">
-              {formatEth(ethBalance)} ETH
-            </div>
-            <div className="mt-4 text-base text-secondary md:text-lg">
-              ETH Balance
-            </div>
-          </div>
-          <div>
-            <div className="font-heading text-4xl leading-none">
-              {formatUsd(ethBalanceUsd)}
-            </div>
-            <div className="mt-4 text-base text-secondary md:text-lg">
-              ETH Balance in USD
-            </div>
-          </div>
-        </section>
+        <div className="grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)]">
+          <aside className="flex flex-col gap-6">
+            <TreasuryDonut
+              items={allocationItems}
+              totalLabel={formatUsd(portfolioUsd)}
+            />
+            <TreasuryNftGrid nfts={nfts} />
+          </aside>
 
-        <section className="flex flex-col gap-6">
-          <div className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
-            <h2 className="font-heading text-4xl leading-none">Tokens</h2>
-            <div className="font-heading text-4xl leading-none">
-              {formatUsd(tokenTotalUsd)}
-            </div>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-skin-stroke bg-skin-muted shadow-sm">
-            {tokens.length > 0 ? (
-              <div className="min-w-[720px]">
-                <div className="grid grid-cols-3 gap-6 p-8 font-heading text-xl">
-                  <div>Asset</div>
-                  <div>Balance</div>
-                  <div>Value in USD</div>
+          <main className="flex min-w-0 flex-col gap-6">
+            <section className="rounded-2xl border border-skin-stroke bg-skin-muted p-5 shadow-sm">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h2 className="font-heading text-3xl leading-none">
+                    Assets
+                  </h2>
+                  <p className="mt-2 text-sm leading-snug text-secondary">
+                    ETH first, then tracked ERC-20 treasury holdings.
+                  </p>
                 </div>
-                {tokens.map((token) => (
+                <div className="font-heading text-3xl leading-none">
+                  {formatUsd(portfolioUsd)}
+                </div>
+              </div>
+
+              <div className="mt-5 overflow-hidden rounded-xl border border-skin-stroke bg-white">
+                {assetRows.map((asset) => (
                   <div
-                    key={token.symbol}
-                    className="grid grid-cols-3 items-center gap-6 px-8 pb-8 text-base md:text-lg"
+                    key={asset.id}
+                    className="grid gap-4 border-b border-skin-stroke p-4 last:border-b-0 md:grid-cols-[minmax(0,1.4fr)_minmax(120px,0.7fr)_minmax(120px,0.7fr)] md:items-center"
                   >
-                    <div className="flex items-center gap-4">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-full border border-skin-stroke bg-skin-backdrop font-heading text-lg">
-                        {token.symbol.charAt(0)}
-                      </span>
-                      <span>{token.name}</span>
+                    <div className="flex min-w-0 items-center gap-3">
+                      <TokenLogo
+                        address={asset.address}
+                        symbol={asset.symbol}
+                        name={asset.name}
+                        logoUrl={asset.logoUrl}
+                      />
+                      <div className="min-w-0">
+                        <div className="truncate font-heading text-xl leading-none">
+                          {asset.name}
+                        </div>
+                        <div className="mt-1 truncate text-sm text-secondary">
+                          {asset.subLabel}
+                        </div>
+                      </div>
                     </div>
-                    <div>{token.balanceLabel}</div>
-                    <div>{formatUsd(token.valueUsd)}</div>
+
+                    <div>
+                      <div className="font-heading text-lg leading-none">
+                        {asset.balanceLabel}
+                      </div>
+                      <div className="mt-2 h-2 overflow-hidden rounded-full bg-skin-muted">
+                        <div
+                          className="h-full rounded-full bg-accent"
+                          style={{ width: `${asset.allocationPercent}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="font-heading text-xl leading-none md:text-right">
+                      {formatUsd(asset.valueUsd)}
+                    </div>
                   </div>
                 ))}
               </div>
-            ) : (
-              <div className="p-12 text-center text-base text-secondary md:text-lg">
-                No Tokens Found
-              </div>
-            )}
-          </div>
-        </section>
+            </section>
 
-        <section className="flex flex-col gap-6">
-          <h2 className="text-center font-heading text-4xl leading-none sm:text-left">
-            NFTs
-          </h2>
-          <div className="rounded-2xl border border-skin-stroke bg-skin-muted p-12 text-center text-base text-secondary shadow-sm md:text-lg">
-            No NFTs Found
-          </div>
-        </section>
+            <TreasuryTransactions
+              transactions={recentTransactions}
+              explorerUrl={explorerAddressUrl}
+            />
+          </main>
+        </div>
       </div>
     </Layout>
+  );
+}
+
+function TreasuryStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-skin-stroke bg-white p-4">
+      <div className="font-heading text-2xl leading-none">{value}</div>
+      <div className="mt-2 text-sm leading-snug text-secondary">{label}</div>
+    </div>
   );
 }
