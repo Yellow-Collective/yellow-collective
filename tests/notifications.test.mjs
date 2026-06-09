@@ -256,6 +256,15 @@ test("admin dashboard exposes Mini App audience sync", () => {
   assert.match(dashboard, /notification tokens[\s\S]*not stored or shown/i);
 });
 
+test("Mini App notification prompt persists a user response", () => {
+  const prompt = read("components/MiniApp/MiniAppNotificationsPrompt.tsx");
+  assert.match(prompt, /MINIAPP_NOTIFICATIONS_PROMPT_STORAGE_PREFIX/);
+  assert.match(prompt, /localStorage\.getItem/);
+  assert.match(prompt, /localStorage\.setItem/);
+  assert.match(prompt, /markPromptResponded/);
+  assert.match(prompt, /context\?\.user\?\.fid/);
+});
+
 test("notification test sends use an admin-scoped endpoint", () => {
   const dashboard = read("pages/admin/dashboard.tsx");
   assert.match(dashboard, /"\/api\/admin\/notifications\/test"/);
