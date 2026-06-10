@@ -1547,6 +1547,9 @@ const formatNotificationDate = (value?: string | null) => {
   });
 };
 
+const notificationLogScrollClass = "max-h-[35rem] overflow-y-auto pr-2";
+const notificationAudienceScrollClass = "max-h-[30rem] overflow-y-auto pr-2";
+
 const NotificationLogPanel = ({
   events,
   error,
@@ -1594,80 +1597,84 @@ const NotificationLogPanel = ({
           No notifications have been recorded yet.
         </p>
       ) : (
-        <table className="w-full min-w-[920px] border-separate border-spacing-y-2 text-left">
-          <thead>
-            <tr className="text-sm text-secondary">
-              <th className="px-3 py-2">Sent</th>
-              <th className="px-3 py-2">Alert</th>
-              <th className="px-3 py-2">Copy</th>
-              <th className="px-3 py-2">Recipients</th>
-              <th className="px-3 py-2">Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => {
-              const response = event.response || {};
-              const retryableFids = response.retryable_fids || [];
+        <div className={notificationLogScrollClass}>
+          <table className="w-full min-w-[920px] border-separate border-spacing-y-2 text-left">
+            <thead>
+              <tr className="text-sm text-secondary">
+                <th className="px-3 py-2">Sent</th>
+                <th className="px-3 py-2">Alert</th>
+                <th className="px-3 py-2">Copy</th>
+                <th className="px-3 py-2">Recipients</th>
+                <th className="px-3 py-2">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.map((event) => {
+                const response = event.response || {};
+                const retryableFids = response.retryable_fids || [];
 
-              return (
-                <tr key={event.id} className="bg-[#fff7bf] align-top">
-                  <td className="rounded-l-2xl px-3 py-4 text-sm text-secondary">
-                    {formatNotificationDate(event.sentAt)}
-                    {event.dryRun && (
-                      <span className="mt-1 block font-semibold">Dry run</span>
-                    )}
-                  </td>
-                  <td className="px-3 py-4">
-                    <div className="font-semibold text-skin-base">
-                      {event.eventType.replaceAll("_", " ")}
-                    </div>
-                    <a
-                      href={event.targetUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-1 block break-all text-sm text-secondary underline"
-                    >
-                      {event.targetUrl}
-                    </a>
-                  </td>
-                  <td className="px-3 py-4">
-                    <div className="font-semibold text-skin-base">
-                      {event.title}
-                    </div>
-                    <div className="mt-1 text-sm text-secondary">
-                      {event.body}
-                    </div>
-                  </td>
-                  <td className="px-3 py-4 text-sm text-secondary">
-                    {event.targetFids.length > 0 ? (
-                      <span>FIDs: {event.targetFids.join(", ")}</span>
-                    ) : (
-                      <span>Broadcast to all enabled Mini App users</span>
-                    )}
-                    {retryableFids.length > 0 && (
-                      <span className="mt-1 block">
-                        Retryable: {retryableFids.join(", ")}
-                      </span>
-                    )}
-                  </td>
-                  <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
-                    <div>Success: {Number(response.success_count || 0)}</div>
-                    <div>Failed: {Number(response.failure_count || 0)}</div>
-                    <div>
-                      Not attempted:{" "}
-                      {Number(response.not_attempted_count || 0)}
-                    </div>
-                    {response.campaign_id && (
-                      <div className="mt-1 break-all">
-                        Campaign: {response.campaign_id}
+                return (
+                  <tr key={event.id} className="h-24 bg-[#fff7bf] align-top">
+                    <td className="rounded-l-2xl px-3 py-4 text-sm text-secondary">
+                      {formatNotificationDate(event.sentAt)}
+                      {event.dryRun && (
+                        <span className="mt-1 block font-semibold">
+                          Dry run
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-3 py-4">
+                      <div className="font-semibold text-skin-base">
+                        {event.eventType.replaceAll("_", " ")}
                       </div>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                      <a
+                        href={event.targetUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-1 block break-all text-sm text-secondary underline"
+                      >
+                        {event.targetUrl}
+                      </a>
+                    </td>
+                    <td className="px-3 py-4">
+                      <div className="font-semibold text-skin-base">
+                        {event.title}
+                      </div>
+                      <div className="mt-1 text-sm text-secondary">
+                        {event.body}
+                      </div>
+                    </td>
+                    <td className="px-3 py-4 text-sm text-secondary">
+                      {event.targetFids.length > 0 ? (
+                        <span>FIDs: {event.targetFids.join(", ")}</span>
+                      ) : (
+                        <span>Broadcast to all enabled Mini App users</span>
+                      )}
+                      {retryableFids.length > 0 && (
+                        <span className="mt-1 block">
+                          Retryable: {retryableFids.join(", ")}
+                        </span>
+                      )}
+                    </td>
+                    <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
+                      <div>Success: {Number(response.success_count || 0)}</div>
+                      <div>Failed: {Number(response.failure_count || 0)}</div>
+                      <div>
+                        Not attempted:{" "}
+                        {Number(response.not_attempted_count || 0)}
+                      </div>
+                      {response.campaign_id && (
+                        <div className="mt-1 break-all">
+                          Campaign: {response.campaign_id}
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   </section>
@@ -1779,56 +1786,58 @@ const NotificationAudiencePanel = ({
             No Mini App notification users have been synced yet.
           </p>
         ) : (
-          <table className="w-full min-w-[820px] border-separate border-spacing-y-2 text-left">
-            <thead>
-              <tr className="text-sm text-secondary">
-                <th className="px-3 py-2">FID</th>
-                <th className="px-3 py-2">User</th>
-                <th className="px-3 py-2">Status</th>
-                <th className="px-3 py-2">Token updated</th>
-                <th className="px-3 py-2">Last synced</th>
-              </tr>
-            </thead>
-            <tbody>
-              {audience.map((user) => (
-                <tr key={user.fid} className="bg-[#fff7bf] align-top">
-                  <td className="rounded-l-2xl px-3 py-4 font-semibold text-skin-base">
-                    {user.fid}
-                  </td>
-                  <td className="px-3 py-4 text-sm text-secondary">
-                    <div className="font-semibold text-skin-base">
-                      {user.displayName || user.username || "Unknown"}
-                    </div>
-                    {user.username && (
-                      <div className="mt-1">@{user.username}</div>
-                    )}
-                    {user.walletAddress && (
-                      <div className="mt-1 break-all">
-                        {user.walletAddress}
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-3 py-4">
-                    <StatusPill
-                      status={
-                        user.notificationsEnabled
-                          ? "enabled"
-                          : user.lastSyncedAt
-                            ? "no Neynar token"
-                            : "disabled"
-                      }
-                    />
-                  </td>
-                  <td className="px-3 py-4 text-sm text-secondary">
-                    {formatNotificationDate(user.tokenUpdatedAt)}
-                  </td>
-                  <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
-                    {formatNotificationDate(user.lastSyncedAt)}
-                  </td>
+          <div className={notificationAudienceScrollClass}>
+            <table className="w-full min-w-[820px] border-separate border-spacing-y-2 text-left">
+              <thead>
+                <tr className="text-sm text-secondary">
+                  <th className="px-3 py-2">FID</th>
+                  <th className="px-3 py-2">User</th>
+                  <th className="px-3 py-2">Status</th>
+                  <th className="px-3 py-2">Token updated</th>
+                  <th className="px-3 py-2">Last synced</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {audience.map((user) => (
+                  <tr key={user.fid} className="h-20 bg-[#fff7bf] align-top">
+                    <td className="rounded-l-2xl px-3 py-4 font-semibold text-skin-base">
+                      {user.fid}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-secondary">
+                      <div className="font-semibold text-skin-base">
+                        {user.displayName || user.username || "Unknown"}
+                      </div>
+                      {user.username && (
+                        <div className="mt-1">@{user.username}</div>
+                      )}
+                      {user.walletAddress && (
+                        <div className="mt-1 break-all">
+                          {user.walletAddress}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-3 py-4">
+                      <StatusPill
+                        status={
+                          user.notificationsEnabled
+                            ? "enabled"
+                            : user.lastSyncedAt
+                              ? "no Neynar token"
+                              : "disabled"
+                        }
+                      />
+                    </td>
+                    <td className="px-3 py-4 text-sm text-secondary">
+                      {formatNotificationDate(user.tokenUpdatedAt)}
+                    </td>
+                    <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
+                      {formatNotificationDate(user.lastSyncedAt)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </section>
@@ -2529,6 +2538,7 @@ const RoundsAdminPanel = ({
             mutate={mutate}
           />
           <RoundSubmissionsManager
+            round={selectedRound}
             submissions={submissions}
             isLoading={Boolean(
               selectedRound && !submissionData && !submissionsError
@@ -3021,11 +3031,13 @@ const RoundEditor = ({
 };
 
 const RoundSubmissionsManager = ({
+  round,
   submissions,
   isLoading,
   error,
   onSelect,
 }: {
+  round: Round;
   submissions: RoundSubmission[];
   isLoading: boolean;
   error?: string;
@@ -3038,9 +3050,18 @@ const RoundSubmissionsManager = ({
     showStatusInTitle={false}
     surfaceClassName="yc-dark-yellow-form-surface"
     actions={
-      <div className="rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
-        {submissions.length} total
-      </div>
+      <>
+        <a
+          href={`/api/admin/rounds/${encodeURIComponent(round.id)}/submissions/export`}
+          download
+          className={secondaryButtonClass}
+        >
+          Export CSV
+        </a>
+        <div className="rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+          {submissions.length} total
+        </div>
+      </>
     }
   >
     {isLoading ? (

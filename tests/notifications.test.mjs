@@ -319,6 +319,14 @@ test("admin dashboard exposes Mini App audience sync", () => {
   assert.match(dashboard, /notification tokens[\s\S]*not stored or shown/i);
 });
 
+test("admin notification lists are capped to five visible rows", () => {
+  const dashboard = read("pages/admin/dashboard.tsx");
+  assert.match(dashboard, /notificationLogScrollClass = "max-h-\[35rem\] overflow-y-auto/);
+  assert.match(dashboard, /notificationAudienceScrollClass = "max-h-\[30rem\] overflow-y-auto/);
+  assert.match(dashboard, /className="h-24 bg-\[#fff7bf\] align-top"/);
+  assert.match(dashboard, /className="h-20 bg-\[#fff7bf\] align-top"/);
+});
+
 test("Mini App notification prompt persists a user response", () => {
   const prompt = read("components/MiniApp/MiniAppNotificationsPrompt.tsx");
   assert.match(prompt, /MINIAPP_NOTIFICATIONS_PROMPT_STORAGE_PREFIX/);
