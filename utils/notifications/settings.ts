@@ -3,6 +3,7 @@ import { SITE_DOMAIN } from "@/utils/site";
 export const NOTIFICATIONS_SETTINGS_KEY = "notifications_settings_v1";
 export const NOTIFICATION_TITLE_LIMIT = 32;
 export const NOTIFICATION_BODY_LIMIT = 128;
+export const NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS = [1, 2, 4, 12, 24];
 
 export const NOTIFICATION_ALERT_KEYS = [
   "round_published",
@@ -34,6 +35,7 @@ export type NotificationAlertSettings = {
 export type NotificationSettings = {
   enabled: boolean;
   dryRun: boolean;
+  pollIntervalHours: number;
   alerts: Record<NotificationAlertKey, NotificationAlertSettings>;
 };
 
@@ -176,6 +178,7 @@ const defaultAlerts: Record<NotificationAlertKey, NotificationAlertSettings> = {
 export const DEFAULT_NOTIFICATION_SETTINGS: NotificationSettings = {
   enabled: true,
   dryRun: false,
+  pollIntervalHours: 1,
   alerts: defaultAlerts,
 };
 
@@ -189,6 +192,13 @@ const normalizeTemplate = (value: unknown, fallback: string) => {
   if (typeof value !== "string") return fallback;
   const trimmed = value.trim();
   return trimmed || fallback;
+};
+
+const normalizePollIntervalHours = (value: unknown) => {
+  const interval = Number(value);
+  return NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS.includes(interval)
+    ? interval
+    : DEFAULT_NOTIFICATION_SETTINGS.pollIntervalHours;
 };
 
 export const normalizeNotificationSettings = (
@@ -236,6 +246,7 @@ export const normalizeNotificationSettings = (
       typeof input.dryRun === "boolean"
         ? input.dryRun
         : DEFAULT_NOTIFICATION_SETTINGS.dryRun,
+    pollIntervalHours: normalizePollIntervalHours(input.pollIntervalHours),
     alerts,
   };
 };

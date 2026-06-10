@@ -25,6 +25,7 @@ import type { NoundrySubmission } from "data/noundry/submissions";
 import {
   DEFAULT_NOTIFICATION_SETTINGS,
   NOTIFICATION_ALERT_GROUPS,
+  NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS,
   buildNotificationCopy,
   validateNotificationSettings,
   validateNotificationCopy,
@@ -729,17 +730,6 @@ export default function AdminDashboardPage() {
                   />
                 ) : (
                   <>
-                    {hasPermission("testing") && (
-                      <TestingSettingsPanel
-                        adminAuth={adminAuth}
-                        dummyContentEnabled={
-                          testingSettingsData?.dummyContentEnabled || false
-                        }
-                        error={testingSettingsError?.message}
-                        isLoading={!testingSettingsData && !testingSettingsError}
-                        mutate={mutateTestingSettings}
-                      />
-                    )}
                     {activeSection === "community" ? (
                       <CommunityAdminPanel
                         adminAuth={adminAuth}
@@ -827,6 +817,20 @@ export default function AdminDashboardPage() {
                         mutateRequests={mutateRoundRequests}
                       />
                     )}
+                    {hasPermission("testing") &&
+                      activeSection !== "notifications" && (
+                        <TestingSettingsPanel
+                          adminAuth={adminAuth}
+                          dummyContentEnabled={
+                            testingSettingsData?.dummyContentEnabled || false
+                          }
+                          error={testingSettingsError?.message}
+                          isLoading={
+                            !testingSettingsData && !testingSettingsError
+                          }
+                          mutate={mutateTestingSettings}
+                        />
+                      )}
                   </>
                 )}
               </>
@@ -1394,6 +1398,25 @@ const NotificationsAdminPanel = ({
               }
             />
             Dry run
+          </label>
+          <label className="flex flex-col gap-1 rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-2 text-sm font-semibold text-skin-base">
+            Poll every
+            <select
+              value={draft.pollIntervalHours}
+              onChange={(event) =>
+                setDraft((current) => ({
+                  ...current,
+                  pollIntervalHours: Number(event.target.value),
+                }))
+              }
+              className="rounded-lg border border-skin-stroke bg-white px-3 py-2 text-sm text-skin-base"
+            >
+              {NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS.map((hours) => (
+                <option key={hours} value={hours}>
+                  {hours === 1 ? "1 hour" : `${hours} hours`}
+                </option>
+              ))}
+            </select>
           </label>
           <button
             type="button"

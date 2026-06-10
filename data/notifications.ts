@@ -190,6 +190,20 @@ export const getNotificationSettings = async () => {
   }
 };
 
+export const NOTIFICATIONS_LAST_POLLED_AT_KEY =
+  "notifications_last_polled_at_v1";
+
+export const getLastNotificationPollAt = async () => {
+  const raw = await getTextSiteSetting(NOTIFICATIONS_LAST_POLLED_AT_KEY, null);
+  if (!raw) return null;
+
+  const date = new Date(raw);
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+export const setLastNotificationPollAt = async (value = new Date()) =>
+  setTextSiteSetting(NOTIFICATIONS_LAST_POLLED_AT_KEY, value.toISOString());
+
 export const setNotificationSettings = async (
   settings: NotificationSettings
 ) => {

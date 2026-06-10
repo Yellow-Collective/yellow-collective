@@ -7,7 +7,11 @@ import {
   listPublicRounds,
   type Round,
 } from "data/rounds";
-import { getNotificationSettings } from "data/notifications";
+import {
+  getLastNotificationPollAt,
+  getNotificationSettings,
+  setLastNotificationPollAt,
+} from "data/notifications";
 import { sendConfiguredNotification } from "@/utils/notifications/service";
 import type {
   NotificationAlertKey,
@@ -17,17 +21,20 @@ import { getProposalName } from "@/utils/getProposalName";
 import { BigNumber } from "@/utils/ethers-compat";
 
 export type NotificationPollResult = {
+  status: "sent" | "skipped";
   attempted: number;
   sent: number;
   disabled: number;
   duplicate: number;
   errors: string[];
+  nextRunAt?: string;
 };
 
 const RECENT_WINDOW_SECONDS = 10 * 60;
 const REMINDER_WINDOW_SECONDS = 10 * 60;
 
 const emptyResult = (): NotificationPollResult => ({
+  status: "sent",
   attempted: 0,
   sent: 0,
   disabled: 0,
@@ -70,6 +77,30 @@ const record = async (
   } catch (error) {
     result.errors.push(error instanceof Error ? error.message : String(error));
   }
+};
+
+export const shouldRunNotificationPoll = ({
+  settings,
+  lastPolledAt,
+  now = new Date(),
+  force = false,
+}: {
+  settings: NotificationSettings;
+  lastPolledAt: Date | null;
+  now?: Date;
+  force?: boolean;
+}) => {
+  if (force || !lastPolledAt) {
+    return { shouldRun: true, nextRunAt: now.toISOString() };
+  }
+
+  const intervalMs = settings.pollIntervalHours * 60 * 60 * 1000;
+  const nextRunAt = new Date(lastPolledAt.getTime() + intervalMs);
+
+  return {
+    shouldRun: now.getTime() >= nextRunAt.getTime(),
+    nextRunAt: nextRunAt.toISOString(),
+  };
 };
 
 const notifyRound = async ({
@@ -313,18 +344,32 @@ export const pollYellowProposalNotifications = async ({
 
 export const pollWebNotifications = async ({
   dryRun,
+  force,
 }: {
   dryRun?: boolean;
+  force?: boolean;
 } = {}) => {
   const settings = await getNotificationSettings();
+  const lastPolledAt = await getLastNotificationPollAt();
+  const cadence = shouldRunNotificationPoll({ settings, lastPolledAt, force });
+
+  if (!cadence.shouldRun) {
+    return {
+      ...emptyResult(),
+      status: "skipped" as const,
+      nextRunAt: cadence.nextRunAt,
+    };
+  }
+
   const results = await Promise.all([
     pollRoundNotifications({ settings, dryRun }),
     pollAuctionNotifications({ settings, dryRun }),
     pollYellowProposalNotifications({ settings, dryRun }),
   ]);
 
-  return results.reduce(
+  const result = results.reduce(
     (acc, item) => ({
+      status: "sent" as const,
       attempted: acc.attempted + item.attempted,
       sent: acc.sent + item.sent,
       disabled: acc.disabled + item.disabled,
@@ -333,4 +378,8 @@ export const pollWebNotifications = async ({
     }),
     emptyResult()
   );
+
+  await setLastNotificationPollAt();
+
+  return result;
 };

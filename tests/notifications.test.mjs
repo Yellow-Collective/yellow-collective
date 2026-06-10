@@ -96,6 +96,7 @@ test("notification settings sanitize unknown keys and validate rendered copy len
   const sanitized = settings.normalizeNotificationSettings({
     enabled: true,
     dryRun: false,
+    pollIntervalHours: 4,
     alerts: {
       round_published: {
         enabled: false,
@@ -113,6 +114,16 @@ test("notification settings sanitize unknown keys and validate rendered copy len
   assert.equal(sanitized.alerts.round_published.enabled, false);
   assert.equal(sanitized.alerts.unknown_key, undefined);
   assert.equal(sanitized.alerts.auction_started.enabled, true);
+  assert.equal(sanitized.pollIntervalHours, 4);
+  assert.equal(
+    settings.normalizeNotificationSettings({ pollIntervalHours: 3 })
+      .pollIntervalHours,
+    settings.DEFAULT_NOTIFICATION_SETTINGS.pollIntervalHours
+  );
+  assert.equal(
+    JSON.stringify(settings.NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS),
+    JSON.stringify([1, 2, 4, 12, 24])
+  );
 
   assert.equal(
     JSON.stringify(settings.validateNotificationCopy({
@@ -242,6 +253,22 @@ test("notification token sync fetches Neynar audience without exposing token sec
   assert.equal(Object.prototype.hasOwnProperty.call(result[0], "token"), false);
 });
 
+test("notification poll cadence is controlled by admin settings", () => {
+  const poll = read("utils/notifications/poll.ts");
+  assert.match(poll, /shouldRunNotificationPoll/);
+  assert.match(poll, /getLastNotificationPollAt/);
+  assert.match(poll, /setLastNotificationPollAt/);
+  assert.match(poll, /pollIntervalHours/);
+  assert.match(poll, /status: "skipped"/);
+
+  const route = read("pages/api/notifications/poll.ts");
+  assert.match(route, /force: req\.query\.force === "true"/);
+
+  const dashboard = read("pages/admin/dashboard.tsx");
+  assert.match(dashboard, /Poll every/);
+  assert.match(dashboard, /NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS/);
+});
+
 test("notification test send preflights Neynar tokens before a real send", () => {
   const endpoint = read("pages/api/notifications/test.ts");
   assert.match(endpoint, /fetchNeynarNotificationTokens/);
@@ -338,7 +365,7 @@ test("Vercel cron is configured for the authenticated notification poll route", 
   assert.deepEqual(vercelConfig.crons, [
     {
       path: "/api/notifications/poll",
-      schedule: "0 14 * * *",
+      schedule: "0 * * * *",
     },
   ]);
 
