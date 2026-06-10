@@ -263,6 +263,10 @@ export const syncMiniAppNotificationAudience = async (
     await pool.query(`
       UPDATE miniapp_users
       SET notifications_enabled = false,
+        notification_url = null,
+        notification_token_created_at = null,
+        notification_token_updated_at = null,
+        last_synced_at = now(),
         updated_at = now()
     `);
 

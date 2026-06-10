@@ -75,7 +75,7 @@ test("mini app manifest includes Neynar webhookUrl on the miniapp config", () =>
   const manifest = JSON.parse(read("public/.well-known/farcaster.json"));
   assert.match(
     manifest.miniapp.webhookUrl,
-    /^https:\/\/api\.neynar\.com\/f\/app\/[^/]+\/event$/
+    /^https:\/\/api\.neynar\.com\/f\/app\/c6ba551a-2844-41d9-8b0b-fe3011e3b212\/event$/
   );
   assert.equal(manifest.miniapp.canonicalDomain, "yellowcollective.art");
 });
@@ -242,11 +242,47 @@ test("notification token sync fetches Neynar audience without exposing token sec
   assert.equal(Object.prototype.hasOwnProperty.call(result[0], "token"), false);
 });
 
+test("notification test send preflights Neynar tokens before a real send", () => {
+  const endpoint = read("pages/api/notifications/test.ts");
+  assert.match(endpoint, /fetchNeynarNotificationTokens/);
+  assert.match(endpoint, /fetchNeynarNotificationTokens\(\{\s*fids: targetFids\s*\}\)/s);
+  assert.match(endpoint, /missingFids/);
+  assert.match(endpoint, /NoNotificationTokens/);
+  assert.match(endpoint, /status\(422\)/);
+});
+
+test("audience sync clears stale token fields and reports zero-token syncs clearly", () => {
+  const data = read("data/notifications.ts");
+  assert.match(data, /notification_url = null/);
+  assert.match(data, /notification_token_created_at = null/);
+  assert.match(data, /notification_token_updated_at = null/);
+  assert.match(data, /last_synced_at = now\(\)/);
+
+  const dashboard = read("pages/admin/dashboard.tsx");
+  assert.match(dashboard, /Neynar returned 0 enabled notification tokens/);
+  assert.match(dashboard, /no Neynar token/i);
+});
+
 test("admin dashboard exposes a notification log with recipient limitations", () => {
   const dashboard = read("pages/admin/dashboard.tsx");
   assert.match(dashboard, /<NotificationLogPanel/);
   assert.match(dashboard, /list of who received targeted notifications/i);
   assert.match(dashboard, /Broadcast recipient lists[\s\S]*are not returned by Neynar/i);
+});
+
+test("admin dashboard renders the notification log at the bottom of the notifications tab", () => {
+  const dashboard = read("pages/admin/dashboard.tsx");
+  const audienceIndex = dashboard.indexOf("<NotificationAudiencePanel");
+  const testFidIndex = dashboard.indexOf("Test FID");
+  const logIndex = dashboard.indexOf("<NotificationLogPanel");
+
+  assert.ok(audienceIndex >= 0, "notification audience panel should render");
+  assert.ok(testFidIndex >= 0, "notification test send block should render");
+  assert.ok(logIndex >= 0, "notification log panel should render");
+  assert.ok(
+    logIndex > audienceIndex && logIndex > testFidIndex,
+    "notification log should render after audience sync and test-send controls"
+  );
 });
 
 test("admin dashboard exposes Mini App audience sync", () => {
