@@ -1406,13 +1406,6 @@ const NotificationsAdminPanel = ({
         </div>
       </div>
 
-      <NotificationLogPanel
-        events={events}
-        error={logError}
-        isLoading={isLogLoading}
-        mutate={mutateEvents}
-      />
-
       <NotificationAudiencePanel
         adminAuth={adminAuth}
         audience={audience}
@@ -1509,6 +1502,13 @@ const NotificationsAdminPanel = ({
           <p className="text-sm font-semibold text-secondary">{testMessage}</p>
         )}
       </div>
+
+      <NotificationLogPanel
+        events={events}
+        error={logError}
+        isLoading={isLogLoading}
+        mutate={mutateEvents}
+      />
     </section>
   );
 };

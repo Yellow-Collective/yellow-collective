@@ -75,7 +75,7 @@ test("mini app manifest includes Neynar webhookUrl on the miniapp config", () =>
   const manifest = JSON.parse(read("public/.well-known/farcaster.json"));
   assert.match(
     manifest.miniapp.webhookUrl,
-    /^https:\/\/api\.neynar\.com\/f\/app\/[^/]+\/event$/
+    /^https:\/\/api\.neynar\.com\/f\/app\/c6ba551a-2844-41d9-8b0b-fe3011e3b212\/event$/
   );
   assert.equal(manifest.miniapp.canonicalDomain, "yellowcollective.art");
 });
@@ -268,6 +268,21 @@ test("admin dashboard exposes a notification log with recipient limitations", ()
   assert.match(dashboard, /<NotificationLogPanel/);
   assert.match(dashboard, /list of who received targeted notifications/i);
   assert.match(dashboard, /Broadcast recipient lists[\s\S]*are not returned by Neynar/i);
+});
+
+test("admin dashboard renders the notification log at the bottom of the notifications tab", () => {
+  const dashboard = read("pages/admin/dashboard.tsx");
+  const audienceIndex = dashboard.indexOf("<NotificationAudiencePanel");
+  const testFidIndex = dashboard.indexOf("Test FID");
+  const logIndex = dashboard.indexOf("<NotificationLogPanel");
+
+  assert.ok(audienceIndex >= 0, "notification audience panel should render");
+  assert.ok(testFidIndex >= 0, "notification test send block should render");
+  assert.ok(logIndex >= 0, "notification log panel should render");
+  assert.ok(
+    logIndex > audienceIndex && logIndex > testFidIndex,
+    "notification log should render after audience sync and test-send controls"
+  );
 });
 
 test("admin dashboard exposes Mini App audience sync", () => {
