@@ -7,6 +7,7 @@ const readSource = (path) =>
 
 const membersPage = readSource("pages/members.tsx");
 const membersData = readSource("data/members.ts");
+const addresses = readSource("constants/addresses.ts");
 
 assert.match(
   membersPage,
@@ -40,8 +41,26 @@ assert.match(
 
 assert.match(
   membersData,
-  /https:\/\/nouns\.build\/api\/membersList\/\$\{TOKEN_CONTRACT\}\?chainId=\$\{TOKEN_NETWORK\}/,
-  "Member voting power must come from the Nouns Builder members list API."
+  /COLLECTIVE_NOUNS_VOTING_POWER_CONTRACT/,
+  "Member voting power must use the configured voting power contract."
+);
+
+assert.match(
+  membersData,
+  /function getVotes\(address account\) view returns \(uint256\)/,
+  "Member voting power must call getVotes."
+);
+
+assert.doesNotMatch(
+  membersData,
+  /membersListUrl|nouns\.build\/api\/membersList/,
+  "Member voting power must not depend on the Nouns Builder members list API."
+);
+
+assert.match(
+  addresses,
+  /COLLECTIVE_NOUNS_VOTING_POWER_CONTRACT[\s\S]*0x1297FFd714ACb55Af447c6B7641B3cf01930d605/,
+  "Voting power contract must be the Collective Nouns voting contract."
 );
 
 assert.match(

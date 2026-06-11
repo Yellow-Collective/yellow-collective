@@ -1,9 +1,14 @@
 import { shortenWalletAddress } from "@/utils/profile/identity";
+import DefaultProvider from "@/utils/DefaultProvider";
+import { Contract } from "@/utils/ethers-compat";
 import { getEnsNamesForAddresses } from "data/ens";
 import { getCollectiveNounTokens, type ProbeToken } from "data/nouns-builder/probe";
 import { countApprovedNoundrySubmissionsByArtists } from "data/noundry/submissions";
 import { listProfileMetadata, type ProfileMetadata } from "data/profile";
-import { TOKEN_CONTRACT, TOKEN_NETWORK } from "constants/addresses";
+import {
+  COLLECTIVE_NOUNS_VOTING_POWER_CONTRACT,
+  TOKEN_CONTRACT,
+} from "constants/addresses";
 import { SUBGRAPH_ENDPOINT } from "constants/urls";
 import { GraphQLClient, gql } from "graphql-request";
 import { getAddress, isAddress } from "viem";
@@ -42,78 +47,39 @@ const BURNER_ADDRESSES = new Set([
   "0x000000000000000000000000000000000000dead",
 ]);
 
-const membersListUrl = `https://nouns.build/api/membersList/${TOKEN_CONTRACT}?chainId=${TOKEN_NETWORK}`;
-
-const getNumber = (value: unknown): number => {
-  if (Array.isArray(value)) return value.length;
-  if (typeof value === "number") return Number.isFinite(value) ? value : 0;
-  if (typeof value === "string") {
-    const parsed = Number(value);
-    return Number.isFinite(parsed) ? parsed : 0;
-  }
-  return 0;
-};
-
-const getMemberAddress = (item: Record<string, unknown>) =>
-  String(
-    item.address ||
-      item.delegate ||
-      item.voter ||
-      item.wallet ||
-      item.owner ||
-      item.id ||
-      ""
-  );
+const votingPowerAbi = [
+  "function getVotes(address account) view returns (uint256)",
+];
 
 const getVotingPowerByAddress = async (addresses: string[]) => {
-  const requestedAddresses = new Set(
-    addresses.map((address) => address.toLowerCase())
+  const contract = new Contract(
+    COLLECTIVE_NOUNS_VOTING_POWER_CONTRACT,
+    votingPowerAbi,
+    DefaultProvider
   );
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 5000);
 
-  try {
-    const response = await fetch(membersListUrl, { signal: controller.signal });
-    if (!response.ok) return new Map<string, number>();
+  const entries = await Promise.all(
+    addresses.map(async (address) => {
+      try {
+        const normalizedAddress = getAddress(address);
+        const votes = await contract.getVotes(normalizedAddress);
 
-    const payload = await response.json();
-    const data = payload as {
-      members?: unknown[];
-      membersList?: unknown[];
-      delegates?: unknown[];
-    };
-    const members = Array.isArray(payload)
-      ? payload
-      : data.membersList || data.members || data.delegates || [];
-    const votingPowerByAddress = new Map<string, number>();
+        return [
+          normalizedAddress.toLowerCase(),
+          Number(votes.toString()),
+        ] as const;
+      } catch (error) {
+        console.warn(`Unable to load voting power for ${address}`, error);
+        return null;
+      }
+    })
+  );
 
-    members.forEach((member) => {
-      const item = member as Record<string, unknown>;
-      const address = getMemberAddress(item);
-      if (!isAddress(address)) return;
-
-      const normalizedAddress = getAddress(address).toLowerCase();
-      if (!requestedAddresses.has(normalizedAddress)) return;
-
-      votingPowerByAddress.set(
-        normalizedAddress,
-        getNumber(
-          item.votes ??
-            item.votingPower ??
-            item.tokenCount ??
-            item.tokens ??
-            item.balance
-        )
-      );
-    });
-
-    return votingPowerByAddress;
-  } catch (error) {
-    console.warn("Unable to load member voting power", error);
-    return new Map<string, number>();
-  } finally {
-    clearTimeout(timeout);
-  }
+  return new Map(
+    entries.filter(
+      (entry): entry is readonly [string, number] => Boolean(entry)
+    )
+  );
 };
 
 const getMetadataByAddress = async (addresses: string[]) => {
