@@ -3,7 +3,7 @@ import { getEnsNamesForAddresses } from "data/ens";
 import { getCollectiveNounTokens, type ProbeToken } from "data/nouns-builder/probe";
 import { countApprovedNoundrySubmissionsByArtists } from "data/noundry/submissions";
 import { listProfileMetadata, type ProfileMetadata } from "data/profile";
-import { TOKEN_CONTRACT } from "constants/addresses";
+import { TOKEN_CONTRACT, TOKEN_NETWORK } from "constants/addresses";
 import { SUBGRAPH_ENDPOINT } from "constants/urls";
 import { GraphQLClient, gql } from "graphql-request";
 import { getAddress, isAddress } from "viem";
@@ -18,6 +18,7 @@ export type DaoMemberSummary = {
   firstTokenName: string;
   firstTokenImage: string;
   tokenCount: number;
+  votingPower: number;
 };
 
 export type DaoMember = DaoMemberSummary & {
@@ -40,6 +41,80 @@ const BURNER_ADDRESSES = new Set([
   "0x0000000000000000000000000000000000000000",
   "0x000000000000000000000000000000000000dead",
 ]);
+
+const membersListUrl = `https://nouns.build/api/membersList/${TOKEN_CONTRACT}?chainId=${TOKEN_NETWORK}`;
+
+const getNumber = (value: unknown): number => {
+  if (Array.isArray(value)) return value.length;
+  if (typeof value === "number") return Number.isFinite(value) ? value : 0;
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+  return 0;
+};
+
+const getMemberAddress = (item: Record<string, unknown>) =>
+  String(
+    item.address ||
+      item.delegate ||
+      item.voter ||
+      item.wallet ||
+      item.owner ||
+      item.id ||
+      ""
+  );
+
+const getVotingPowerByAddress = async (addresses: string[]) => {
+  const requestedAddresses = new Set(
+    addresses.map((address) => address.toLowerCase())
+  );
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const response = await fetch(membersListUrl, { signal: controller.signal });
+    if (!response.ok) return new Map<string, number>();
+
+    const payload = await response.json();
+    const data = payload as {
+      members?: unknown[];
+      membersList?: unknown[];
+      delegates?: unknown[];
+    };
+    const members = Array.isArray(payload)
+      ? payload
+      : data.membersList || data.members || data.delegates || [];
+    const votingPowerByAddress = new Map<string, number>();
+
+    members.forEach((member) => {
+      const item = member as Record<string, unknown>;
+      const address = getMemberAddress(item);
+      if (!isAddress(address)) return;
+
+      const normalizedAddress = getAddress(address).toLowerCase();
+      if (!requestedAddresses.has(normalizedAddress)) return;
+
+      votingPowerByAddress.set(
+        normalizedAddress,
+        getNumber(
+          item.votes ??
+            item.votingPower ??
+            item.tokenCount ??
+            item.tokens ??
+            item.balance
+        )
+      );
+    });
+
+    return votingPowerByAddress;
+  } catch (error) {
+    console.warn("Unable to load member voting power", error);
+    return new Map<string, number>();
+  } finally {
+    clearTimeout(timeout);
+  }
+};
 
 const getMetadataByAddress = async (addresses: string[]) => {
   try {
@@ -207,9 +282,10 @@ export const getDaoMemberSummaries = async (): Promise<DaoMemberSummary[]> => {
   });
 
   const addresses = Array.from(tokensByOwner.keys());
-  const [ensNames, metadataByAddress] = await Promise.all([
+  const [ensNames, metadataByAddress, votingPowerByAddress] = await Promise.all([
     getEnsNamesForAddresses(addresses),
     getMetadataByAddress(addresses),
+    getVotingPowerByAddress(addresses),
   ]);
 
   return sortMemberSummaries(
@@ -233,6 +309,7 @@ export const getDaoMemberSummaries = async (): Promise<DaoMemberSummary[]> => {
           firstToken?.name || `Collective Noun #${firstToken?.id || "0"}`,
         firstTokenImage: firstToken?.image || "",
         tokenCount: ownerTokens.length,
+        votingPower: votingPowerByAddress.get(address) ?? ownerTokens.length,
       };
     })
   );

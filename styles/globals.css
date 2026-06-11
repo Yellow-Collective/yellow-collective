@@ -262,6 +262,23 @@
     color: #212529 !important;
   }
 
+  .header-submenu-panel {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-0.25rem);
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease,
+      visibility 150ms ease;
+  }
+
+  .header-submenu-parent:hover > .header-submenu-panel,
+  .header-submenu-parent:focus-within > .header-submenu-panel {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   [data-theme="dark"] .yc-dark-yellow-surface {
     --color-text-base: 33, 37, 41;
     --color-text-muted: 69, 74, 78;
