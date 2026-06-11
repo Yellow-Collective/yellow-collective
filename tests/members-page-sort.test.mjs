@@ -41,8 +41,8 @@ assert.match(
 
 assert.match(
   membersData,
-  /COLLECTIVE_NOUNS_VOTING_POWER_CONTRACT/,
-  "Member voting power must use the configured voting power contract."
+  /new Contract\(TOKEN_CONTRACT,\s*votingPowerAbi,\s*DefaultProvider\)/,
+  "Member voting power must use getVotes on the Collective Nouns token contract."
 );
 
 assert.match(
@@ -51,22 +51,28 @@ assert.match(
   "Member voting power must call getVotes."
 );
 
+assert.match(
+  membersData,
+  /nouns\.build\/api\/membersList\/\$\{TOKEN_CONTRACT\}\?chainId=\$\{TOKEN_NETWORK\}/,
+  "Member voting power should keep Nouns Builder members list parity as a fallback source."
+);
+
+assert.doesNotMatch(
+  addresses,
+  /COLLECTIVE_NOUNS_VOTING_POWER_CONTRACT/,
+  "Members voting power must not use the governor contract as the current voting-power contract."
+);
+
+assert.match(
+  membersData,
+  /votingPower:\s*votingPowerByAddress\.get\(address\) \?\? 0/,
+  "Member voting power must default to zero instead of owned-token count when delegated votes are unavailable."
+);
+
 assert.doesNotMatch(
   membersData,
-  /membersListUrl|nouns\.build\/api\/membersList/,
-  "Member voting power must not depend on the Nouns Builder members list API."
-);
-
-assert.match(
-  addresses,
-  /COLLECTIVE_NOUNS_VOTING_POWER_CONTRACT[\s\S]*0x1297FFd714ACb55Af447c6B7641B3cf01930d605/,
-  "Voting power contract must be the Collective Nouns voting contract."
-);
-
-assert.match(
-  membersData,
   /votingPower:\s*votingPowerByAddress\.get\(address\) \?\? ownerTokens\.length/,
-  "Member voting power must fall back to owned token count when delegate data is unavailable."
+  "Owned token count must not be used as voting power because holders can delegate away their votes."
 );
 
 console.log("ok - members page supports voting power sort");
