@@ -91,6 +91,48 @@ test("admin permissions include notifications", () => {
   );
 });
 
+test("notification cron auth accepts the Vercel CRON_SECRET fallback", () => {
+  const originalNotificationsSecret = process.env.NOTIFICATIONS_CRON_SECRET;
+  const originalCronSecret = process.env.CRON_SECRET;
+  const auth = loadTsModule("utils/notifications/auth.ts");
+
+  try {
+    delete process.env.NOTIFICATIONS_CRON_SECRET;
+    process.env.CRON_SECRET = "vercel-secret";
+    assert.equal(
+      auth.hasNotificationCronAuth({
+        headers: { authorization: "Bearer vercel-secret" },
+      }),
+      true
+    );
+
+    process.env.NOTIFICATIONS_CRON_SECRET = "notifications-secret";
+    assert.equal(
+      auth.hasNotificationCronAuth({
+        headers: { authorization: "Bearer notifications-secret" },
+      }),
+      true
+    );
+    assert.equal(
+      auth.hasNotificationCronAuth({
+        headers: { authorization: "Bearer wrong-secret" },
+      }),
+      false
+    );
+  } finally {
+    if (originalNotificationsSecret === undefined) {
+      delete process.env.NOTIFICATIONS_CRON_SECRET;
+    } else {
+      process.env.NOTIFICATIONS_CRON_SECRET = originalNotificationsSecret;
+    }
+    if (originalCronSecret === undefined) {
+      delete process.env.CRON_SECRET;
+    } else {
+      process.env.CRON_SECRET = originalCronSecret;
+    }
+  }
+});
+
 test("notification settings sanitize unknown keys and validate rendered copy length", () => {
   const settings = loadTsModule("utils/notifications/settings.ts");
   const sanitized = settings.normalizeNotificationSettings({
@@ -114,6 +156,7 @@ test("notification settings sanitize unknown keys and validate rendered copy len
   assert.equal(sanitized.alerts.round_published.enabled, false);
   assert.equal(sanitized.alerts.unknown_key, undefined);
   assert.equal(sanitized.alerts.auction_started.enabled, true);
+  assert.equal(sanitized.alerts.auction_ended.enabled, true);
   assert.equal(sanitized.pollIntervalHours, 4);
   assert.equal(
     settings.normalizeNotificationSettings({ pollIntervalHours: 3 })
@@ -213,6 +256,31 @@ test("notification send attempts persist explicit target FIDs for the admin log"
   assert.equal(JSON.stringify(attempts[0].targetFids), JSON.stringify([13870]));
 });
 
+test("dry-run notification attempts do not burn future real sends", async () => {
+  let markedSent = false;
+  const service = loadTsModule("utils/notifications/service.ts", {
+    "data/notifications": {
+      getNotificationEvent: async () => null,
+      upsertNotificationEventAttempt: async () => undefined,
+      markNotificationEventSent: async () => {
+        markedSent = true;
+      },
+    },
+  });
+
+  const result = await service.sendConfiguredNotification({
+    eventType: "auction_started",
+    sourceId: "1:started",
+    targetPath: "/",
+    variables: { tokenId: 1 },
+    settings: service.DEFAULT_NOTIFICATION_SETTINGS,
+    dryRun: true,
+  });
+
+  assert.equal(result.status, "sent");
+  assert.equal(markedSent, false);
+});
+
 test("notification token sync fetches Neynar audience without exposing token secrets", async () => {
   const originalApiKey = process.env.NEYNAR_API_KEY;
   process.env.NEYNAR_API_KEY = "test-key";
@@ -259,6 +327,8 @@ test("notification poll cadence is controlled by admin settings", () => {
   assert.match(poll, /getLastNotificationPollAt/);
   assert.match(poll, /setLastNotificationPollAt/);
   assert.match(poll, /pollIntervalHours/);
+  assert.match(poll, /POLL_CADENCE_GRACE_SECONDS/);
+  assert.match(poll, /now\.getTime\(\) \+ graceMs >= nextRunAt\.getTime\(\)/);
   assert.match(poll, /status: "skipped"/);
 
   const route = read("pages/api/notifications/poll.ts");
@@ -267,6 +337,40 @@ test("notification poll cadence is controlled by admin settings", () => {
   const dashboard = read("pages/admin/dashboard.tsx");
   assert.match(dashboard, /Poll every/);
   assert.match(dashboard, /NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS/);
+});
+
+test("auction notifications use poll windows and a cursor for settled auctions", () => {
+  const poll = read("utils/notifications/poll.ts");
+  const settings = read("utils/notifications/settings.ts");
+  const data = read("data/notifications.ts");
+
+  assert.match(settings, /"auction_ended"/);
+  assert.match(settings, /titleTemplate: "Auction ended"/);
+  assert.match(poll, /POLL_WINDOW_LOOKBACK_SECONDS/);
+  assert.match(poll, /getPollWindowStartSeconds/);
+  assert.match(poll, /reminderReachedDuringPollWindow/);
+  assert.match(
+    poll,
+    /auction\.endTime,\s*60 \* 60,\s*windowStartSeconds,\s*nowSeconds/s
+  );
+  assert.match(poll, /getAuctionNotificationCursor/);
+  assert.match(poll, /setAuctionNotificationCursor/);
+  assert.match(
+    poll,
+    /auctionCursor\?\.tokenId && auctionCursor\.tokenId !== tokenId/
+  );
+  assert.match(poll, /eventType: "auction_ended"/);
+  assert.match(poll, /!isEffectiveDryRun\(dryRun, settings\)/);
+  assert.match(poll, /!effectiveDryRun && result\.errors\.length === 0/);
+  assert.ok(
+    poll.includes("sourceId: `${auctionCursor.tokenId}:settled`,"),
+    "settled notifications should use the previous auction token"
+  );
+  assert.doesNotMatch(
+    poll,
+    /auction\.settled && happenedRecently\(auction\.endTime/
+  );
+  assert.match(data, /NOTIFICATIONS_AUCTION_CURSOR_KEY/);
 });
 
 test("notification test send preflights Neynar tokens before a real send", () => {
@@ -349,15 +453,38 @@ test("Mini App passive saves do not downgrade synced notification status", () =>
     data,
     /COALESCE\(\$6::boolean, miniapp_users\.notifications_enabled\)/
   );
+  assert.match(data, /notification_url = CASE/);
+  assert.match(data, /notification_token_updated_at = CASE/);
   assert.doesNotMatch(data, /Boolean\(input\.notificationsEnabled\)/);
 });
 
 test("Mini App prompt treats notification details as optional context", () => {
   const prompt = read("components/MiniApp/MiniAppNotificationsPrompt.tsx");
   assert.match(prompt, /getNotificationDetails/);
-  assert.match(prompt, /context\?\.client\?\.notificationDetails/);
+  assert.match(prompt, /miniAppContext\?\.client\?\.notificationDetails/);
   assert.doesNotMatch(prompt, /Boolean\(context\?\.notificationDetails\)/);
   assert.match(prompt, /notificationsEnabled: notificationDetails \? true : undefined/);
+});
+
+test("Mini App prompt forwards notification metadata without suppressing failed retries", () => {
+  const prompt = read("components/MiniApp/MiniAppNotificationsPrompt.tsx");
+  const farcaster = read("utils/farcasterMiniApp.ts");
+  const endpoint = read("pages/api/miniapp/users.ts");
+
+  assert.match(prompt, /notificationUrl: notificationDetails\.url/);
+  assert.match(prompt, /notificationTokenCreatedAt/);
+  assert.match(prompt, /notificationTokenUpdatedAt/);
+  assert.match(endpoint, /notificationUrl: req\.body\?\.notificationUrl/);
+  assert.doesNotMatch(farcaster, /return null;\s*\n\s*}\s*catch/);
+
+  const enableIndex = prompt.indexOf("const enableNotifications = async");
+  const addIndex = prompt.indexOf("addMiniAppWithNotifications", enableIndex);
+  const markIndex = prompt.indexOf("markPromptResponded(promptFid)", enableIndex);
+  assert.ok(addIndex > enableIndex, "enable flow should call addMiniApp");
+  assert.ok(
+    markIndex > addIndex,
+    "failed SDK adds should not mark the prompt as responded before retry is possible"
+  );
 });
 
 test("notification test sends use an admin-scoped endpoint", () => {

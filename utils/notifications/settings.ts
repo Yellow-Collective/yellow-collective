@@ -13,6 +13,7 @@ export const NOTIFICATION_ALERT_KEYS = [
   "round_results_finalized",
   "auction_started",
   "auction_ending_soon_1h",
+  "auction_ended",
   "auction_settled",
   "yellow_proposal_created",
   "yellow_proposal_active",
@@ -66,7 +67,12 @@ export const NOTIFICATION_ALERT_GROUPS: Array<{
     id: "auctions",
     label: "Auctions",
     variables: ["tokenId"],
-    alerts: ["auction_started", "auction_ending_soon_1h", "auction_settled"],
+    alerts: [
+      "auction_started",
+      "auction_ending_soon_1h",
+      "auction_ended",
+      "auction_settled",
+    ],
   },
   {
     id: "yellow_proposals",
@@ -127,6 +133,11 @@ const defaultAlerts: Record<NotificationAlertKey, NotificationAlertSettings> = {
     enabled: true,
     titleTemplate: "Auction ending",
     bodyTemplate: "Collective Noun #{tokenId} ends in about 1 hour.",
+  },
+  auction_ended: {
+    enabled: true,
+    titleTemplate: "Auction ended",
+    bodyTemplate: "Collective Noun #{tokenId} auction ended.",
   },
   auction_settled: {
     enabled: true,
@@ -290,6 +301,7 @@ const sampleVariablesByAlert: Record<
   },
   auction_started: { tokenId: 1 },
   auction_ending_soon_1h: { tokenId: 1 },
+  auction_ended: { tokenId: 1 },
   auction_settled: { tokenId: 1 },
   yellow_proposal_created: {
     proposalTitle: "Test Proposal",

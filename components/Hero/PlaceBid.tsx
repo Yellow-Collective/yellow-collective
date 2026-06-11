@@ -29,12 +29,32 @@ import { useMiniAppWalletConnect } from "@/hooks/useMiniAppWalletConnect";
 
 const auctionInterface = new utils.Interface(auctionAbi as any);
 const BASE_CHAIN_ID = 8453;
+const ZERO_BID = BigNumber.from(0);
 
-const parseBidAmount = (value: string) => {
+const parseBidAmount = (value: string): BigNumber | undefined => {
   try {
-    return value ? utils.parseEther(value) : undefined;
+    if (!value) return undefined;
+
+    return BigNumber.from(utils.parseEther(value).toString());
   } catch {
     return undefined;
+  }
+};
+
+const toSafeBigNumber = (value: unknown, fallback = ZERO_BID) => {
+  try {
+    return BigNumber.from(value ?? fallback);
+  } catch {
+    return fallback;
+  }
+};
+
+const isZeroBalanceValue = (value: unknown) => {
+  try {
+    if (typeof value === "bigint") return value === BigInt(0);
+    return BigNumber.from(value ?? 0).isZero();
+  } catch {
+    return false;
   }
 };
 
@@ -79,27 +99,36 @@ export const PlaceBid = ({
       bidCommentDataSuffix
     ) as `0x${string}`;
   }, [bidCommentDataSuffix, tokenId]);
-  const highestBidBN = BigNumber.from(highestBid);
+  const highestBidBN = toSafeBigNumber(highestBid);
   const amountIncrease = highestBidBN.div("10");
   const nextBidAmount = highestBidBN.add(amountIncrease);
   const commentLength = getBidCommentByteLength(bidComment);
   const commentError = bidComment.trim()
     ? validateBidCommentText(bidComment) || ""
     : "";
+  const isPreparedBidValid = parsedBid
+    ? parsedBid.gt(ZERO_BID) && parsedBid.gte(nextBidAmount)
+    : false;
+  const canPrepareBid = Boolean(
+    auction &&
+      finalBidCalldata &&
+      parsedBid &&
+      isPreparedBidValid &&
+      debouncedBid &&
+      isConnected &&
+      !commentError
+  );
 
   const { config, error } = usePrepareSendTransaction({
     chainId: BASE_CHAIN_ID,
-    request:
-      auction && finalBidCalldata && parsedBid
-        ? {
-            to: auction as Address,
-            data: finalBidCalldata,
-            value: parsedBid,
-          }
-        : undefined,
-    enabled:
-      Boolean(auction && finalBidCalldata && parsedBid && debouncedBid) &&
-      !commentError,
+    request: canPrepareBid && auction && finalBidCalldata && parsedBid
+      ? {
+          to: auction as Address,
+          data: finalBidCalldata,
+          value: parsedBid,
+        }
+      : undefined,
+    enabled: canPrepareBid,
   });
   const { sendTransaction: write, data } = useSendTransaction(config);
   const { isLoading } = useWaitForTransaction({
@@ -119,11 +148,12 @@ export const PlaceBid = ({
   const getError = () => {
     const minNextBid = utils.formatEther(nextBidAmount);
     const bidAmount = parseBidAmount(bid);
-    if (
-      bid &&
-      (!bidAmount || BigNumber.from(bidAmount.toString()).lt(nextBidAmount))
-    ) {
-      return `Bid must be at least ${minNextBid}`;
+    if (bid) {
+      if (!bidAmount) return "Enter a valid ETH amount";
+
+      if (bidAmount.lte(ZERO_BID)) return "Enter a bid greater than 0";
+
+      if (bidAmount.lt(nextBidAmount)) return `Bid must be at least ${minNextBid}`;
     }
 
     const reason = (error as any)?.reason;
@@ -132,11 +162,17 @@ export const PlaceBid = ({
     if (reason.includes("insufficient funds"))
       return "Error insufficient funds for bid";
 
-    if (parsedBid && BigNumber.from(parsedBid.toString()).lt(nextBidAmount))
+    if (parsedBid && parsedBid.lt(nextBidAmount))
       return "Error invalid bid";
+
+    return "";
   };
+  const bidError = getError();
+  const hasBidError = Boolean(bidError);
   const showBridgeToBase =
-    isConnected && baseBalance?.value !== undefined && baseBalance.value.isZero();
+    isConnected &&
+    baseBalance?.value !== undefined &&
+    isZeroBalanceValue(baseBalance.value);
 
   return (
     <div
@@ -157,7 +193,7 @@ export const PlaceBid = ({
             onChange={(e) => setBid(e.target.value)}
             className={clsx(
               "h-[59px] w-full min-w-0 rounded-[18px] border-2 border-accent bg-primary px-4 py-4 outline-none focus:border-accent sm:px-6",
-              getError() != undefined && getError() != "" && "border-negative"
+              bidError && "border-negative"
             )}
             placeholder={
               nextBidAmount
@@ -165,16 +201,19 @@ export const PlaceBid = ({
                 : ""
             }
           />
-          {error && <p className="caption text-negative">{getError()}</p>}
+          {bidError && <p className="caption text-negative">{bidError}</p>}
         </div>
         <div className="flex flex-col items-center justify-center gap-1">
           <Button
             className="yc-dark-yellow-button h-[59px] min-w-[112px] px-3 py-0 text-sm hover:-translate-y-0.5 hover:shadow-[0px_6px_0px_0px_rgb(var(--color-action-shadow))] active:translate-y-1 active:shadow-none sm:min-w-[140px]"
-            disabled={((!write || isLoading) && isConnected) || !!commentError}
+            disabled={
+              ((!write || isLoading || hasBidError) && isConnected) ||
+              !!commentError
+            }
             onClick={(e) => {
               e.preventDefault();
               if (isConnected) {
-                if (commentError) return;
+                if (commentError || hasBidError) return;
                 track("placeBidTriggered");
                 write?.();
               } else {

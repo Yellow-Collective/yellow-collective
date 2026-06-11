@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { providers } from "ethers";
+import { BigNumber, providers } from "ethers";
 import { Interface } from "ethers6";
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
@@ -108,4 +108,26 @@ test("bid calldata uses ethers6-compatible token id values", () => {
       "0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
     ])
   );
+});
+
+test("auction bid preparation uses serializable ethers v5 BigNumber values", () => {
+  const placeBid = read("components/Hero/PlaceBid.tsx");
+
+  assert.match(
+    placeBid,
+    /const parseBidAmount = \(value: string\): BigNumber \| undefined/
+  );
+  assert.match(
+    placeBid,
+    /BigNumber\.from\(utils\.parseEther\(value\)\.toString\(\)\)/
+  );
+  assert.equal(placeBid.includes("return value ? utils.parseEther(value)"), false);
+  assert.match(placeBid, /const isPreparedBidValid = parsedBid[\s\S]*parsedBid\.gt\(ZERO_BID\)[\s\S]*parsedBid\.gte\(nextBidAmount\)/);
+  assert.match(placeBid, /const canPrepareBid = Boolean\([\s\S]*isConnected[\s\S]*!commentError/);
+  assert.match(placeBid, /request: canPrepareBid && auction && finalBidCalldata && parsedBid/);
+  assert.match(placeBid, /const toSafeBigNumber/);
+  assert.match(placeBid, /const isZeroBalanceValue/);
+
+  assert.throws(() => JSON.stringify({ value: 1n }), /BigInt/);
+  assert.doesNotThrow(() => JSON.stringify({ value: BigNumber.from("1") }));
 });

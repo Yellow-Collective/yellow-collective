@@ -79,11 +79,13 @@ export const sendConfiguredNotification = async ({
     dryRun: shouldDryRun,
   });
 
-  await markNotificationEventSent({
-    eventType,
-    sourceId,
-    response: response as unknown as Record<string, unknown>,
-  });
+  if (!shouldDryRun) {
+    await markNotificationEventSent({
+      eventType,
+      sourceId,
+      response: response as unknown as Record<string, unknown>,
+    });
+  }
 
   return { status: "sent", response };
 };

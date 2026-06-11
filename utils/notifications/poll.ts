@@ -8,9 +8,12 @@ import {
   type Round,
 } from "data/rounds";
 import {
+  getAuctionNotificationCursor,
   getLastNotificationPollAt,
   getNotificationSettings,
+  setAuctionNotificationCursor,
   setLastNotificationPollAt,
+  type NotificationAuctionCursor,
 } from "data/notifications";
 import { sendConfiguredNotification } from "@/utils/notifications/service";
 import type {
@@ -32,6 +35,8 @@ export type NotificationPollResult = {
 
 const RECENT_WINDOW_SECONDS = 10 * 60;
 const REMINDER_WINDOW_SECONDS = 10 * 60;
+const POLL_CADENCE_GRACE_SECONDS = 5 * 60;
+const POLL_WINDOW_LOOKBACK_SECONDS = 10 * 60;
 
 const emptyResult = (): NotificationPollResult => ({
   status: "sent",
@@ -50,17 +55,48 @@ const happenedRecently = (timestampSeconds: number, nowSeconds: number) => {
   return diff <= 0 && Math.abs(diff) <= RECENT_WINDOW_SECONDS;
 };
 
+const getPollWindowStartSeconds = (
+  lastPolledAt: Date | null | undefined,
+  nowSeconds: number
+) =>
+  lastPolledAt
+    ? Math.floor(lastPolledAt.getTime() / 1000) - POLL_WINDOW_LOOKBACK_SECONDS
+    : nowSeconds - RECENT_WINDOW_SECONDS;
+
+const happenedDuringPollWindow = (
+  timestampSeconds: number,
+  windowStartSeconds: number,
+  nowSeconds: number
+) => timestampSeconds > windowStartSeconds && timestampSeconds <= nowSeconds;
+
 const upcomingWithin = (
   timestampSeconds: number,
   targetSeconds: number,
   nowSeconds: number
 ) => {
   const diff = secondsFromNow(timestampSeconds, nowSeconds);
+  return diff > 0 && Math.abs(diff - targetSeconds) <= REMINDER_WINDOW_SECONDS;
+};
+
+const reminderReachedDuringPollWindow = (
+  timestampSeconds: number,
+  targetSeconds: number,
+  windowStartSeconds: number,
+  nowSeconds: number
+) => {
+  const reminderAtSeconds = timestampSeconds - targetSeconds;
   return (
-    diff > 0 &&
-    Math.abs(diff - targetSeconds) <= REMINDER_WINDOW_SECONDS
+    timestampSeconds > nowSeconds &&
+    reminderAtSeconds > windowStartSeconds &&
+    reminderAtSeconds <= nowSeconds
   );
 };
+
+const isEffectiveDryRun = (
+  dryRun: boolean | undefined,
+  settings: NotificationSettings
+) =>
+  dryRun ?? settings.dryRun ?? process.env.NOTIFICATIONS_DRY_RUN === "true";
 
 const roundTimestamp = (value: string) =>
   Math.floor(new Date(value).getTime() / 1000);
@@ -96,9 +132,10 @@ export const shouldRunNotificationPoll = ({
 
   const intervalMs = settings.pollIntervalHours * 60 * 60 * 1000;
   const nextRunAt = new Date(lastPolledAt.getTime() + intervalMs);
+  const graceMs = POLL_CADENCE_GRACE_SECONDS * 1000;
 
   return {
-    shouldRun: now.getTime() >= nextRunAt.getTime(),
+    shouldRun: now.getTime() + graceMs >= nextRunAt.getTime(),
     nextRunAt: nextRunAt.toISOString(),
   };
 };
@@ -211,21 +248,35 @@ export const pollAuctionNotifications = async ({
   settings,
   now = new Date(),
   dryRun,
+  lastPolledAt,
+  lastAuctionCursor,
 }: {
   settings: NotificationSettings;
   now?: Date;
   dryRun?: boolean;
+  lastPolledAt?: Date | null;
+  lastAuctionCursor?: NotificationAuctionCursor | null;
 }) => {
   const result = emptyResult();
   const nowSeconds = Math.floor(now.getTime() / 1000);
+  const windowStartSeconds = getPollWindowStartSeconds(
+    lastPolledAt,
+    nowSeconds
+  );
   const addresses = await getAddresses({
     tokenAddress: TOKEN_CONTRACT as `0x${string}`,
   });
   const auction = await getCurrentAuction({ address: addresses.auction });
-  const tokenId = String(BigNumber.from(auction.tokenId).toNumber());
+  const auctionCursor =
+    lastAuctionCursor === undefined
+      ? await getAuctionNotificationCursor()
+      : lastAuctionCursor;
+  const tokenId = BigNumber.from(auction.tokenId).toString();
   const targetPath = `/?tokenid=${tokenId}`;
 
-  if (happenedRecently(auction.startTime, nowSeconds)) {
+  if (
+    happenedDuringPollWindow(auction.startTime, windowStartSeconds, nowSeconds)
+  ) {
     await record(result, {
       eventType: "auction_started",
       sourceId: `${tokenId}:started`,
@@ -235,7 +286,14 @@ export const pollAuctionNotifications = async ({
       dryRun,
     });
   }
-  if (upcomingWithin(auction.endTime, 60 * 60, nowSeconds)) {
+  if (
+    reminderReachedDuringPollWindow(
+      auction.endTime,
+      60 * 60,
+      windowStartSeconds,
+      nowSeconds
+    )
+  ) {
     await record(result, {
       eventType: "auction_ending_soon_1h",
       sourceId: `${tokenId}:ending-1h`,
@@ -245,7 +303,31 @@ export const pollAuctionNotifications = async ({
       dryRun,
     });
   }
-  if (auction.settled && happenedRecently(auction.endTime, nowSeconds)) {
+  if (
+    happenedDuringPollWindow(auction.endTime, windowStartSeconds, nowSeconds)
+  ) {
+    await record(result, {
+      eventType: "auction_ended",
+      sourceId: `${tokenId}:ended`,
+      targetPath,
+      variables: { tokenId },
+      settings,
+      dryRun,
+    });
+  }
+  if (auctionCursor?.tokenId && auctionCursor.tokenId !== tokenId) {
+    await record(result, {
+      eventType: "auction_settled",
+      sourceId: `${auctionCursor.tokenId}:settled`,
+      targetPath: `/?tokenid=${auctionCursor.tokenId}`,
+      variables: { tokenId: auctionCursor.tokenId },
+      settings,
+      dryRun,
+    });
+  } else if (
+    auction.settled &&
+    happenedDuringPollWindow(auction.endTime, windowStartSeconds, nowSeconds)
+  ) {
     await record(result, {
       eventType: "auction_settled",
       sourceId: `${tokenId}:settled`,
@@ -253,6 +335,15 @@ export const pollAuctionNotifications = async ({
       variables: { tokenId },
       settings,
       dryRun,
+    });
+  }
+
+  if (!isEffectiveDryRun(dryRun, settings) && result.errors.length === 0) {
+    await setAuctionNotificationCursor({
+      tokenId,
+      startTime: auction.startTime,
+      endTime: auction.endTime,
+      settled: auction.settled,
     });
   }
 
@@ -287,7 +378,12 @@ export const pollYellowProposalNotifications = async ({
     };
     const targetPath = `/proposals/${proposal.proposalId}`;
 
-    if (happenedRecently(proposalTimestamp(proposal.proposal.timeCreated), nowSeconds)) {
+    if (
+      happenedRecently(
+        proposalTimestamp(proposal.proposal.timeCreated),
+        nowSeconds
+      )
+    ) {
       await record(result, {
         eventType: "yellow_proposal_created",
         sourceId: `${proposal.proposalId}:created`,
@@ -297,7 +393,12 @@ export const pollYellowProposalNotifications = async ({
         dryRun,
       });
     }
-    if (happenedRecently(proposalTimestamp(proposal.proposal.voteStart), nowSeconds)) {
+    if (
+      happenedRecently(
+        proposalTimestamp(proposal.proposal.voteStart),
+        nowSeconds
+      )
+    ) {
       await record(result, {
         eventType: "yellow_proposal_active",
         sourceId: `${proposal.proposalId}:active`,
@@ -345,13 +446,22 @@ export const pollYellowProposalNotifications = async ({
 export const pollWebNotifications = async ({
   dryRun,
   force,
+  now = new Date(),
 }: {
   dryRun?: boolean;
   force?: boolean;
+  now?: Date;
 } = {}) => {
   const settings = await getNotificationSettings();
+  const effectiveDryRun = isEffectiveDryRun(dryRun, settings);
   const lastPolledAt = await getLastNotificationPollAt();
-  const cadence = shouldRunNotificationPoll({ settings, lastPolledAt, force });
+  const lastAuctionCursor = await getAuctionNotificationCursor();
+  const cadence = shouldRunNotificationPoll({
+    settings,
+    lastPolledAt,
+    force,
+    now,
+  });
 
   if (!cadence.shouldRun) {
     return {
@@ -362,9 +472,15 @@ export const pollWebNotifications = async ({
   }
 
   const results = await Promise.all([
-    pollRoundNotifications({ settings, dryRun }),
-    pollAuctionNotifications({ settings, dryRun }),
-    pollYellowProposalNotifications({ settings, dryRun }),
+    pollRoundNotifications({ settings, dryRun: effectiveDryRun, now }),
+    pollAuctionNotifications({
+      settings,
+      dryRun: effectiveDryRun,
+      now,
+      lastPolledAt,
+      lastAuctionCursor,
+    }),
+    pollYellowProposalNotifications({ settings, dryRun: effectiveDryRun, now }),
   ]);
 
   const result = results.reduce(
@@ -379,7 +495,9 @@ export const pollWebNotifications = async ({
     emptyResult()
   );
 
-  await setLastNotificationPollAt();
+  if (!effectiveDryRun && result.errors.length === 0) {
+    await setLastNotificationPollAt(now);
+  }
 
   return result;
 };

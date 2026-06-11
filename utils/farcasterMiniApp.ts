@@ -128,14 +128,18 @@ export const getMiniAppEthereumProvider = async () => {
 
 export const addMiniAppWithNotifications = async () => {
   const sdk = await loadMiniAppSdk();
-  if (!sdk?.actions) return null;
+  if (!sdk?.actions) {
+    throw new Error("Farcaster Mini App SDK is unavailable.");
+  }
 
   try {
     if (sdk.actions.addMiniApp) return await sdk.actions.addMiniApp();
     if (sdk.actions.addFrame) return await sdk.actions.addFrame();
-    return null;
+    throw new Error("This Farcaster client does not support Mini App installs.");
   } catch (error) {
     console.warn("Unable to add Farcaster Mini App", error);
-    return null;
+    throw error instanceof Error
+      ? error
+      : new Error("Unable to add Farcaster Mini App.");
   }
 };
