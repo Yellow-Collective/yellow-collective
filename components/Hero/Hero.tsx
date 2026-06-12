@@ -181,7 +181,7 @@ const EndedAuction = ({
           <h3>
             {auctionData &&
             BigNumber.from(auctionData.amount || "0").isZero() ? (
-              "N/A- Burned"
+              "N/A - Burned🔥"
             ) : auctionData ? (
               `Ξ ${formatNumber(utils.formatEther(auctionData.amount || "0"), 4)}`
             ) : (
