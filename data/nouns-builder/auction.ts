@@ -39,6 +39,20 @@ const { auction } = BuilderSDK.connect({ signerOrProvider: DefaultProvider });
 const toBigNumber = (value: unknown) => BigNumber.from(value?.toString() || 0);
 const toNumber = (value: unknown) => Number(value?.toString() || 0);
 
+const getPreviousAuctionIds = ({
+  address,
+  tokenId,
+}: {
+  address: string;
+  tokenId: string;
+}) => {
+  const normalizedTokenId = BigNumber.from(tokenId).toString();
+  const tokenContractId = `${TOKEN_CONTRACT.toLowerCase()}:${normalizedTokenId}`;
+  const requestedAddressId = `${address.toLowerCase()}:${normalizedTokenId}`;
+
+  return Array.from(new Set([tokenContractId, requestedAddressId]));
+};
+
 export const getCurrentAuction = async ({ address }: { address: string }) => {
   const { tokenId, highestBid, highestBidder, startTime, endTime, settled } =
     await auction({
@@ -81,15 +95,25 @@ export const getPreviousAuction = async ({
   `);
 
   const client = new GraphQLClient(SUBGRAPH_ENDPOINT);
-  const id = `${address.toLowerCase()}:${Number(tokenId)}`;
+  const auctionIds = getPreviousAuctionIds({ address, tokenId });
+  let auctionResp:
+    | { auction?: { winningBid?: { amount: string; bidder: string } } }
+    | undefined;
 
-  const auctionResp = await client.request({
-    document: query,
-    variables: { id },
-  });
+  for (const id of auctionIds) {
+    auctionResp = await client.request({
+      document: query,
+      variables: { id },
+    });
+
+    if (auctionResp.auction) {
+      break;
+    }
+  }
+
   const bids = await getBidHistory({ tokenId: BigNumber.from(tokenId) });
 
-  return auctionResp.auction
+  return auctionResp?.auction
     ? ({
         tokenId,
         winner: auctionResp.auction?.winningBid?.bidder ?? zeroAddress,

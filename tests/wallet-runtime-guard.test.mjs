@@ -73,11 +73,14 @@ test("treasury API returns a primitive balance string", () => {
 test("previous auction fetch waits for auction contract and token id", () => {
   const previousAuctionHook = read("hooks/fetch/usePreviousAuctions.tsx");
   const hero = read("components/Hero/Hero.tsx");
+  const auctionData = read("data/nouns-builder/auction.ts");
 
   assert.equal(previousAuctionHook.includes("TOKEN_CONTRACT"), false);
   assert.match(previousAuctionHook, /enabled && auctionContract && tokenId/);
   assert.match(previousAuctionHook, /\/api\/auction\/\$\{auctionContract\}\/previous\/\$\{tokenId\}/);
   assert.match(hero, /usePreviousAuction\(\{\s*auctionContract,\s*enabled: !hidden,\s*tokenId,/);
+  assert.match(auctionData, /const tokenContractId = `\$\{TOKEN_CONTRACT\.toLowerCase\(\)\}:\$\{normalizedTokenId\}`/);
+  assert.match(auctionData, /return Array\.from\(new Set\(\[tokenContractId, requestedAddressId\]\)\)/);
 });
 
 test("bid calldata uses ethers6-compatible token id values", () => {
