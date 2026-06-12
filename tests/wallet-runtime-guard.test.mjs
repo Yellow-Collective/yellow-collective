@@ -79,6 +79,8 @@ test("previous auction fetch waits for auction contract and token id", () => {
   assert.match(previousAuctionHook, /enabled && auctionContract && tokenId/);
   assert.match(previousAuctionHook, /\/api\/auction\/\$\{auctionContract\}\/previous\/\$\{tokenId\}/);
   assert.match(hero, /usePreviousAuction\(\{\s*auctionContract,\s*enabled: !hidden,\s*tokenId,/);
+  assert.match(hero, /BigNumber\.from\(auctionData\.amount \|\| "0"\)\.isZero\(\)/);
+  assert.match(hero, /N\/A- Burned/);
   assert.match(auctionData, /const tokenContractId = `\$\{TOKEN_CONTRACT\.toLowerCase\(\)\}:\$\{normalizedTokenId\}`/);
   assert.match(auctionData, /return Array\.from\(new Set\(\[tokenContractId, requestedAddressId\]\)\)/);
 });
