@@ -7,6 +7,9 @@ export const ROUND_SUBMISSIONS_CSV_HEADERS = [
   "Project Title",
   "Date Submitted",
   "Place After Voting",
+  "Prize Title",
+  "Prize Value",
+  "Prize Description",
 ];
 
 const csvValue = (value: string | number | null | undefined) => {
@@ -54,7 +57,7 @@ export const createRoundSubmissionsCsv = ({
   submissions,
   profiles,
 }: {
-  round: Pick<Round, "votingEndsAt">;
+  round: Pick<Round, "votingEndsAt" | "awards">;
   submissions: RoundSubmission[];
   profiles: ProfileMetadata[];
 }) => {
@@ -65,13 +68,24 @@ export const createRoundSubmissionsCsv = ({
     ])
   );
   const placements = getRoundSubmissionPlacements(round, submissions);
-  const rows = submissions.map((submission) => [
-    usernamesByWallet.get(submission.walletAddress.toLowerCase()) || "",
-    submission.walletAddress,
-    submission.title,
-    formatSubmittedAt(submission.createdAt),
-    placements.get(submission.id) || "",
-  ]);
+  const awardsByPosition = new Map(
+    (round.awards || []).map((award) => [award.position, award])
+  );
+  const rows = submissions.map((submission) => {
+    const placement = placements.get(submission.id);
+    const award = placement ? awardsByPosition.get(placement) : null;
+
+    return [
+      usernamesByWallet.get(submission.walletAddress.toLowerCase()) || "",
+      submission.walletAddress,
+      submission.title,
+      formatSubmittedAt(submission.createdAt),
+      placement || "",
+      award?.title || "",
+      award?.value || "",
+      award?.description || "",
+    ];
+  });
 
   return [ROUND_SUBMISSIONS_CSV_HEADERS, ...rows]
     .map((row) => row.map(csvValue).join(","))

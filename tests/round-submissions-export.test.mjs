@@ -41,6 +41,20 @@ const round = {
   id: "round-1",
   slug: "yellow-test-round",
   votingEndsAt: "2026-01-01T00:00:00.000Z",
+  awards: [
+    {
+      position: 1,
+      title: "Grand Prize",
+      value: "1 ETH",
+      description: "Top voted project",
+    },
+    {
+      position: 2,
+      title: "Runner-up Prize",
+      value: "0.5 ETH",
+      description: "Second place project",
+    },
+  ],
 };
 
 const submissions = [
@@ -94,19 +108,19 @@ const csv = createRoundSubmissionsCsv({
 
 assert.match(
   csv,
-  /^Username,Wallet Address,Project Title,Date Submitted,Place After Voting\n/
+  /^Username,Wallet Address,Project Title,Date Submitted,Place After Voting,Prize Title,Prize Value,Prize Description\n/
 );
 assert.match(
   csv,
-  /alice,0x1111111111111111111111111111111111111111,"Alpha, ""Poster""",2025-12-01T00:00:00.000Z,2/
+  /alice,0x1111111111111111111111111111111111111111,"Alpha, ""Poster""",2025-12-01T00:00:00.000Z,2,Runner-up Prize,0.5 ETH,Second place project/
 );
 assert.match(
   csv,
-  /bob,0x2222222222222222222222222222222222222222,"Beta\nVideo",2025-12-02T00:00:00.000Z,1/
+  /bob,0x2222222222222222222222222222222222222222,"Beta\nVideo",2025-12-02T00:00:00.000Z,1,Grand Prize,1 ETH,Top voted project/
 );
 assert.match(
   csv,
-  /0x3333333333333333333333333333333333333333,Rejected project,2025-12-03T00:00:00.000Z,$/
+  /0x3333333333333333333333333333333333333333,Rejected project,2025-12-03T00:00:00.000Z,,,,/
 );
 
 const futureCsv = createRoundSubmissionsCsv({
@@ -116,6 +130,7 @@ const futureCsv = createRoundSubmissionsCsv({
 });
 assert.doesNotMatch(futureCsv, /,1\n/);
 assert.doesNotMatch(futureCsv, /,2\n/);
+assert.doesNotMatch(futureCsv, /Grand Prize/);
 
 assert.equal(
   getRoundSubmissionsCsvFilename({

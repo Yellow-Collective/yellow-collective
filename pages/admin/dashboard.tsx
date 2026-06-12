@@ -3058,7 +3058,7 @@ const RoundSubmissionsManager = ({
         >
           Export CSV
         </a>
-        <div className="rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+        <div className="flex items-center justify-center rounded-full bg-[#1d9bf0] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#0f5f99]">
           {submissions.length} total
         </div>
       </>
