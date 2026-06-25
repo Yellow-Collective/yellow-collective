@@ -16,6 +16,11 @@ const numberFromEnv = (key: string, fallback: number) => {
 export const config = {
   ethereumRpcUrl: process.env.ETHEREUM_RPC_URL || "https://eth.llamarpc.com",
   chainId: 1,
+  snapshotRpcUrl:
+    process.env.SNAPSHOT_RPC_URL ||
+    process.env.BASE_RPC_URL ||
+    "https://mainnet.base.org",
+  snapshotChainId: numberFromEnv("SNAPSHOT_CHAIN_ID", 8453),
   botPrivateKey: stripPrivateKeyPrefix(process.env.BOT_PRIVATE_KEY || ""),
   safeAddress: process.env.SAFE_ADDRESS || "",
   safeApiKey: process.env.SAFE_API_KEY || "",

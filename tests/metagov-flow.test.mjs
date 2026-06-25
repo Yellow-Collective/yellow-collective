@@ -392,6 +392,37 @@ const snapshotConstants = {
   assert.match(serviceSnapshot, /config\.dryRun[\s\S]*dry-run-\$\{proposal\.id\}/, "Snapshot creation must use DRY_RUN fake IDs.");
   assert.match(serviceSnapshot, /buildSnapshotProposalMessage/, "Snapshot creation must use the tested proposal message builder.");
   assert.match(
+    serviceSnapshot,
+    /getCurrentSnapshotBlockNumber/,
+    "Snapshot creation must use the Snapshot-space chain block number."
+  );
+  assert.doesNotMatch(
+    serviceSnapshot,
+    /getCurrentBlockNumber/,
+    "Snapshot creation must not use the Ethereum mainnet provider block number."
+  );
+  const metagovConfig = read("services/metagov/src/config.ts");
+  assert.match(metagovConfig, /snapshotRpcUrl/, "Metagov config must expose a Snapshot-chain RPC URL.");
+  assert.match(metagovConfig, /snapshotChainId/, "Metagov config must expose a Snapshot-chain id.");
+  const walletUtils = read("services/metagov/src/utils/wallet.ts");
+  assert.match(walletUtils, /getSnapshotProvider/, "Metagov wallet utils must have a Snapshot-chain provider.");
+  assert.match(
+    walletUtils,
+    /validateSnapshotRpcEndpoint/,
+    "Metagov startup validation must validate the Snapshot-chain RPC."
+  );
+  assert.match(
+    walletUtils,
+    /eth_chainId/,
+    "Metagov startup validation must verify the Snapshot RPC's actual chain id."
+  );
+  const validation = read("services/metagov/src/validation.ts");
+  assert.match(
+    validation,
+    /spaceNetwork[\s\S]*config\.snapshotChainId/,
+    "Metagov startup validation must compare the Snapshot space network to the configured Snapshot chain."
+  );
+  assert.match(
     read("services/metagov/src/core.ts"),
     /discussion:\s*proposalLinkTemplate\.replace\("\{id\}", proposal\.id\)/,
     "Snapshot discussion must use the configured proposal link template."

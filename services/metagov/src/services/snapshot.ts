@@ -8,7 +8,7 @@ import {
 } from "../core";
 import { NounsProposal, SnapshotChoice, SnapshotResult } from "../types";
 import { graphqlRequest } from "../utils/http";
-import { getBotWallet, getCurrentBlockNumber } from "../utils/wallet";
+import { getBotWallet, getCurrentSnapshotBlockNumber } from "../utils/wallet";
 
 const snapshotDomain = { name: "snapshot", version: "0.1.4" };
 
@@ -154,7 +154,7 @@ export const createSnapshotProposal = async (
 ): Promise<SnapshotProposalReceipt> => {
   const wallet = getBotWallet();
   const now = Math.floor(Date.now() / 1000);
-  const snapshotBlock = await getCurrentBlockNumber();
+  const snapshotBlock = await getCurrentSnapshotBlockNumber();
   const message = buildSnapshotProposalMessage({
     from: wallet.address,
     space: config.snapshotSpaceId,
