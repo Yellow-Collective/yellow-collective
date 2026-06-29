@@ -945,22 +945,16 @@ const SubmitButton = () => {
   const hasBalance = userVotes && userVotes >= (currentThreshold || 0);
   const disabled =
     !hasBalance || !shouldPrepare || !write || isSuccess || isLoading;
-  const showsIncompleteActionLabel =
-    hasBalance && hasValidContent && !hasValidTransactions;
   const showsSubmitLabel =
     hasBalance &&
     hasValidContent &&
     hasValidTransactions &&
     hasConfirmedCustomTransactions &&
     !isSuccess;
-  const buttonTone = showsIncompleteActionLabel
-    ? "bg-[#dc2626] text-white shadow-[0px_4.02px_0px_0px_#7f1d1d]"
-    : showsSubmitLabel
+  const buttonTone = showsSubmitLabel
     ? "bg-skin-button-accent hover:bg-skin-button-accent-hover"
-    : disabled
-    ? "bg-skin-button-muted"
-    : "bg-skin-button-accent hover:bg-skin-button-accent-hover";
-  const buttonClass = `${buttonTone} yc-dark-submit-blue flex min-h-12 w-full items-center justify-center rounded-[18px] px-4 py-3 text-center font-heading text-base leading-tight text-skin-inverted shadow-[0px_4.02px_0px_0px_#0464BC] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0px_6px_0px_0px_#0464BC] enabled:active:translate-y-1 enabled:active:shadow-none disabled:shadow-none`;
+    : "bg-[#dbeafe] text-[#5f7590] shadow-[0px_4.02px_0px_0px_#b9c7d8]";
+  const buttonClass = `yc-dark-submit-blue flex min-h-12 w-full items-center justify-center rounded-[18px] px-4 py-3 text-center font-heading text-base leading-tight text-skin-inverted shadow-[0px_4.02px_0px_0px_#0464BC] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0px_6px_0px_0px_#0464BC] enabled:active:translate-y-1 enabled:active:shadow-none disabled:cursor-not-allowed ${buttonTone}`;
 
   const getButtonLabel = () => {
     if (!hasBalance) return "You don't have enough votes to submit a proposal";

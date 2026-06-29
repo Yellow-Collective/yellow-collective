@@ -85,18 +85,22 @@ test("create proposal normalizes numeric form values before trimming", () => {
   );
 });
 
-test("create proposal button is red only for incomplete actions and blue when submittable", () => {
-  assert.match(
-    source,
-    /const showsIncompleteActionLabel =\s*hasBalance && hasValidContent && !hasValidTransactions;/
-  );
+test("create proposal button is pale blue until it is submittable", () => {
   assert.match(
     source,
     /const showsSubmitLabel =\s*hasBalance &&[\s\S]*hasConfirmedCustomTransactions &&[\s\S]*!isSuccess;/
   );
-  assert.match(source, /showsIncompleteActionLabel[\s\S]*bg-\[#dc2626\]/);
   assert.match(
     source,
-    /showsSubmitLabel[\s\S]*bg-skin-button-accent hover:bg-skin-button-accent-hover[\s\S]*disabled[\s\S]*bg-skin-button-muted/
+    /showsSubmitLabel[\s\S]*bg-skin-button-accent hover:bg-skin-button-accent-hover[\s\S]*bg-\[#dbeafe\] text-\[#5f7590\]/
+  );
+  assert.match(
+    source,
+    /disabled:cursor-not-allowed/
+  );
+  assert.equal(
+    source.includes("bg-[#dc2626]"),
+    false,
+    "Incomplete proposal actions should use the muted blue inactive state, not red."
   );
 });
