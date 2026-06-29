@@ -40,16 +40,47 @@ test("create proposal tells users when calldata confirmation is the remaining bl
 });
 
 test("create proposal requires explicit positive token amounts and NFT ids", () => {
-  assert.match(source, /const parsePositiveEther = \(value: string\) => \{/);
+  assert.match(source, /const normalizeFormValue = \(value: unknown\) =>/);
+  assert.match(source, /const parsePositiveEther = \(value: unknown\) => \{/);
   assert.match(source, /return parsed > 0n \? parsed : null;/);
   assert.match(source, /if \(!amount\) return null;/);
-  assert.match(source, /if \(!transaction\.tokenId\.trim\(\)\) return null;/);
+  assert.match(
+    source,
+    /const tokenId = normalizeFormValue\(transaction\.tokenId\)\.trim\(\);/
+  );
+  assert.equal(
+    source.includes("transaction.tokenId.trim()"),
+    false,
+    "Token id validation must tolerate numeric form values."
+  );
   assert.match(
     source,
     /const value = parsePositiveEther\(transaction\.valueInETH\);[\s\S]*if \(!value\) return null;[\s\S]*value,/
   );
   assert.match(
     source,
-    /if \(!transaction\.tokenId\.trim\(\)\) return null;[\s\S]*transaction\.tokenId,/
+    /if \(!tokenId\) return null;[\s\S]*tokenId,/
+  );
+});
+
+test("create proposal normalizes numeric form values before trimming", () => {
+  assert.equal(
+    source.includes("value.trim()"),
+    false,
+    "ETH amount validation must not trim raw form values."
+  );
+  assert.equal(
+    source.includes("amount.trim()"),
+    false,
+    "ERC20 amount validation must not trim raw form values."
+  );
+  assert.equal(
+    source.includes("decimals.trim()"),
+    false,
+    "ERC20 decimal validation must not trim raw form values."
+  );
+  assert.match(
+    source,
+    /parseEther\(normalizeFormValue\(transaction\.valueInETH\) \|\| "0"\)/
   );
 });

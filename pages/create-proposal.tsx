@@ -285,17 +285,23 @@ const decodeKnownCalldata = (calldata: string) => {
 const transactionUsesCustomCalldata = (transaction: Transaction) =>
   transaction.type !== "send-tokens" && transaction.type !== "nft";
 
-const parsePositiveEther = (value: string) => {
-  if (!value.trim()) return null;
+const normalizeFormValue = (value: unknown) =>
+  value === null || value === undefined ? "" : String(value);
 
-  const parsed = parseEther(value);
+const parsePositiveEther = (value: unknown) => {
+  const normalizedValue = normalizeFormValue(value).trim();
+  if (!normalizedValue) return null;
+
+  const parsed = parseEther(normalizedValue);
   return parsed > 0n ? parsed : null;
 };
 
-const parsePositiveTokenAmount = (amount: string, decimals: string) => {
-  if (!amount.trim() || !decimals.trim()) return null;
+const parsePositiveTokenAmount = (amount: unknown, decimals: unknown) => {
+  const normalizedAmount = normalizeFormValue(amount).trim();
+  const normalizedDecimals = normalizeFormValue(decimals).trim();
+  if (!normalizedAmount || !normalizedDecimals) return null;
 
-  const decimalPlaces = Number(decimals);
+  const decimalPlaces = Number(normalizedDecimals);
   if (
     !Number.isInteger(decimalPlaces) ||
     decimalPlaces < 0 ||
@@ -304,7 +310,7 @@ const parsePositiveTokenAmount = (amount: string, decimals: string) => {
     return null;
   }
 
-  const parsed = ethers.utils.parseUnits(amount, decimalPlaces);
+  const parsed = ethers.utils.parseUnits(normalizedAmount, decimalPlaces);
   return parsed > 0n ? parsed : null;
 };
 
@@ -1024,7 +1030,8 @@ const prepareTransaction = (
           !ethers.utils.isAddress(fromAddress)
         )
           return null;
-        if (!transaction.tokenId.trim()) return null;
+        const tokenId = normalizeFormValue(transaction.tokenId).trim();
+        if (!tokenId) return null;
 
         return {
           target: transaction.tokenAddress as `0x${string}`,
@@ -1032,7 +1039,7 @@ const prepareTransaction = (
           calldata: erc721Interface.encodeFunctionData("safeTransferFrom", [
             fromAddress,
             transaction.recipient,
-            transaction.tokenId,
+            tokenId,
           ]) as `0x${string}`,
         };
       }
@@ -1045,7 +1052,7 @@ const prepareTransaction = (
           return null;
         return {
           target: transaction.address as `0x${string}`,
-          value: parseEther(transaction.valueInETH || "0"),
+          value: parseEther(normalizeFormValue(transaction.valueInETH) || "0"),
           calldata: transaction.calldata as `0x${string}`,
         };
     }
