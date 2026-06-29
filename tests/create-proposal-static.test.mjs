@@ -6,6 +6,10 @@ const source = readFileSync(
   new URL("../pages/create-proposal.tsx", import.meta.url),
   "utf8"
 );
+const globalStyles = readFileSync(
+  new URL("../styles/globals.css", import.meta.url),
+  "utf8"
+);
 
 test("create proposal separates transaction validity from custom calldata confirmation", () => {
   assert.match(
@@ -18,7 +22,10 @@ test("create proposal separates transaction validity from custom calldata confir
     /const hasConfirmedCustomTransactions = transactions\.every\([\s\S]*!transactionUsesCustomCalldata\(transaction\) \|\|[\s\S]*transaction\.confirmedCustomCalldata[\s\S]*\);/
   );
 
-  const prepareDefaultBranch = source.match(
+  const prepareFunction = source.match(
+    /const prepareTransaction = \([\s\S]*?\nconst getTransactionReadinessIssue = /
+  )?.[0];
+  const prepareDefaultBranch = prepareFunction?.match(
     /case "custom-transaction":[\s\S]*?return \{[\s\S]*?calldata: transaction\.calldata as `0x\$\{string\}`,[\s\S]*?\};/
   )?.[0];
 
@@ -92,7 +99,7 @@ test("create proposal button is pale blue until it is submittable", () => {
   );
   assert.match(
     source,
-    /showsSubmitLabel[\s\S]*bg-skin-button-accent hover:bg-skin-button-accent-hover[\s\S]*bg-\[#dbeafe\] text-\[#5f7590\]/
+    /showsSubmitLabel[\s\S]*yc-proposal-submit-active bg-skin-button-accent hover:bg-skin-button-accent-hover[\s\S]*yc-proposal-submit-inactive bg-\[#dbeafe\] text-\[#5f7590\]/
   );
   assert.match(
     source,
@@ -103,4 +110,22 @@ test("create proposal button is pale blue until it is submittable", () => {
     false,
     "Incomplete proposal actions should use the muted blue inactive state, not red."
   );
+  assert.match(
+    globalStyles,
+    /\[data-theme="dark"\] \.yc-dark-submit-blue\.yc-proposal-submit-inactive/
+  );
+  assert.match(globalStyles, /background-color: rgb\(219, 234, 254\) !important;/);
+});
+
+test("create proposal resolves ENS names before preparing proposal actions", () => {
+  assert.match(source, /import \{ normalizeEnsNameInput \} from "@\/utils\/ens";/);
+  assert.match(source, /type ResolvedAddressMap = Record<string, `0x\$\{string\}` \| undefined>;/);
+  assert.match(source, /const useResolvedEnsAddresses = \(ensNames: string\[\]\) => \{/);
+  assert.match(source, /\/api\/ens\/address\/\$\{encodeURIComponent\(ensName\)\}/);
+  assert.match(source, /const getAddressInput = \([\s\S]*resolvedAddresses: ResolvedAddressMap[\s\S]*\) => \{/);
+  assert.match(
+    source,
+    /prepareTransaction\(transaction, addresses\?\.treasury, resolvedAddresses\)/
+  );
+  assert.match(source, /if \(isResolving\) return "Resolving ENS names";/);
 });

@@ -4,6 +4,7 @@ import { useCurrentThreshold } from "@/hooks/fetch/useCurrentThreshold";
 import { useUserVotes } from "@/hooks/fetch/useUserVotes";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import { normalizeEnsNameInput } from "@/utils/ens";
 import { GovernorABI } from "@buildersdk/sdk";
 import { Listbox } from "@headlessui/react";
 import {
@@ -27,7 +28,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useMemo } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   useContractWrite,
   usePrepareContractWrite,
@@ -72,6 +73,8 @@ interface PreparedTransaction {
   value: bigint;
   calldata: `0x${string}`;
 }
+
+type ResolvedAddressMap = Record<string, `0x${string}` | undefined>;
 
 export const getServerSideProps: GetServerSideProps = async () => ({
   props: {},
@@ -312,6 +315,110 @@ const parsePositiveTokenAmount = (amount: unknown, decimals: unknown) => {
 
   const parsed = ethers.utils.parseUnits(normalizedAmount, decimalPlaces);
   return parsed > 0n ? parsed : null;
+};
+
+const getAddressInputKey = (value: unknown) =>
+  normalizeFormValue(value).trim().toLowerCase();
+
+const getAddressInput = (
+  value: unknown,
+  resolvedAddresses: ResolvedAddressMap
+) => {
+  const input = normalizeFormValue(value).trim();
+  if (ethers.utils.isAddress(input)) return input as `0x${string}`;
+
+  return resolvedAddresses[getAddressInputKey(input)];
+};
+
+const getProposalAddressInputs = (transaction: Transaction) => {
+  switch (transaction.type) {
+    case "send-tokens":
+      return transaction.tokenKind === "eth"
+        ? [transaction.recipient]
+        : [transaction.tokenAddress, transaction.recipient];
+    case "nft":
+      return [
+        transaction.tokenAddress,
+        transaction.recipient,
+        transaction.fromAddress,
+      ];
+    case "custom-transaction":
+    default:
+      return [transaction.address];
+  }
+};
+
+const getEnsInputs = (transactions: Transaction[]) =>
+  Array.from(
+    new Set(
+      transactions
+        .flatMap(getProposalAddressInputs)
+        .map((input) => normalizeEnsNameInput(normalizeFormValue(input)))
+        .filter((input): input is string => Boolean(input))
+    )
+  );
+
+const transactionHasUnresolvedEnsInput = (
+  transaction: Transaction,
+  resolvedAddresses: ResolvedAddressMap
+) =>
+  getProposalAddressInputs(transaction).some((input) => {
+    const ensName = normalizeEnsNameInput(normalizeFormValue(input));
+    return Boolean(ensName && !resolvedAddresses[ensName]);
+  });
+
+const useResolvedEnsAddresses = (ensNames: string[]) => {
+  const ensKey = ensNames.join("|");
+  const [resolvedAddresses, setResolvedAddresses] = useState<ResolvedAddressMap>(
+    {}
+  );
+  const [isResolving, setIsResolving] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const names = ensKey ? ensKey.split("|") : [];
+
+    if (!names.length) {
+      setResolvedAddresses({});
+      setIsResolving(false);
+      return;
+    }
+
+    setIsResolving(true);
+
+    Promise.all(
+      names.map(async (ensName) => {
+        try {
+          const response = await fetch(
+            `/api/ens/address/${encodeURIComponent(ensName)}`
+          );
+          const data = (await response.json().catch(() => ({}))) as {
+            address?: string;
+          };
+
+          return [
+            ensName,
+            data.address && ethers.utils.isAddress(data.address)
+              ? (data.address as `0x${string}`)
+              : undefined,
+          ] as const;
+        } catch {
+          return [ensName, undefined] as const;
+        }
+      })
+    ).then((entries) => {
+      if (cancelled) return;
+
+      setResolvedAddresses(Object.fromEntries(entries));
+      setIsResolving(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [ensKey]);
+
+  return { isResolving, resolvedAddresses };
 };
 
 const getInitialProposalValues = (template?: string | string[]): Values => {
@@ -813,7 +920,7 @@ const CustomTransactionFields = ({
 const AddressField = ({
   name,
   label,
-  placeholder = "0x0000000000000000000000000000000000000000",
+  placeholder = "vitalik.eth or 0x0000000000000000000000000000000000000000",
 }: {
   name: string;
   label: string;
@@ -859,11 +966,26 @@ const AmountField = ({
 const TransactionReadinessMessage = ({
   transaction,
   treasuryAddress,
+  resolvedAddresses,
+  isResolvingEns,
 }: {
   transaction: Transaction;
   treasuryAddress?: `0x${string}`;
+  resolvedAddresses?: ResolvedAddressMap;
+  isResolvingEns?: boolean;
 }) => {
-  const issue = getTransactionReadinessIssue(transaction, treasuryAddress);
+  const ensInputs = useMemo(() => getEnsInputs([transaction]), [transaction]);
+  const localEnsResolution = useResolvedEnsAddresses(ensInputs);
+  const effectiveResolvedAddresses =
+    resolvedAddresses || localEnsResolution.resolvedAddresses;
+  const effectiveIsResolvingEns =
+    isResolvingEns ?? localEnsResolution.isResolving;
+  const issue = getTransactionReadinessIssue(
+    transaction,
+    treasuryAddress,
+    effectiveResolvedAddresses,
+    effectiveIsResolvingEns
+  );
 
   if (!issue) {
     return (
@@ -883,6 +1005,8 @@ const TransactionReadinessMessage = ({
 const SubmitButton = () => {
   const { values: formValues } = useFormikContext<Values>();
   const { transactions, title, summary } = formValues || {};
+  const ensInputs = useMemo(() => getEnsInputs(transactions), [transactions]);
+  const { isResolving, resolvedAddresses } = useResolvedEnsAddresses(ensInputs);
   const { data: addresses } = useDAOAddresses({
     tokenContract: TOKEN_CONTRACT,
   });
@@ -892,7 +1016,7 @@ const SubmitButton = () => {
   });
 
   const preparedTransactions = transactions.map((transaction) =>
-    prepareTransaction(transaction, addresses?.treasury)
+    prepareTransaction(transaction, addresses?.treasury, resolvedAddresses)
   );
   const hasValidContent = Boolean(title.trim() && summary.trim());
   const hasValidTransactions =
@@ -925,7 +1049,10 @@ const SubmitButton = () => {
   const args = [targets, values, callDatas, description] as const;
   const debouncedArgs = useDebounce(args);
   const shouldPrepare =
-    hasValidContent && hasValidTransactions && hasConfirmedCustomTransactions;
+    hasValidContent &&
+    hasValidTransactions &&
+    hasConfirmedCustomTransactions &&
+    !isResolving;
 
   const { config } = usePrepareContractWrite({
     address: addresses?.governor,
@@ -950,15 +1077,17 @@ const SubmitButton = () => {
     hasValidContent &&
     hasValidTransactions &&
     hasConfirmedCustomTransactions &&
+    !isResolving &&
     !isSuccess;
   const buttonTone = showsSubmitLabel
-    ? "bg-skin-button-accent hover:bg-skin-button-accent-hover"
-    : "bg-[#dbeafe] text-[#5f7590] shadow-[0px_4.02px_0px_0px_#b9c7d8]";
+    ? "yc-proposal-submit-active bg-skin-button-accent hover:bg-skin-button-accent-hover"
+    : "yc-proposal-submit-inactive bg-[#dbeafe] text-[#5f7590] shadow-[0px_4.02px_0px_0px_#b9c7d8]";
   const buttonClass = `yc-dark-submit-blue flex min-h-12 w-full items-center justify-center rounded-[18px] px-4 py-3 text-center font-heading text-base leading-tight text-skin-inverted shadow-[0px_4.02px_0px_0px_#0464BC] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0px_6px_0px_0px_#0464BC] enabled:active:translate-y-1 enabled:active:shadow-none disabled:cursor-not-allowed ${buttonTone}`;
 
   const getButtonLabel = () => {
     if (!hasBalance) return "You don't have enough votes to submit a proposal";
     if (!hasValidContent) return "Add a title and description";
+    if (isResolving) return "Resolving ENS names";
     if (!hasValidTransactions) return "Complete every proposal action";
     if (!hasConfirmedCustomTransactions) return "Confirm custom calldata";
     if (isSuccess) return "Proposal submitted";
@@ -990,28 +1119,36 @@ const SubmitButton = () => {
 
 const prepareTransaction = (
   transaction: Transaction,
-  treasuryAddress?: `0x${string}`
+  treasuryAddress?: `0x${string}`,
+  resolvedAddresses: ResolvedAddressMap = {}
 ): PreparedTransaction | null => {
   try {
     switch (transaction.type) {
       case "send-tokens":
         if (transaction.tokenKind === "eth") {
-          if (!ethers.utils.isAddress(transaction.recipient)) return null;
+          const recipient = getAddressInput(
+            transaction.recipient,
+            resolvedAddresses
+          );
+          if (!recipient) return null;
           const value = parsePositiveEther(transaction.valueInETH);
           if (!value) return null;
 
           return {
-            target: transaction.recipient as `0x${string}`,
+            target: recipient,
             value,
             calldata: "0x",
           };
         }
-        if (
-          !ethers.utils.isAddress(transaction.tokenAddress) ||
-          !ethers.utils.isAddress(transaction.recipient)
-        ) {
-          return null;
-        }
+        const tokenAddress = getAddressInput(
+          transaction.tokenAddress,
+          resolvedAddresses
+        );
+        const recipient = getAddressInput(
+          transaction.recipient,
+          resolvedAddresses
+        );
+        if (!tokenAddress || !recipient) return null;
         const amount = parsePositiveTokenAmount(
           transaction.amount,
           transaction.decimals
@@ -1019,44 +1156,45 @@ const prepareTransaction = (
         if (!amount) return null;
 
         return {
-          target: transaction.tokenAddress as `0x${string}`,
+          target: tokenAddress,
           value: parseEther("0"),
           calldata: erc20Interface.encodeFunctionData("transfer", [
-            transaction.recipient,
+            recipient,
             amount,
           ]) as `0x${string}`,
         };
       case "nft": {
-        const fromAddress = transaction.fromAddress || treasuryAddress;
-        if (
-          !ethers.utils.isAddress(transaction.tokenAddress) ||
-          !ethers.utils.isAddress(transaction.recipient) ||
-          !fromAddress ||
-          !ethers.utils.isAddress(fromAddress)
-        )
-          return null;
+        const tokenAddress = getAddressInput(
+          transaction.tokenAddress,
+          resolvedAddresses
+        );
+        const recipient = getAddressInput(
+          transaction.recipient,
+          resolvedAddresses
+        );
+        const fromAddress = transaction.fromAddress
+          ? getAddressInput(transaction.fromAddress, resolvedAddresses)
+          : treasuryAddress;
+        if (!tokenAddress || !recipient || !fromAddress) return null;
         const tokenId = normalizeFormValue(transaction.tokenId).trim();
         if (!tokenId) return null;
 
         return {
-          target: transaction.tokenAddress as `0x${string}`,
+          target: tokenAddress,
           value: parseEther("0"),
           calldata: erc721Interface.encodeFunctionData("safeTransferFrom", [
             fromAddress,
-            transaction.recipient,
+            recipient,
             tokenId,
           ]) as `0x${string}`,
         };
       }
       case "custom-transaction":
       default:
-        if (
-          !ethers.utils.isAddress(transaction.address) ||
-          !isStrictHexCalldata(transaction.calldata)
-        )
-          return null;
+        const target = getAddressInput(transaction.address, resolvedAddresses);
+        if (!target || !isStrictHexCalldata(transaction.calldata)) return null;
         return {
-          target: transaction.address as `0x${string}`,
+          target,
           value: parseEther(normalizeFormValue(transaction.valueInETH) || "0"),
           calldata: transaction.calldata as `0x${string}`,
         };
@@ -1069,20 +1207,29 @@ const prepareTransaction = (
 
 const getTransactionReadinessIssue = (
   transaction: Transaction,
-  treasuryAddress?: `0x${string}`
+  treasuryAddress?: `0x${string}`,
+  resolvedAddresses: ResolvedAddressMap = {},
+  isResolvingEns = false
 ) => {
-  if (!prepareTransaction(transaction, treasuryAddress)) {
+  if (!prepareTransaction(transaction, treasuryAddress, resolvedAddresses)) {
+    if (
+      isResolvingEns &&
+      transactionHasUnresolvedEnsInput(transaction, resolvedAddresses)
+    ) {
+      return "Resolving ENS names for this action.";
+    }
+
     if (transaction.type === "send-tokens") {
       return transaction.tokenKind === "eth"
-        ? "Add a valid recipient and ETH amount for this action."
-        : "Add a valid token contract, recipient, amount, and decimals for this action.";
+        ? "Add a valid recipient address or ENS name and ETH amount for this action."
+        : "Add a valid token contract, recipient address or ENS name, amount, and decimals for this action.";
     }
 
     if (transaction.type === "nft") {
-      return "Add a valid NFT contract, recipient, from address, and token ID for this action.";
+      return "Add a valid NFT contract, recipient address or ENS name, from address or ENS name, and token ID for this action.";
     }
 
-    return "Add a valid target address, ETH value, and hex calldata for this action.";
+    return "Add a valid target address or ENS name, ETH value, and hex calldata for this action.";
   }
 
   if (

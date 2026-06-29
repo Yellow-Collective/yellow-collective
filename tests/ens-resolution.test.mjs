@@ -76,6 +76,18 @@ test("ENS data resolver avoids weak fallback winners for forward lookups", () =>
   assert.equal(ensData.includes("viemMainnetClient"), false);
 });
 
+test("ENS forward address API exposes the shared resolver with rate limits", () => {
+  const ensAddressApi = readFileSync(
+    resolve(process.cwd(), "pages/api/ens/address/[ensName].ts"),
+    "utf8"
+  );
+
+  assert.match(ensAddressApi, /getEnsAddress/);
+  assert.match(ensAddressApi, /keyPrefix: "ens-address"/);
+  assert.match(ensAddressApi, /Cache-Control/);
+  assert.match(ensAddressApi, /res\.status\(200\)\.json\(address\)/);
+});
+
 test("ENS reverse lookup avoids viem universal resolver gateways", () => {
   const ensData = readFileSync(resolve(process.cwd(), "data/ens.ts"), "utf8");
 

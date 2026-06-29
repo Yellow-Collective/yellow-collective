@@ -456,9 +456,22 @@
     box-shadow: 0px 6px 0px 0px rgb(0, 76, 153) !important;
   }
 
+  [data-theme="dark"] .yc-dark-submit-blue.yc-proposal-submit-inactive,
+  [data-theme="dark"] .yc-dark-submit-blue.yc-proposal-submit-inactive:hover {
+    background-color: rgb(219, 234, 254) !important;
+    border-color: rgb(185, 199, 216) !important;
+    color: rgb(95, 117, 144) !important;
+    box-shadow: 0px 4.02px 0px 0px rgb(185, 199, 216) !important;
+  }
+
   [data-theme="dark"] .yc-dark-submit-blue *,
   [data-theme="dark"] .yc-dark-submit-blue:hover * {
     color: rgb(255, 255, 255) !important;
+  }
+
+  [data-theme="dark"] .yc-dark-submit-blue.yc-proposal-submit-inactive *,
+  [data-theme="dark"] .yc-dark-submit-blue.yc-proposal-submit-inactive:hover * {
+    color: rgb(95, 117, 144) !important;
   }
 
   [data-theme="dark"] .yc-dark-reset-red {
