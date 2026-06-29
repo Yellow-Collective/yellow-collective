@@ -282,6 +282,32 @@ const decodeKnownCalldata = (calldata: string) => {
   return null;
 };
 
+const transactionUsesCustomCalldata = (transaction: Transaction) =>
+  transaction.type !== "send-tokens" && transaction.type !== "nft";
+
+const parsePositiveEther = (value: string) => {
+  if (!value.trim()) return null;
+
+  const parsed = parseEther(value);
+  return parsed > 0n ? parsed : null;
+};
+
+const parsePositiveTokenAmount = (amount: string, decimals: string) => {
+  if (!amount.trim() || !decimals.trim()) return null;
+
+  const decimalPlaces = Number(decimals);
+  if (
+    !Number.isInteger(decimalPlaces) ||
+    decimalPlaces < 0 ||
+    decimalPlaces > 255
+  ) {
+    return null;
+  }
+
+  const parsed = ethers.utils.parseUnits(amount, decimalPlaces);
+  return parsed > 0n ? parsed : null;
+};
+
 const getInitialProposalValues = (template?: string | string[]): Values => {
   const defaultValues: Values = {
     title: "",
@@ -442,6 +468,10 @@ export default function CreateProposalPage() {
                           <TransactionFields
                             transaction={transaction}
                             index={index}
+                            treasuryAddress={addresses?.treasury}
+                          />
+                          <TransactionReadinessMessage
+                            transaction={transaction}
                             treasuryAddress={addresses?.treasury}
                           />
                         </div>
@@ -820,6 +850,30 @@ const AmountField = ({
   </div>
 );
 
+const TransactionReadinessMessage = ({
+  transaction,
+  treasuryAddress,
+}: {
+  transaction: Transaction;
+  treasuryAddress?: `0x${string}`;
+}) => {
+  const issue = getTransactionReadinessIssue(transaction, treasuryAddress);
+
+  if (!issue) {
+    return (
+      <p className="mt-4 rounded-xl border border-skin-proposal-success bg-skin-proposal-success bg-opacity-10 px-4 py-3 text-sm font-semibold text-skin-proposal-success">
+        Action ready.
+      </p>
+    );
+  }
+
+  return (
+    <p className="mt-4 rounded-xl border border-[#d9a300] bg-[#fff7bf] px-4 py-3 text-sm font-semibold text-[#8a5a00]">
+      {issue}
+    </p>
+  );
+};
+
 const SubmitButton = () => {
   const { values: formValues } = useFormikContext<Values>();
   const { transactions, title, summary } = formValues || {};
@@ -842,7 +896,7 @@ const SubmitButton = () => {
     );
   const hasConfirmedCustomTransactions = transactions.every(
     (transaction) =>
-      transaction.type !== "custom-transaction" ||
+      !transactionUsesCustomCalldata(transaction) ||
       transaction.confirmedCustomCalldata
   );
   const validTransactions = preparedTransactions.filter(
@@ -932,9 +986,12 @@ const prepareTransaction = (
       case "send-tokens":
         if (transaction.tokenKind === "eth") {
           if (!ethers.utils.isAddress(transaction.recipient)) return null;
+          const value = parsePositiveEther(transaction.valueInETH);
+          if (!value) return null;
+
           return {
             target: transaction.recipient as `0x${string}`,
-            value: parseEther(transaction.valueInETH || "0"),
+            value,
             calldata: "0x",
           };
         }
@@ -944,15 +1001,18 @@ const prepareTransaction = (
         ) {
           return null;
         }
+        const amount = parsePositiveTokenAmount(
+          transaction.amount,
+          transaction.decimals
+        );
+        if (!amount) return null;
+
         return {
           target: transaction.tokenAddress as `0x${string}`,
           value: parseEther("0"),
           calldata: erc20Interface.encodeFunctionData("transfer", [
             transaction.recipient,
-            ethers.utils.parseUnits(
-              transaction.amount || "0",
-              Number(transaction.decimals || "18")
-            ),
+            amount,
           ]) as `0x${string}`,
         };
       case "nft": {
@@ -964,13 +1024,15 @@ const prepareTransaction = (
           !ethers.utils.isAddress(fromAddress)
         )
           return null;
+        if (!transaction.tokenId.trim()) return null;
+
         return {
           target: transaction.tokenAddress as `0x${string}`,
           value: parseEther("0"),
           calldata: erc721Interface.encodeFunctionData("safeTransferFrom", [
             fromAddress,
             transaction.recipient,
-            transaction.tokenId || "0",
+            transaction.tokenId,
           ]) as `0x${string}`,
         };
       }
@@ -978,8 +1040,7 @@ const prepareTransaction = (
       default:
         if (
           !ethers.utils.isAddress(transaction.address) ||
-          !isStrictHexCalldata(transaction.calldata) ||
-          !transaction.confirmedCustomCalldata
+          !isStrictHexCalldata(transaction.calldata)
         )
           return null;
         return {
@@ -992,6 +1053,34 @@ const prepareTransaction = (
     console.error("Unable to prepare proposal transaction", error);
     return null;
   }
+};
+
+const getTransactionReadinessIssue = (
+  transaction: Transaction,
+  treasuryAddress?: `0x${string}`
+) => {
+  if (!prepareTransaction(transaction, treasuryAddress)) {
+    if (transaction.type === "send-tokens") {
+      return transaction.tokenKind === "eth"
+        ? "Add a valid recipient and ETH amount for this action."
+        : "Add a valid token contract, recipient, amount, and decimals for this action.";
+    }
+
+    if (transaction.type === "nft") {
+      return "Add a valid NFT contract, recipient, from address, and token ID for this action.";
+    }
+
+    return "Add a valid target address, ETH value, and hex calldata for this action.";
+  }
+
+  if (
+    transactionUsesCustomCalldata(transaction) &&
+    !transaction.confirmedCustomCalldata
+  ) {
+    return "Confirm that you verified this target, value, and calldata.";
+  }
+
+  return null;
 };
 
 const HTMLTextEditor = () => {
