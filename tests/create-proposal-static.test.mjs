@@ -84,3 +84,19 @@ test("create proposal normalizes numeric form values before trimming", () => {
     /parseEther\(normalizeFormValue\(transaction\.valueInETH\) \|\| "0"\)/
   );
 });
+
+test("create proposal button is red only for incomplete actions and blue when submittable", () => {
+  assert.match(
+    source,
+    /const showsIncompleteActionLabel =\s*hasBalance && hasValidContent && !hasValidTransactions;/
+  );
+  assert.match(
+    source,
+    /const showsSubmitLabel =\s*hasBalance &&[\s\S]*hasConfirmedCustomTransactions &&[\s\S]*!isSuccess;/
+  );
+  assert.match(source, /showsIncompleteActionLabel[\s\S]*bg-\[#dc2626\]/);
+  assert.match(
+    source,
+    /showsSubmitLabel[\s\S]*bg-skin-button-accent hover:bg-skin-button-accent-hover[\s\S]*disabled[\s\S]*bg-skin-button-muted/
+  );
+});
