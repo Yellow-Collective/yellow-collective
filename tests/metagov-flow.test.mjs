@@ -268,7 +268,32 @@ const snapshotConstants = {
   assert.match(voteCard, /submitError/, "Snapshot vote card must expose an error state after a mocked submit.");
   assert.match(voteCard, /Collective Noun required/, "Snapshot vote card must expose holder eligibility messaging.");
   assert.match(voteCard, /disabled=\{!canSubmitVote\}/, "Snapshot vote CTA must be disabled when voting is unavailable.");
+  assert.match(
+    voteCard,
+    /getMiniAppEthereumProvider/,
+    "Snapshot vote card must fall back to the Farcaster mini app provider when wagmi signer hydration lags."
+  );
+  assert.doesNotMatch(
+    voteCard,
+    /disabled=\{!choice \|\| !signer \|\| submitting\}/,
+    "Snapshot vote modal must not dead-end on a missing preloaded signer."
+  );
   console.log("ok - Snapshot vote UI exposes success, error, eligibility, and disabled states");
+}
+
+{
+  const modalWrapper = read("components/ModalWrapper.tsx");
+  assert.match(
+    modalWrapper,
+    /z-\[80\]/,
+    "Shared modal wrapper must sit above the site header and mobile menu stack."
+  );
+  assert.doesNotMatch(
+    modalWrapper,
+    /z-40/,
+    "Shared modal wrapper must not render below the header stack."
+  );
+  console.log("ok - Shared modal wrapper stays above header overlays");
 }
 
 {

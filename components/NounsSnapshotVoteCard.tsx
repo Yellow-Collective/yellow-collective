@@ -1,4 +1,5 @@
 import ModalWrapper from "@/components/ModalWrapper";
+import { getMiniAppEthereumProvider } from "@/utils/farcasterMiniApp";
 import { submitSnapshotVote } from "@/utils/snapshot-vote";
 import { SNAPSHOT_SPACE_ID, SNAPSHOT_SPACE_URL } from "constants/metagov";
 import CheckIcon from "@heroicons/react/20/solid/CheckIcon";
@@ -6,7 +7,7 @@ import MinusIcon from "@heroicons/react/20/solid/MinusIcon";
 import XMarkIcon from "@heroicons/react/20/solid/XMarkIcon";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { useAccount, useSigner } from "wagmi";
 
@@ -109,16 +110,35 @@ export default function NounsSnapshotVoteCard({
     return "Pending";
   }, [now, proposal]);
 
+  const resolveVoteSigner = useCallback(async () => {
+    if (signer) return signer as any;
+    if (!address) return null;
+
+    const miniAppProvider = await getMiniAppEthereumProvider();
+    if (!miniAppProvider) return null;
+
+    const { BrowserProvider } = await import("ethers6");
+    return new BrowserProvider(miniAppProvider as any).getSigner(address);
+  }, [address, signer]);
+
   const submitVote = async () => {
-    if (!proposal || !choice || !signer || !address) return;
+    if (!proposal || !choice || !address) return;
 
     setSubmitting(true);
     setSubmitError("");
     setSubmitSuccess("");
 
     try {
+      const voteSigner = await resolveVoteSigner();
+
+      if (!voteSigner) {
+        throw new Error(
+          "Wallet signer unavailable. Reconnect your wallet and try again."
+        );
+      }
+
       await submitSnapshotVote({
-        signer: signer as any,
+        signer: voteSigner,
         address,
         space: data?.space || SNAPSHOT_SPACE_ID,
         proposal: proposal.id,
@@ -366,9 +386,9 @@ export default function NounsSnapshotVoteCard({
                 <button
                   type="button"
                   onClick={submitVote}
-                  disabled={!choice || !signer || submitting}
+                  disabled={!choice || !address || submitting}
                   className={`h-12 flex-1 rounded-[18px] px-4 font-heading text-base font-bold shadow-[0px_4.02px_0px_0px_#3f3f3f] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0px_6px_0px_0px_#3f3f3f] enabled:active:translate-y-1 enabled:active:shadow-none disabled:shadow-none ${
-                    choice && signer && !submitting
+                    choice && address && !submitting
                       ? "yc-dark-submit-blue bg-[#1d9bf0] text-white shadow-[0px_4.02px_0px_0px_#0f5f99] hover:bg-[#45adf5] enabled:hover:shadow-[0px_6px_0px_0px_#0f5f99]"
                       : "bg-skin-button-muted text-[#212529]"
                   }`}
