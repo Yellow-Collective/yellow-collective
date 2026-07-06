@@ -4,17 +4,21 @@ import {
 } from "@/services/nouns-builder/governor";
 import { TOKEN_CONTRACT } from "constants/addresses";
 import {
+  useAccount,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
 import { useDAOAddresses } from "../hooks";
 import { GovernorABI } from "@buildersdk/sdk";
-import { BigNumber } from "@/utils/ethers-compat";
+import { BigNumber, utils } from "@/utils/ethers-compat";
 import { useState } from "react";
 import Image from "next/image";
 import { CheckIcon, MinusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { getProposalName } from "@/utils/getProposalName";
+import { getMiniAppEthereumProvider } from "@/utils/farcasterMiniApp";
+
+const governorInterface = new utils.Interface(GovernorABI as any);
 
 export default function VoteModal({
   proposal,
@@ -25,12 +29,16 @@ export default function VoteModal({
   proposalNumber: number;
   setOpen: (value: boolean) => void;
 }) {
+  const { address } = useAccount();
   const isPreviewProposal = proposal.proposalId === PREVIEW_PROPOSAL_ID;
   const { data: addresses } = useDAOAddresses({
     tokenContract: TOKEN_CONTRACT,
   });
   const [support, setSupport] = useState<0 | 1 | 2 | undefined>();
   const [reason, setReason] = useState("");
+  const [miniAppTxHash, setMiniAppTxHash] = useState<`0x${string}`>();
+  const [fallbackLoading, setFallbackLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const trimmedReason = reason.trim();
   const hasReason = trimmedReason.length > 0;
   const shouldPrepare = Boolean(
@@ -55,13 +63,77 @@ export default function VoteModal({
   const activeWrite = hasReason ? castVoteWithReasonWrite : castVoteWrite;
   const { write, data, isLoading: writeLoading } = activeWrite;
   const { isLoading: txLoading, isSuccess: txSuccess } = useWaitForTransaction({
-    hash: data?.hash,
+    hash: data?.hash || miniAppTxHash,
   });
   const selectedVote = voteOptions.find((option) => option.value === support);
   const proposalTitle = getProposalName(proposal.description);
+  const isSubmitting = writeLoading || txLoading || fallbackLoading;
   const canSubmit = Boolean(
-    support !== undefined && (isPreviewProposal || write) && !txSuccess
+    support !== undefined &&
+      (isPreviewProposal || write || address) &&
+      !txSuccess
   );
+
+  const submitMiniAppVote = async () => {
+    if (!addresses?.governor || !address || support === undefined) {
+      throw new Error("Connect your wallet before submitting a vote.");
+    }
+
+    const provider = await getMiniAppEthereumProvider();
+    if (!provider) {
+      throw new Error("Wallet transaction is not ready. Reconnect and try again.");
+    }
+
+    const data = hasReason
+      ? governorInterface.encodeFunctionData("castVoteWithReason", [
+          proposal.proposalId,
+          support,
+          trimmedReason,
+        ])
+      : governorInterface.encodeFunctionData("castVote", [
+          proposal.proposalId,
+          support,
+        ]);
+
+    const hash = await provider.request({
+      method: "eth_sendTransaction",
+      params: [
+        {
+          from: address,
+          to: addresses.governor,
+          data,
+        },
+      ],
+    });
+
+    if (typeof hash !== "string" || !hash.startsWith("0x")) {
+      throw new Error("Wallet did not return a transaction hash.");
+    }
+
+    setMiniAppTxHash(hash as `0x${string}`);
+  };
+
+  const submitVote = async () => {
+    setSubmitError("");
+
+    if (isPreviewProposal) return;
+    if (write) {
+      write();
+      return;
+    }
+
+    setFallbackLoading(true);
+    try {
+      await submitMiniAppVote();
+    } catch (error) {
+      console.error("Mini App vote failed", error);
+      setSubmitError(
+        error instanceof Error ? error.message : "Unable to submit vote."
+      );
+    } finally {
+      setFallbackLoading(false);
+    }
+  };
 
   return (
     <div className="relative rounded-2xl bg-skin-backdrop p-1 text-skin-base">
@@ -132,6 +204,12 @@ export default function VoteModal({
         className="yc-vote-reason-textarea mt-2 w-full resize-none rounded-xl border border-skin-stroke bg-white px-4 py-3 text-base text-[#212529] shadow-sm placeholder:text-[#454a4e] focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
       />
 
+      {submitError && (
+        <div className="mt-4 rounded-xl border border-skin-proposal-danger bg-white p-3 text-sm text-skin-proposal-danger">
+          {submitError}
+        </div>
+      )}
+
       <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row">
         <button
           type="button"
@@ -142,10 +220,10 @@ export default function VoteModal({
         </button>
         <button
           type="button"
-          onClick={() => write?.()}
-          disabled={!canSubmit || writeLoading || txLoading || txSuccess}
+          onClick={submitVote}
+          disabled={!canSubmit || isSubmitting || txSuccess}
           className={`h-12 flex-1 rounded-[18px] px-4 font-heading text-base font-bold shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-accent))] enabled:active:translate-y-1 enabled:active:shadow-none disabled:shadow-none ${
-            canSubmit && !writeLoading && !txLoading && !txSuccess
+            canSubmit && !isSubmitting && !txSuccess
               ? "yc-dark-submit-blue bg-[#1d9bf0] text-white shadow-[0px_4.02px_0px_0px_#0f5f99] hover:bg-[#45adf5] enabled:hover:shadow-[0px_6px_0px_0px_#0f5f99]"
               : "bg-skin-button-muted text-[#212529]"
           }`}
@@ -158,7 +236,7 @@ export default function VoteModal({
             )
           ) : txSuccess ? (
             "Vote submitted"
-          ) : writeLoading || txLoading ? (
+          ) : isSubmitting ? (
             <span className="flex justify-center">
               <Image
                 src={"/spinner.svg"}

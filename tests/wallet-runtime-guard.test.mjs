@@ -33,6 +33,25 @@ test("Mini App wallet connection is explicit and gated by runtime detection", ()
   assert.match(settleAuction, /isMiniApp[\s\S]*connectMiniAppWallet\(\)[\s\S]*openConnectModal\?\.\(\)/);
 });
 
+test("proposal vote modal can fall back to the Mini App wallet provider", () => {
+  const voteModal = read("components/VoteModal.tsx");
+
+  assert.match(voteModal, /getMiniAppEthereumProvider/);
+  assert.match(voteModal, /eth_sendTransaction/);
+  assert.match(voteModal, /encodeFunctionData\("castVote"/);
+  assert.match(voteModal, /encodeFunctionData\("castVoteWithReason"/);
+  assert.match(
+    voteModal,
+    /support !== undefined[\s\S]*\(isPreviewProposal \|\| write \|\| address\)/,
+    "Vote submit availability must not depend only on wagmi's prepared writer."
+  );
+  assert.doesNotMatch(
+    voteModal,
+    /support !== undefined && \(isPreviewProposal \|\| write\)/,
+    "Vote modal must not dead-end when the Mini App wallet is connected but wagmi prepare has no write function."
+  );
+});
+
 test("CSP allows the imported Google font stylesheet and font files", () => {
   const nextConfig = read("next.config.js");
 
