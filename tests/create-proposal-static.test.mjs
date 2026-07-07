@@ -129,3 +129,19 @@ test("create proposal resolves ENS names before preparing proposal actions", () 
   );
   assert.match(source, /if \(isResolving\) return "Resolving ENS names";/);
 });
+
+test("create proposal previews final proposal body and transactions before submit", () => {
+  assert.match(source, /import ProposalTransactions from "@\/components\/ProposalTransactions";/);
+  assert.match(source, /import ReactMarkdown from "react-markdown";/);
+  assert.match(source, /const ProposalSubmissionPreview = \(\{/);
+  assert.match(source, /<ProposalSubmissionPreview[\s\S]*description=\{description\}[\s\S]*transactions=\{validTransactions\}/);
+  assert.match(source, /const previewTitle = getProposalName\(description\);/);
+  assert.match(source, /const previewDescription = getProposalDescription\(description\);/);
+  assert.match(source, /Final proposal preview/);
+  assert.match(source, /remarkPlugins=\{\[remarkGfm\]\}/);
+  assert.match(source, /rehypePlugins=\{\[rehypeRaw, rehypeSanitize\]\}/);
+  assert.match(
+    source,
+    /<ProposalTransactions[\s\S]*transactions=\{[\s\S]*hasValidTransactions[\s\S]*target: transaction\.target,[\s\S]*value: transaction\.value\.toString\(\),[\s\S]*calldata: transaction\.calldata,/
+  );
+});

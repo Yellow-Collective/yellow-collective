@@ -1,9 +1,12 @@
 import AuthWrapper from "@/components/AuthWrapper";
 import Layout from "@/components/Layout";
+import ProposalTransactions from "@/components/ProposalTransactions";
 import { useCurrentThreshold } from "@/hooks/fetch/useCurrentThreshold";
 import { useUserVotes } from "@/hooks/fetch/useUserVotes";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import { getProposalDescription } from "@/utils/getProposalDescription";
+import { getProposalName } from "@/utils/getProposalName";
 import { normalizeEnsNameInput } from "@/utils/ens";
 import { GovernorABI } from "@buildersdk/sdk";
 import { Listbox } from "@headlessui/react";
@@ -34,6 +37,10 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import remarkGfm from "remark-gfm";
 
 type TransactionType =
   | "send-tokens"
@@ -1095,25 +1102,101 @@ const SubmitButton = () => {
   };
 
   return (
-    <AuthWrapper className={buttonClass}>
-      <button
-        onClick={() => write?.()}
-        disabled={disabled}
-        type="button"
-        className={buttonClass}
-      >
-        {isSuccess ? (
-          <span className="flex items-center gap-2">
-            {getButtonLabel()}
-            <CheckCircleIcon className="h-5" />
-          </span>
-        ) : isLoading ? (
-          <Image src="/spinner.svg" alt="spinner" width={25} height={25} />
+    <div className="flex flex-col gap-6">
+      <ProposalSubmissionPreview
+        description={description}
+        transactions={validTransactions}
+        hasValidContent={hasValidContent}
+        hasValidTransactions={hasValidTransactions}
+      />
+
+      <AuthWrapper className={buttonClass}>
+        <button
+          onClick={() => write?.()}
+          disabled={disabled}
+          type="button"
+          className={buttonClass}
+        >
+          {isSuccess ? (
+            <span className="flex items-center gap-2">
+              {getButtonLabel()}
+              <CheckCircleIcon className="h-5" />
+            </span>
+          ) : isLoading ? (
+            <Image src="/spinner.svg" alt="spinner" width={25} height={25} />
+          ) : (
+            getButtonLabel()
+          )}
+        </button>
+      </AuthWrapper>
+    </div>
+  );
+};
+
+const ProposalSubmissionPreview = ({
+  description,
+  transactions,
+  hasValidContent,
+  hasValidTransactions,
+}: {
+  description: string;
+  transactions: PreparedTransaction[];
+  hasValidContent: boolean;
+  hasValidTransactions: boolean;
+}) => {
+  const previewTitle = getProposalName(description);
+  const previewDescription = getProposalDescription(description);
+
+  return (
+    <div className="yc-proposal-final-preview flex flex-col gap-5">
+      <div>
+        <p className="font-heading text-sm uppercase tracking-wide text-secondary">
+          Final proposal preview
+        </p>
+        <h3 className="mt-2 break-words font-heading text-[28px] font-semibold leading-none text-skin-base md:text-[34px]">
+          {previewTitle || "Untitled proposal"}
+        </h3>
+      </div>
+
+      <section className="yc-dark-surface rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm md:p-6">
+        <div className="font-heading text-2xl font-bold text-skin-base">
+          Description
+        </div>
+
+        {hasValidContent ? (
+          <ReactMarkdown
+            className="prose prose-skin mt-4 max-w-[90vw] break-words prose-img:w-auto sm:max-w-[1000px]"
+            rehypePlugins={[rehypeRaw, rehypeSanitize]}
+            remarkPlugins={[remarkGfm]}
+          >
+            {previewDescription}
+          </ReactMarkdown>
         ) : (
-          getButtonLabel()
+          <p className="mt-4 text-base text-secondary">
+            Add a title and description to preview the final proposal body.
+          </p>
         )}
-      </button>
-    </AuthWrapper>
+      </section>
+
+      <ProposalTransactions
+        className="yc-proposal-final-transactions"
+        transactions={
+          hasValidTransactions
+            ? transactions.map((transaction) => ({
+                target: transaction.target,
+                value: transaction.value.toString(),
+                calldata: transaction.calldata,
+              }))
+            : []
+        }
+      />
+
+      {!hasValidTransactions && (
+        <p className="rounded-xl border border-[#d9a300] bg-[#fff7bf] px-4 py-3 text-sm font-semibold text-[#8a5a00]">
+          Complete every proposal action to preview the exact transaction list.
+        </p>
+      )}
+    </div>
   );
 };
 
