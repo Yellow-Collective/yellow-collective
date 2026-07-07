@@ -10,6 +10,14 @@ const globalStyles = readFileSync(
   new URL("../styles/globals.css", import.meta.url),
   "utf8"
 );
+const proposalPageSource = readFileSync(
+  new URL("../pages/vote/[proposalid].tsx", import.meta.url),
+  "utf8"
+);
+const nounsProposalPageSource = readFileSync(
+  new URL("../pages/proposals/nouns/[proposalNumber].tsx", import.meta.url),
+  "utf8"
+);
 
 test("create proposal separates transaction validity from custom calldata confirmation", () => {
   assert.match(
@@ -144,4 +152,18 @@ test("create proposal previews final proposal body and transactions before submi
     source,
     /<ProposalTransactions[\s\S]*transactions=\{[\s\S]*hasValidTransactions[\s\S]*target: transaction\.target,[\s\S]*value: transaction\.value\.toString\(\),[\s\S]*calldata: transaction\.calldata,/
   );
+});
+
+test("proposal markdown renders heading levels in descending size order", () => {
+  for (const pageSource of [
+    source,
+    proposalPageSource,
+    nounsProposalPageSource,
+  ]) {
+    assert.match(pageSource, /prose-headings:font-heading/);
+    assert.match(pageSource, /prose-h3:text-2xl/);
+    assert.match(pageSource, /prose-h4:text-xl/);
+    assert.match(pageSource, /prose-h5:text-lg/);
+    assert.match(pageSource, /prose-h6:text-base/);
+  }
 });

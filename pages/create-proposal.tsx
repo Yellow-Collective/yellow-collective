@@ -1146,6 +1146,8 @@ const ProposalSubmissionPreview = ({
 }) => {
   const previewTitle = getProposalName(description);
   const previewDescription = getProposalDescription(description);
+  const markdownClassName =
+    "prose prose-skin mt-4 max-w-[90vw] break-words prose-img:w-auto prose-headings:font-heading prose-h2:text-3xl prose-h2:leading-tight prose-h3:text-2xl prose-h3:leading-tight prose-h4:text-xl prose-h4:leading-snug prose-h5:text-lg prose-h5:leading-snug prose-h6:text-base prose-h6:leading-snug sm:max-w-[1000px]";
 
   return (
     <div className="yc-proposal-final-preview flex flex-col gap-5">
@@ -1165,7 +1167,7 @@ const ProposalSubmissionPreview = ({
 
         {hasValidContent ? (
           <ReactMarkdown
-            className="prose prose-skin mt-4 max-w-[90vw] break-words prose-img:w-auto sm:max-w-[1000px]"
+            className={markdownClassName}
             rehypePlugins={[rehypeRaw, rehypeSanitize]}
             remarkPlugins={[remarkGfm]}
           >

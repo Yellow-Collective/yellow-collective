@@ -28,6 +28,9 @@ import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 
+const proposalMarkdownClassName =
+  "prose prose-skin mt-4 max-w-[90vw] break-words prose-img:w-auto prose-headings:font-heading prose-h2:text-3xl prose-h2:leading-tight prose-h3:text-2xl prose-h3:leading-tight prose-h4:text-xl prose-h4:leading-snug prose-h5:text-lg prose-h5:leading-snug prose-h6:text-base prose-h6:leading-snug sm:max-w-[1000px]";
+
 export default function ProposalComponent() {
   const { data: addresses } = useDAOAddresses({
     tokenContract: TOKEN_CONTRACT,
@@ -190,7 +193,7 @@ export default function ProposalComponent() {
                     </div>
 
                     <ReactMarkdown
-                      className="prose prose-skin mt-4 prose-img:w-auto break-words max-w-[90vw] sm:max-w-[1000px]"
+                      className={proposalMarkdownClassName}
                       rehypePlugins={[rehypeRaw, rehypeSanitize]}
                       remarkPlugins={[remarkGfm]}
                     >
