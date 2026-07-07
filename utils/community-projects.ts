@@ -13,6 +13,7 @@ import {
   normalizeSafeImageUrl,
   normalizeSafeProjectUrl,
 } from "@/utils/url-safety";
+import { normalizeCommunityProjectGalleryImages } from "@/utils/community-project-gallery";
 import fs from "fs";
 import path from "path";
 
@@ -35,13 +36,49 @@ const isProjectLinks = (value: unknown): value is CommunityProject["links"] =>
       typeof (item as { href?: unknown }).href === "string"
   );
 
+const isProjectGalleryImages = (
+  value: unknown
+): value is NonNullable<CommunityProject["galleryImages"]> =>
+  Array.isArray(value) &&
+  value.every((item) => {
+    if (typeof item === "string") return true;
+    if (!item || typeof item !== "object") return false;
+
+    const image = item as {
+      src?: unknown;
+      caption?: unknown;
+      sourceHref?: unknown;
+      sourceLabel?: unknown;
+    };
+
+    return (
+      typeof image.src === "string" &&
+      (image.caption === undefined || typeof image.caption === "string") &&
+      (image.sourceHref === undefined ||
+        typeof image.sourceHref === "string") &&
+      (image.sourceLabel === undefined ||
+        typeof image.sourceLabel === "string")
+    );
+  });
+
+const hasInvalidProjectGalleryImage = (
+  image: NonNullable<CommunityProject["galleryImages"]>[number]
+) => {
+  const src = typeof image === "string" ? image : image.src;
+  const sourceHref = typeof image === "string" ? "" : image.sourceHref || "";
+
+  return Boolean(
+    (src.trim() && !normalizeSafeImageUrl(src, { allowInternal: true })) ||
+      (sourceHref.trim() &&
+        !normalizeSafeProjectUrl(sourceHref, { allowInternal: true }))
+  );
+};
+
 const normalizeProject = (project: CommunityProject): CommunityProject => ({
   ...project,
   href: normalizeSafeProjectUrl(project.href, { allowInternal: true }),
   image: normalizeSafeImageUrl(project.image, { allowInternal: true }),
-  galleryImages: (project.galleryImages || [])
-    .map((image) => normalizeSafeImageUrl(image, { allowInternal: true }))
-    .filter(Boolean),
+  galleryImages: normalizeCommunityProjectGalleryImages(project.galleryImages),
   links: (project.links || [])
     .map((link) => ({
       ...link,
@@ -71,7 +108,7 @@ const isCommunityProject = (value: unknown): value is CommunityProject => {
     return false;
   }
 
-  if (project.galleryImages && !isStringArray(project.galleryImages)) {
+  if (project.galleryImages && !isProjectGalleryImages(project.galleryImages)) {
     return false;
   }
 
@@ -93,9 +130,8 @@ const isCommunityProject = (value: unknown): value is CommunityProject => {
   }
 
   if (
-    project.galleryImages?.some(
-      (image) => !normalizeSafeImageUrl(image, { allowInternal: true })
-    )
+    project.galleryImages &&
+    project.galleryImages.some(hasInvalidProjectGalleryImage)
   ) {
     return false;
   }

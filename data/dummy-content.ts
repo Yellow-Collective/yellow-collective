@@ -423,7 +423,16 @@ export const getDummyCommunityProjects = async (): Promise<
     date: "Admin testing",
     href: `/projects/${project.slug}`,
     image: project.image,
-    galleryImages: [project.image, "/banner.png", "/og-image.png"],
+    galleryImages: [
+      {
+        src: project.image,
+        caption: "Primary dummy project image.",
+        sourceHref: `/projects/${project.slug}`,
+        sourceLabel: "Project page",
+      },
+      { src: "/banner.png" },
+      { src: "/og-image.png" },
+    ],
     links: [
       {
         title: "Open testing round",

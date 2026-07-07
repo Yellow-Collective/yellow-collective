@@ -16,6 +16,11 @@ import {
 } from "@/utils/rounds/admin-round-form";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getSafeLinkProps, normalizeSafeImageUrl } from "@/utils/url-safety";
+import {
+  formatCommunityProjectGalleryImages,
+  normalizeCommunityProjectGalleryImages,
+  parseCommunityProjectGalleryImages,
+} from "@/utils/community-project-gallery";
 import { TOKEN_NETWORK } from "constants/addresses";
 import type { CommunityProject } from "data/community";
 import type { CommunityProjectRecord } from "data/community-project-submissions";
@@ -3612,7 +3617,11 @@ const ProjectEditor = ({
   );
   const [details, setDetails] = useState(toLines(project.details));
   const [galleryImages, setGalleryImages] = useState(
-    toLines(project.galleryImages)
+    formatCommunityProjectGalleryImages(
+      normalizeCommunityProjectGalleryImages(project.galleryImages, {
+        allowDataImages: true,
+      })
+    )
   );
   const [links, setLinks] = useState(formatLinks(project.links));
   const [editorMode, setEditorMode] = useState<ProjectEditorMode>("edit");
@@ -3633,7 +3642,7 @@ const ProjectEditor = ({
     image,
     memberAddresses,
     details: fromLines(details),
-    galleryImages: fromLines(galleryImages),
+    galleryImages: parseCommunityProjectGalleryImages(galleryImages),
     links: parseLinks(links),
   };
   const isQueuedProject = project.status === "pending";
@@ -3653,7 +3662,7 @@ const ProjectEditor = ({
         image,
         memberAddresses,
         details: fromLines(details),
-        galleryImages: fromLines(galleryImages),
+        galleryImages: parseCommunityProjectGalleryImages(galleryImages),
         links: parseLinks(links),
       };
 
@@ -3785,7 +3794,7 @@ const ProjectEditor = ({
             rows={5}
           />
           <FormField
-            label="Gallery images, one URL per line"
+            label="Gallery images, one per line as URL | Caption | Source URL | Source label"
             value={galleryImages}
             onChange={setGalleryImages}
             rows={4}
@@ -3809,14 +3818,12 @@ const ProjectPreview = ({ project }: { project: CommunityProject }) => {
     allowInternal: true,
     allowDataImages: true,
   });
-  const galleryImages = (project.galleryImages || [])
-    .map((image) =>
-      normalizeSafeImageUrl(image, {
-        allowInternal: true,
-        allowDataImages: true,
-      })
-    )
-    .filter(Boolean);
+  const galleryImages = normalizeCommunityProjectGalleryImages(
+    project.galleryImages,
+    {
+      allowDataImages: true,
+    }
+  );
   const sourceLinkProps = getSafeLinkProps(project.href, {
     allowInternal: true,
   });
@@ -3854,12 +3861,12 @@ const ProjectPreview = ({ project }: { project: CommunityProject }) => {
             <div className="grid grid-cols-2 gap-4 pt-2">
               {galleryImages.map((image, index) => (
                 <div
-                  key={`${image}-${index}`}
+                  key={`${image.src}-${index}`}
                   className="overflow-hidden rounded-2xl border border-skin-stroke bg-skin-muted shadow-sm"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={image}
+                    src={image.src}
                     alt={`${project.title} gallery image ${index + 1}`}
                     className="aspect-square h-full w-full object-cover"
                   />

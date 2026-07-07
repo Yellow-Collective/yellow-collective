@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
   getInvalidCommunityProjectMemberAddresses,
+  type CommunityProjectGalleryImage,
   type CommunityProject,
 } from "data/community";
 import {
@@ -9,11 +10,16 @@ import {
   validateCommunityProjectInput,
 } from "data/community-project-submissions";
 import { applyRateLimit } from "@/utils/rate-limit";
+import { normalizeCommunityProjectGalleryImages } from "@/utils/community-project-gallery";
+import { normalizeSafeProjectUrl } from "@/utils/url-safety";
 
 type UploadedImagePayload = {
   name: string;
   type: string;
   dataUrl: string;
+  caption?: string;
+  sourceHref?: string;
+  sourceLabel?: string;
 };
 
 type SubmitCommunityProjectBody = {
@@ -59,9 +65,18 @@ const validateUploadedImage = (image?: UploadedImagePayload | null) => {
   return image.dataUrl;
 };
 
+const validateUploadedImageSource = (image: UploadedImagePayload) => {
+  if (
+    image.sourceHref?.trim() &&
+    !normalizeSafeProjectUrl(image.sourceHref, { allowInternal: true })
+  ) {
+    throw new Error("Gallery image source links must be valid URLs.");
+  }
+};
+
 const validateUploadedImages = (
   images?: UploadedImagePayload[] | null
-): string[] => {
+): CommunityProjectGalleryImage[] => {
   if (!images) return [];
 
   if (!Array.isArray(images)) {
@@ -73,8 +88,25 @@ const validateUploadedImages = (
   }
 
   return images
-    .map((image) => validateUploadedImage(image))
-    .filter((image): image is string => Boolean(image));
+    .map((image) => {
+      const src = validateUploadedImage(image);
+      validateUploadedImageSource(image);
+
+      return normalizeCommunityProjectGalleryImages(
+        [
+          {
+            src,
+            caption: image.caption,
+            sourceHref: image.sourceHref,
+            sourceLabel: image.sourceLabel,
+          },
+        ],
+        { allowDataImages: true }
+      )[0];
+    })
+    .filter(
+      (image): image is CommunityProjectGalleryImage => Boolean(image?.src)
+    );
 };
 
 export default async function handler(

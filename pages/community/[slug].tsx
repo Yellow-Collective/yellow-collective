@@ -5,7 +5,9 @@ import { getCommunityProject } from "@/utils/community-projects";
 import { areSameWalletAddress } from "@/utils/profile/identity";
 import { isAdminAddress } from "@/utils/admin";
 import { getSafeLinkProps, normalizeSafeImageUrl } from "@/utils/url-safety";
+import { normalizeCommunityProjectGalleryImages } from "@/utils/community-project-gallery";
 import { getDaoMemberSummaries, type DaoMemberSummary } from "data/members";
+import type { CommunityProjectGalleryImage } from "data/community";
 import type {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
@@ -81,19 +83,18 @@ export default function CommunityDetailPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { address } = useAccount();
   const isAdmin = isAdminAddress(address);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] =
+    useState<CommunityProjectGalleryImage | null>(null);
   const imageUrl = normalizeSafeImageUrl(project.image, {
     allowInternal: true,
     allowDataImages: true,
   });
-  const galleryImages = (project.galleryImages || [])
-    .map((image) =>
-      normalizeSafeImageUrl(image, {
-        allowInternal: true,
-        allowDataImages: true,
-      })
-    )
-    .filter(Boolean);
+  const galleryImages = normalizeCommunityProjectGalleryImages(
+    project.galleryImages,
+    {
+      allowDataImages: true,
+    }
+  );
   const sourceLinkProps = getSafeLinkProps(project.href, {
     allowInternal: true,
   });
@@ -144,14 +145,14 @@ export default function CommunityDetailPage({
               <div className="grid grid-cols-2 gap-4 pt-2">
                 {galleryImages.map((image, index) => (
                   <button
-                    key={`${image}-${index}`}
+                    key={`${image.src}-${index}`}
                     type="button"
                     onClick={() => setSelectedImage(image)}
                     className="group block overflow-hidden rounded-2xl border border-skin-stroke bg-skin-muted shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={image}
+                      src={image.src}
                       alt={`${project.title} gallery image ${index + 1}`}
                       className="aspect-square h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]"
                     />
@@ -271,11 +272,41 @@ export default function CommunityDetailPage({
             </button>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={selectedImage}
+              src={selectedImage.src}
               alt={`${project.title} enlarged gallery image`}
               className="max-h-[86vh] max-w-full rounded-2xl border border-skin-stroke bg-skin-muted object-contain shadow-xl"
               onClick={(event) => event.stopPropagation()}
             />
+            {(selectedImage.caption || selectedImage.sourceHref) && (
+              <div
+                className="absolute bottom-0 left-0 right-0 rounded-b-2xl border-x border-b border-skin-stroke bg-black/75 px-5 py-4 text-white shadow-xl"
+                onClick={(event) => event.stopPropagation()}
+              >
+                {selectedImage.caption && (
+                  <p className="text-sm leading-snug md:text-base">
+                    {selectedImage.caption}
+                  </p>
+                )}
+                {selectedImage.sourceHref &&
+                  (() => {
+                    const selectedSourceLinkProps = getSafeLinkProps(
+                      selectedImage.sourceHref || "",
+                      {
+                        allowInternal: true,
+                      }
+                    );
+
+                    return selectedSourceLinkProps ? (
+                      <Link
+                        {...selectedSourceLinkProps}
+                        className="mt-2 inline-flex font-heading text-sm text-[#ffcc00] underline transition hover:opacity-80"
+                      >
+                        {selectedImage.sourceLabel || "Source"}
+                      </Link>
+                    ) : null;
+                  })()}
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -1,5 +1,12 @@
 import { getAddress, isAddress } from "viem";
 
+export type CommunityProjectGalleryImage = {
+  src: string;
+  caption?: string;
+  sourceHref?: string;
+  sourceLabel?: string;
+};
+
 export type CommunityProject = {
   slug: string;
   title: string;
@@ -11,7 +18,7 @@ export type CommunityProject = {
   date: string;
   href: string;
   image: string;
-  galleryImages?: string[];
+  galleryImages?: Array<string | CommunityProjectGalleryImage>;
   links?: Array<{
     title: string;
     href: string;
