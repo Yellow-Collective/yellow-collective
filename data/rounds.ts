@@ -2343,6 +2343,13 @@ type AdminRoundVoteMutationInput = {
   reason?: string;
 };
 
+export class AdminRoundVoteConflictError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "AdminRoundVoteConflictError";
+  }
+}
+
 const getVoteWalletForAdminMutation = async (
   client: PoolClient,
   roundId: string,
@@ -2409,13 +2416,21 @@ const insertRoundVoteAdminAudit = async ({
 export const updateAdminRoundVote = async ({
   roundId,
   voteId,
+  submissionId,
   voteCount,
   adminWalletAddress,
   reason,
-}: AdminRoundVoteMutationInput & { voteCount: number }) => {
+}: AdminRoundVoteMutationInput & {
+  submissionId: string;
+  voteCount: number;
+}) => {
   await ensureTables();
   if (!Number.isInteger(voteCount) || voteCount < 1) {
     throw new Error("Vote count must be a positive integer.");
+  }
+  const targetSubmissionId = submissionId.trim();
+  if (!targetSubmissionId) {
+    throw new Error("Selected submission is required.");
   }
 
   const client = await getPool().connect();
@@ -2440,14 +2455,48 @@ export const updateAdminRoundVote = async ({
       return null;
     }
 
+    const submissionResult = await client.query(
+      `
+        SELECT id
+        FROM round_submissions
+        WHERE round_id = $1 AND id = $2 AND deleted_at IS NULL
+        LIMIT 1
+      `,
+      [roundId, targetSubmissionId]
+    );
+    if (!submissionResult.rows[0]) {
+      throw new Error("Selected submission is not available in this round.");
+    }
+
+    if (targetSubmissionId !== before.submissionId) {
+      const conflictingVote = await client.query(
+        `
+          SELECT id
+          FROM round_votes
+          WHERE round_id = $1
+            AND submission_id = $2
+            AND lower(wallet_address) = lower($3)
+            AND id <> $4
+          LIMIT 1
+        `,
+        [roundId, targetSubmissionId, walletAddress, voteId]
+      );
+      if (conflictingVote.rows[0]) {
+        throw new AdminRoundVoteConflictError(
+          "This voter already has a vote allocation for that submission. Edit or delete that allocation first."
+        );
+      }
+    }
+
     await client.query(
       `
         UPDATE round_votes
-        SET vote_count = $3,
+        SET submission_id = $3,
+          vote_count = $4,
           updated_at = now()
         WHERE round_id = $1 AND id = $2
       `,
-      [roundId, voteId, voteCount]
+      [roundId, voteId, targetSubmissionId, voteCount]
     );
     const after = await getAdminRoundVote(roundId, voteId, client);
     if (!after) throw new Error("Unable to reload updated vote.");

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
+  AdminRoundVoteConflictError,
   removeAdminRoundVote,
   updateAdminRoundVote,
 } from "data/rounds";
@@ -7,6 +8,7 @@ import { requireAdminRequest } from "@/utils/admin-api";
 import { validateAdminRoundVoteCount } from "@/utils/rounds/admin-votes";
 
 type AdminRoundVoteBody = {
+  submissionId?: unknown;
   voteCount?: unknown;
   reason?: unknown;
 };
@@ -25,6 +27,14 @@ const getReason = (value: unknown) => {
     throw new Error("Correction reason must be 1000 characters or fewer.");
   }
   return reason;
+};
+
+const getSubmissionId = (value: unknown) => {
+  if (typeof value !== "string" || !value.trim()) {
+    throw new Error("Selected submission is required.");
+  }
+
+  return value.trim().slice(0, 200);
 };
 
 export default async function handler(
@@ -50,6 +60,7 @@ export default async function handler(
     const reason = getReason(body.reason);
 
     if (req.method === "PATCH") {
+      const submissionId = getSubmissionId(body.submissionId);
       const validationError = validateAdminRoundVoteCount(body.voteCount);
       if (validationError) {
         return res.status(400).json({ error: validationError });
@@ -58,6 +69,7 @@ export default async function handler(
       const vote = await updateAdminRoundVote({
         roundId,
         voteId,
+        submissionId,
         voteCount: body.voteCount as number,
         adminWalletAddress: adminAddress,
         reason,
@@ -77,9 +89,14 @@ export default async function handler(
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unable to update round vote.";
+    const isConflict = error instanceof AdminRoundVoteConflictError;
     const isValidationError =
-      message.includes("must be") || message.includes("positive integer");
+      message.includes("must be") ||
+      message.includes("positive integer") ||
+      message.startsWith("Selected submission");
     console.error("Admin round vote mutation failed", error);
-    return res.status(isValidationError ? 400 : 500).json({ error: message });
+    return res
+      .status(isConflict ? 409 : isValidationError ? 400 : 500)
+      .json({ error: message });
   }
 }

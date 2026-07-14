@@ -56,6 +56,38 @@ export const validateAdminRoundVoteCount = (value: unknown) =>
     ? undefined
     : "Vote count must be a positive integer.";
 
+export type AdminRoundVotesByWallet = {
+  walletAddress: string;
+  totalVoteCount: number;
+  updatedAt: string;
+  votes: AdminRoundVote[];
+};
+
+export const groupAdminRoundVotesByWallet = (votes: AdminRoundVote[]) => {
+  const groups = new Map<string, AdminRoundVotesByWallet>();
+
+  for (const vote of votes) {
+    const walletKey = vote.walletAddress.toLowerCase();
+    const current = groups.get(walletKey);
+
+    if (current) {
+      current.votes.push(vote);
+      current.totalVoteCount += vote.voteCount;
+      if (vote.updatedAt > current.updatedAt) current.updatedAt = vote.updatedAt;
+      continue;
+    }
+
+    groups.set(walletKey, {
+      walletAddress: vote.walletAddress,
+      totalVoteCount: vote.voteCount,
+      updatedAt: vote.updatedAt,
+      votes: [vote],
+    });
+  }
+
+  return Array.from(groups.values());
+};
+
 const csvValue = (value: unknown) => {
   let text = value === null || value === undefined ? "" : String(value);
 

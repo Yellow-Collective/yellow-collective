@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import WalletIdentityLink from "@/components/WalletIdentityLink";
 import CoinMediaPreview from "@/components/coins/CoinMediaPreview";
 import ProjectMemberSelector from "@/components/community/ProjectMemberSelector";
 import {
@@ -17,7 +18,7 @@ import {
 } from "@/utils/rounds/admin-round-form";
 import { validateRoundVotingSnapshot } from "@/utils/rounds/voting-snapshot";
 import { isRoundExportable } from "@/utils/rounds/admin-submissions-export";
-import { getProfilePath } from "@/utils/profile/identity";
+import { groupAdminRoundVotesByWallet } from "@/utils/rounds/admin-votes";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getSafeLinkProps, normalizeSafeImageUrl } from "@/utils/url-safety";
 import {
@@ -3103,7 +3104,7 @@ const RoundEditor = ({
           onChange={setMaxDescriptionLength}
         />
       </div>
-      <fieldset className="rounded-xl border border-skin-stroke bg-skin-muted p-4">
+      <fieldset className="min-w-0 w-full max-w-full rounded-xl border border-skin-stroke bg-skin-muted p-4">
         <legend className="px-1 font-heading text-base text-skin-base">
           Voting power snapshot
         </legend>
@@ -3111,7 +3112,7 @@ const RoundEditor = ({
           Delegated Collective Noun voting power is fixed at this time. Dates
           are entered in your local timezone.
         </p>
-        <div className="mt-3 grid gap-3 md:grid-cols-2">
+        <div className="mt-3 grid min-w-0 gap-3 md:grid-cols-2">
           {[
             {
               value: "voting_start" as const,
@@ -3126,7 +3127,7 @@ const RoundEditor = ({
           ].map((option) => (
             <label
               key={option.value}
-              className="flex cursor-pointer items-start gap-3 rounded-xl border border-skin-stroke bg-white p-3"
+              className="flex min-w-0 cursor-pointer items-start gap-3 rounded-xl border border-skin-stroke bg-white p-3"
             >
               <input
                 type="radio"
@@ -3135,9 +3136,9 @@ const RoundEditor = ({
                 checked={votingSnapshotMode === option.value}
                 onChange={() => setVotingSnapshotMode(option.value)}
                 disabled={round.votingSnapshotBlock !== null}
-                className="mt-1 h-4 w-4 accent-[#ffcc00]"
+                className="mt-1 h-4 w-4 shrink-0 accent-[#ffcc00]"
               />
-              <span>
+              <span className="min-w-0">
                 <span className="block font-heading text-sm text-skin-base">
                   {option.label}
                 </span>
@@ -3366,6 +3367,10 @@ const RoundVotesManager = ({
     AdminSWRKey
   >([votesUrl, adminAuth], roundVotesFetcher);
   const votes = useMemo(() => data?.votes || [], [data?.votes]);
+  const voteGroups = useMemo(
+    () => groupAdminRoundVotesByWallet(votes),
+    [votes]
+  );
   const totalAllocatedVotes = useMemo(
     () => votes.reduce((total, vote) => total + vote.voteCount, 0),
     [votes]
@@ -3445,6 +3450,9 @@ const RoundVotesManager = ({
             <div className="flex items-center justify-center rounded-full bg-[#1d9bf0] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#0f5f99]">
               {votes.length} vote records
             </div>
+            <div className="flex items-center justify-center rounded-full bg-[#8a6d00] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#5c4800]">
+              {voteGroups.length} voters
+            </div>
             <div className="flex items-center justify-center rounded-full bg-[#16a34a] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#15803d]">
               {totalAllocatedVotes} allocated
             </div>
@@ -3498,56 +3506,82 @@ const RoundVotesManager = ({
           </p>
         ) : votes.length > 0 ? (
           <div className="mt-4 grid gap-3">
-            {votes.map((vote) => (
+            {voteGroups.map((group) => (
               <article
-                key={vote.id}
+                key={group.walletAddress.toLowerCase()}
                 className="rounded-xl border border-skin-stroke bg-white p-4"
               >
-                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                <div className="flex flex-col gap-3 border-b border-skin-stroke pb-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-heading text-xl leading-none text-skin-base">
-                        {vote.submissionTitle}
+                      <WalletIdentityLink
+                        address={group.walletAddress}
+                        fallback="short"
+                        className="break-all font-heading text-xl leading-none text-skin-base underline decoration-2 underline-offset-4"
+                      />
+                      <span className="rounded-full bg-[#fff7bf] px-2 py-0.5 text-xs font-semibold text-skin-base">
+                        {group.votes.length} allocation
+                        {group.votes.length === 1 ? "" : "s"}
                       </span>
-                      {vote.submissionStatus && (
-                        <StatusPill status={vote.submissionStatus} />
-                      )}
-                      {vote.submissionDeleted && (
-                        <span className="rounded-full bg-[#fde2df] px-2 py-0.5 text-xs font-semibold text-[#8f2c22]">
-                          Submission deleted
-                        </span>
-                      )}
                     </div>
-                    <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-secondary">
-                      <Link
-                        href={getProfilePath({ address: vote.walletAddress })}
-                        className="break-all font-semibold underline"
-                      >
-                        {vote.walletAddress}
-                      </Link>
-                      <span>{vote.voteCount} votes</span>
-                      <span>Updated {new Date(vote.updatedAt).toLocaleString()}</span>
-                    </div>
-                    <div className="mt-2 break-all text-xs text-secondary">
-                      Vote ID: {vote.id} · Submission ID: {vote.submissionId}
+                    <div className="mt-2 break-all font-mono text-xs text-secondary">
+                      {group.walletAddress}
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => openVoteEditor(vote, "edit")}
-                      className={secondaryButtonClass}
-                    >
-                      Edit vote
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => openVoteEditor(vote, "delete")}
-                      className={dangerButtonClass}
-                    >
-                      Delete vote
-                    </button>
+                  <div className="shrink-0 text-left sm:text-right">
+                    <div className="font-heading text-2xl leading-none text-skin-base">
+                      {group.totalVoteCount} votes
+                    </div>
+                    <div className="mt-1 text-xs text-secondary">
+                      Updated {new Date(group.updatedAt).toLocaleString()}
+                    </div>
                   </div>
+                </div>
+                <div className="divide-y divide-skin-stroke">
+                  {group.votes.map((vote) => (
+                    <section
+                      key={vote.id}
+                      className="flex flex-col gap-3 py-4 last:pb-0 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-heading text-lg leading-none text-skin-base">
+                            {vote.submissionTitle}
+                          </span>
+                          {vote.submissionStatus && (
+                            <StatusPill status={vote.submissionStatus} />
+                          )}
+                          {vote.submissionDeleted && (
+                            <span className="rounded-full bg-[#fde2df] px-2 py-0.5 text-xs font-semibold text-[#8f2c22]">
+                              Submission deleted
+                            </span>
+                          )}
+                          <span className="rounded-full bg-[#dff3ff] px-2 py-0.5 text-xs font-semibold text-[#0f5f99]">
+                            {vote.voteCount} votes
+                          </span>
+                        </div>
+                        <div className="mt-2 break-all text-xs text-secondary">
+                          Vote ID: {vote.id} · Submission ID: {vote.submissionId}
+                        </div>
+                      </div>
+                      <div className="flex shrink-0 flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => openVoteEditor(vote, "edit")}
+                          className={secondaryButtonClass}
+                        >
+                          Edit vote
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => openVoteEditor(vote, "delete")}
+                          className={dangerButtonClass}
+                        >
+                          Delete vote
+                        </button>
+                      </div>
+                    </section>
+                  ))}
                 </div>
               </article>
             ))}
@@ -3564,6 +3598,7 @@ const RoundVotesManager = ({
           key={`${selectedVote.id}-${editorMode}`}
           adminAuth={adminAuth}
           round={round}
+          submissions={submissions}
           vote={selectedVote}
           mode={editorMode}
           onClose={() => setSelectedVote(null)}
@@ -3577,6 +3612,7 @@ const RoundVotesManager = ({
 const RoundVoteEditorModal = ({
   adminAuth,
   round,
+  submissions,
   vote,
   mode,
   onClose,
@@ -3584,11 +3620,15 @@ const RoundVoteEditorModal = ({
 }: {
   adminAuth: AdminAuth;
   round: Round;
+  submissions: RoundSubmission[];
   vote: AdminRoundVote;
   mode: "edit" | "delete";
   onClose: () => void;
   onChanged: (message: string) => Promise<void>;
 }) => {
+  const [selectedSubmissionId, setSelectedSubmissionId] = useState(
+    vote.submissionId
+  );
   const [voteCount, setVoteCount] = useState(String(vote.voteCount));
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState<string | null>(null);
@@ -3600,12 +3640,23 @@ const RoundVoteEditorModal = ({
       setMessage("Vote count must be a positive integer.");
       return;
     }
+    if (mode === "edit" && !selectedSubmissionId) {
+      setMessage("Select a submission for this vote allocation.");
+      return;
+    }
+
+    const selectedSubmission = submissions.find(
+      (submission) => submission.id === selectedSubmissionId
+    );
 
     const actionLabel = mode === "delete" ? "delete" : "update";
     const confirmation = [
       `${actionLabel} this stored vote?`,
       `Wallet: ${vote.walletAddress}`,
-      `Submission: ${vote.submissionTitle}`,
+      `Current submission: ${vote.submissionTitle}`,
+      mode === "edit"
+        ? `New submission: ${selectedSubmission?.title || vote.submissionTitle}`
+        : "",
       `Current votes: ${vote.voteCount}`,
       mode === "edit" ? `New votes: ${nextVoteCount}` : "",
     ]
@@ -3624,7 +3675,11 @@ const RoundVoteEditorModal = ({
         mode === "delete" ? "DELETE" : "PATCH",
         mode === "delete"
           ? { reason }
-          : { voteCount: nextVoteCount, reason }
+          : {
+              submissionId: selectedSubmissionId,
+              voteCount: nextVoteCount,
+              reason,
+            }
       );
       await onChanged(mode === "delete" ? "Vote deleted." : "Vote updated.");
     } catch (error) {
@@ -3682,10 +3737,42 @@ const RoundVoteEditorModal = ({
         >
           <div className="grid gap-4">
             <ReadonlyField label="Voter wallet" value={vote.walletAddress} />
-            <ReadonlyField
-              label="Submission"
-              value={`${vote.submissionTitle} (${vote.submissionId})`}
-            />
+            {mode === "delete" ? (
+              <ReadonlyField
+                label="Submission"
+                value={`${vote.submissionTitle} (${vote.submissionId})`}
+              />
+            ) : (
+              <label className={labelClass}>
+                Submission
+                <select
+                  value={selectedSubmissionId}
+                  onChange={(event) =>
+                    setSelectedSubmissionId(event.target.value)
+                  }
+                  disabled={isSaving}
+                  className={`mt-2 ${fieldClass}`}
+                >
+                  {!submissions.some(
+                    (submission) => submission.id === vote.submissionId
+                  ) && (
+                    <option value={vote.submissionId}>
+                      {vote.submissionTitle} (unavailable)
+                    </option>
+                  )}
+                  {submissions
+                    .filter((submission) => !submission.deletedAt)
+                    .map((submission) => (
+                      <option key={submission.id} value={submission.id}>
+                        {submission.title}
+                      </option>
+                    ))}
+                </select>
+                <span className="mt-2 block text-xs font-normal leading-snug text-secondary">
+                  A voter can only have one stored allocation per submission.
+                </span>
+              </label>
+            )}
             <ReadonlyField label="Vote ID" value={vote.id} />
             {mode === "edit" && (
               <label className={labelClass}>

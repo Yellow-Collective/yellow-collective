@@ -199,6 +199,18 @@ test("exposes snapshot selection in admin and request interfaces", () => {
   assert.match(requestPageSource, /Custom date/);
 });
 
+test("contains the admin snapshot controls within their responsive fieldset", () => {
+  assert.match(
+    adminPageSource,
+    /<fieldset className="min-w-0 w-full max-w-full rounded-xl border border-skin-stroke bg-skin-muted p-4"/
+  );
+  assert.match(adminPageSource, /mt-3 grid min-w-0 gap-3 md:grid-cols-2/);
+  assert.match(
+    adminPageSource,
+    /flex min-w-0 cursor-pointer items-start gap-3 rounded-xl/
+  );
+});
+
 test("shows public snapshot timing", () => {
   assert.match(roundPageSource, /Voting power snapshot:/);
 });
