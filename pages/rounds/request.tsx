@@ -32,6 +32,8 @@ type FormValues = {
   submissionsOpenAt: string;
   votingStartsAt: string;
   votingEndsAt: string;
+  votingSnapshotMode: "voting_start" | "custom";
+  votingSnapshotAt: string;
   votingStrategy: string;
   votesPerWallet: string;
   winnerCount: string;
@@ -72,6 +74,8 @@ const createInitialValues = (): FormValues => ({
   submissionsOpenAt: "",
   votingStartsAt: "",
   votingEndsAt: "",
+  votingSnapshotMode: "voting_start",
+  votingSnapshotAt: "",
   votingStrategy: "one_per_nft",
   votesPerWallet: "1",
   winnerCount: "1",
@@ -114,21 +118,25 @@ export default function RequestRoundPage() {
     () =>
       Boolean(
         values.requesterName.trim() &&
-          values.requesterEmail.trim() &&
-          slugify(values.title).trim() &&
-          values.title.trim().length >= 3 &&
-          values.description.trim().length >= 20 &&
-          values.content.trim().length >= 20 &&
-          values.image.trim() &&
-          values.submissionsOpenAt &&
-          values.votingStartsAt &&
-          values.votingEndsAt &&
-          Number(values.winnerCount) > 0 &&
-          Number(values.maxSubmissionsPerWallet) > 0 &&
-          Number(values.votesPerWallet) > 0 &&
-          address &&
-          values.awards.length === Number(values.winnerCount) &&
-          values.awards.every((award) => award.value.trim())
+        values.requesterEmail.trim() &&
+        slugify(values.title).trim() &&
+        values.title.trim().length >= 3 &&
+        values.description.trim().length >= 20 &&
+        values.content.trim().length >= 20 &&
+        values.image.trim() &&
+        values.submissionsOpenAt &&
+        values.votingStartsAt &&
+        values.votingEndsAt &&
+        (values.votingSnapshotMode === "voting_start" ||
+          (Boolean(values.votingSnapshotAt) &&
+            new Date(values.votingSnapshotAt).getTime() <=
+              new Date(values.votingStartsAt).getTime())) &&
+        Number(values.winnerCount) > 0 &&
+        Number(values.maxSubmissionsPerWallet) > 0 &&
+        Number(values.votesPerWallet) > 0 &&
+        address &&
+        values.awards.length === Number(values.winnerCount) &&
+        values.awards.every((award) => award.value.trim())
       ),
     [address, values]
   );
@@ -198,6 +206,11 @@ export default function RequestRoundPage() {
           submissionsOpenAt: dateInputToIso(values.submissionsOpenAt),
           votingStartsAt: dateInputToIso(values.votingStartsAt),
           votingEndsAt: dateInputToIso(values.votingEndsAt),
+          votingSnapshotMode: values.votingSnapshotMode,
+          votingSnapshotAt:
+            values.votingSnapshotMode === "custom"
+              ? dateInputToIso(values.votingSnapshotAt)
+              : null,
           votesPerWallet: Number(values.votesPerWallet),
           winnerCount: Number(values.winnerCount),
           maxSubmissionsPerWallet: Number(values.maxSubmissionsPerWallet),
@@ -387,6 +400,64 @@ export default function RequestRoundPage() {
               required
             />
           </div>
+
+          <fieldset className="mt-6 rounded-xl border border-skin-stroke bg-skin-muted p-4">
+            <legend className="px-1 font-heading text-base text-skin-base">
+              Voting power snapshot
+            </legend>
+            <p className="mt-1 text-sm leading-snug text-secondary">
+              Delegated Collective Noun voting power is fixed at this time.
+              Dates are entered in your local timezone.
+            </p>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              {[
+                {
+                  value: "voting_start" as const,
+                  label: "When voting begins",
+                  note: "Recommended. Follows the Voting starts date.",
+                },
+                {
+                  value: "custom" as const,
+                  label: "Custom date",
+                  note: "Use delegated voting power from an earlier date.",
+                },
+              ].map((option) => (
+                <label
+                  key={option.value}
+                  className="flex cursor-pointer items-start gap-3 rounded-xl border border-skin-stroke bg-white p-3"
+                >
+                  <input
+                    type="radio"
+                    name="votingSnapshotMode"
+                    value={option.value}
+                    checked={values.votingSnapshotMode === option.value}
+                    onChange={() =>
+                      updateValue("votingSnapshotMode", option.value)
+                    }
+                    className="mt-1 h-4 w-4 accent-[#ffcc00]"
+                  />
+                  <span>
+                    <span className="block font-heading text-sm text-skin-base">
+                      {option.label}
+                    </span>
+                    <span className="mt-1 block text-xs leading-snug text-secondary">
+                      {option.note}
+                    </span>
+                  </span>
+                </label>
+              ))}
+            </div>
+            {values.votingSnapshotMode === "custom" && (
+              <div className="mt-4 max-w-sm">
+                <DateField
+                  label="Custom snapshot date"
+                  value={values.votingSnapshotAt}
+                  onChange={(value) => updateValue("votingSnapshotAt", value)}
+                  required
+                />
+              </div>
+            )}
+          </fieldset>
 
           <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             <label className="font-heading text-base text-skin-base">

@@ -64,6 +64,9 @@ type VotingPowerResponse = {
   votingPower: number;
   usedVotes: number;
   remainingVotes: number;
+  votingSnapshotBlock: number | null;
+  votingSnapshotAt: string;
+  votingSnapshotStatus: "pending" | "resolved";
 };
 
 type SubmissionVotesResponse = {
@@ -89,15 +92,18 @@ const getLockedVotesBySubmission = (
   if (!walletAddress) return {} as Record<string, number>;
 
   const normalizedWallet = walletAddress.toLowerCase();
-  return voteActivity.reduce<Record<string, number>>((lockedVotes, activity) => {
-    if (activity.walletAddress.toLowerCase() !== normalizedWallet) {
-      return lockedVotes;
-    }
+  return voteActivity.reduce<Record<string, number>>(
+    (lockedVotes, activity) => {
+      if (activity.walletAddress.toLowerCase() !== normalizedWallet) {
+        return lockedVotes;
+      }
 
-    lockedVotes[activity.submissionId] =
-      (lockedVotes[activity.submissionId] || 0) + activity.voteCount;
-    return lockedVotes;
-  }, {});
+      lockedVotes[activity.submissionId] =
+        (lockedVotes[activity.submissionId] || 0) + activity.voteCount;
+      return lockedVotes;
+    },
+    {}
+  );
 };
 
 const DeferredInlineImage = ({
@@ -401,6 +407,22 @@ export default function RoundDetailPage({
 
         <RoundTimeline round={round} />
 
+        <p className="rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-3 text-sm text-[#212529]">
+          Voting power snapshot:{" "}
+          {round.votingSnapshotMode === "custom"
+            ? "Custom date"
+            : "When voting begins"}{" "}
+          —{" "}
+          {new Date(
+            round.votingSnapshotMode === "custom" && round.votingSnapshotAt
+              ? round.votingSnapshotAt
+              : round.votingStartsAt
+          ).toLocaleString()}
+          {round.votingSnapshotBlock !== null
+            ? ` | Base block ${round.votingSnapshotBlock}`
+            : ""}
+        </p>
+
         <RoundDetailsPanel
           round={round}
           stateLabel={getRoundStateLabel(state)}
@@ -484,6 +506,15 @@ export default function RoundDetailPage({
                     "Previously submitted votes cannot be changed. You can still allocate your remaining votes until voting ends."
                   }
                 </p>
+                {votingPowerData?.votingSnapshotStatus === "pending" && (
+                  <p className="mt-2 text-sm text-secondary">
+                    Voting power will be captured on{" "}
+                    {new Date(
+                      votingPowerData.votingSnapshotAt
+                    ).toLocaleString()}
+                    .
+                  </p>
+                )}
               </div>
               {isConnected ? (
                 <div className="flex w-full flex-wrap justify-center gap-3 rounded-xl bg-[#fff7bf] px-4 py-3 text-center text-[#212529] sm:gap-4 2xl:w-[640px] 2xl:shrink-0 2xl:px-6">

@@ -11,6 +11,16 @@ export type SavedRoundDates = {
   votingEndsAt?: string;
 };
 
+export type AdminRoundSnapshotInputs = {
+  votingSnapshotMode: "voting_start" | "custom";
+  votingSnapshotAt: string;
+};
+
+export type SavedRoundSnapshot = {
+  votingSnapshotMode?: "voting_start" | "custom";
+  votingSnapshotAt?: string | null;
+};
+
 export const toDateInput = (value: string) => {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "";
@@ -51,3 +61,17 @@ export const getAdminRoundDatePayload = (
     ),
   };
 };
+
+export const getAdminRoundSnapshotPayload = (
+  values: AdminRoundSnapshotInputs,
+  current: SavedRoundSnapshot
+) => ({
+  votingSnapshotMode: values.votingSnapshotMode,
+  votingSnapshotAt:
+    values.votingSnapshotMode === "custom"
+      ? dateInputToPreservedIso(
+          values.votingSnapshotAt,
+          current.votingSnapshotAt || undefined
+        )
+      : null,
+});

@@ -11,9 +11,11 @@ import {
 import { getAdminSessionSignedRequestAction } from "@/utils/admin-auth";
 import {
   getAdminRoundDatePayload,
+  getAdminRoundSnapshotPayload,
   toDateInput,
   type SavedRoundDates,
 } from "@/utils/rounds/admin-round-form";
+import { validateRoundVotingSnapshot } from "@/utils/rounds/voting-snapshot";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getSafeLinkProps, normalizeSafeImageUrl } from "@/utils/url-safety";
 import {
@@ -2643,7 +2645,10 @@ const getRoundPayloadFromForm = ({
   submissionsOpenAt,
   votingStartsAt,
   votingEndsAt,
+  votingSnapshotMode,
+  votingSnapshotAt,
   currentDates,
+  currentSnapshot,
   active,
   featured,
   isTraitContest,
@@ -2666,7 +2671,10 @@ const getRoundPayloadFromForm = ({
   submissionsOpenAt: string;
   votingStartsAt: string;
   votingEndsAt: string;
+  votingSnapshotMode: Round["votingSnapshotMode"];
+  votingSnapshotAt: string;
   currentDates: SavedRoundDates;
+  currentSnapshot: Pick<Round, "votingSnapshotMode" | "votingSnapshotAt">;
   active: boolean;
   featured: boolean;
   isTraitContest: boolean;
@@ -2689,6 +2697,10 @@ const getRoundPayloadFromForm = ({
     },
     currentDates
   );
+  const snapshot = getAdminRoundSnapshotPayload(
+    { votingSnapshotMode, votingSnapshotAt },
+    currentSnapshot
+  );
 
   return {
     title,
@@ -2697,6 +2709,7 @@ const getRoundPayloadFromForm = ({
     content,
     image,
     ...dates,
+    ...snapshot,
     active,
     featured,
     isTraitContest,
@@ -2743,6 +2756,13 @@ const validateRoundPublishForm = (round: RoundInput) => {
     return "Dates must be valid and ordered from start through voting end.";
   }
 
+  const snapshotValidationError = validateRoundVotingSnapshot({
+    votingStartsAt: String(round.votingStartsAt),
+    votingSnapshotMode: round.votingSnapshotMode || "voting_start",
+    votingSnapshotAt: round.votingSnapshotAt || null,
+  });
+  if (snapshotValidationError) return snapshotValidationError;
+
   return undefined;
 };
 
@@ -2768,6 +2788,12 @@ const RoundEditor = ({
   );
   const [votingEndsAt, setVotingEndsAt] = useState(
     toDateInput(round.votingEndsAt)
+  );
+  const [votingSnapshotMode, setVotingSnapshotMode] = useState<
+    Round["votingSnapshotMode"]
+  >(round.votingSnapshotMode);
+  const [votingSnapshotAt, setVotingSnapshotAt] = useState(
+    round.votingSnapshotAt ? toDateInput(round.votingSnapshotAt) : ""
   );
   const [active, setActive] = useState(round.active);
   const [featured, setFeatured] = useState(round.featured);
@@ -2806,11 +2832,17 @@ const RoundEditor = ({
       submissionsOpenAt,
       votingStartsAt,
       votingEndsAt,
+      votingSnapshotMode,
+      votingSnapshotAt,
       currentDates: {
         startsAt: round.startsAt,
         submissionsOpenAt: round.submissionsOpenAt,
         votingStartsAt: round.votingStartsAt,
         votingEndsAt: round.votingEndsAt,
+      },
+      currentSnapshot: {
+        votingSnapshotMode: round.votingSnapshotMode,
+        votingSnapshotAt: round.votingSnapshotAt,
       },
       active,
       featured,
@@ -2863,6 +2895,12 @@ const RoundEditor = ({
       setIsSaving(false);
     }
   };
+  const effectiveSnapshotValue =
+    votingSnapshotMode === "custom" ? votingSnapshotAt : votingStartsAt;
+  const effectiveSnapshotTime = new Date(effectiveSnapshotValue).getTime();
+  const effectiveSnapshotLabel = Number.isFinite(effectiveSnapshotTime)
+    ? new Date(effectiveSnapshotValue).toLocaleString()
+    : "Select a valid snapshot date";
 
   return (
     <EditorCard
@@ -3012,6 +3050,68 @@ const RoundEditor = ({
           onChange={setMaxDescriptionLength}
         />
       </div>
+      <fieldset className="rounded-xl border border-skin-stroke bg-skin-muted p-4">
+        <legend className="px-1 font-heading text-base text-skin-base">
+          Voting power snapshot
+        </legend>
+        <p className="mt-1 text-sm leading-snug text-secondary">
+          Delegated Collective Noun voting power is fixed at this time. Dates
+          are entered in your local timezone.
+        </p>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {[
+            {
+              value: "voting_start" as const,
+              label: "When voting begins",
+              note: "Recommended. Follows the Voting starts date.",
+            },
+            {
+              value: "custom" as const,
+              label: "Custom date",
+              note: "Use delegated voting power from an earlier date.",
+            },
+          ].map((option) => (
+            <label
+              key={option.value}
+              className="flex cursor-pointer items-start gap-3 rounded-xl border border-skin-stroke bg-white p-3"
+            >
+              <input
+                type="radio"
+                name={`round-${round.id}-voting-snapshot-mode`}
+                value={option.value}
+                checked={votingSnapshotMode === option.value}
+                onChange={() => setVotingSnapshotMode(option.value)}
+                disabled={round.votingSnapshotBlock !== null}
+                className="mt-1 h-4 w-4 accent-[#ffcc00]"
+              />
+              <span>
+                <span className="block font-heading text-sm text-skin-base">
+                  {option.label}
+                </span>
+                <span className="mt-1 block text-xs leading-snug text-secondary">
+                  {option.note}
+                </span>
+              </span>
+            </label>
+          ))}
+        </div>
+        {votingSnapshotMode === "custom" && (
+          <div className="mt-3 max-w-sm">
+            <DateField
+              label="Custom snapshot date"
+              value={votingSnapshotAt}
+              onChange={setVotingSnapshotAt}
+              disabled={round.votingSnapshotBlock !== null}
+            />
+          </div>
+        )}
+        <p className="mt-3 text-sm text-secondary">
+          Effective snapshot: {effectiveSnapshotLabel}
+          {round.votingSnapshotBlock !== null
+            ? ` | Base block ${round.votingSnapshotBlock}. Snapshot timing is locked.`
+            : ""}
+        </p>
+      </fieldset>
       <FormField
         label="Prizes, one per line as Position | Title | Value | Description"
         value={awardsText}
@@ -3520,6 +3620,19 @@ const RoundRequestEditor = ({
               request.votingStrategy,
               request.votesPerWallet
             )}
+          />
+          <ReadonlyField
+            label="Voting power snapshot"
+            value={`${
+              request.votingSnapshotMode === "custom"
+                ? "Custom date"
+                : "When voting begins"
+            }: ${new Date(
+              request.votingSnapshotMode === "custom" &&
+                request.votingSnapshotAt
+                ? request.votingSnapshotAt
+                : request.votingStartsAt
+            ).toLocaleString()}`}
           />
           <ReadonlyField
             label="Winners"
@@ -4320,10 +4433,12 @@ const DateField = ({
   label,
   value,
   onChange,
+  disabled = false,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 }) => (
   <label className={labelClass}>
     {label}
@@ -4331,6 +4446,7 @@ const DateField = ({
       type="datetime-local"
       value={value}
       onChange={(event) => onChange(event.target.value)}
+      disabled={disabled}
       className={`${fieldClass} mt-2`}
     />
   </label>

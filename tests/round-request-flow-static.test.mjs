@@ -22,6 +22,8 @@ test("approving a round request creates a draft round", () => {
 
   assert.match(section, /status:\s*"draft"/);
   assert.match(section, /active:\s*false/);
+  assert.match(section, /votingSnapshotMode:\s*request\.votingSnapshotMode/);
+  assert.match(section, /votingSnapshotAt:\s*request\.votingSnapshotAt/);
 });
 
 let failures = 0;

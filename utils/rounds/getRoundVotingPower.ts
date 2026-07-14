@@ -2,12 +2,15 @@ import type { Round } from "data/rounds";
 import { getCollectiveNounVotingPower } from "./getCollectiveNounVotingPower";
 
 export const getRoundVotingPower = async (
-  round: Pick<Round, "votingStrategy" | "votesPerWallet" | "votingSnapshotBlock">,
+  round: Pick<
+    Round,
+    "votingStrategy" | "votesPerWallet" | "votingSnapshotBlock"
+  >,
   walletAddress: string
 ) => {
   const collectiveNounVotingPower = await getCollectiveNounVotingPower(
     walletAddress,
-    round.votingSnapshotBlock || undefined
+    round.votingSnapshotBlock ?? undefined
   );
 
   if (collectiveNounVotingPower <= 0) return 0;

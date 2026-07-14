@@ -43,12 +43,22 @@ export default async function handler(
       return res.status(404).json({ error: "Round not found." });
     }
 
-    const votingSnapshotBlock = await getOrCreateRoundVotingSnapshotBlock(round);
+    const votingSnapshotBlock =
+      await getOrCreateRoundVotingSnapshotBlock(round);
+    if (votingSnapshotBlock === null) {
+      return res.status(409).json({
+        error:
+          "Voting power is not available yet because the configured Base snapshot block has not been indexed. Please try again shortly.",
+      });
+    }
     const roundForVoting = {
       ...round,
-      votingSnapshotBlock: votingSnapshotBlock || round.votingSnapshotBlock,
+      votingSnapshotBlock: votingSnapshotBlock ?? round.votingSnapshotBlock,
     };
-    const votingPower = await getRoundVotingPower(roundForVoting, walletAddress);
+    const votingPower = await getRoundVotingPower(
+      roundForVoting,
+      walletAddress
+    );
     const submissions = await castRoundVotes({
       round: roundForVoting,
       walletAddress,

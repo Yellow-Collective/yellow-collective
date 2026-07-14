@@ -34,13 +34,19 @@ const loadTsModule = (filePath, requireOverrides = {}) => {
 const voteValidation = loadTsModule(
   resolve(process.cwd(), "utils/rounds/validateRoundVote.ts")
 );
-const loadRoundVotingPowerModule = (delegatedVotes) =>
+const loadRoundVotingPowerModule = (delegatedVotes, calls = []) =>
   loadTsModule(resolve(process.cwd(), "utils/rounds/getRoundVotingPower.ts"), {
     "./getCollectiveNounVotingPower": {
-      getCollectiveNounVotingPower: async () => delegatedVotes,
+      getCollectiveNounVotingPower: async (walletAddress, blockTag) => {
+        calls.push({ walletAddress, blockTag });
+        return delegatedVotes;
+      },
     },
   });
-const roundsSource = readFileSync(resolve(process.cwd(), "data/rounds.ts"), "utf8");
+const roundsSource = readFileSync(
+  resolve(process.cwd(), "data/rounds.ts"),
+  "utf8"
+);
 const votingPowerApiSource = readFileSync(
   resolve(process.cwd(), "pages/api/rounds/[slug]/voting-power.ts"),
   "utf8"
@@ -139,10 +145,7 @@ test("round voting power reads getVotes from the Collective Noun contract", asyn
   );
 
   assert.equal(votingPower, 7);
-  assert.equal(
-    calls[0].address,
-    "0x220e41499CF4d93a3629a5509410CBf9E6E0B109"
-  );
+  assert.equal(calls[0].address, "0x220e41499CF4d93a3629a5509410CBf9E6E0B109");
   assert.match(calls[0].abi.join(" "), /getVotes/);
   assert.equal(calls[1].type, "getVotes");
   assert.equal(
@@ -197,6 +200,65 @@ test("token-weighted rounds use delegated Collective Noun votes", async () => {
   assert.equal(votingPower, 4);
 });
 
+test("every voting strategy reads eligibility from the resolved snapshot block", async () => {
+  const calls = [];
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(4, calls);
+  const walletAddress = "0x0000000000000000000000000000000000000001";
+
+  for (const votingStrategy of [
+    "one_per_nft",
+    "one_per_wallet",
+    "fixed_per_wallet",
+  ]) {
+    await getRoundVotingPower(
+      {
+        votingStrategy,
+        votesPerWallet: 5,
+        votingSnapshotBlock: 456,
+      },
+      walletAddress
+    );
+  }
+
+  assert.deepEqual(
+    calls.map((call) => call.blockTag),
+    [456, 456, 456]
+  );
+});
+
+test("snapshot block lookup uses the block at or before the target and rejects future targets", async () => {
+  const blocks = [
+    { number: 0, timestamp: 100 },
+    { number: 1, timestamp: 200 },
+    { number: 2, timestamp: 300 },
+  ];
+  const votingPowerModule = loadTsModule(
+    resolve(process.cwd(), "utils/rounds/getCollectiveNounVotingPower.ts"),
+    {
+      "@/utils/DefaultProvider": {
+        getBlockNumber: async () => 2,
+        getBlock: async (blockNumber) => blocks[blockNumber] || null,
+      },
+      "@/utils/ethers-compat": { Contract: function Contract() {} },
+      viem: { getAddress: (address) => address, isAddress: () => true },
+    }
+  );
+
+  assert.equal(
+    await votingPowerModule.getBlockNumberAtOrBeforeTimestamp(
+      new Date(250 * 1000).toISOString()
+    ),
+    1
+  );
+  await assert.rejects(
+    () =>
+      votingPowerModule.getBlockNumberAtOrBeforeTimestamp(
+        new Date(350 * 1000).toISOString()
+      ),
+    /not available yet/
+  );
+});
+
 test("round vote persistence is additive and never deletes prior wallet votes", () => {
   const start = roundsSource.indexOf("export const castRoundVotes");
   const section = roundsSource.slice(start);
@@ -244,11 +306,20 @@ test("round voting UI separates locked votes, pending votes, and remaining votes
   assert.match(roundPageSource, /Previously submitted votes cannot be changed/);
   assert.match(roundPageSource, /votes remaining/);
   assert.match(roundPageSource, /lockedVotesBySubmission/);
-  assert.match(roundPageSource, /yc-round-locked-vote-pill[\s\S]*\{lockedVotes\} locked/);
-  assert.match(globalsSource, /yc-round-locked-vote-pill[\s\S]*color: #212529 !important/);
+  assert.match(
+    roundPageSource,
+    /yc-round-locked-vote-pill[\s\S]*\{lockedVotes\} locked/
+  );
+  assert.match(
+    globalsSource,
+    /yc-round-locked-vote-pill[\s\S]*color: #212529 !important/
+  );
   assert.match(roundPageSource, /2xl:w-\[640px\][\s\S]*votes submitted/);
   assert.match(roundPageSource, /min-w-\[9\.75rem\][\s\S]*pending votes/);
-  assert.match(roundPageSource, /whitespace-nowrap[\s\S]*\{submission\.voteCount\} votes/);
+  assert.match(
+    roundPageSource,
+    /whitespace-nowrap[\s\S]*\{submission\.voteCount\} votes/
+  );
   assert.match(roundPageSource, /New votes/);
 });
 

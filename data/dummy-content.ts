@@ -338,6 +338,8 @@ const makeRound = (round: DummyRoundSeed): Round => {
     status: "published",
     votingStrategy: "fixed_per_wallet",
     votesPerWallet: 3,
+    votingSnapshotMode: "voting_start",
+    votingSnapshotAt: null,
     votingSnapshotBlock: null,
     winnerCount: 2,
     maxSubmissionsPerWallet: 3,
