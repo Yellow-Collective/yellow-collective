@@ -116,6 +116,22 @@ export type RoundVoteActivity = {
   updatedAt: string;
 };
 
+export type AdminRoundVote = RoundVoteActivity & {
+  roundId: string;
+  submissionStatus: RoundSubmissionStatus | null;
+  submissionDeleted: boolean;
+};
+
+export type AdminRoundVoteSort = "newest" | "oldest" | "highest" | "lowest";
+
+export type AdminRoundVoteFilters = {
+  search: string;
+  submissionId: string;
+  walletAddress: string;
+  sort: AdminRoundVoteSort;
+  direction: "asc" | "desc";
+};
+
 export type ProfileRoundSubmission = RoundSubmission & {
   roundSlug: string;
   roundTitle: string;
@@ -394,6 +410,19 @@ const ensureTables = async () => {
             CONSTRAINT round_votes_unique_wallet_submission UNIQUE (round_id, submission_id, wallet_address)
           );
 
+          CREATE TABLE IF NOT EXISTS round_vote_admin_audit (
+            id text PRIMARY KEY,
+            round_id text NOT NULL,
+            vote_id text NOT NULL,
+            admin_wallet_address text NOT NULL,
+            action text NOT NULL,
+            before_state jsonb NOT NULL,
+            after_state jsonb,
+            reason text NOT NULL DEFAULT '',
+            created_at timestamptz NOT NULL DEFAULT now(),
+            CONSTRAINT round_vote_admin_audit_action_check CHECK (action IN ('update', 'delete'))
+          );
+
           CREATE TABLE IF NOT EXISTS round_awards (
             id text PRIMARY KEY,
             round_id text NOT NULL REFERENCES rounds(id) ON DELETE CASCADE,
@@ -478,6 +507,10 @@ const ensureTables = async () => {
           CREATE INDEX IF NOT EXISTS round_votes_round_wallet_idx ON round_votes(round_id, wallet_address);
           CREATE UNIQUE INDEX IF NOT EXISTS round_votes_round_submission_wallet_idx
             ON round_votes(round_id, submission_id, wallet_address);
+          CREATE INDEX IF NOT EXISTS round_vote_admin_audit_round_created_idx
+            ON round_vote_admin_audit(round_id, created_at DESC);
+          CREATE INDEX IF NOT EXISTS round_vote_admin_audit_vote_idx
+            ON round_vote_admin_audit(vote_id);
           CREATE INDEX IF NOT EXISTS round_awards_round_position_idx ON round_awards(round_id, award_position);
           CREATE INDEX IF NOT EXISTS round_winners_round_position_idx ON round_winners(round_id, winner_position);
           CREATE INDEX IF NOT EXISTS round_requests_status_idx ON round_requests(status);
@@ -2191,6 +2224,308 @@ export const listRoundVoteActivity = async (roundId: string) => {
     createdAt: formatDate(row.created_at) || "",
     updatedAt: formatDate(row.updated_at) || "",
   })) as RoundVoteActivity[];
+};
+
+const mapAdminRoundVoteRow = (row: Record<string, any>): AdminRoundVote => ({
+  id: row.id,
+  roundId: row.round_id,
+  walletAddress: row.wallet_address,
+  submissionId: row.submission_id,
+  submissionTitle: row.submission_title || "Deleted submission",
+  submissionStatus: row.submission_status || null,
+  submissionDeleted: Boolean(row.submission_deleted),
+  voteCount: Number(row.vote_count || 0),
+  createdAt: formatDate(row.created_at) || "",
+  updatedAt: formatDate(row.updated_at) || "",
+});
+
+const ADMIN_ROUND_VOTE_ORDER_BY: Record<AdminRoundVoteSort, string> = {
+  newest: "v.updated_at DESC, v.created_at DESC, v.id ASC",
+  oldest: "v.created_at ASC, v.updated_at ASC, v.id ASC",
+  highest: "v.vote_count DESC, v.updated_at DESC, v.id ASC",
+  lowest: "v.vote_count ASC, v.updated_at DESC, v.id ASC",
+};
+
+export const listAdminRoundVotes = async (
+  roundId: string,
+  filters: Partial<AdminRoundVoteFilters> = {},
+  client: Pool | PoolClient = getPool()
+) => {
+  await ensureTables();
+
+  const conditions = ["v.round_id = $1"];
+  const values: unknown[] = [roundId];
+  const addCondition = (condition: string, value: unknown) => {
+    values.push(value);
+    conditions.push(condition.replace("?", `$${values.length}`));
+  };
+  const search = filters.search?.trim();
+  const submissionId = filters.submissionId?.trim();
+  const walletAddress = filters.walletAddress?.trim();
+
+  if (search) {
+    values.push(`%${search}%`);
+    const searchParameter = `$${values.length}`;
+    conditions.push(
+      `(v.id ILIKE ${searchParameter} OR v.submission_id ILIKE ${searchParameter} OR v.wallet_address ILIKE ${searchParameter} OR COALESCE(s.title, '') ILIKE ${searchParameter})`
+    );
+  }
+  if (submissionId) {
+    addCondition("v.submission_id = ?", submissionId);
+  }
+  if (walletAddress) {
+    addCondition("lower(v.wallet_address) = lower(?)", walletAddress);
+  }
+
+  const sort = filters.sort || "newest";
+  const orderBy = ADMIN_ROUND_VOTE_ORDER_BY[sort] || ADMIN_ROUND_VOTE_ORDER_BY.newest;
+  const result = await client.query(
+    `
+      SELECT
+        v.id,
+        v.round_id,
+        v.wallet_address,
+        v.submission_id,
+        COALESCE(s.title, 'Deleted submission') AS submission_title,
+        s.status AS submission_status,
+        (s.deleted_at IS NOT NULL) AS submission_deleted,
+        v.vote_count,
+        v.created_at,
+        v.updated_at
+      FROM round_votes v
+      LEFT JOIN round_submissions s
+        ON s.id = v.submission_id AND s.round_id = v.round_id
+      WHERE ${conditions.join(" AND ")}
+      ORDER BY ${orderBy}
+    `,
+    values
+  );
+
+  return result.rows.map(mapAdminRoundVoteRow);
+};
+
+export const getAdminRoundVote = async (
+  roundId: string,
+  voteId: string,
+  client: Pool | PoolClient = getPool()
+) => {
+  await ensureTables();
+
+  const result = await client.query(
+    `
+      SELECT
+        v.id,
+        v.round_id,
+        v.wallet_address,
+        v.submission_id,
+        COALESCE(s.title, 'Deleted submission') AS submission_title,
+        s.status AS submission_status,
+        (s.deleted_at IS NOT NULL) AS submission_deleted,
+        v.vote_count,
+        v.created_at,
+        v.updated_at
+      FROM round_votes v
+      LEFT JOIN round_submissions s
+        ON s.id = v.submission_id AND s.round_id = v.round_id
+      WHERE v.round_id = $1 AND v.id = $2
+      LIMIT 1
+    `,
+    [roundId, voteId]
+  );
+
+  return result.rows[0] ? mapAdminRoundVoteRow(result.rows[0]) : null;
+};
+
+type AdminRoundVoteMutationInput = {
+  roundId: string;
+  voteId: string;
+  adminWalletAddress: string;
+  reason?: string;
+};
+
+const getVoteWalletForAdminMutation = async (
+  client: PoolClient,
+  roundId: string,
+  voteId: string
+) => {
+  const result = await client.query(
+    `
+      SELECT v.wallet_address
+      FROM round_votes v
+      INNER JOIN rounds r ON r.id = v.round_id
+      WHERE v.round_id = $1
+        AND v.id = $2
+        AND r.deleted_at IS NULL
+      LIMIT 1
+    `,
+    [roundId, voteId]
+  );
+
+  return result.rows[0]?.wallet_address as string | undefined;
+};
+
+const insertRoundVoteAdminAudit = async ({
+  client,
+  roundId,
+  voteId,
+  adminWalletAddress,
+  action,
+  before,
+  after,
+  reason,
+}: AdminRoundVoteMutationInput & {
+  client: PoolClient;
+  action: "update" | "delete";
+  before: AdminRoundVote;
+  after: AdminRoundVote | null;
+}) => {
+  await client.query(
+    `
+      INSERT INTO round_vote_admin_audit (
+        id,
+        round_id,
+        vote_id,
+        admin_wallet_address,
+        action,
+        before_state,
+        after_state,
+        reason
+      )
+      VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb, $8)
+    `,
+    [
+      randomUUID(),
+      roundId,
+      voteId,
+      adminWalletAddress,
+      action,
+      JSON.stringify(before),
+      after ? JSON.stringify(after) : null,
+      reason?.trim() || "",
+    ]
+  );
+};
+
+export const updateAdminRoundVote = async ({
+  roundId,
+  voteId,
+  voteCount,
+  adminWalletAddress,
+  reason,
+}: AdminRoundVoteMutationInput & { voteCount: number }) => {
+  await ensureTables();
+  if (!Number.isInteger(voteCount) || voteCount < 1) {
+    throw new Error("Vote count must be a positive integer.");
+  }
+
+  const client = await getPool().connect();
+  try {
+    await client.query("BEGIN");
+    const walletAddress = await getVoteWalletForAdminMutation(
+      client,
+      roundId,
+      voteId
+    );
+    if (!walletAddress) {
+      await client.query("ROLLBACK");
+      return null;
+    }
+
+    await client.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+      `${roundId}:${walletAddress.toLowerCase()}`,
+    ]);
+    const before = await getAdminRoundVote(roundId, voteId, client);
+    if (!before) {
+      await client.query("ROLLBACK");
+      return null;
+    }
+
+    await client.query(
+      `
+        UPDATE round_votes
+        SET vote_count = $3,
+          updated_at = now()
+        WHERE round_id = $1 AND id = $2
+      `,
+      [roundId, voteId, voteCount]
+    );
+    const after = await getAdminRoundVote(roundId, voteId, client);
+    if (!after) throw new Error("Unable to reload updated vote.");
+
+    await insertRoundVoteAdminAudit({
+      client,
+      roundId,
+      voteId,
+      adminWalletAddress,
+      action: "update",
+      before,
+      after,
+      reason,
+    });
+    await client.query("COMMIT");
+    return after;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+};
+
+export const removeAdminRoundVote = async ({
+  roundId,
+  voteId,
+  adminWalletAddress,
+  reason,
+}: AdminRoundVoteMutationInput) => {
+  await ensureTables();
+  const client = await getPool().connect();
+
+  try {
+    await client.query("BEGIN");
+    const walletAddress = await getVoteWalletForAdminMutation(
+      client,
+      roundId,
+      voteId
+    );
+    if (!walletAddress) {
+      await client.query("ROLLBACK");
+      return null;
+    }
+
+    await client.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+      `${roundId}:${walletAddress.toLowerCase()}`,
+    ]);
+    const before = await getAdminRoundVote(roundId, voteId, client);
+    if (!before) {
+      await client.query("ROLLBACK");
+      return null;
+    }
+
+    const deleted = await client.query(
+      `DELETE FROM round_votes WHERE round_id = $1 AND id = $2 RETURNING id`,
+      [roundId, voteId]
+    );
+    if (!deleted.rows[0]) throw new Error("Unable to delete vote.");
+
+    await insertRoundVoteAdminAudit({
+      client,
+      roundId,
+      voteId,
+      adminWalletAddress,
+      action: "delete",
+      before,
+      after: null,
+      reason,
+    });
+    await client.query("COMMIT");
+    return before;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 };
 
 export const listRoundSubmissionVotes = async ({

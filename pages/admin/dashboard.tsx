@@ -17,6 +17,7 @@ import {
 } from "@/utils/rounds/admin-round-form";
 import { validateRoundVotingSnapshot } from "@/utils/rounds/voting-snapshot";
 import { isRoundExportable } from "@/utils/rounds/admin-submissions-export";
+import { getProfilePath } from "@/utils/profile/identity";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getSafeLinkProps, normalizeSafeImageUrl } from "@/utils/url-safety";
 import {
@@ -42,6 +43,7 @@ import {
 } from "@/utils/notifications/settings";
 import type {
   Round,
+  AdminRoundVote,
   RoundSubmission,
   RoundInput,
   RoundRequest,
@@ -60,6 +62,7 @@ type AdminSection = AdminPermissionSection | "access";
 type CommunityListMode = "queue" | "existing";
 type ProjectEditorMode = "edit" | "preview";
 type RoundListMode = "draft" | "published" | "archived";
+type RoundContentMode = "submissions" | "votes";
 
 type AdminAuth = {
   adminAddress: string;
@@ -282,6 +285,10 @@ const adminAccessFetcher = createAdminFetcher<AdminAccessResponse>();
 
 const roundSubmissionsFetcher = createAdminFetcher<{
   submissions: RoundSubmission[];
+}>();
+
+const roundVotesFetcher = createAdminFetcher<{
+  votes: AdminRoundVote[];
 }>();
 
 const roundRequestsFetcher = createAdminFetcher<{
@@ -2277,6 +2284,8 @@ const RoundsAdminPanel = ({
 }) => {
   const router = useRouter();
   const [isUpdatingVisibility, setIsUpdatingVisibility] = useState(false);
+  const [roundContentMode, setRoundContentMode] =
+    useState<RoundContentMode>("submissions");
   const [selectedSubmission, setSelectedSubmission] =
     useState<RoundSubmission | null>(null);
   const requestedRoundId = getQueryValue(router.query.round);
@@ -2338,6 +2347,7 @@ const RoundsAdminPanel = ({
 
   useEffect(() => {
     setSelectedSubmission(null);
+    setRoundContentMode("submissions");
   }, [selectedRound?.id]);
 
   const selectRound = (round: Round) => {
@@ -2565,15 +2575,37 @@ const RoundsAdminPanel = ({
             round={selectedRound}
             mutate={mutate}
           />
-          <RoundSubmissionsManager
-            round={selectedRound}
-            submissions={submissions}
-            isLoading={Boolean(
-              selectedRound && !submissionData && !submissionsError
-            )}
-            error={submissionsError?.message}
-            onSelect={setSelectedSubmission}
-          />
+          <div className="rounded-[28px] border border-skin-stroke bg-[#fff7bf] p-3">
+            <AdminModeTabs
+              modes={[
+                ["submissions", `Submissions (${submissions.length})`],
+                ["votes", `Votes (${selectedRound.totalVotes || 0} allocated)`],
+              ]}
+              activeMode={roundContentMode}
+              onChange={(mode) =>
+                setRoundContentMode(mode as RoundContentMode)
+              }
+            />
+          </div>
+          {roundContentMode === "submissions" ? (
+            <RoundSubmissionsManager
+              round={selectedRound}
+              submissions={submissions}
+              isLoading={Boolean(
+                selectedRound && !submissionData && !submissionsError
+              )}
+              error={submissionsError?.message}
+              onSelect={setSelectedSubmission}
+            />
+          ) : (
+            <RoundVotesManager
+              adminAuth={adminAuth}
+              round={selectedRound}
+              submissions={submissions}
+              mutateRounds={mutate}
+              mutateSubmissions={mutateSubmissions}
+            />
+          )}
         </div>
       ) : (
         <EmptyEditor
@@ -3289,6 +3321,408 @@ const RoundSubmissionsManager = ({
         </p>
       )}
     </EditorCard>
+  );
+};
+
+const RoundVotesManager = ({
+  adminAuth,
+  round,
+  submissions,
+  mutateRounds,
+  mutateSubmissions,
+}: {
+  adminAuth: AdminAuth;
+  round: Round;
+  submissions: RoundSubmission[];
+  mutateRounds: KeyedMutator<{ rounds: Round[] }>;
+  mutateSubmissions: KeyedMutator<{ submissions: RoundSubmission[] }>;
+}) => {
+  const [search, setSearch] = useState("");
+  const [submissionId, setSubmissionId] = useState("");
+  const [sort, setSort] = useState("newest");
+  const [selectedVote, setSelectedVote] = useState<AdminRoundVote | null>(null);
+  const [editorMode, setEditorMode] = useState<"edit" | "delete">("edit");
+  const [message, setMessage] = useState<string | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const queryString = useMemo(() => {
+    const query = [
+      search.trim()
+        ? `search=${encodeURIComponent(search.trim())}`
+        : "",
+      submissionId
+        ? `submissionId=${encodeURIComponent(submissionId)}`
+        : "",
+      `sort=${encodeURIComponent(sort)}`,
+    ];
+    return query.filter(Boolean).join("&");
+  }, [search, sort, submissionId]);
+  const votesUrl = `/api/admin/rounds/${encodeURIComponent(
+    round.id
+  )}/votes${queryString ? `?${queryString}` : ""}`;
+  const { data, error, mutate: mutateVotes } = useSWR<
+    { votes: AdminRoundVote[] },
+    Error,
+    AdminSWRKey
+  >([votesUrl, adminAuth], roundVotesFetcher);
+  const votes = useMemo(() => data?.votes || [], [data?.votes]);
+  const totalAllocatedVotes = useMemo(
+    () => votes.reduce((total, vote) => total + vote.voteCount, 0),
+    [votes]
+  );
+
+  const openVoteEditor = (
+    vote: AdminRoundVote,
+    mode: "edit" | "delete"
+  ) => {
+    setSelectedVote(vote);
+    setEditorMode(mode);
+    setMessage(null);
+  };
+
+  const refreshVoteData = async (successMessage: string) => {
+    await Promise.all([mutateVotes(), mutateSubmissions(), mutateRounds()]);
+    setMessage(successMessage);
+    setSelectedVote(null);
+  };
+
+  const exportVotes = async () => {
+    try {
+      setIsExporting(true);
+      setMessage(null);
+      const exportUrl = `/api/admin/rounds/${encodeURIComponent(
+        round.id
+      )}/votes/export${queryString ? `?${queryString}` : ""}`;
+      const response = await fetch(exportUrl, {
+        cache: "no-store",
+        credentials: "same-origin",
+      });
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Unable to export round votes.");
+      }
+
+      const disposition = response.headers.get("Content-Disposition") || "";
+      const filenameMatch = disposition.match(/filename="?([^";]+)"?/i);
+      const filename = filenameMatch?.[1] || `${round.slug}-votes.csv`;
+      const objectUrl = URL.createObjectURL(await response.blob());
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+    } catch (exportError) {
+      setMessage(
+        exportError instanceof Error
+          ? exportError.message
+          : "Unable to export round votes."
+      );
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  return (
+    <>
+      <EditorCard
+        title="Stored votes"
+        status={`${votes.length}`}
+        message={message || error?.message || null}
+        showStatusInTitle={false}
+        surfaceClassName="yc-dark-yellow-form-surface"
+        actions={
+          <>
+            <button
+              type="button"
+              onClick={exportVotes}
+              disabled={isExporting || !data}
+              className={secondaryButtonClass}
+            >
+              {isExporting ? "Preparing export..." : "Export votes CSV"}
+            </button>
+            <div className="flex items-center justify-center rounded-full bg-[#1d9bf0] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+              {votes.length} vote records
+            </div>
+            <div className="flex items-center justify-center rounded-full bg-[#16a34a] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#15803d]">
+              {totalAllocatedVotes} allocated
+            </div>
+          </>
+        }
+      >
+        <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(180px,0.5fr)_minmax(180px,0.4fr)]">
+          <label className={labelClass}>
+            Search votes
+            <input
+              type="search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Wallet, submission, or vote ID"
+              className={`mt-2 ${fieldClass}`}
+            />
+          </label>
+          <label className={labelClass}>
+            Submission
+            <select
+              value={submissionId}
+              onChange={(event) => setSubmissionId(event.target.value)}
+              className={`mt-2 ${fieldClass}`}
+            >
+              <option value="">All submissions</option>
+              {submissions.map((submission) => (
+                <option key={submission.id} value={submission.id}>
+                  {submission.title}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className={labelClass}>
+            Sort
+            <select
+              value={sort}
+              onChange={(event) => setSort(event.target.value)}
+              className={`mt-2 ${fieldClass}`}
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="highest">Highest vote count</option>
+              <option value="lowest">Lowest vote count</option>
+            </select>
+          </label>
+        </div>
+
+        {!data && !error ? (
+          <p className="mt-4 rounded-xl bg-white p-4 text-sm text-secondary">
+            Loading votes...
+          </p>
+        ) : votes.length > 0 ? (
+          <div className="mt-4 grid gap-3">
+            {votes.map((vote) => (
+              <article
+                key={vote.id}
+                className="rounded-xl border border-skin-stroke bg-white p-4"
+              >
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-heading text-xl leading-none text-skin-base">
+                        {vote.submissionTitle}
+                      </span>
+                      {vote.submissionStatus && (
+                        <StatusPill status={vote.submissionStatus} />
+                      )}
+                      {vote.submissionDeleted && (
+                        <span className="rounded-full bg-[#fde2df] px-2 py-0.5 text-xs font-semibold text-[#8f2c22]">
+                          Submission deleted
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-secondary">
+                      <Link
+                        href={getProfilePath({ address: vote.walletAddress })}
+                        className="break-all font-semibold underline"
+                      >
+                        {vote.walletAddress}
+                      </Link>
+                      <span>{vote.voteCount} votes</span>
+                      <span>Updated {new Date(vote.updatedAt).toLocaleString()}</span>
+                    </div>
+                    <div className="mt-2 break-all text-xs text-secondary">
+                      Vote ID: {vote.id} · Submission ID: {vote.submissionId}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => openVoteEditor(vote, "edit")}
+                      className={secondaryButtonClass}
+                    >
+                      Edit vote
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => openVoteEditor(vote, "delete")}
+                      className={dangerButtonClass}
+                    >
+                      Delete vote
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-4 rounded-xl bg-white p-4 text-sm leading-snug text-secondary">
+            No stored votes match these filters.
+          </p>
+        )}
+      </EditorCard>
+
+      {selectedVote && (
+        <RoundVoteEditorModal
+          key={`${selectedVote.id}-${editorMode}`}
+          adminAuth={adminAuth}
+          round={round}
+          vote={selectedVote}
+          mode={editorMode}
+          onClose={() => setSelectedVote(null)}
+          onChanged={refreshVoteData}
+        />
+      )}
+    </>
+  );
+};
+
+const RoundVoteEditorModal = ({
+  adminAuth,
+  round,
+  vote,
+  mode,
+  onClose,
+  onChanged,
+}: {
+  adminAuth: AdminAuth;
+  round: Round;
+  vote: AdminRoundVote;
+  mode: "edit" | "delete";
+  onClose: () => void;
+  onChanged: (message: string) => Promise<void>;
+}) => {
+  const [voteCount, setVoteCount] = useState(String(vote.voteCount));
+  const [reason, setReason] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const submit = async () => {
+    const nextVoteCount = Number(voteCount);
+    if (mode === "edit" && (!Number.isInteger(nextVoteCount) || nextVoteCount < 1)) {
+      setMessage("Vote count must be a positive integer.");
+      return;
+    }
+
+    const actionLabel = mode === "delete" ? "delete" : "update";
+    const confirmation = [
+      `${actionLabel} this stored vote?`,
+      `Wallet: ${vote.walletAddress}`,
+      `Submission: ${vote.submissionTitle}`,
+      `Current votes: ${vote.voteCount}`,
+      mode === "edit" ? `New votes: ${nextVoteCount}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+    if (!window.confirm(confirmation)) return;
+
+    try {
+      setIsSaving(true);
+      setMessage(null);
+      await sendAdminRequest(
+        `/api/admin/rounds/${encodeURIComponent(
+          round.id
+        )}/votes/${encodeURIComponent(vote.id)}`,
+        adminAuth,
+        mode === "delete" ? "DELETE" : "PATCH",
+        mode === "delete"
+          ? { reason }
+          : { voteCount: nextVoteCount, reason }
+      );
+      await onChanged(mode === "delete" ? "Vote deleted." : "Vote updated.");
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "Unable to update vote."
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 p-4 py-8"
+      role="dialog"
+      aria-modal="true"
+      aria-label={mode === "delete" ? "Delete vote" : "Edit vote"}
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-2xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <EditorCard
+          title={mode === "delete" ? "Delete vote" : "Edit vote"}
+          status={`${vote.voteCount} votes`}
+          message={message}
+          surfaceClassName="yc-dark-yellow-form-surface"
+          actions={
+            <>
+              <button
+                type="button"
+                onClick={submit}
+                disabled={isSaving}
+                className={mode === "delete" ? dangerButtonClass : saveButtonClass}
+              >
+                {isSaving
+                  ? mode === "delete"
+                    ? "Deleting..."
+                    : "Saving..."
+                  : mode === "delete"
+                    ? "Delete vote"
+                    : "Save vote"}
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={isSaving}
+                className={secondaryButtonClass}
+              >
+                Cancel
+              </button>
+            </>
+          }
+        >
+          <div className="grid gap-4">
+            <ReadonlyField label="Voter wallet" value={vote.walletAddress} />
+            <ReadonlyField
+              label="Submission"
+              value={`${vote.submissionTitle} (${vote.submissionId})`}
+            />
+            <ReadonlyField label="Vote ID" value={vote.id} />
+            {mode === "edit" && (
+              <label className={labelClass}>
+                Vote count
+                <input
+                  type="number"
+                  min="1"
+                  step="1"
+                  value={voteCount}
+                  onChange={(event) => setVoteCount(event.target.value)}
+                  disabled={isSaving}
+                  className={`mt-2 ${fieldClass}`}
+                />
+              </label>
+            )}
+            <label className={labelClass}>
+              Correction reason (optional)
+              <textarea
+                value={reason}
+                onChange={(event) => setReason(event.target.value)}
+                maxLength={1000}
+                rows={4}
+                disabled={isSaving}
+                placeholder="Why is this administrative correction needed?"
+                className={`mt-2 ${fieldClass}`}
+              />
+            </label>
+            {mode === "delete" && (
+              <p className="rounded-xl bg-[#fde2df] p-4 text-sm font-semibold leading-snug text-[#8f2c22]">
+                This permanently removes the stored vote allocation. It does not
+                delete the submission or round.
+              </p>
+            )}
+          </div>
+        </EditorCard>
+      </div>
+    </div>
   );
 };
 
