@@ -102,3 +102,182 @@ export const getRoundSubmissionsCsvFilename = (
 
   return `${safeSlug || "round"}-submissions.csv`;
 };
+
+export const ROUND_SUBMISSIONS_ZIP_CSV_HEADERS = [
+  "submission_id",
+  "round_id",
+  "round_slug",
+  "round_title",
+  "title",
+  "author_wallet_address",
+  "description",
+  "project_url",
+  "original_image_url",
+  "artwork_filename",
+  "artwork_export_status",
+  "artwork_export_error",
+  "submission_type",
+  "trait_id",
+  "trait_type",
+  "source",
+  "source_payload_json",
+  "status",
+  "vote_count",
+  "winner_position",
+  "created_at",
+  "updated_at",
+  "approved_at",
+  "rejected_at",
+  "hidden_at",
+] as const;
+
+export type RoundArtworkExportResult = {
+  status: "exported" | "failed";
+  filename: string;
+  error: string;
+};
+
+const ZIP_CONTENT_TYPE_EXTENSIONS: Record<string, string> = {
+  "image/gif": "gif",
+  "image/jpeg": "jpg",
+  "image/jpg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+
+const sanitizeArchiveFilenamePart = (
+  value: string,
+  fallback: string,
+  maxLength: number
+) => {
+  const sanitized = String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[<>:"/\\|?*\u0000-\u001f\u007f]/g, "-")
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, maxLength)
+    .replace(/-+$/g, "");
+
+  return sanitized || fallback;
+};
+
+export const isRoundExportable = (
+  round: Pick<Round, "status" | "votingEndsAt">,
+  now = new Date()
+) => {
+  if (round.status === "draft") return false;
+
+  const votingEndsAt = new Date(round.votingEndsAt).getTime();
+  return Number.isFinite(votingEndsAt) && votingEndsAt <= now.getTime();
+};
+
+export const getRoundSubmissionArtworkFilename = ({
+  index,
+  submission,
+  contentType,
+}: {
+  index: number;
+  submission: Pick<RoundSubmission, "id" | "title">;
+  contentType: string;
+}) => {
+  const extension =
+    ZIP_CONTENT_TYPE_EXTENSIONS[contentType.toLowerCase().split(";", 1)[0]];
+  if (!extension) throw new Error("Unsupported artwork image type.");
+
+  const position = String(index + 1).padStart(3, "0");
+  const title = sanitizeArchiveFilenamePart(submission.title, "untitled", 64);
+  const submissionId = sanitizeArchiveFilenamePart(
+    submission.id,
+    `submission-${position}`,
+    48
+  );
+
+  return `${position}-${title}-${submissionId}.${extension}`;
+};
+
+export const getRoundSubmissionsZipFilename = (
+  round: Pick<Round, "slug" | "id">
+) => {
+  const safeSlug = sanitizeArchiveFilenamePart(
+    round.slug || round.id,
+    "round",
+    80
+  );
+  return `${safeSlug}-submissions.zip`;
+};
+
+const safeJsonStringify = (value: unknown) => {
+  if (value === null || value === undefined) return "";
+
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return "";
+  }
+};
+
+const zipCsvValue = (value: unknown) => {
+  let text = value === null || value === undefined ? "" : String(value);
+
+  if (/^[\t\r\n ]*[=+\-@]/.test(text)) {
+    text = `'${text}`;
+  }
+
+  return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+};
+
+export const createRoundSubmissionsZipCsv = ({
+  round,
+  submissions,
+  artworkResults,
+}: {
+  round: Pick<Round, "id" | "slug" | "title">;
+  submissions: RoundSubmission[];
+  artworkResults: Record<string, RoundArtworkExportResult>;
+}) => {
+  const rows = submissions.map((submission) => {
+    const artwork = artworkResults[submission.id] || {
+      status: "failed" as const,
+      filename: "",
+      error: "Artwork was not exported.",
+    };
+
+    return [
+      submission.id,
+      round.id,
+      round.slug,
+      round.title,
+      submission.title,
+      submission.walletAddress,
+      submission.description,
+      submission.url,
+      submission.image,
+      artwork.filename ? `artwork/${artwork.filename}` : "",
+      artwork.status,
+      artwork.error,
+      submission.submissionType,
+      submission.traitId,
+      submission.traitType,
+      submission.source,
+      safeJsonStringify(submission.sourcePayload),
+      submission.status,
+      submission.voteCount,
+      submission.winnerPosition,
+      submission.createdAt,
+      submission.updatedAt,
+      submission.approvedAt,
+      submission.rejectedAt,
+      submission.hiddenAt,
+    ];
+  });
+
+  return (
+    "\uFEFF" +
+    [ROUND_SUBMISSIONS_ZIP_CSV_HEADERS, ...rows]
+      .map((row) => row.map(zipCsvValue).join(","))
+      .join("\r\n")
+  );
+};

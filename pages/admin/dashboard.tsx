@@ -16,6 +16,7 @@ import {
   type SavedRoundDates,
 } from "@/utils/rounds/admin-round-form";
 import { validateRoundVotingSnapshot } from "@/utils/rounds/voting-snapshot";
+import { isRoundExportable } from "@/utils/rounds/admin-submissions-export";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getSafeLinkProps, normalizeSafeImageUrl } from "@/utils/url-safety";
 import {
@@ -418,46 +419,57 @@ export default function AdminDashboardPage() {
   const canAccessSection = (section: AdminSection) =>
     Boolean(
       adminAuth &&
-        (section === "access" ? adminAuth.isGlobal : hasPermission(section))
+      (section === "access" ? adminAuth.isGlobal : hasPermission(section))
     );
   const visibleAdminSections = adminAuth
     ? adminSections.filter((section) => canAccessSection(section.id))
     : adminSections;
   const activeSectionAllowed = canAccessSection(activeSection);
 
-  const communityKey = adminAuth && hasPermission("community")
-    ? (["/api/admin/community-projects", adminAuth] as const)
-    : null;
-  const noundryKey = adminAuth && hasPermission("noundry")
-    ? (["/api/admin/noundry-submissions", adminAuth] as const)
-    : null;
-  const galleryKey = adminAuth && hasPermission("gallery")
-    ? (["/api/admin/gallery", adminAuth] as const)
-    : null;
-  const roundsKey = adminAuth && hasPermission("rounds")
-    ? (["/api/admin/rounds", adminAuth] as const)
-    : null;
-  const roundsSettingsKey = adminAuth && hasPermission("rounds")
-    ? (["/api/admin/rounds/settings", adminAuth] as const)
-    : null;
-  const testingSettingsKey = adminAuth && hasPermission("testing")
-    ? (["/api/admin/testing/settings", adminAuth] as const)
-    : null;
-  const nounsSettingsKey = adminAuth && hasPermission("nouns")
-    ? (["/api/admin/nouns/settings", adminAuth] as const)
-    : null;
-  const notificationsSettingsKey = adminAuth && hasPermission("notifications")
-    ? (["/api/admin/notifications/settings", adminAuth] as const)
-    : null;
-  const notificationsEventsKey = adminAuth && hasPermission("notifications")
-    ? (["/api/admin/notifications/events", adminAuth] as const)
-    : null;
-  const notificationsAudienceKey = adminAuth && hasPermission("notifications")
-    ? (["/api/admin/notifications/audience", adminAuth] as const)
-    : null;
-  const roundRequestsKey = adminAuth && hasPermission("rounds")
-    ? (["/api/admin/rounds/requests", adminAuth] as const)
-    : null;
+  const communityKey =
+    adminAuth && hasPermission("community")
+      ? (["/api/admin/community-projects", adminAuth] as const)
+      : null;
+  const noundryKey =
+    adminAuth && hasPermission("noundry")
+      ? (["/api/admin/noundry-submissions", adminAuth] as const)
+      : null;
+  const galleryKey =
+    adminAuth && hasPermission("gallery")
+      ? (["/api/admin/gallery", adminAuth] as const)
+      : null;
+  const roundsKey =
+    adminAuth && hasPermission("rounds")
+      ? (["/api/admin/rounds", adminAuth] as const)
+      : null;
+  const roundsSettingsKey =
+    adminAuth && hasPermission("rounds")
+      ? (["/api/admin/rounds/settings", adminAuth] as const)
+      : null;
+  const testingSettingsKey =
+    adminAuth && hasPermission("testing")
+      ? (["/api/admin/testing/settings", adminAuth] as const)
+      : null;
+  const nounsSettingsKey =
+    adminAuth && hasPermission("nouns")
+      ? (["/api/admin/nouns/settings", adminAuth] as const)
+      : null;
+  const notificationsSettingsKey =
+    adminAuth && hasPermission("notifications")
+      ? (["/api/admin/notifications/settings", adminAuth] as const)
+      : null;
+  const notificationsEventsKey =
+    adminAuth && hasPermission("notifications")
+      ? (["/api/admin/notifications/events", adminAuth] as const)
+      : null;
+  const notificationsAudienceKey =
+    adminAuth && hasPermission("notifications")
+      ? (["/api/admin/notifications/audience", adminAuth] as const)
+      : null;
+  const roundRequestsKey =
+    adminAuth && hasPermission("rounds")
+      ? (["/api/admin/rounds/requests", adminAuth] as const)
+      : null;
   const adminAccessKey = adminAuth?.isGlobal
     ? (["/api/admin/access", adminAuth] as const)
     : null;
@@ -602,7 +614,11 @@ export default function AdminDashboardPage() {
   }, [address, adminAuth]);
 
   useEffect(() => {
-    if (!adminAuth || activeSectionAllowed || visibleAdminSections.length === 0) {
+    if (
+      !adminAuth ||
+      activeSectionAllowed ||
+      visibleAdminSections.length === 0
+    ) {
       return;
     }
 
@@ -669,7 +685,7 @@ export default function AdminDashboardPage() {
                     ? "Signing..."
                     : isCheckingSession
                       ? "Checking..."
-                    : "Unlock admin requests"}
+                      : "Unlock admin requests"}
               </button>
             )}
           </div>
@@ -930,7 +946,8 @@ const AdminAccessPanel = ({
 
     if (
       admins.some(
-        (admin) => admin.walletAddress.toLowerCase() === walletAddress.toLowerCase()
+        (admin) =>
+          admin.walletAddress.toLowerCase() === walletAddress.toLowerCase()
       )
     ) {
       setLocalError("That wallet is already an admin.");
@@ -1456,7 +1473,8 @@ const NotificationsAdminPanel = ({
                   {group.label}
                 </h3>
                 <p className="mt-2 text-sm text-secondary">
-                  Variables: {group.variables.map((item) => `{${item}}`).join(", ")}
+                  Variables:{" "}
+                  {group.variables.map((item) => `{${item}}`).join(", ")}
                 </p>
               </div>
             </div>
@@ -1575,10 +1593,9 @@ const NotificationLogPanel = ({
           Sent notification log
         </h3>
         <p className="mt-2 max-w-3xl text-sm leading-snug text-secondary">
-          This shows every notification recorded by Yellow. It can show the
-          list of who received targeted notifications. Broadcast recipient lists
-          are not returned by Neynar, so broadcasts show aggregate delivery
-          counts and retryable FIDs only.
+          This shows every notification recorded by Yellow. It can show the list of who received targeted notifications.
+          Broadcast recipient lists are not returned by Neynar, so broadcasts
+          show aggregate delivery counts and retryable FIDs only.
         </p>
         {error && (
           <p className="mt-2 text-sm font-semibold text-skin-proposal-danger">
@@ -1705,8 +1722,9 @@ const NotificationAudiencePanel = ({
 }) => {
   const [isSyncing, setIsSyncing] = useState(false);
   const [message, setMessage] = useState("");
-  const enabledCount = audience.filter((user) => user.notificationsEnabled)
-    .length;
+  const enabledCount = audience.filter(
+    (user) => user.notificationsEnabled
+  ).length;
 
   const syncAudience = async () => {
     try {
@@ -1718,10 +1736,13 @@ const NotificationAudiencePanel = ({
         "POST",
         {}
       );
-      await mutate(response as {
-        audience: NotificationAudienceRecord[];
-        syncedCount?: number;
-      }, { revalidate: false });
+      await mutate(
+        response as {
+          audience: NotificationAudienceRecord[];
+          syncedCount?: number;
+        },
+        { revalidate: false }
+      );
       const syncedCount = Number(
         (response as { syncedCount?: number }).syncedCount || 0
       );
@@ -3147,74 +3168,129 @@ const RoundSubmissionsManager = ({
   isLoading: boolean;
   error?: string;
   onSelect: (submission: RoundSubmission) => void;
-}) => (
-  <EditorCard
-    title="Submitted projects"
-    status={`${submissions.length}`}
-    message={error || null}
-    showStatusInTitle={false}
-    surfaceClassName="yc-dark-yellow-form-surface"
-    actions={
-      <>
-        <a
-          href={`/api/admin/rounds/${encodeURIComponent(round.id)}/submissions/export`}
-          download
-          className={secondaryButtonClass}
-        >
-          Export CSV
-        </a>
-        <div className="flex items-center justify-center rounded-full bg-[#1d9bf0] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#0f5f99]">
-          {submissions.length} total
-        </div>
-      </>
+}) => {
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
+
+  const exportSubmissionsZip = async () => {
+    try {
+      setIsExporting(true);
+      setExportError(null);
+      const response = await fetch(
+        `/api/admin/rounds/${encodeURIComponent(round.id)}/export`,
+        {
+          cache: "no-store",
+          credentials: "same-origin",
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Unable to export submissions.");
+      }
+
+      const disposition = response.headers.get("Content-Disposition") || "";
+      const filenameMatch = disposition.match(/filename="?([^";]+)"?/i);
+      const filename = filenameMatch?.[1] || `${round.slug}-submissions.zip`;
+      const objectUrl = URL.createObjectURL(await response.blob());
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+    } catch (exportFailure) {
+      setExportError(
+        exportFailure instanceof Error
+          ? exportFailure.message
+          : "Unable to export submissions."
+      );
+    } finally {
+      setIsExporting(false);
     }
-  >
-    {isLoading ? (
-      <p className="rounded-xl bg-white p-4 text-sm text-secondary">
-        Loading submissions...
-      </p>
-    ) : submissions.length > 0 ? (
-      <div className="grid gap-3">
-        {submissions.map((submission) => (
-          <button
-            key={submission.id}
-            type="button"
-            onClick={() => onSelect(submission)}
-            className="rounded-xl border border-skin-stroke bg-white p-4 text-left transition hover:-translate-y-0.5 hover:bg-[#fffbe0] hover:shadow-sm"
+  };
+  return (
+    <EditorCard
+      title="Submitted projects"
+      status={`${submissions.length}`}
+      message={exportError || error || null}
+      showStatusInTitle={false}
+      surfaceClassName="yc-dark-yellow-form-surface"
+      actions={
+        <>
+          <a
+            href={`/api/admin/rounds/${encodeURIComponent(round.id)}/submissions/export`}
+            download
+            className={secondaryButtonClass}
           >
-            <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-              <div className="min-w-0">
-                <div className="break-words font-heading text-xl leading-none text-skin-base">
-                  {submission.title}
+            Export CSV
+          </a>
+          {isRoundExportable(round) && (
+            <button
+              type="button"
+              onClick={exportSubmissionsZip}
+              disabled={isLoading || isExporting || submissions.length === 0}
+              className={secondaryButtonClass}
+            >
+              {isExporting ? "Preparing export…" : "Export submissions (.zip)"}
+            </button>
+          )}
+          <div className="flex items-center justify-center rounded-full bg-[#1d9bf0] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+            {submissions.length} total
+          </div>
+        </>
+      }
+    >
+      {isLoading ? (
+        <p className="rounded-xl bg-white p-4 text-sm text-secondary">
+          Loading submissions...
+        </p>
+      ) : submissions.length > 0 ? (
+        <div className="grid gap-3">
+          {submissions.map((submission) => (
+            <button
+              key={submission.id}
+              type="button"
+              onClick={() => onSelect(submission)}
+              className="rounded-xl border border-skin-stroke bg-white p-4 text-left transition hover:-translate-y-0.5 hover:bg-[#fffbe0] hover:shadow-sm"
+            >
+              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                <div className="min-w-0">
+                  <div className="break-words font-heading text-xl leading-none text-skin-base">
+                    {submission.title}
+                  </div>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-secondary">
+                    <span
+                      className={`rounded-full px-2 py-0.5 font-semibold ${
+                        submission.submissionType === "trait"
+                          ? "bg-[#dff3ff] text-[#0f5f99]"
+                          : "bg-[#fff7bf] text-skin-base"
+                      }`}
+                    >
+                      {submission.submissionType === "trait"
+                        ? "Trait"
+                        : "Project"}
+                    </span>
+                    <span>{submission.voteCount} votes</span>
+                    <span className="break-all">
+                      {submission.walletAddress}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-secondary">
-                  <span
-                    className={`rounded-full px-2 py-0.5 font-semibold ${
-                      submission.submissionType === "trait"
-                        ? "bg-[#dff3ff] text-[#0f5f99]"
-                        : "bg-[#fff7bf] text-skin-base"
-                    }`}
-                  >
-                    {submission.submissionType === "trait"
-                      ? "Trait"
-                      : "Project"}
-                  </span>
-                  <span>{submission.voteCount} votes</span>
-                  <span className="break-all">{submission.walletAddress}</span>
-                </div>
+                <StatusPill status={submission.status} />
               </div>
-              <StatusPill status={submission.status} />
-            </div>
-          </button>
-        ))}
-      </div>
-    ) : (
-      <p className="rounded-xl bg-white p-4 text-sm leading-snug text-secondary">
-        No projects have been submitted to this round yet.
-      </p>
-    )}
-  </EditorCard>
-);
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p className="rounded-xl bg-white p-4 text-sm leading-snug text-secondary">
+          No projects have been submitted to this round yet.
+        </p>
+      )}
+    </EditorCard>
+  );
+};
 
 const RoundSubmissionModal = ({
   adminAuth,
