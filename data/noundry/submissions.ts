@@ -30,6 +30,11 @@ export type CreateNoundrySubmissionInput = {
 export type UpdateNoundrySubmissionInput =
   Partial<CreateNoundrySubmissionInput>;
 
+export type UpdateNoundrySubmissionMetadataInput = Pick<
+  CreateNoundrySubmissionInput,
+  "title" | "traitType"
+>;
+
 const GRID_PIXEL_COUNT = 32 * 32;
 const MAX_TITLE_LENGTH = 80;
 const MAX_TRAIT_TYPE_LENGTH = 64;
@@ -107,24 +112,11 @@ const isStringRecord = (value: unknown): value is Record<string, string> => {
 export const validateNoundrySubmission = (
   input: Partial<CreateNoundrySubmissionInput>
 ) => {
-  if (!input.title || typeof input.title !== "string") {
-    return "A trait name is required.";
-  }
-
-  if (input.title.trim().length > MAX_TITLE_LENGTH) {
-    return `Trait name must be ${MAX_TITLE_LENGTH} characters or fewer.`;
-  }
+  const metadataValidationError = validateNoundryAuthorMetadata(input);
+  if (metadataValidationError) return metadataValidationError;
 
   if (!input.artist || !WALLET_ADDRESS_PATTERN.test(input.artist)) {
     return "A connected wallet address is required.";
-  }
-
-  if (!input.traitType || typeof input.traitType !== "string") {
-    return "A trait type is required.";
-  }
-
-  if (input.traitType.length > MAX_TRAIT_TYPE_LENGTH) {
-    return "Trait type is invalid.";
   }
 
   if (
@@ -141,6 +133,28 @@ export const validateNoundrySubmission = (
 
   if (!isStringRecord(input.previewTraits)) {
     return "Preview traits are invalid.";
+  }
+
+  return undefined;
+};
+
+export const validateNoundryAuthorMetadata = (
+  input: Partial<UpdateNoundrySubmissionMetadataInput>
+) => {
+  if (typeof input.title !== "string" || !input.title.trim()) {
+    return "A trait name is required.";
+  }
+
+  if (input.title.trim().length > MAX_TITLE_LENGTH) {
+    return `Trait name must be ${MAX_TITLE_LENGTH} characters or fewer.`;
+  }
+
+  if (typeof input.traitType !== "string" || !input.traitType.trim()) {
+    return "A trait type is required.";
+  }
+
+  if (input.traitType.trim().length > MAX_TRAIT_TYPE_LENGTH) {
+    return "Trait type is invalid.";
   }
 
   return undefined;
@@ -395,6 +409,33 @@ export const updateNoundrySubmission = async (
   return result.rows[0] ? mapSubmission(result.rows[0]) : null;
 };
 
+export const updateNoundrySubmissionMetadata = async (
+  id: string,
+  input: UpdateNoundrySubmissionMetadataInput,
+  expectedArtist: string
+) => {
+  await ensureTable();
+
+  const validationError = validateNoundryAuthorMetadata(input);
+  if (validationError) throw new Error(validationError);
+
+  const result = await getPool().query(
+    `
+      UPDATE noundry_submissions
+      SET title = $2,
+          trait_type = $3,
+          updated_at = now()
+      WHERE id = $1
+        AND status = 'approved'
+        AND lower(artist) = lower($4)
+      RETURNING ${selectFields}
+    `,
+    [id, input.title.trim(), input.traitType.trim(), expectedArtist]
+  );
+
+  return result.rows[0] ? mapSubmission(result.rows[0]) : null;
+};
+
 export const removeNoundrySubmission = async (id: string) => {
   await ensureTable();
 
@@ -408,6 +449,29 @@ export const removeNoundrySubmission = async (id: string) => {
       RETURNING ${selectFields}
     `,
     [id]
+  );
+
+  return result.rows[0] ? mapSubmission(result.rows[0]) : null;
+};
+
+export const removeNoundrySubmissionByAuthor = async (
+  id: string,
+  expectedArtist: string
+) => {
+  await ensureTable();
+
+  const result = await getPool().query(
+    `
+      UPDATE noundry_submissions
+      SET status = 'removed',
+          removed_at = now(),
+          updated_at = now()
+      WHERE id = $1
+        AND status = 'approved'
+        AND lower(artist) = lower($2)
+      RETURNING ${selectFields}
+    `,
+    [id, expectedArtist]
   );
 
   return result.rows[0] ? mapSubmission(result.rows[0]) : null;

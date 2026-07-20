@@ -14,6 +14,7 @@ import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import type { PlaygroundArtwork } from "data/nouns-builder/artwork";
 import type { Round } from "data/rounds";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
+import { getNoundryAuthorSignedRequestAction } from "@/utils/noundry/auth";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
 import type { GetServerSideProps } from "next";
@@ -46,12 +47,17 @@ export default function NoundryTraitPage() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync, isLoading: isSigning } = useSignMessage();
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const id = typeof router.query.id === "string" ? router.query.id : "";
   const { data: artwork, error: artworkError } = useSWR<PlaygroundArtwork>(
     "/api/playground/artwork",
     fetcher
   );
-  const { data, error: submissionsError } = useSWR<{
+  const {
+    data,
+    error: submissionsError,
+    mutate: mutateSubmissions,
+  } = useSWR<{
     submissions: NoundrySubmission[];
   }>("/api/noundry/submissions", fetcher);
 
@@ -146,12 +152,23 @@ export default function NoundryTraitPage() {
             Back to gallery
           </Link>
           {submission && (
-            <Link
-              href={getProfilePath({ address: submission.artist })}
-              className="yc-dark-yellow-button rounded-[18px] border border-skin-stroke bg-white px-5 py-3 font-heading text-base text-skin-base shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition hover:-translate-y-0.5 hover:bg-[#fff7bf] hover:shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral))] active:translate-y-1 active:shadow-none"
-            >
-              Artist profile
-            </Link>
+            <div className="flex items-center gap-3">
+              {isConnected && isCreator && (
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(true)}
+                  className="yc-dark-force-white rounded-[18px] border border-[#8f1d1b] bg-[#d63230] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] hover:shadow-[0px_6px_0px_0px_#8f1d1b] active:translate-y-1 active:shadow-none"
+                >
+                  Edit
+                </button>
+              )}
+              <Link
+                href={getProfilePath({ address: submission.artist })}
+                className="yc-dark-force-white rounded-[18px] border border-[#0f5f99] bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] hover:shadow-[0px_6px_0px_0px_#0f5f99] active:translate-y-1 active:shadow-none"
+              >
+                Artist profile
+              </Link>
+            </div>
           )}
         </div>
 
@@ -211,7 +228,10 @@ export default function NoundryTraitPage() {
                   </span>
                   <span className="min-w-0">
                     <span className="block truncate font-heading text-base text-skin-base">
-                    <WalletIdentityLink address={submission.artist} link={false} />
+                      <WalletIdentityLink
+                        address={submission.artist}
+                        link={false}
+                      />
                     </span>
                     <span className="block text-xs text-secondary">
                       {artistSubmissions.length} submission
@@ -232,7 +252,7 @@ export default function NoundryTraitPage() {
                 )}
                 <Link
                   href={`/noundry?tab=gallery`}
-                  className="yc-dark-force-white flex w-full items-center justify-center rounded-xl border border-[#0f5f99] bg-[#1d9bf0] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none"
+                  className="yc-dark-force-white flex w-full items-center justify-center rounded-xl border border-[#8f1d1b] bg-[#d63230] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] active:translate-y-1 active:shadow-none"
                 >
                   Remix in studio
                 </Link>
@@ -273,9 +293,240 @@ export default function NoundryTraitPage() {
           onSubmitted={() => mutateEligibleRounds()}
         />
       )}
+      {submission && isConnected && isCreator && isEditModalOpen && (
+        <EditTraitModal
+          address={address}
+          artwork={artwork}
+          isSigning={isSigning}
+          signMessageAsync={signMessageAsync}
+          submission={submission}
+          onClose={() => setIsEditModalOpen(false)}
+          onDeleted={async () => {
+            await mutateSubmissions();
+            await router.push("/noundry?tab=gallery");
+          }}
+          onSaved={async () => {
+            await mutateSubmissions();
+            setIsEditModalOpen(false);
+          }}
+        />
+      )}
     </Layout>
   );
 }
+
+const EditTraitModal = ({
+  address,
+  artwork,
+  isSigning,
+  signMessageAsync,
+  submission,
+  onClose,
+  onDeleted,
+  onSaved,
+}: {
+  address?: string;
+  artwork?: PlaygroundArtwork;
+  isSigning: boolean;
+  signMessageAsync: (args: { message: string }) => Promise<string>;
+  submission: NoundrySubmission;
+  onClose: () => void;
+  onDeleted: () => Promise<void>;
+  onSaved: () => Promise<void>;
+}) => {
+  const [title, setTitle] = useState(submission.title);
+  const [traitType, setTraitType] = useState(submission.traitType);
+  const [message, setMessage] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+  const traitTypes = useMemo(
+    () =>
+      Array.from(
+        new Set([
+          submission.traitType,
+          ...(artwork?.orderedLayers
+            .map((layer) => layer.trait)
+            .filter((trait) => trait !== "glasses") || []),
+        ])
+      ),
+    [artwork?.orderedLayers, submission.traitType]
+  );
+  const isBusy = isSigning || isSaving || isDeleting;
+
+  const sendRequest = async (method: "PATCH" | "DELETE") => {
+    if (!address) throw new Error("Wallet not connected.");
+
+    const path = `/api/noundry/submissions/${submission.id}`;
+    const payload =
+      method === "PATCH"
+        ? { submission: { title: title.trim(), traitType } }
+        : {};
+    const authorization = await createSignedRequestAuthHeader({
+      walletAddress: address,
+      chainId: ROUND_SIGNED_REQUEST_CHAIN_ID,
+      action: getNoundryAuthorSignedRequestAction(
+        method === "DELETE" ? "delete" : "update"
+      ),
+      method,
+      path,
+      payload,
+      signMessageAsync,
+    });
+    const response = await fetch(path, {
+      method,
+      headers: {
+        Authorization: authorization,
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+      body: JSON.stringify(payload),
+    });
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.error || "Unable to update trait.");
+    }
+  };
+
+  const save = async () => {
+    if (!title.trim()) {
+      setMessage("A trait name is required.");
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      setMessage("");
+      await sendRequest("PATCH");
+      await onSaved();
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "Unable to update trait."
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const deleteTrait = async () => {
+    try {
+      setIsDeleting(true);
+      setMessage("");
+      await sendRequest("DELETE");
+      await onDeleted();
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "Unable to delete trait."
+      );
+      setIsDeleting(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-trait-title"
+      onClick={isBusy ? undefined : onClose}
+    >
+      <div
+        className="w-full max-w-[520px] rounded-2xl border border-skin-stroke bg-white p-6 shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral))]"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <h2
+          id="edit-trait-title"
+          className="font-heading text-4xl leading-none text-skin-base"
+        >
+          Edit trait
+        </h2>
+        <p className="mt-3 text-sm leading-snug text-secondary">
+          Only the name and trait type can be changed. The submitted artwork,
+          artist wallet, and preview composition stay locked.
+        </p>
+
+        <div className="mt-6 flex flex-col gap-4">
+          <label className="font-heading text-base text-skin-base">
+            Trait name
+            <input
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              maxLength={80}
+              disabled={isBusy}
+              className="mt-2 w-full rounded-xl border border-skin-stroke bg-white px-4 py-3 font-sans text-base text-skin-base focus:outline-none focus:ring-2 focus:ring-skin-highlighted disabled:opacity-60"
+            />
+          </label>
+          <label className="font-heading text-base text-skin-base">
+            Trait type
+            <select
+              value={traitType}
+              onChange={(event) => setTraitType(event.target.value)}
+              disabled={isBusy}
+              className="mt-2 w-full rounded-xl border border-skin-stroke bg-white px-4 py-3 font-sans text-base text-skin-base focus:outline-none focus:ring-2 focus:ring-skin-highlighted disabled:opacity-60"
+            >
+              {traitTypes.map((type) => (
+                <option key={type} value={type}>
+                  {getLayerLabel(type)}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        {message && (
+          <p className="mt-4 rounded-xl border border-[#e4a09f] bg-[#fff0f0] p-3 text-sm text-[#8f1d1b]">
+            {message}
+          </p>
+        )}
+
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-skin-stroke pt-5">
+          <div>
+            {!isConfirmingDelete ? (
+              <button
+                type="button"
+                onClick={() => setIsConfirmingDelete(true)}
+                disabled={isBusy}
+                className="font-heading text-sm text-[#b42320] underline decoration-2 underline-offset-4 disabled:opacity-50"
+              >
+                Delete trait
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={deleteTrait}
+                disabled={isBusy}
+                className="rounded-xl border border-[#8f1d1b] bg-[#d63230] px-4 py-2 font-heading text-sm text-white disabled:opacity-50"
+              >
+                {isDeleting || isSigning
+                  ? "Confirm in wallet..."
+                  : "Confirm delete"}
+              </button>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={isBusy}
+              className="rounded-xl border border-skin-stroke bg-white px-4 py-2 font-heading text-sm text-skin-base disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={save}
+              disabled={isBusy || !title.trim()}
+              className="rounded-xl border border-[#0f5f99] bg-[#1d9bf0] px-4 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none disabled:translate-y-0 disabled:opacity-50 disabled:shadow-none"
+            >
+              {isSaving || isSigning ? "Confirm in wallet..." : "Save metadata"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const SubmitTraitToRoundModal = ({
   address,
@@ -403,7 +654,9 @@ const SubmitTraitToRoundModal = ({
         throw new Error(result.error || "Submission failed.");
       }
 
-      setMessage("Trait submitted successfully. It is now visible on the round page.");
+      setMessage(
+        "Trait submitted successfully. It is now visible on the round page."
+      );
       onSubmitted();
     } catch (error) {
       setMessage(
@@ -563,7 +816,9 @@ const SubmitTraitToRoundModal = ({
                 disabled={!selectedRound || isSubmitting || isSigning}
                 className="rounded-[18px] bg-accent px-5 py-3 font-heading text-lg text-skin-base shadow-[0px_4.02px_0px_0px_#b89400] transition hover:-translate-y-0.5 hover:bg-[#ffd84d] active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {isSubmitting || isSigning ? "Submitting..." : "Submit to round"}
+                {isSubmitting || isSigning
+                  ? "Submitting..."
+                  : "Submit to round"}
               </button>
               <button
                 type="button"
