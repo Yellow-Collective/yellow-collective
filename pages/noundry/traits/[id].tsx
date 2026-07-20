@@ -148,7 +148,7 @@ export default function NoundryTraitPage() {
       </Head>
 
       <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-6 pb-12">
-        <div className="flex items-center justify-between gap-4">
+        <div>
           <Link
             href="/noundry?tab=gallery"
             className="flex w-fit items-center gap-2 font-heading text-sm uppercase text-skin-base transition hover:opacity-80"
@@ -158,25 +158,6 @@ export default function NoundryTraitPage() {
             </span>
             Back to gallery
           </Link>
-          {submission && (
-            <div className="flex items-center gap-3">
-              {isConnected && isCreator && (
-                <button
-                  type="button"
-                  onClick={() => setIsEditModalOpen(true)}
-                  className="rounded-[18px] border border-[#8f1d1b] bg-[#d63230] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] hover:shadow-[0px_6px_0px_0px_#8f1d1b] active:translate-y-1 active:shadow-none"
-                >
-                  Edit
-                </button>
-              )}
-              <Link
-                href={getProfilePath({ address: submission.artist })}
-                className="rounded-[18px] border border-[#0f5f99] bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] hover:shadow-[0px_6px_0px_0px_#0f5f99] active:translate-y-1 active:shadow-none"
-              >
-                Artist profile
-              </Link>
-            </div>
-          )}
         </div>
 
         {loadError && (
@@ -228,7 +209,7 @@ export default function NoundryTraitPage() {
                 </div>
                 <Link
                   href={getProfilePath({ address: submission.artist })}
-                  className="mt-4 flex min-w-0 items-center gap-3 rounded-xl border border-skin-stroke bg-[#f7f7f7] p-3 transition hover:bg-[#fff7bf]"
+                  className="yc-noundry-artist-card group mt-4 flex min-w-0 items-center gap-3 rounded-xl border border-skin-stroke bg-accent p-3 transition hover:bg-[#ffd84d]"
                 >
                   <ArtistProfileAvatar
                     artist={submission.artist}
@@ -248,21 +229,33 @@ export default function NoundryTraitPage() {
                       {artistSubmissions.length === 1 ? "" : "s"}
                     </span>
                   </span>
+                  <span className="ml-auto shrink-0 rounded-xl border border-[#0f5f99] bg-[#1d9bf0] px-3 py-2 font-heading text-xs text-white shadow-[0px_3px_0px_0px_#0f5f99] transition group-hover:bg-[#45adf5] sm:text-sm">
+                    Artist profile
+                  </span>
                 </Link>
               </div>
               <div className="border-t border-skin-stroke p-4">
                 {isConnected && isCreator && (
-                  <button
-                    type="button"
-                    onClick={() => setIsSubmitModalOpen(true)}
-                    className="mb-3 flex w-full items-center justify-center rounded-xl border border-[#0f5f99] bg-[#1d9bf0] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none"
-                  >
-                    Submit to a Round
-                  </button>
+                  <div className="mb-3 flex flex-col gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setIsEditModalOpen(true)}
+                      className="flex w-full items-center justify-center rounded-xl border border-[#8f1d1b] bg-[#d63230] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] active:translate-y-1 active:shadow-none"
+                    >
+                      Edit trait
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsSubmitModalOpen(true)}
+                      className="flex w-full items-center justify-center rounded-xl border border-[#0f5f99] bg-[#1d9bf0] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none"
+                    >
+                      Submit to a Round
+                    </button>
+                  </div>
                 )}
                 <Link
                   href={`/noundry?tab=gallery`}
-                  className="flex w-full items-center justify-center rounded-xl border border-[#8f1d1b] bg-[#d63230] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] active:translate-y-1 active:shadow-none"
+                  className="yc-noundry-remix-button flex w-full items-center justify-center rounded-xl border border-skin-stroke bg-accent px-3 py-2 font-heading text-sm text-skin-base shadow-[0px_3px_0px_0px_#b89400] transition hover:-translate-y-0.5 hover:bg-[#ffd84d] hover:shadow-[0px_5px_0px_0px_#b89400] active:translate-y-1 active:shadow-none"
                 >
                   Remix in studio
                 </Link>
@@ -979,7 +972,7 @@ const NounGridSection = ({
   traits: Record<string, string>[];
   editedIndexes: number[];
 }) => (
-  <section className="yc-dark-yellow-surface rounded-none border-y-4 border-skin-stroke bg-white px-5 py-6 shadow-sm">
+  <section className="yc-dark-yellow-surface overflow-hidden rounded-2xl border border-skin-stroke bg-white px-5 py-6 shadow-sm">
     <div className="mb-4">
       <h2 className="font-heading text-2xl leading-none text-skin-base">
         {title}

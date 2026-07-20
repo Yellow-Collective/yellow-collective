@@ -85,6 +85,18 @@ const profileEndpoint = readFileSync(
   resolve(process.cwd(), "pages/api/profile/[address].ts"),
   "utf8"
 );
+const globalStyles = readFileSync(
+  resolve(process.cwd(), "styles/globals.css"),
+  "utf8"
+);
+const traitHeader = traitPage.slice(
+  traitPage.indexOf('href="/noundry?tab=gallery"'),
+  traitPage.indexOf("{loadError &&")
+);
+const traitDetailCard = traitPage.slice(
+  traitPage.indexOf("<aside"),
+  traitPage.indexOf("</aside>")
+);
 const editTraitModal = traitPage.slice(
   traitPage.indexOf("const EditTraitModal"),
   traitPage.indexOf("const SubmitTraitToRoundModal")
@@ -92,13 +104,33 @@ const editTraitModal = traitPage.slice(
 const nounGridSection = traitPage.slice(
   traitPage.indexOf("const NounGridSection")
 );
-assert.match(traitPage, /isCreator\s*&&[\s\S]*?>\s*Edit\s*</);
+assert.match(traitPage, /isCreator\s*&&[\s\S]*?>\s*Edit trait\s*</);
 assert.match(traitPage, /EditTraitModal/);
 assert.match(traitPage, /Save metadata/);
 assert.match(traitPage, /Delete trait/);
 assert.match(traitPage, /Only the name and trait type can be changed/);
 assert.match(traitPage, /bg-\[#1d9bf0\][\s\S]*Artist profile/);
-assert.match(traitPage, /bg-\[#d63230\][\s\S]*Remix in studio/);
+assert.doesNotMatch(
+  traitHeader,
+  /Artist profile|>\s*Edit(?: trait)?\s*</,
+  "Trait actions must not remain in the page header."
+);
+assert.match(
+  traitDetailCard,
+  /yc-noundry-artist-card[^\"]*bg-accent[\s\S]*bg-\[#1d9bf0\][\s\S]*Artist profile/,
+  "The artist profile button must live inside the yellow artist card."
+);
+assert.match(
+  traitDetailCard,
+  />\s*Edit trait\s*<[\s\S]*>\s*Submit to a Round\s*</,
+  "Edit trait must sit immediately before round submission actions."
+);
+assert.match(traitDetailCard, /yc-noundry-remix-button/);
+assert.match(
+  globalStyles,
+  /\[data-theme="dark"\] \.yc-noundry-remix-button[\s\S]*?background-color: rgb\(255, 255, 255\) !important;[\s\S]*?box-shadow: 0px 3px 0px 0px rgb\(var\(--color-shadow-neutral\)\) !important;/,
+  "Remix must become white with a neutral shadow in dark mode."
+);
 assert.doesNotMatch(
   traitPage,
   /yc-dark-force-white/,
@@ -141,6 +173,11 @@ assert.doesNotMatch(
   nounGridSection,
   />\s*Noundry\s*</,
   "Trait preview grids must not repeat the Noundry label."
+);
+assert.match(
+  nounGridSection,
+  /<section className="[^"]*overflow-hidden[^"]*rounded-2xl[^"]*"/,
+  "Trait preview panels must have rounded clipped corners."
 );
 assert.match(profileEndpoint, /getFirstOwnedCollectiveNounImage/);
 assert.match(profileEndpoint, /fallbackAvatarUrl/);
