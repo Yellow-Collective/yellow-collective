@@ -41,8 +41,8 @@ export const areSameWalletAddress = (
 
   return Boolean(
     normalizedFirst &&
-      normalizedSecond &&
-      normalizedFirst.toLowerCase() === normalizedSecond.toLowerCase()
+    normalizedSecond &&
+    normalizedFirst.toLowerCase() === normalizedSecond.toLowerCase()
   );
 };
 
@@ -64,6 +64,11 @@ export const getProfilePath = ({
   const profileId = normalizeWalletAddress(address) || address;
   return `/profile/${encodeURIComponent(profileId)}`;
 };
+
+export const selectProfileAvatarUrl = (
+  uploadedAvatarUrl?: string | null,
+  collectiveNounImageUrl?: string | null
+) => uploadedAvatarUrl?.trim() || collectiveNounImageUrl?.trim() || "";
 
 const normalizeUrl = (value?: string) => {
   const trimmed = value?.trim();

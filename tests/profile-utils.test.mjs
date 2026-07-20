@@ -53,12 +53,18 @@ test("compares own-profile addresses case-insensitively", () => {
     ),
     true
   );
-  assert.equal(identity.areSameWalletAddress(checksumAddress, undefined), false);
+  assert.equal(
+    identity.areSameWalletAddress(checksumAddress, undefined),
+    false
+  );
 });
 
 test("builds profile paths from wallet addresses even when ENS is available", () => {
   assert.equal(
-    identity.getProfilePath({ address: checksumAddress, ensName: "yellow.eth" }),
+    identity.getProfilePath({
+      address: checksumAddress,
+      ensName: "yellow.eth",
+    }),
     `/profile/${checksumAddress}`
   );
   assert.equal(
@@ -67,16 +73,28 @@ test("builds profile paths from wallet addresses even when ENS is available", ()
   );
 });
 
+test("prefers an uploaded profile image before a Collective Noun fallback", () => {
+  assert.equal(
+    identity.selectProfileAvatarUrl("uploaded-avatar", "collective-noun"),
+    "uploaded-avatar"
+  );
+  assert.equal(
+    identity.selectProfileAvatarUrl("", "collective-noun"),
+    "collective-noun"
+  );
+  assert.equal(identity.selectProfileAvatarUrl("", ""), "");
+});
+
 test("normalizes profile social links", () => {
   assert.deepEqual(
     JSON.parse(
       JSON.stringify(
         identity.normalizeProfileMetadata({
-      username: "  yellowartist  ",
-      websiteUrl: "yellowcollective.art",
-      farcaster: "@yellow",
-      twitter: "https://twitter.com/yellowcollect",
-      avatarUrl: "data:image/jpeg;base64,abcd",
+          username: "  yellowartist  ",
+          websiteUrl: "yellowcollective.art",
+          farcaster: "@yellow",
+          twitter: "https://twitter.com/yellowcollect",
+          avatarUrl: "data:image/jpeg;base64,abcd",
         })
       )
     ),

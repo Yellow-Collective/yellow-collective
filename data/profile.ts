@@ -24,10 +24,7 @@ import {
 } from "@/utils/profile/identity";
 import { getCommunityProjectsForMember } from "@/utils/community-projects";
 import type { CommunityProject } from "data/community";
-import {
-  listPublicGalleryCoinsByOwner,
-  type GalleryCoin,
-} from "data/coins";
+import { listPublicGalleryCoinsByOwner, type GalleryCoin } from "data/coins";
 import {
   listProfileRoundSubmissions,
   listProfileRoundVotes,
@@ -411,6 +408,16 @@ const getOwnedTokensForAddress = async (address: string) => {
       token.owner &&
       isAddress(token.owner) &&
       getAddress(token.owner) === normalizedAddress
+  );
+};
+
+export const getFirstOwnedCollectiveNounImage = async (address: string) => {
+  const ownedTokens = await getOwnedTokensForAddress(address);
+
+  return (
+    [...ownedTokens]
+      .filter((token) => token.image)
+      .sort((first, second) => first.id - second.id)[0]?.image || ""
   );
 };
 

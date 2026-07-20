@@ -1,6 +1,9 @@
 import Layout from "@/components/Layout";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
-import { getProfilePath } from "@/utils/profile/identity";
+import {
+  getProfilePath,
+  selectProfileAvatarUrl,
+} from "@/utils/profile/identity";
 import {
   NoundrySubmission,
   NounPreviewTile,
@@ -8,7 +11,6 @@ import {
   formatRelativeTime,
   getLayerLabel,
   getSubmissionPreviewTraits,
-  getTraitPath,
 } from "@/components/noundry/NoundryPreview";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import type { PlaygroundArtwork } from "data/nouns-builder/artwork";
@@ -26,6 +28,7 @@ import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 
 const ROUND_SIGNED_REQUEST_CHAIN_ID = Number(TOKEN_NETWORK);
+const EMPTY_NOUN_PIXELS = Array.from({ length: 32 * 32 }, () => "transparent");
 
 export const getServerSideProps: GetServerSideProps = async () => ({
   props: {},
@@ -65,6 +68,10 @@ export default function NoundryTraitPage() {
     () => data?.submissions.find((item) => item.id === id),
     [data?.submissions, id]
   );
+  const { data: artistProfileData } = useSWR<{
+    profile?: { avatarUrl?: string } | null;
+    fallbackAvatarUrl?: string;
+  }>(submission ? `/api/profile/${submission.artist}` : null, fetcher);
   const artistSubmissions = useMemo(
     () =>
       submission
@@ -223,9 +230,12 @@ export default function NoundryTraitPage() {
                   href={getProfilePath({ address: submission.artist })}
                   className="mt-4 flex min-w-0 items-center gap-3 rounded-xl border border-skin-stroke bg-[#f7f7f7] p-3 transition hover:bg-[#fff7bf]"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-heading text-sm text-skin-base">
-                    {submission.artist.slice(2, 4).toUpperCase()}
-                  </span>
+                  <ArtistProfileAvatar
+                    artist={submission.artist}
+                    artwork={artwork}
+                    uploadedAvatarUrl={artistProfileData?.profile?.avatarUrl}
+                    fallbackAvatarUrl={artistProfileData?.fallbackAvatarUrl}
+                  />
                   <span className="min-w-0">
                     <span className="block truncate font-heading text-base text-skin-base">
                       <WalletIdentityLink
@@ -314,6 +324,86 @@ export default function NoundryTraitPage() {
     </Layout>
   );
 }
+
+const ArtistProfileAvatar = ({
+  artist,
+  artwork,
+  uploadedAvatarUrl,
+  fallbackAvatarUrl,
+}: {
+  artist: string;
+  artwork?: PlaygroundArtwork;
+  uploadedAvatarUrl?: string;
+  fallbackAvatarUrl?: string;
+}) => {
+  const [failedAvatarUrls, setFailedAvatarUrls] = useState<string[]>([]);
+  const preferredAvatarUrl = selectProfileAvatarUrl(
+    uploadedAvatarUrl,
+    fallbackAvatarUrl
+  );
+  const avatarUrl = failedAvatarUrls.includes(preferredAvatarUrl)
+    ? selectProfileAvatarUrl(
+        preferredAvatarUrl === uploadedAvatarUrl ? "" : uploadedAvatarUrl,
+        failedAvatarUrls.includes(fallbackAvatarUrl || "")
+          ? ""
+          : fallbackAvatarUrl
+      )
+    : preferredAvatarUrl;
+
+  useEffect(() => {
+    setFailedAvatarUrls([]);
+  }, [uploadedAvatarUrl, fallbackAvatarUrl]);
+
+  const fallbackTraits = useMemo(
+    () =>
+      artwork
+        ? buildRandomTraits(artwork, `artist-profile-${artist.toLowerCase()}`)
+        : {},
+    [artist, artwork]
+  );
+  const fallbackSubmission = useMemo<NoundrySubmission>(
+    () => ({
+      id: `artist-profile-${artist}`,
+      title: "Artist profile noun",
+      artist,
+      traitType: "heads",
+      pixels: EMPTY_NOUN_PIXELS,
+      selectedTraits: fallbackTraits,
+      previewTraits: fallbackTraits,
+      status: "approved",
+      createdAt: "",
+      updatedAt: "",
+    }),
+    [artist, fallbackTraits]
+  );
+
+  return (
+    <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-accent font-heading text-sm text-skin-base">
+      {avatarUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={avatarUrl}
+          alt="Artist profile"
+          className="h-full w-full object-cover"
+          onError={() =>
+            setFailedAvatarUrls((current) =>
+              current.includes(avatarUrl) ? current : [...current, avatarUrl]
+            )
+          }
+        />
+      ) : artwork ? (
+        <NounPreviewTile
+          artwork={artwork}
+          submission={fallbackSubmission}
+          traits={fallbackTraits}
+          showEditedTrait={false}
+        />
+      ) : (
+        <span aria-hidden="true" className="h-full w-full bg-accent" />
+      )}
+    </span>
+  );
+};
 
 const EditTraitModal = ({
   address,
@@ -432,7 +522,7 @@ const EditTraitModal = ({
       onClick={isBusy ? undefined : onClose}
     >
       <div
-        className="w-full max-w-[520px] rounded-2xl border border-skin-stroke bg-white p-6 shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral))]"
+        className="yc-force-white w-full max-w-[520px] rounded-2xl border border-skin-stroke bg-white p-6 shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral))]"
         onClick={(event) => event.stopPropagation()}
       >
         <h2
@@ -890,16 +980,10 @@ const NounGridSection = ({
   editedIndexes: number[];
 }) => (
   <section className="yc-dark-yellow-surface rounded-none border-y-4 border-skin-stroke bg-white px-5 py-6 shadow-sm">
-    <div className="mb-4 flex items-center justify-between gap-4">
+    <div className="mb-4">
       <h2 className="font-heading text-2xl leading-none text-skin-base">
         {title}
       </h2>
-      <Link
-        href={getTraitPath(submission.id)}
-        className="font-heading text-xs uppercase text-secondary"
-      >
-        Noundry
-      </Link>
     </div>
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
       {traits.map((traitSet, index) => (

@@ -1,4 +1,5 @@
 import {
+  getFirstOwnedCollectiveNounImage,
   getProfileMetadata,
   saveProfileMetadata,
 } from "data/profile";
@@ -22,7 +23,9 @@ const getRequestedAddress = (req: NextApiRequest) => {
     ? req.query.address[0]
     : req.query.address;
 
-  return rawAddress && isAddress(rawAddress) ? getAddress(rawAddress) : undefined;
+  return rawAddress && isAddress(rawAddress)
+    ? getAddress(rawAddress)
+    : undefined;
 };
 
 export default async function handler(
@@ -37,7 +40,15 @@ export default async function handler(
 
   try {
     if (req.method === "GET") {
-      return res.status(200).json({ profile: await getProfileMetadata(address) });
+      const [profile, fallbackAvatarUrl] = await Promise.all([
+        getProfileMetadata(address),
+        getFirstOwnedCollectiveNounImage(address).catch((error) => {
+          console.error("Collective Noun profile fallback load failed", error);
+          return "";
+        }),
+      ]);
+
+      return res.status(200).json({ profile, fallbackAvatarUrl });
     }
 
     if (req.method === "PUT") {
@@ -61,7 +72,8 @@ export default async function handler(
   } catch (error) {
     console.error("Profile API failed", error);
     return res.status(500).json({
-      error: error instanceof Error ? error.message : "Unable to update profile.",
+      error:
+        error instanceof Error ? error.message : "Unable to update profile.",
     });
   }
 }

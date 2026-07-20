@@ -81,6 +81,17 @@ const traitPage = readFileSync(
   resolve(process.cwd(), "pages/noundry/traits/[id].tsx"),
   "utf8"
 );
+const profileEndpoint = readFileSync(
+  resolve(process.cwd(), "pages/api/profile/[address].ts"),
+  "utf8"
+);
+const editTraitModal = traitPage.slice(
+  traitPage.indexOf("const EditTraitModal"),
+  traitPage.indexOf("const SubmitTraitToRoundModal")
+);
+const nounGridSection = traitPage.slice(
+  traitPage.indexOf("const NounGridSection")
+);
 assert.match(traitPage, /isCreator\s*&&[\s\S]*?>\s*Edit\s*</);
 assert.match(traitPage, /EditTraitModal/);
 assert.match(traitPage, /Save metadata/);
@@ -103,5 +114,35 @@ assert.match(
   /<h1[\s\S]*?className="[^"]*whitespace-nowrap[^"]*overflow-hidden[^"]*text-ellipsis[^"]*text-\[clamp\(/,
   "Trait titles must stay on one responsive line."
 );
+assert.match(traitPage, /ArtistProfileAvatar/);
+assert.match(traitPage, /\/api\/profile\/\$\{submission\.artist\}/);
+assert.match(traitPage, /fallbackAvatarUrl/);
+assert.match(
+  traitPage,
+  /<ArtistProfileAvatar[\s\S]*?artwork=\{artwork\}/,
+  "The artist badge must receive artwork for its generated Noun fallback."
+);
+assert.match(
+  traitPage,
+  /const fallbackTraits = useMemo\([\s\S]*?buildRandomTraits/,
+  "The artist badge must generate a Noun when no profile image is available."
+);
+assert.doesNotMatch(
+  traitPage,
+  /artist\.slice\(2, 4\)\.toUpperCase\(\)/,
+  "The artist badge must never fall back to wallet letters."
+);
+assert.match(
+  editTraitModal,
+  /className="[^"]*yc-force-white[^"]*"/,
+  "The edit trait modal must keep dark text on its white surface in dark mode."
+);
+assert.doesNotMatch(
+  nounGridSection,
+  />\s*Noundry\s*</,
+  "Trait preview grids must not repeat the Noundry label."
+);
+assert.match(profileEndpoint, /getFirstOwnedCollectiveNounImage/);
+assert.match(profileEndpoint, /fallbackAvatarUrl/);
 
 console.log("ok - Noundry authors can securely manage metadata only");
