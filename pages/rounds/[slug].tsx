@@ -702,7 +702,6 @@ const SubmissionCard = ({
               submission={noundrySubmission}
               traits={getSubmissionPreviewTraits(noundrySubmission)}
               showEditedTrait
-              fullBleed
             />
           </div>
         ) : (
@@ -967,7 +966,6 @@ const SubmissionModal = ({
                   submission={noundrySubmission}
                   traits={noundryPreviewTraits}
                   showEditedTrait
-                  fullBleed
                 />
               ) : (
                 <DeferredInlineImage
@@ -1154,7 +1152,6 @@ const NoundryModalPreviewSet = ({
               submission={submission}
               traits={traitSet}
               showEditedTrait={editedIndexes.includes(index)}
-              fullBleed
             />
           </div>
         ))}

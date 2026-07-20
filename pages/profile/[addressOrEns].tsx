@@ -724,7 +724,6 @@ const ProfileAvatar = ({
           submission={fallbackSubmission}
           traits={fallbackTraits}
           showEditedTrait={false}
-          fullBleed
         />
       ) : (
         <Jazzicon diameter={72} seed={jsNumberForAddress(normalizedAddress)} />
