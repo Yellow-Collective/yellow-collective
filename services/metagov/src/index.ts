@@ -163,7 +163,8 @@ const checkForClosedVotes = async () => {
       const result = await getSnapshotResults(snapshotId);
       if (!result) continue;
 
-      const { scores, scoresTotal } = await getSnapshotScores(snapshotId);
+      const { scores, scoresTotal, submittedVotesCount } =
+        await getSnapshotScores(snapshotId);
       store.markWinningChoice(nounsId, result, scores, scoresTotal);
       await sendMetagovNotification({
         store,
@@ -176,6 +177,15 @@ const checkForClosedVotes = async () => {
           winningChoice: result || "NO_VOTES",
         },
       }).catch(console.error);
+
+      if (submittedVotesCount === 0) {
+        store.markProposal(nounsId, "skipped", {
+          failureReason: "No Snapshot votes were submitted.",
+        });
+        submittedVotes.add(snapshotId);
+        pendingVotes.delete(snapshotId);
+        continue;
+      }
 
       if (result === "NO_VOTES" && config.noVotesAction === "skip") {
         store.markProposal(nounsId, "skipped", {

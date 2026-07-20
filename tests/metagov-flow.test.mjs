@@ -376,6 +376,80 @@ const snapshotConstants = {
 }
 
 {
+  const core = loadTsModule("services/metagov/src/core.ts");
+  let snapshotVotes = [];
+  const { getSnapshotScores } = loadTsModule(
+    "services/metagov/src/services/snapshot.ts",
+    {
+      "../config": {
+        config: {
+          snapshotGraphql: "https://snapshot.test/graphql",
+          snapshotSequencer: "https://snapshot.test/seq",
+          snapshotSpaceId: "yellowcollective.eth",
+        },
+        snapshotVotingDuration: () => 432000,
+      },
+      "../core": core,
+      "../utils/http": {
+        graphqlRequest: async () => ({
+          proposal: {
+            state: "closed",
+            scores: [0, 0, 0],
+            scores_total: 0,
+          },
+          votes: snapshotVotes,
+        }),
+      },
+      "../utils/wallet": {
+        getBotWallet: () => {
+          throw new Error("getBotWallet should not be called by getSnapshotScores");
+        },
+        getCurrentSnapshotBlockNumber: () => {
+          throw new Error("getCurrentSnapshotBlockNumber should not be called by getSnapshotScores");
+        },
+      },
+    }
+  );
+
+  snapshotVotes = [];
+  const noParticipation = await getSnapshotScores("snapshot-no-votes");
+  assert.equal(
+    noParticipation.submittedVotesCount,
+    0,
+    "Closed Snapshot proposals with no submitted vote records must be detectable."
+  );
+
+  snapshotVotes = [
+    {
+      voter: "0x0000000000000000000000000000000000000001",
+      choice: 1,
+      vp: 0,
+    },
+  ];
+  const zeroPowerParticipation = await getSnapshotScores(
+    "snapshot-zero-power-vote"
+  );
+  assert.equal(
+    zeroPowerParticipation.submittedVotesCount,
+    1,
+    "A zero-voting-power Snapshot vote must still count as submitted participation."
+  );
+
+  const metagovIndex = read("services/metagov/src/index.ts");
+  assert.match(
+    metagovIndex,
+    /submittedVotesCount\s*===\s*0[\s\S]*No Snapshot votes were submitted\./,
+    "Closed Snapshot proposals with zero submitted votes must be skipped before final Nouns execution."
+  );
+  assert.match(
+    metagovIndex,
+    /submittedVotes\.add\(snapshotId\)[\s\S]*pendingVotes\.delete\(snapshotId\)/,
+    "No-participation skips must leave the in-memory pending/submitted sets consistent."
+  );
+  console.log("ok - Metagov skips final execution only when Snapshot has no submitted votes");
+}
+
+{
   const tempDir = mkdtempSync(join(tmpdir(), "yc-metagov-state-"));
   try {
     const statePath = join(tempDir, "metagov-state.json");

@@ -247,11 +247,13 @@ export const getSnapshotScores = async (snapshotId: string) => {
       scores_total?: number;
       state: string;
     } | null;
+    votes?: SnapshotVote[];
   }>(config.snapshotGraphql, GET_PROPOSAL_RESULTS, { id: snapshotId });
 
   return {
     scores: data.proposal?.scores || [0, 0, 0],
     scoresTotal: Number(data.proposal?.scores_total || 0),
+    submittedVotesCount: Array.isArray(data.votes) ? data.votes.length : 0,
   };
 };
 
