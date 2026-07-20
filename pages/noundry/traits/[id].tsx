@@ -157,14 +157,14 @@ export default function NoundryTraitPage() {
                 <button
                   type="button"
                   onClick={() => setIsEditModalOpen(true)}
-                  className="yc-dark-force-white rounded-[18px] border border-[#8f1d1b] bg-[#d63230] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] hover:shadow-[0px_6px_0px_0px_#8f1d1b] active:translate-y-1 active:shadow-none"
+                  className="rounded-[18px] border border-[#8f1d1b] bg-[#d63230] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] hover:shadow-[0px_6px_0px_0px_#8f1d1b] active:translate-y-1 active:shadow-none"
                 >
                   Edit
                 </button>
               )}
               <Link
                 href={getProfilePath({ address: submission.artist })}
-                className="yc-dark-force-white rounded-[18px] border border-[#0f5f99] bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] hover:shadow-[0px_6px_0px_0px_#0f5f99] active:translate-y-1 active:shadow-none"
+                className="rounded-[18px] border border-[#0f5f99] bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] hover:shadow-[0px_6px_0px_0px_#0f5f99] active:translate-y-1 active:shadow-none"
               >
                 Artist profile
               </Link>
@@ -193,17 +193,17 @@ export default function NoundryTraitPage() {
           <section className="grid gap-6 lg:grid-cols-[minmax(320px,440px)_1fr]">
             <aside className="yc-dark-yellow-surface overflow-hidden rounded-2xl border border-skin-stroke bg-white shadow-sm">
               <div className="p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h1 className="font-heading text-4xl leading-none text-skin-base md:text-5xl">
+                <div className="min-w-0">
+                  <div className="min-w-0 w-full">
+                    <h1
+                      title={submission.title}
+                      className="font-heading whitespace-nowrap overflow-hidden text-ellipsis text-[clamp(1.5rem,7vw,3rem)] leading-none text-skin-base"
+                    >
                       {submission.title}
                     </h1>
                     <div className="mt-2 font-heading text-lg uppercase text-secondary">
                       {getLayerLabel(submission.traitType)}
                     </div>
-                  </div>
-                  <div className="rounded-sm bg-[#d8d8df] px-3 py-2 font-heading text-xs uppercase tracking-normal text-secondary">
-                    {getLayerLabel(submission.traitType)}
                   </div>
                 </div>
 
@@ -252,7 +252,7 @@ export default function NoundryTraitPage() {
                 )}
                 <Link
                   href={`/noundry?tab=gallery`}
-                  className="yc-dark-force-white flex w-full items-center justify-center rounded-xl border border-[#8f1d1b] bg-[#d63230] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] active:translate-y-1 active:shadow-none"
+                  className="flex w-full items-center justify-center rounded-xl border border-[#8f1d1b] bg-[#d63230] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#8f1d1b] transition hover:-translate-y-0.5 hover:bg-[#e44845] active:translate-y-1 active:shadow-none"
                 >
                   Remix in studio
                 </Link>

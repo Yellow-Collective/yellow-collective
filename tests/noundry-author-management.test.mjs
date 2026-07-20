@@ -88,5 +88,20 @@ assert.match(traitPage, /Delete trait/);
 assert.match(traitPage, /Only the name and trait type can be changed/);
 assert.match(traitPage, /bg-\[#1d9bf0\][\s\S]*Artist profile/);
 assert.match(traitPage, /bg-\[#d63230\][\s\S]*Remix in studio/);
+assert.doesNotMatch(
+  traitPage,
+  /yc-dark-force-white/,
+  "Noundry trait actions must not use the dark-mode class that forces white backgrounds."
+);
+assert.doesNotMatch(
+  traitPage,
+  /rounded-sm bg-\[#d8d8df\]/,
+  "The duplicate trait-type badge must not render beside the title."
+);
+assert.match(
+  traitPage,
+  /<h1[\s\S]*?className="[^"]*whitespace-nowrap[^"]*overflow-hidden[^"]*text-ellipsis[^"]*text-\[clamp\(/,
+  "Trait titles must stay on one responsive line."
+);
 
 console.log("ok - Noundry authors can securely manage metadata only");
