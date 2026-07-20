@@ -1072,7 +1072,7 @@ const DaoActivityFeed = ({
   const activity: ProfileFeedItem[] = [
     ...proposals.map((proposal) => ({
       id: `proposal-${proposal.proposalId}`,
-      href: `/proposals/${proposal.proposalId}`,
+      href: `/proposals/${proposal.proposalNumber}`,
       title: `Proposal: ${proposal.title}`,
       meta: "Proposal submitted",
       badge: getProposalStateLabel(proposal.state),
@@ -1085,7 +1085,7 @@ const DaoActivityFeed = ({
     ...votes.map((vote) => ({
       voteTone: getVoteTone(vote.support),
       id: `proposal-vote-${vote.proposalId}-${vote.support}`,
-      href: `/proposals/${vote.proposalId}`,
+      href: `/proposals/${vote.proposalNumber}`,
       title: `Proposal: ${vote.proposalTitle}`,
       meta: `Voted ${supportText(vote.support)}`,
       badge: `${vote.weight} votes`,

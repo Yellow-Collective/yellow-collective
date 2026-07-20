@@ -11,6 +11,7 @@ export const PREVIEW_PROPOSAL_ID =
 
 export type Proposal = {
   proposalId: `0x${string}`;
+  proposalNumber: number;
   targets: `0x${string}`[];
   values: string[];
   calldatas: `0x${string}`[];
@@ -22,6 +23,7 @@ export type Proposal = {
 
 type SubgraphProposal = {
   proposalId: `0x${string}`;
+  proposalNumber: string;
   targets: `0x${string}`[];
   values: string[] | string;
   calldatas: `0x${string}`[] | `0x${string}`;
@@ -48,6 +50,7 @@ const proposalsQuery = gql`
     daos(first: 1, where: { governorAddress: $governorAddress }) {
       proposals(first: 100, orderBy: proposalNumber, orderDirection: desc) {
         proposalId
+        proposalNumber
         targets
         values
         calldatas
@@ -191,11 +194,12 @@ const getSubgraphProposalState = (proposal: SubgraphProposal) => {
   return 3;
 };
 
-const getPreviewProposal = (): Proposal => {
+const getPreviewProposal = (proposalNumber: number): Proposal => {
   const now = Math.floor(Date.now() / 1000);
 
   return {
     proposalId: PREVIEW_PROPOSAL_ID,
+    proposalNumber,
     targets: ["0x55333306a4c6e74eb9e23a521a24fb78be2de92c"],
     values: ["0"],
     calldatas: ["0x"],
@@ -249,6 +253,7 @@ export const getProposals = async ({ address }: { address: `0x${string}` }) => {
 
     return {
       proposalId: item.proposalId,
+      proposalNumber: Number(item.proposalNumber),
       targets: item.targets,
       values: toArray(item.values),
       calldatas: toArray(item.calldatas),
@@ -260,7 +265,8 @@ export const getProposals = async ({ address }: { address: `0x${string}` }) => {
   });
 
   if (process.env.VERCEL_ENV !== "production") {
-    return [getPreviewProposal(), ...proposals];
+    const nextProposalNumber = (proposals[0]?.proposalNumber || 0) + 1;
+    return [getPreviewProposal(nextProposalNumber), ...proposals];
   }
 
   return proposals;

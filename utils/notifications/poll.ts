@@ -376,7 +376,7 @@ export const pollYellowProposalNotifications = async ({
       proposalTitle: title,
       proposalId: proposal.proposalId,
     };
-    const targetPath = `/proposals/${proposal.proposalId}`;
+    const targetPath = `/proposals/${proposal.proposalNumber}`;
 
     if (
       happenedRecently(

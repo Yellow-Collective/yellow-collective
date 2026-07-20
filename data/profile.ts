@@ -43,6 +43,7 @@ export type ProfileMetadata = NormalizedProfileMetadata & {
 
 export type ProfileDaoProposal = {
   proposalId: string;
+  proposalNumber: number;
   title: string;
   state: number;
   timeCreated: number;
@@ -50,6 +51,7 @@ export type ProfileDaoProposal = {
 
 export type ProfileDaoVote = {
   proposalId: string;
+  proposalNumber: number;
   proposalTitle: string;
   support: number;
   weight: number;
@@ -438,6 +440,7 @@ const getDaoActivityForAddress = async (address: string) => {
           )
           .map((vote) => ({
             proposalId: proposal.proposalId,
+            proposalNumber: proposal.proposalNumber,
             proposalTitle: getProposalName(proposal.description),
             support: vote.support,
             weight: vote.weight,
@@ -541,6 +544,7 @@ const getAuctionActivityForAddress = async (address: string) => {
 
 const mapProposal = (proposal: Proposal): ProfileDaoProposal => ({
   proposalId: proposal.proposalId,
+  proposalNumber: proposal.proposalNumber,
   title: getProposalName(proposal.description),
   state: proposal.state,
   timeCreated: proposal.proposal.timeCreated,
@@ -597,7 +601,7 @@ const buildActivity = ({
       id: `dao-proposal-${proposal.proposalId}`,
       type: "dao-proposal" as const,
       title: `Created proposal: ${proposal.title}`,
-      href: `/proposals/${proposal.proposalId}`,
+      href: `/proposals/${proposal.proposalNumber}`,
       timestamp: proposal.timeCreated
         ? new Date(proposal.timeCreated * 1000).toISOString()
         : undefined,
@@ -606,7 +610,7 @@ const buildActivity = ({
       id: `dao-vote-${vote.proposalId}`,
       type: "dao-vote" as const,
       title: `Voted ${supportLabel(vote.support)}`,
-      href: `/proposals/${vote.proposalId}`,
+      href: `/proposals/${vote.proposalNumber}`,
       timestamp: vote.timestamp,
       meta: vote.proposalTitle,
     })),

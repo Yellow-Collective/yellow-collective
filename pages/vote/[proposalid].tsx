@@ -16,7 +16,7 @@ import ProposalTransactions from "@/components/ProposalTransactions";
 import ProposalPropdates from "@/components/ProposalPropdates";
 import ProposalVoteList, { ProposalVote } from "@/components/ProposalVoteList";
 import ProposalVoteSummary from "@/components/ProposalVoteSummary";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   PREVIEW_PROPOSAL_ID,
   Proposal,
@@ -27,6 +27,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
+import { findProposalByRouteParam } from "@/utils/proposal-routing";
 
 const proposalMarkdownClassName =
   "prose prose-skin mt-4 max-w-[90vw] break-words prose-img:w-auto prose-headings:font-heading prose-h2:text-3xl prose-h2:leading-tight prose-h3:text-2xl prose-h3:leading-tight prose-h4:text-xl prose-h4:leading-snug prose-h5:text-lg prose-h5:leading-snug prose-h6:text-base prose-h6:leading-snug sm:max-w-[1000px]";
@@ -39,15 +40,27 @@ export default function ProposalComponent() {
     governorContract: addresses?.governor,
   });
 
-  const {
-    query: { proposalid },
-  } = useRouter();
+  const router = useRouter();
+  const { proposalid } = router.query;
 
-  const proposalNumber = proposals
-    ? proposals.length - proposals.findIndex((x) => x.proposalId === proposalid)
-    : 0;
+  const proposal = findProposalByRouteParam(proposals, proposalid);
+  const proposalNumber = proposal?.proposalNumber || 0;
 
-  const proposal = proposals?.find((x) => x.proposalId === proposalid);
+  useEffect(() => {
+    if (
+      !proposal ||
+      router.pathname !== "/proposals/[proposalid]" ||
+      typeof proposalid !== "string" ||
+      /^\d+$/.test(proposalid)
+    ) {
+      return;
+    }
+
+    void router.replace(`/proposals/${proposal.proposalNumber}`, undefined, {
+      shallow: true,
+    });
+  }, [proposal, proposalid, router]);
+
   const { data: proposalVotes, isLoading: proposalVotesLoading } = useSWR<
     ProposalVote[]
   >(

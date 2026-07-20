@@ -8,6 +8,7 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useDAOAddresses, useGetAllProposals } from "hooks";
+import { getYellowProposalPath } from "@/utils/proposal-routing";
 
 type ProposalsPageProps = {
   nounsMetagovEnabled: boolean;
@@ -134,11 +135,10 @@ export default function ProposalsPage({
                 Unable to load proposals.
               </div>
             ) : proposals && proposals.length > 0 ? (
-              proposals.map((proposal, index) => (
+              proposals.map((proposal) => (
                 <ProposalRow
                   key={proposal.proposalId}
                   proposal={proposal}
-                  proposalNumber={proposals.length - index}
                 />
               ))
             ) : (
@@ -155,20 +155,18 @@ export default function ProposalsPage({
 
 const ProposalRow = ({
   proposal,
-  proposalNumber,
 }: {
   proposal: Proposal;
-  proposalNumber: number;
 }) => {
   const timingLabel = getTimingLabel(proposal);
 
   return (
     <Link
-      href={`/proposals/${proposal.proposalId}`}
+      href={getYellowProposalPath(proposal)}
       className="proposal-hover-row grid min-h-[96px] grid-cols-[34px_1fr] items-start gap-4 rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral))] md:grid-cols-[44px_1fr_auto] md:items-center"
     >
       <div className="font-heading text-xl text-skin-base">
-        {proposalNumber}
+        {proposal.proposalNumber}
       </div>
 
       <div className="min-w-0">
