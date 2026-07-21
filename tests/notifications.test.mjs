@@ -339,6 +339,156 @@ test("notification poll cadence is controlled by admin settings", () => {
   assert.match(dashboard, /NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS/);
 });
 
+test("proposal notifications cover every event since the last successful poll", async () => {
+  const attempts = [];
+  const poll = loadTsModule("utils/notifications/poll.ts", {
+    "constants/addresses": {
+      TOKEN_CONTRACT: "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+    },
+    "data/nouns-builder/auction": {
+      getCurrentAuction: async () => {
+        throw new Error("Auction reads are not expected in this test.");
+      },
+    },
+    "data/nouns-builder/governor": {
+      getProposals: async () => [
+        {
+          proposalId:
+            "0x8bda646580590e0fda776723e6002e5ca962dda73c8d4cf96ee5cf26c8f1b1f3",
+          proposalNumber: 29,
+          description: "A Yellow Summer",
+          state: 0,
+          proposal: {
+            timeCreated: 1784297355,
+            voteStart: 1784383755,
+            voteEnd: 1784729355,
+          },
+        },
+      ],
+    },
+    "data/nouns-builder/manager": {
+      getAddresses: async () => ({
+        governor: "0x1297ffd714acb55af447c6b7641b3cf01930d605",
+      }),
+    },
+    "data/rounds": {
+      finalizeRoundWinners: async () => undefined,
+      listPublicRounds: async () => [],
+    },
+    "data/notifications": {},
+    "@/utils/notifications/service": {
+      sendConfiguredNotification: async (input) => {
+        attempts.push(input);
+        return {
+          status: "sent",
+          response: {
+            campaign_id: "proposal-29",
+            failure_count: 0,
+            not_attempted_count: 0,
+            success_count: 1,
+            retryable_fids: [],
+          },
+        };
+      },
+    },
+    "@/utils/getProposalName": {
+      getProposalName: () => "A Yellow Summer",
+    },
+    "@/utils/ethers-compat": {
+      BigNumber: {
+        from: (value) => ({ toString: () => String(value) }),
+      },
+    },
+  });
+
+  const result = await poll.pollYellowProposalNotifications({
+    settings: loadTsModule("utils/notifications/settings.ts")
+      .DEFAULT_NOTIFICATION_SETTINGS,
+    lastPolledAt: new Date("2026-07-17T14:00:00.000Z"),
+    now: new Date("2026-07-17T15:00:00.000Z"),
+  });
+
+  assert.equal(result.attempted, 1);
+  assert.equal(attempts.length, 1);
+  assert.equal(attempts[0].eventType, "yellow_proposal_created");
+  assert.equal(attempts[0].targetPath, "/proposals/29");
+});
+
+test("round notifications cover every event since the last successful poll", async () => {
+  const attempts = [];
+  const poll = loadTsModule("utils/notifications/poll.ts", {
+    "constants/addresses": {
+      TOKEN_CONTRACT: "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+    },
+    "data/nouns-builder/auction": {
+      getCurrentAuction: async () => {
+        throw new Error("Auction reads are not expected in this test.");
+      },
+    },
+    "data/nouns-builder/governor": {
+      getProposals: async () => [],
+    },
+    "data/nouns-builder/manager": {
+      getAddresses: async () => ({
+        governor: "0x1297ffd714acb55af447c6b7641b3cf01930d605",
+      }),
+    },
+    "data/rounds": {
+      finalizeRoundWinners: async () => undefined,
+      listPublicRounds: async () => [
+        {
+          id: "round-1",
+          slug: "farcaster-community-nominations",
+          title: "Farcaster Community Nominations",
+          startsAt: "2026-07-17T14:09:15.000Z",
+          submissionsOpenAt: "2026-07-18T14:09:15.000Z",
+          votingStartsAt: "2026-07-25T14:09:15.000Z",
+          votingEndsAt: "2026-08-01T14:09:15.000Z",
+        },
+      ],
+    },
+    "data/notifications": {},
+    "@/utils/notifications/service": {
+      sendConfiguredNotification: async (input) => {
+        attempts.push(input);
+        return {
+          status: "sent",
+          response: {
+            campaign_id: "round-1",
+            failure_count: 0,
+            not_attempted_count: 0,
+            success_count: 1,
+            retryable_fids: [],
+          },
+        };
+      },
+    },
+    "@/utils/getProposalName": {
+      getProposalName: () => "A Yellow Summer",
+    },
+    "@/utils/ethers-compat": {
+      BigNumber: {
+        from: (value) => ({ toString: () => String(value) }),
+      },
+    },
+  });
+
+  const result = await poll.pollRoundNotifications({
+    settings: loadTsModule("utils/notifications/settings.ts")
+      .DEFAULT_NOTIFICATION_SETTINGS,
+    lastPolledAt: new Date("2026-07-17T14:00:00.000Z"),
+    now: new Date("2026-07-17T15:00:00.000Z"),
+  });
+
+  assert.equal(result.attempted, 1);
+  assert.equal(attempts.length, 1);
+  assert.equal(attempts[0].eventType, "round_published");
+  assert.equal(
+    attempts[0].targetPath,
+    "/rounds/farcaster-community-nominations"
+  );
+});
+
 test("auction notifications use poll windows and a cursor for settled auctions", () => {
   const poll = read("utils/notifications/poll.ts");
   const settings = read("utils/notifications/settings.ts");

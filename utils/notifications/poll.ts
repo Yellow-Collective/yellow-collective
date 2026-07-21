@@ -34,7 +34,6 @@ export type NotificationPollResult = {
 };
 
 const RECENT_WINDOW_SECONDS = 10 * 60;
-const REMINDER_WINDOW_SECONDS = 10 * 60;
 const POLL_CADENCE_GRACE_SECONDS = 5 * 60;
 const POLL_WINDOW_LOOKBACK_SECONDS = 10 * 60;
 
@@ -46,14 +45,6 @@ const emptyResult = (): NotificationPollResult => ({
   duplicate: 0,
   errors: [],
 });
-
-const secondsFromNow = (timestampSeconds: number, nowSeconds: number) =>
-  timestampSeconds - nowSeconds;
-
-const happenedRecently = (timestampSeconds: number, nowSeconds: number) => {
-  const diff = secondsFromNow(timestampSeconds, nowSeconds);
-  return diff <= 0 && Math.abs(diff) <= RECENT_WINDOW_SECONDS;
-};
 
 const getPollWindowStartSeconds = (
   lastPolledAt: Date | null | undefined,
@@ -68,15 +59,6 @@ const happenedDuringPollWindow = (
   windowStartSeconds: number,
   nowSeconds: number
 ) => timestampSeconds > windowStartSeconds && timestampSeconds <= nowSeconds;
-
-const upcomingWithin = (
-  timestampSeconds: number,
-  targetSeconds: number,
-  nowSeconds: number
-) => {
-  const diff = secondsFromNow(timestampSeconds, nowSeconds);
-  return diff > 0 && Math.abs(diff - targetSeconds) <= REMINDER_WINDOW_SECONDS;
-};
 
 const reminderReachedDuringPollWindow = (
   timestampSeconds: number,
@@ -171,13 +153,19 @@ export const pollRoundNotifications = async ({
   settings,
   now = new Date(),
   dryRun,
+  lastPolledAt,
 }: {
   settings: NotificationSettings;
   now?: Date;
   dryRun?: boolean;
+  lastPolledAt?: Date | null;
 }) => {
   const result = emptyResult();
   const nowSeconds = Math.floor(now.getTime() / 1000);
+  const windowStartSeconds = getPollWindowStartSeconds(
+    lastPolledAt,
+    nowSeconds
+  );
   const rounds = (await listPublicRounds()).filter(
     (round) => !round.slug.startsWith("demo-")
   );
@@ -188,7 +176,7 @@ export const pollRoundNotifications = async ({
     const votingStartsAt = roundTimestamp(round.votingStartsAt);
     const votingEndsAt = roundTimestamp(round.votingEndsAt);
 
-    if (happenedRecently(startsAt, nowSeconds)) {
+    if (happenedDuringPollWindow(startsAt, windowStartSeconds, nowSeconds)) {
       await notifyRound({
         result,
         settings,
@@ -198,7 +186,13 @@ export const pollRoundNotifications = async ({
         dryRun,
       });
     }
-    if (happenedRecently(submissionsOpenAt, nowSeconds)) {
+    if (
+      happenedDuringPollWindow(
+        submissionsOpenAt,
+        windowStartSeconds,
+        nowSeconds
+      )
+    ) {
       await notifyRound({
         result,
         settings,
@@ -208,7 +202,13 @@ export const pollRoundNotifications = async ({
         dryRun,
       });
     }
-    if (happenedRecently(votingStartsAt, nowSeconds)) {
+    if (
+      happenedDuringPollWindow(
+        votingStartsAt,
+        windowStartSeconds,
+        nowSeconds
+      )
+    ) {
       await notifyRound({
         result,
         settings,
@@ -218,7 +218,14 @@ export const pollRoundNotifications = async ({
         dryRun,
       });
     }
-    if (upcomingWithin(votingEndsAt, 24 * 60 * 60, nowSeconds)) {
+    if (
+      reminderReachedDuringPollWindow(
+        votingEndsAt,
+        24 * 60 * 60,
+        windowStartSeconds,
+        nowSeconds
+      )
+    ) {
       await notifyRound({
         result,
         settings,
@@ -228,7 +235,9 @@ export const pollRoundNotifications = async ({
         dryRun,
       });
     }
-    if (happenedRecently(votingEndsAt, nowSeconds)) {
+    if (
+      happenedDuringPollWindow(votingEndsAt, windowStartSeconds, nowSeconds)
+    ) {
       await finalizeRoundWinners(round);
       await notifyRound({
         result,
@@ -358,13 +367,19 @@ export const pollYellowProposalNotifications = async ({
   settings,
   now = new Date(),
   dryRun,
+  lastPolledAt,
 }: {
   settings: NotificationSettings;
   now?: Date;
   dryRun?: boolean;
+  lastPolledAt?: Date | null;
 }) => {
   const result = emptyResult();
   const nowSeconds = Math.floor(now.getTime() / 1000);
+  const windowStartSeconds = getPollWindowStartSeconds(
+    lastPolledAt,
+    nowSeconds
+  );
   const addresses = await getAddresses({
     tokenAddress: TOKEN_CONTRACT as `0x${string}`,
   });
@@ -379,8 +394,9 @@ export const pollYellowProposalNotifications = async ({
     const targetPath = `/proposals/${proposal.proposalNumber}`;
 
     if (
-      happenedRecently(
+      happenedDuringPollWindow(
         proposalTimestamp(proposal.proposal.timeCreated),
+        windowStartSeconds,
         nowSeconds
       )
     ) {
@@ -394,8 +410,9 @@ export const pollYellowProposalNotifications = async ({
       });
     }
     if (
-      happenedRecently(
+      happenedDuringPollWindow(
         proposalTimestamp(proposal.proposal.voteStart),
+        windowStartSeconds,
         nowSeconds
       )
     ) {
@@ -409,9 +426,10 @@ export const pollYellowProposalNotifications = async ({
       });
     }
     if (
-      upcomingWithin(
+      reminderReachedDuringPollWindow(
         proposalTimestamp(proposal.proposal.voteEnd),
         24 * 60 * 60,
+        windowStartSeconds,
         nowSeconds
       )
     ) {
@@ -427,7 +445,11 @@ export const pollYellowProposalNotifications = async ({
     if (
       proposal.state !== 0 &&
       proposal.state !== 1 &&
-      happenedRecently(proposalTimestamp(proposal.proposal.voteEnd), nowSeconds)
+      happenedDuringPollWindow(
+        proposalTimestamp(proposal.proposal.voteEnd),
+        windowStartSeconds,
+        nowSeconds
+      )
     ) {
       await record(result, {
         eventType: "yellow_proposal_final",
@@ -472,7 +494,12 @@ export const pollWebNotifications = async ({
   }
 
   const results = await Promise.all([
-    pollRoundNotifications({ settings, dryRun: effectiveDryRun, now }),
+    pollRoundNotifications({
+      settings,
+      dryRun: effectiveDryRun,
+      now,
+      lastPolledAt,
+    }),
     pollAuctionNotifications({
       settings,
       dryRun: effectiveDryRun,
@@ -480,7 +507,12 @@ export const pollWebNotifications = async ({
       lastPolledAt,
       lastAuctionCursor,
     }),
-    pollYellowProposalNotifications({ settings, dryRun: effectiveDryRun, now }),
+    pollYellowProposalNotifications({
+      settings,
+      dryRun: effectiveDryRun,
+      now,
+      lastPolledAt,
+    }),
   ]);
 
   const result = results.reduce(
