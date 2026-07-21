@@ -3,6 +3,10 @@
     {
       "path": "/api/notifications/poll",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/notifications/proposal-29-ending-24h",
+      "schedule": "9 14 21 7 *"
     }
   ]
 }

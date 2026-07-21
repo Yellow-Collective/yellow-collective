@@ -489,6 +489,70 @@ test("round notifications cover every event since the last successful poll", asy
   );
 });
 
+test("one-time notification timing waits for the exact timestamp and expires safely", () => {
+  let schedule;
+  try {
+    schedule = loadTsModule("utils/notifications/schedule.ts");
+  } catch {
+    assert.fail("scheduled notification timing helper is required");
+  }
+
+  const scheduledAt = new Date("2026-07-21T14:09:15.000Z");
+  assert.equal(
+    schedule.getScheduledNotificationDelay(
+      scheduledAt,
+      new Date("2026-07-21T14:09:00.000Z")
+    ),
+    15_000
+  );
+  assert.equal(
+    schedule.getScheduledNotificationDelay(
+      scheduledAt,
+      new Date("2026-07-21T14:09:45.000Z")
+    ),
+    0
+  );
+  assert.equal(
+    schedule.getScheduledNotificationDelay(
+      scheduledAt,
+      new Date("2026-07-21T14:07:00.000Z")
+    ),
+    null
+  );
+  assert.equal(
+    schedule.getScheduledNotificationDelay(
+      scheduledAt,
+      new Date("2026-07-21T14:20:16.000Z")
+    ),
+    null
+  );
+});
+
+test("proposal 29 ending reminder has a guarded one-time cron route", () => {
+  let endpoint = "";
+  try {
+    endpoint = read("pages/api/notifications/proposal-29-ending-24h.ts");
+  } catch {
+    // The assertion below should explain the missing scheduled route.
+  }
+
+  assert.match(endpoint, /hasNotificationCronAuth/);
+  assert.match(endpoint, /2026-07-21T14:09:15\.000Z/);
+  assert.match(endpoint, /yellow_proposal_ending_24h/);
+  assert.match(endpoint, /\/proposals\/29/);
+  assert.match(endpoint, /A Yellow Summer/);
+
+  const vercelConfig = JSON.parse(read("vercel.json"));
+  assert.equal(
+    vercelConfig.crons.some(
+      (cron) =>
+        cron.path === "/api/notifications/proposal-29-ending-24h" &&
+        cron.schedule === "9 14 21 7 *"
+    ),
+    true
+  );
+});
+
 test("auction notifications use poll windows and a cursor for settled auctions", () => {
   const poll = read("utils/notifications/poll.ts");
   const settings = read("utils/notifications/settings.ts");
@@ -651,6 +715,10 @@ test("Vercel cron is configured for the authenticated notification poll route", 
     {
       path: "/api/notifications/poll",
       schedule: "0 * * * *",
+    },
+    {
+      path: "/api/notifications/proposal-29-ending-24h",
+      schedule: "9 14 21 7 *",
     },
   ]);
 
