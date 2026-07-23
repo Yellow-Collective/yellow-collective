@@ -16,6 +16,7 @@ import ProposalTransactions from "@/components/ProposalTransactions";
 import ProposalPropdates from "@/components/ProposalPropdates";
 import ProposalVoteList, { ProposalVote } from "@/components/ProposalVoteList";
 import ProposalVoteSummary from "@/components/ProposalVoteSummary";
+import ProposalLifecycleAction from "@/components/ProposalLifecycleAction";
 import { Fragment, useEffect, useState } from "react";
 import {
   PREVIEW_PROPOSAL_ID,
@@ -33,6 +34,7 @@ const proposalMarkdownClassName =
   "prose prose-skin mt-4 max-w-[90vw] break-words prose-img:w-auto prose-headings:font-heading prose-h2:text-3xl prose-h2:leading-tight prose-h3:text-2xl prose-h3:leading-tight prose-h4:text-xl prose-h4:leading-snug prose-h5:text-lg prose-h5:leading-snug prose-h6:text-base prose-h6:leading-snug sm:max-w-[1000px]";
 
 export default function ProposalComponent() {
+  const [onchainState, setOnchainState] = useState<number>();
   const { data: addresses } = useDAOAddresses({
     tokenContract: TOKEN_CONTRACT,
   });
@@ -45,6 +47,10 @@ export default function ProposalComponent() {
 
   const proposal = findProposalByRouteParam(proposals, proposalid);
   const proposalNumber = proposal?.proposalNumber || 0;
+
+  useEffect(() => {
+    setOnchainState(undefined);
+  }, [proposal?.proposalId]);
 
   useEffect(() => {
     if (
@@ -78,8 +84,10 @@ export default function ProposalComponent() {
       </Layout>
     );
 
+  const displayedProposal =
+    onchainState === undefined ? proposal : { ...proposal, state: onchainState };
   const { forVotes, againstVotes, abstainVotes, voteEnd, voteStart } =
-    proposal?.proposal || {};
+    displayedProposal.proposal;
 
   const getVotePercentage = (votes: number) => {
     if (!proposal || !votes) return 0;
@@ -123,7 +131,7 @@ export default function ProposalComponent() {
                 Proposal {proposalNumber}
               </div>
               <ProposalStatus
-                proposal={proposal}
+                proposal={displayedProposal}
                 className="w-auto shrink-0 px-2 py-1 text-xs sm:w-24 sm:text-base"
               />
             </div>
@@ -140,18 +148,18 @@ export default function ProposalComponent() {
           </div>
         </div>
 
-        <VoteButton
-          proposal={proposal}
-          proposalNumber={proposalNumber}
-          className="hidden sm:block"
-        />
+        <div className="w-full sm:w-auto">
+          <VoteButton
+            proposal={displayedProposal}
+            proposalNumber={proposalNumber}
+          />
+          <ProposalLifecycleAction
+            proposal={proposal}
+            governorAddress={addresses?.governor}
+            onStateChange={setOnchainState}
+          />
+        </div>
       </div>
-
-      <VoteButton
-        proposal={proposal}
-        proposalNumber={proposalNumber}
-        className="mt-5 sm:hidden"
-      />
 
       <ProposalVoteSummary
         votes={[
@@ -177,7 +185,7 @@ export default function ProposalComponent() {
         metrics={[
           {
             label: "Threshold",
-            value: `${proposal.proposal.quorumVotes || 1} Quorum`,
+            value: `${displayedProposal.proposal.quorumVotes || 1} Quorum`,
           },
           {
             label: "Ends",
