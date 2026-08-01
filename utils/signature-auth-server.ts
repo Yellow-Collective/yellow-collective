@@ -215,9 +215,36 @@ export const getRequestPath = (req: NextApiRequest) => {
   return normalizeSignedRequestPath(new URL(url, "http://local").pathname);
 };
 
-const normalizeBaseUrl = (value: string) => value.replace(/\/+$/u, "");
+const getFirstForwardedValue = (value?: string) =>
+  value?.split(",", 1)[0]?.trim();
 
-const getRequestBaseUrl = (req: NextApiRequest) => {
+const createRequestOrigin = (protocol?: string, host?: string) => {
+  if (!host) return "";
+
+  const normalizedProtocol = protocol?.toLowerCase();
+  if (normalizedProtocol !== "http" && normalizedProtocol !== "https") {
+    return "";
+  }
+
+  try {
+    const url = new URL(`${normalizedProtocol}://${host}`);
+    if (
+      url.username ||
+      url.password ||
+      url.pathname !== "/" ||
+      url.search ||
+      url.hash
+    ) {
+      return "";
+    }
+
+    return url.origin;
+  } catch {
+    return "";
+  }
+};
+
+const getConfiguredBaseUrl = () => {
   const configuredSiteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.SITE_URL ||
@@ -225,21 +252,61 @@ const getRequestBaseUrl = (req: NextApiRequest) => {
       ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
       : "");
 
-  if (configuredSiteUrl && process.env.NODE_ENV === "production") {
-    return normalizeBaseUrl(
-      configuredSiteUrl.startsWith("http")
-        ? configuredSiteUrl
-        : `https://${configuredSiteUrl}`
-    );
+  if (!configuredSiteUrl) return "";
+
+  try {
+    const normalized = configuredSiteUrl.startsWith("http")
+      ? configuredSiteUrl
+      : `https://${configuredSiteUrl}`;
+    return new URL(normalized).origin;
+  } catch {
+    return "";
+  }
+};
+
+const isConfiguredProductionOrigin = (
+  requestOrigin: string,
+  configuredOrigin: string
+) => {
+  const requestUrl = new URL(requestOrigin);
+  const configuredUrl = new URL(configuredOrigin);
+  const configuredHostname = configuredUrl.hostname.toLowerCase();
+  const alternateHostname = configuredHostname.startsWith("www.")
+    ? configuredHostname.slice(4)
+    : `www.${configuredHostname}`;
+
+  return (
+    requestUrl.protocol === configuredUrl.protocol &&
+    requestUrl.port === configuredUrl.port &&
+    (requestUrl.hostname.toLowerCase() === configuredHostname ||
+      requestUrl.hostname.toLowerCase() === alternateHostname)
+  );
+};
+
+const getRequestBaseUrl = (req: NextApiRequest) => {
+  const forwardedHost = getFirstForwardedValue(
+    getHeaderValue(req.headers["x-forwarded-host"])
+  );
+  const host =
+    forwardedHost || getFirstForwardedValue(getHeaderValue(req.headers.host));
+  const forwardedProto = getFirstForwardedValue(
+    getHeaderValue(req.headers["x-forwarded-proto"])
+  );
+  const protocol =
+    forwardedProto || (host?.includes("localhost") ? "http" : "https");
+  const requestOrigin = createRequestOrigin(protocol, host);
+  const configuredOrigin = getConfiguredBaseUrl();
+
+  if (
+    process.env.NODE_ENV === "production" &&
+    configuredOrigin &&
+    requestOrigin &&
+    !isConfiguredProductionOrigin(requestOrigin, configuredOrigin)
+  ) {
+    return configuredOrigin;
   }
 
-  const forwardedHost = getHeaderValue(req.headers["x-forwarded-host"]);
-  const host = forwardedHost || getHeaderValue(req.headers.host) || "localhost";
-  const forwardedProto = getHeaderValue(req.headers["x-forwarded-proto"]);
-  const protocol =
-    forwardedProto || (host.includes("localhost") ? "http" : "https");
-
-  return `${protocol}://${host}`;
+  return requestOrigin || configuredOrigin || "http://localhost";
 };
 
 const getRequestDomainAndUri = (req: NextApiRequest, path: string) => {

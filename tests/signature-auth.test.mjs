@@ -211,6 +211,107 @@ test("authorization header encoding works with browser Buffer polyfills", () => 
   assert.equal(parsed.signature, authorization.signature);
 });
 
+test("signed request message uses SIWE fields and keeps request bindings", () => {
+  const challenge = {
+    nonce: "0123456789abcdef",
+    walletAddress: account.address,
+    chainId: 8453,
+    action: "admin:session",
+    method: "POST",
+    path: "/api/admin/session",
+    domain: "www.yellowcollective.art",
+    uri: "https://www.yellowcollective.art/api/admin/session",
+    issuedAt: "2026-08-01T12:00:00.000Z",
+    expirationTime: "2026-08-01T12:05:00.000Z",
+    payloadHash: shared.createRequestPayloadHash({}),
+  };
+
+  const message = shared.buildSignedRequestMessage(challenge);
+
+  assert.match(
+    message,
+    /^www\.yellowcollective\.art wants you to sign in with your Ethereum account:\n/u
+  );
+  assert.match(message, /\nURI: https:\/\/www\.yellowcollective\.art\/api\/admin\/session\n/u);
+  assert.match(message, /\nVersion: 1\nChain ID: 8453\n/u);
+  assert.match(message, /\nNonce: 0123456789abcdef\n/u);
+  assert.match(message, /\nResources:\n/u);
+  assert.match(message, /\n- urn:yellow-collective:action:admin%3Asession\n/u);
+  assert.match(message, /\n- urn:yellow-collective:method:POST\n/u);
+  assert.match(message, /\n- urn:yellow-collective:path:%2Fapi%2Fadmin%2Fsession\n/u);
+  assert.match(
+    message,
+    new RegExp(`\\n- urn:yellow-collective:payload:${challenge.payloadHash}$`, "u")
+  );
+});
+
+test("production challenge uses the forwarded request origin over stale site config", async () => {
+  server.resetMemorySignedRequestNoncesForTests();
+  const originalNodeEnv = process.env.NODE_ENV;
+  const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  process.env.NODE_ENV = "production";
+  process.env.NEXT_PUBLIC_SITE_URL = "https://yellowcollective.art";
+
+  try {
+    const req = makeReq();
+    req.headers.host = "yellowcollective.vercel.app";
+    req.headers["x-forwarded-host"] = "www.yellowcollective.art";
+    req.headers["x-forwarded-proto"] = "https";
+    const challenge = await server.issueSignedRequestChallenge(req, {
+      walletAddress: account.address,
+      chainId: 8453,
+      action: "admin:session",
+      method: "POST",
+      path: "/api/admin/session",
+      payloadHash: shared.createRequestPayloadHash({}),
+    });
+
+    assert.equal(challenge.domain, "www.yellowcollective.art");
+    assert.equal(
+      challenge.uri,
+      "https://www.yellowcollective.art/api/admin/session"
+    );
+  } finally {
+    if (originalNodeEnv === undefined) delete process.env.NODE_ENV;
+    else process.env.NODE_ENV = originalNodeEnv;
+    if (originalSiteUrl === undefined) delete process.env.NEXT_PUBLIC_SITE_URL;
+    else process.env.NEXT_PUBLIC_SITE_URL = originalSiteUrl;
+  }
+});
+
+test("production challenge rejects unrelated forwarded hosts", async () => {
+  server.resetMemorySignedRequestNoncesForTests();
+  const originalNodeEnv = process.env.NODE_ENV;
+  const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  process.env.NODE_ENV = "production";
+  process.env.NEXT_PUBLIC_SITE_URL = "https://yellowcollective.art";
+
+  try {
+    const req = makeReq();
+    req.headers["x-forwarded-host"] = "attacker.example";
+    req.headers["x-forwarded-proto"] = "https";
+    const challenge = await server.issueSignedRequestChallenge(req, {
+      walletAddress: account.address,
+      chainId: 8453,
+      action: "admin:session",
+      method: "POST",
+      path: "/api/admin/session",
+      payloadHash: shared.createRequestPayloadHash({}),
+    });
+
+    assert.equal(challenge.domain, "yellowcollective.art");
+    assert.equal(
+      challenge.uri,
+      "https://yellowcollective.art/api/admin/session"
+    );
+  } finally {
+    if (originalNodeEnv === undefined) delete process.env.NODE_ENV;
+    else process.env.NODE_ENV = originalNodeEnv;
+    if (originalSiteUrl === undefined) delete process.env.NEXT_PUBLIC_SITE_URL;
+    else process.env.NEXT_PUBLIC_SITE_URL = originalSiteUrl;
+  }
+});
+
 test("modified body, endpoint, method, wallet, chain, and expiry fail", async () => {
   for (const scenario of [
     {
