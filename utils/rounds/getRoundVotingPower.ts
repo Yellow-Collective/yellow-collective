@@ -18,5 +18,14 @@ export const getRoundVotingPower = async (
   if (round.votingStrategy === "one_per_wallet") return 1;
   if (round.votingStrategy === "fixed_per_wallet") return round.votesPerWallet;
 
+  if (round.votingStrategy === "base_plus_voting_power") {
+    const votingPower = round.votesPerWallet + collectiveNounVotingPower;
+    if (!Number.isSafeInteger(votingPower) || votingPower < 0) {
+      throw new Error("Round voting power must be a non-negative safe integer.");
+    }
+
+    return votingPower;
+  }
+
   return collectiveNounVotingPower;
 };

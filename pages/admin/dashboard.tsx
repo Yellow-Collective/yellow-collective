@@ -17,6 +17,7 @@ import {
   type SavedRoundDates,
 } from "@/utils/rounds/admin-round-form";
 import { validateRoundVotingSnapshot } from "@/utils/rounds/voting-snapshot";
+import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
 import { isRoundExportable } from "@/utils/rounds/admin-submissions-export";
 import { groupAdminRoundVotesByWallet } from "@/utils/rounds/admin-votes";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
@@ -402,6 +403,8 @@ const formatVotingStrategy = (
     ? "1 vote per wallet"
     : strategy === "fixed_per_wallet"
       ? `${votesPerWallet} votes per wallet`
+      : strategy === "base_plus_voting_power"
+        ? `${votesPerWallet} base votes + delegated voting power`
       : "1 vote per delegated Collective Noun vote";
 
 const getQueryValue = (value: string | string[] | undefined) =>
@@ -2857,6 +2860,10 @@ const RoundEditor = ({
     round.votingStrategy
   );
   const [votesPerWallet, setVotesPerWallet] = useState(round.votesPerWallet);
+  const [hasEditedVotesPerWallet, setHasEditedVotesPerWallet] = useState(
+    round.votingStrategy === "fixed_per_wallet" ||
+      round.votingStrategy === "base_plus_voting_power"
+  );
   const [winnerCount, setWinnerCount] = useState(round.winnerCount);
   const [maxSubmissionsPerWallet, setMaxSubmissionsPerWallet] = useState(
     round.maxSubmissionsPerWallet
@@ -2872,6 +2879,16 @@ const RoundEditor = ({
   );
   const [message, setMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  const updateVotingStrategy = (nextStrategy: Round["votingStrategy"]) => {
+    if (
+      nextStrategy === "base_plus_voting_power" &&
+      !hasEditedVotesPerWallet
+    ) {
+      setVotesPerWallet(getDefaultRoundVotesPerWallet(nextStrategy));
+    }
+    setVotingStrategy(nextStrategy);
+  };
 
   const submit = async (action?: "publish" | "archive" | "remove") => {
     if (action === "remove" && !window.confirm("Remove this round?")) return;
@@ -3057,7 +3074,9 @@ const RoundEditor = ({
           <select
             value={votingStrategy}
             onChange={(event) =>
-              setVotingStrategy(event.target.value as Round["votingStrategy"])
+              updateVotingStrategy(
+                event.target.value as Round["votingStrategy"]
+              )
             }
             className={`${fieldClass} mt-2`}
           >
@@ -3066,12 +3085,32 @@ const RoundEditor = ({
             </option>
             <option value="one_per_wallet">1 vote per wallet</option>
             <option value="fixed_per_wallet">Fixed votes per wallet</option>
+            <option value="base_plus_voting_power">
+              Base votes + voting power
+            </option>
           </select>
+          {votingStrategy === "base_plus_voting_power" && (
+            <span className="mt-2 block text-sm font-normal leading-snug text-secondary">
+              Each eligible wallet receives the base allocation plus its
+              delegated Collective Noun voting power at the voting snapshot.
+            </span>
+          )}
         </label>
         <NumberField
-          label="Votes / wallet"
+          label={
+            votingStrategy === "base_plus_voting_power"
+              ? "Base votes per wallet"
+              : "Votes / wallet"
+          }
           value={votesPerWallet}
-          onChange={setVotesPerWallet}
+          onChange={(value) => {
+            setHasEditedVotesPerWallet(true);
+            setVotesPerWallet(value);
+          }}
+          disabled={
+            votingStrategy !== "fixed_per_wallet" &&
+            votingStrategy !== "base_plus_voting_power"
+          }
         />
         <NumberField
           label="Winner count"
@@ -5053,10 +5092,12 @@ const NumberField = ({
   label,
   value,
   onChange,
+  disabled = false,
 }: {
   label: string;
   value: number;
   onChange: (value: number) => void;
+  disabled?: boolean;
 }) => (
   <label className={labelClass}>
     {label}
@@ -5065,6 +5106,7 @@ const NumberField = ({
       min={1}
       value={value}
       onChange={(event) => onChange(Number(event.target.value))}
+      disabled={disabled}
       className={`${fieldClass} mt-2`}
     />
   </label>

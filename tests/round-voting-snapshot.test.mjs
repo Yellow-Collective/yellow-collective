@@ -199,6 +199,39 @@ test("exposes snapshot selection in admin and request interfaces", () => {
   assert.match(requestPageSource, /Custom date/);
 });
 
+test("exposes the hybrid strategy and base allocation controls", () => {
+  for (const source of [adminPageSource, requestPageSource]) {
+    assert.match(source, /base_plus_voting_power/);
+    assert.match(source, /Base votes \+ voting power/);
+    assert.match(source, /Base votes per wallet/);
+    assert.match(
+      source,
+      /Each eligible wallet receives the base allocation plus its[\s\S]*delegated Collective Noun voting power at the voting[\s\S]*snapshot\./
+    );
+    assert.match(
+      source,
+      /fixed_per_wallet[\s\S]*base_plus_voting_power|base_plus_voting_power[\s\S]*fixed_per_wallet/
+    );
+  }
+});
+
+test("initializes new hybrid form allocations without resetting deliberate values", () => {
+  assert.match(adminPageSource, /hasEditedVotesPerWallet/);
+  assert.match(
+    adminPageSource,
+    /round\.votingStrategy\s*===\s*"fixed_per_wallet"[\s\S]*round\.votingStrategy\s*===\s*"base_plus_voting_power"/
+  );
+  assert.match(
+    adminPageSource,
+    /base_plus_voting_power[\s\S]*!hasEditedVotesPerWallet[\s\S]*setVotesPerWallet\([\s\S]*getDefaultRoundVotesPerWallet/
+  );
+  assert.match(requestPageSource, /hasEditedVotesPerWallet/);
+  assert.match(
+    requestPageSource,
+    /votesPerWallet:[\s\S]*base_plus_voting_power[\s\S]*!hasEditedVotesPerWallet[\s\S]*String\(getDefaultRoundVotesPerWallet/
+  );
+});
+
 test("contains the admin snapshot controls within their responsive fieldset", () => {
   assert.match(
     adminPageSource,

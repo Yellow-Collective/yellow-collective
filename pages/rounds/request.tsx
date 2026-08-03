@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
+import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
 import {
   ROUND_IMAGE_UPLOAD_ACCEPT,
   resizeRoundImageFile,
@@ -104,6 +105,10 @@ const votingStrategyOptions = [
     value: "fixed_per_wallet",
     label: "Fixed votes per wallet",
   },
+  {
+    value: "base_plus_voting_power",
+    label: "Base votes + voting power",
+  },
 ];
 
 export default function RequestRoundPage() {
@@ -112,6 +117,8 @@ export default function RequestRoundPage() {
   const [values, setValues] = useState<FormValues>(() => createInitialValues());
   const [message, setMessage] = useState<MessageState>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasEditedVotesPerWallet, setHasEditedVotesPerWallet] =
+    useState(false);
   const prizeCount = Number(values.winnerCount) || 1;
 
   const canSubmit = useMemo(
@@ -154,6 +161,24 @@ export default function RequestRoundPage() {
 
       return { ...currentValues, [field]: value };
     });
+  };
+
+  const updateVotingStrategy = (nextStrategy: string) => {
+    setMessage(null);
+    setValues((currentValues) => ({
+      ...currentValues,
+      votingStrategy: nextStrategy,
+      votesPerWallet:
+        nextStrategy === "base_plus_voting_power" &&
+        !hasEditedVotesPerWallet
+          ? String(getDefaultRoundVotesPerWallet(nextStrategy))
+          : currentValues.votesPerWallet,
+    }));
+  };
+
+  const updateVotesPerWallet = (value: string) => {
+    setHasEditedVotesPerWallet(true);
+    updateValue("votesPerWallet", value);
   };
 
   const updatePrizeCount = (count: number) => {
@@ -243,6 +268,7 @@ export default function RequestRoundPage() {
       }
 
       setValues(createInitialValues());
+      setHasEditedVotesPerWallet(false);
       setMessage({
         type: "success",
         text: "Round request submitted. An admin will review it and get back to you.",
@@ -464,9 +490,7 @@ export default function RequestRoundPage() {
               Voting type *
               <select
                 value={values.votingStrategy}
-                onChange={(event) =>
-                  updateValue("votingStrategy", event.target.value)
-                }
+                onChange={(event) => updateVotingStrategy(event.target.value)}
                 className="mt-2 w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
               >
                 {votingStrategyOptions.map((option) => (
@@ -475,12 +499,26 @@ export default function RequestRoundPage() {
                   </option>
                 ))}
               </select>
+              {values.votingStrategy === "base_plus_voting_power" && (
+                <span className="mt-2 block text-sm font-normal leading-snug text-secondary">
+                  Each eligible wallet receives the base allocation plus its
+                  delegated Collective Noun voting power at the voting
+                  snapshot.
+                </span>
+              )}
             </label>
             <NumberField
-              label="Votes per wallet"
+              label={
+                values.votingStrategy === "base_plus_voting_power"
+                  ? "Base votes per wallet"
+                  : "Votes per wallet"
+              }
               value={values.votesPerWallet}
-              onChange={(value) => updateValue("votesPerWallet", value)}
-              disabled={values.votingStrategy !== "fixed_per_wallet"}
+              onChange={updateVotesPerWallet}
+              disabled={
+                values.votingStrategy !== "fixed_per_wallet" &&
+                values.votingStrategy !== "base_plus_voting_power"
+              }
               required
             />
             <NumberField

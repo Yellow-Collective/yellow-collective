@@ -1464,6 +1464,10 @@ const getVotingStrategyLabel = (round: RoundWithSubmissions | null) => {
     return `${round.votesPerWallet} votes per wallet`;
   }
 
+  if (round.votingStrategy === "base_plus_voting_power") {
+    return `${round.votesPerWallet} base votes + delegated voting power`;
+  }
+
   return "1 vote per delegated Collective Noun vote";
 };
 

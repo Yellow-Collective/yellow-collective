@@ -30,6 +30,7 @@ import {
   getDummyPublicRoundBySlug,
   getDummyPublicRounds,
 } from "data/dummy-content";
+import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
 
 export type RoundStatus = "draft" | "published" | "archived";
 export type RoundSubmissionStatus =
@@ -41,7 +42,8 @@ export type RoundRequestStatus = "pending" | "approved" | "rejected";
 export type RoundVotingStrategy =
   | "one_per_wallet"
   | "one_per_nft"
-  | "fixed_per_wallet";
+  | "fixed_per_wallet"
+  | "base_plus_voting_power";
 export type { RoundVotingSnapshotMode };
 export type RoundSubmissionType = "project" | "trait";
 
@@ -281,7 +283,6 @@ export type RoundRequestInput = Partial<
 const DEFAULT_LIMITS = {
   maxSubmissionsPerWallet: 1,
   winnerCount: 1,
-  votesPerWallet: 1,
   minTitleLength: 3,
   maxTitleLength: 120,
   minDescriptionLength: 20,
@@ -355,7 +356,7 @@ const ensureTables = async () => {
             updated_at timestamptz NOT NULL DEFAULT now(),
             deleted_at timestamptz,
             CONSTRAINT rounds_status_check CHECK (status IN ('draft', 'published', 'archived')),
-            CONSTRAINT rounds_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet')),
+            CONSTRAINT rounds_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power')),
             CONSTRAINT rounds_voting_snapshot_mode_check CHECK (voting_snapshot_mode IN ('voting_start', 'custom')),
             CONSTRAINT rounds_voting_snapshot_date_check CHECK (
               (voting_snapshot_mode = 'voting_start' AND voting_snapshot_at IS NULL)
@@ -480,7 +481,7 @@ const ensureTables = async () => {
             reviewed_at timestamptz,
             deleted_at timestamptz,
             CONSTRAINT round_requests_status_check CHECK (status IN ('pending', 'approved', 'rejected')),
-            CONSTRAINT round_requests_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet')),
+            CONSTRAINT round_requests_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power')),
             CONSTRAINT round_requests_voting_snapshot_mode_check CHECK (voting_snapshot_mode IN ('voting_start', 'custom')),
             CONSTRAINT round_requests_voting_snapshot_date_check CHECK (
               (voting_snapshot_mode = 'voting_start' AND voting_snapshot_at IS NULL)
@@ -566,6 +567,19 @@ const ensureTables = async () => {
             ADD COLUMN IF NOT EXISTS is_trait_contest boolean NOT NULL DEFAULT false,
             ADD COLUMN IF NOT EXISTS trait_submissions_enabled boolean NOT NULL DEFAULT false,
             ADD COLUMN IF NOT EXISTS awards jsonb NOT NULL DEFAULT '[]'::jsonb
+        `)
+      )
+      .then(() =>
+        getPool().query(`
+          ALTER TABLE rounds
+            DROP CONSTRAINT IF EXISTS rounds_voting_strategy_check,
+            ADD CONSTRAINT rounds_voting_strategy_check
+            CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power'));
+
+          ALTER TABLE round_requests
+            DROP CONSTRAINT IF EXISTS round_requests_voting_strategy_check,
+            ADD CONSTRAINT round_requests_voting_strategy_check
+            CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power'));
         `)
       )
       .then(() =>
@@ -980,6 +994,13 @@ export const normalizeRoundInput = (
           input.votingSnapshotAt ?? current?.votingSnapshotAt ?? null
         )
       : null;
+  const votingStrategy = (input.votingStrategy ??
+    current?.votingStrategy ??
+    "one_per_nft") as RoundVotingStrategy;
+  const currentVotesPerWallet =
+    current?.votingStrategy === votingStrategy
+      ? current.votesPerWallet
+      : undefined;
 
   return {
     slug: normalizeSlug(input.slug ?? current?.slug ?? `round-${Date.now()}`),
@@ -1013,13 +1034,11 @@ export const normalizeRoundInput = (
       false
     ),
     status: (input.status ?? current?.status ?? "draft") as RoundStatus,
-    votingStrategy: (input.votingStrategy ??
-      current?.votingStrategy ??
-      "one_per_nft") as RoundVotingStrategy,
+    votingStrategy,
     votesPerWallet: Number(
       input.votesPerWallet ??
-        current?.votesPerWallet ??
-        DEFAULT_LIMITS.votesPerWallet
+        currentVotesPerWallet ??
+        getDefaultRoundVotesPerWallet(votingStrategy)
     ),
     votingSnapshotMode,
     votingSnapshotAt,
@@ -1074,13 +1093,14 @@ export const validateRoundInput = (input: NormalizedRoundInput) => {
   if (
     input.votingStrategy !== "one_per_wallet" &&
     input.votingStrategy !== "one_per_nft" &&
-    input.votingStrategy !== "fixed_per_wallet"
+    input.votingStrategy !== "fixed_per_wallet" &&
+    input.votingStrategy !== "base_plus_voting_power"
   ) {
     return "Voting type is invalid.";
   }
 
-  if (!Number.isInteger(input.votesPerWallet) || input.votesPerWallet < 1) {
-    return "Votes per wallet must be at least 1.";
+  if (!Number.isSafeInteger(input.votesPerWallet) || input.votesPerWallet < 1) {
+    return "Votes per wallet must be a positive safe whole number.";
   }
 
   const snapshotValidationError = validateRoundVotingSnapshot(input);
@@ -1326,6 +1346,8 @@ const normalizeRoundRequestInput = (input: RoundRequestInput) => {
   );
   const votingSnapshotMode = (input.votingSnapshotMode ??
     "voting_start") as RoundVotingSnapshotMode;
+  const votingStrategy = (input.votingStrategy ||
+    "one_per_nft") as RoundVotingStrategy;
 
   return {
     walletAddress:
@@ -1349,9 +1371,11 @@ const normalizeRoundRequestInput = (input: RoundRequestInput) => {
     votingStartsAt,
     votingEndsAt,
     endsAt: votingEndsAt,
-    votingStrategy: (input.votingStrategy ||
-      "one_per_nft") as RoundVotingStrategy,
-    votesPerWallet: Number(input.votesPerWallet || 1),
+    votingStrategy,
+    votesPerWallet: Number(
+      input.votesPerWallet ??
+        getDefaultRoundVotesPerWallet(votingStrategy)
+    ),
     votingSnapshotMode,
     votingSnapshotAt:
       votingSnapshotMode === "custom"
