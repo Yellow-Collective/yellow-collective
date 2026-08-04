@@ -435,7 +435,7 @@ export default function RoundDetailPage({
         </section>
 
         {winners.length > 0 && (
-          <section className="rounded-2xl border border-skin-stroke bg-accent p-6 text-[#212529] shadow-sm md:p-8">
+          <section className="rounded-2xl border border-skin-stroke bg-white p-6 text-[#212529] shadow-sm md:p-8">
             <h2 className="font-heading text-3xl leading-none text-[#212529]">
               Winners
             </h2>
