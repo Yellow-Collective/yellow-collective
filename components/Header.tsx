@@ -1,5 +1,6 @@
 import { useThemeMode } from "@/hooks/useThemeMode";
 import { isAdminAddress } from "@/utils/admin";
+import { getHomeNavigationItems } from "@/utils/header-navigation";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import {
   ChevronDownIcon,
@@ -18,11 +19,6 @@ type NavItem = {
   href: string;
   children?: NavItem[];
 };
-
-const homeItems: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Admin Dashboard", href: "/admin/dashboard" },
-];
 
 const daoItems = [
   { label: "About", href: "/about" },
@@ -87,6 +83,10 @@ export default function Header() {
   }, []);
 
   const isAdmin = isMounted && isAdminAddress(walletAddress);
+  const homeItems = getHomeNavigationItems(
+    isMounted && Boolean(walletAddress),
+    isAdmin
+  );
   const artItems = useMemo(() => {
     const visibleBaseArtItems =
       isAdmin || gallerySettings?.galleryPublicEnabled
@@ -148,7 +148,7 @@ export default function Header() {
         </div>
 
         <div className="hidden flex-1 items-center justify-end gap-2 px-4 lg:flex">
-          {isAdmin ? (
+          {homeItems ? (
             <NavDropdown label="Home" items={homeItems} />
           ) : (
             <Link
@@ -193,7 +193,7 @@ export default function Header() {
               "calc(100dvh - 88px - env(safe-area-inset-bottom) - var(--miniapp-safe-area-bottom))",
           }}
         >
-          {isAdmin ? (
+          {homeItems ? (
             <MobileNavGroup
               label="Home"
               items={homeItems}
