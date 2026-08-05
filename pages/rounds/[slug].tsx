@@ -351,7 +351,7 @@ export default function RoundDetailPage({
           </h1>
           <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px] lg:items-stretch">
             <div className="flex min-h-[230px] flex-col justify-center rounded-2xl border border-skin-stroke bg-[#fff7bf] p-5">
-              <div className="font-heading text-xl leading-none text-skin-base">
+              <div className="font-heading text-xl font-bold leading-none text-skin-base">
                 About this round
               </div>
               <p className="mt-2 max-w-3xl text-lg leading-snug text-secondary">
@@ -1252,9 +1252,12 @@ const RoundAwardsPanel = ({ round }: { round: RoundWithSubmissions }) => (
 
 const AwardIcon = ({ award }: { award: RoundAward }) => {
   const icon = getAwardIcon(award);
+  const backgroundClass = icon?.backgroundClass || "bg-accent";
 
   return (
-    <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-accent">
+    <div
+      className={`flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl ${backgroundClass}`}
+    >
       {icon ? (
         <DeferredInlineImage
           src={icon.src}
@@ -1278,6 +1281,7 @@ const getAwardIcon = (award: RoundAward) => {
     return {
       src: COLLECTIVE_NOUNS_AWARD_ICON,
       alt: "Collective Nouns prize",
+      backgroundClass: "bg-black",
     };
   }
 
@@ -1285,6 +1289,7 @@ const getAwardIcon = (award: RoundAward) => {
     return {
       src: ETH_AWARD_ICON,
       alt: "ETH prize",
+      backgroundClass: "bg-accent",
     };
   }
 
