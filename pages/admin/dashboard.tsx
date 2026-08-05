@@ -2,6 +2,8 @@ import Layout from "@/components/Layout";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import CoinMediaPreview from "@/components/coins/CoinMediaPreview";
 import ProjectMemberSelector from "@/components/community/ProjectMemberSelector";
+import RoundImageUploadField from "@/components/rounds/RoundImageUploadField";
+import VotingPowerSnapshotFieldset from "@/components/rounds/VotingPowerSnapshotFieldset";
 import {
   ADMIN_PERMISSION_DEFINITIONS,
   GLOBAL_ADMIN_WALLET_ADDRESS,
@@ -3036,7 +3038,14 @@ const RoundEditor = ({
         onChange={setContent}
         rows={6}
       />
-      <FormField label="Image URL" value={image} onChange={setImage} />
+      <RoundImageUploadField
+        value={image}
+        onChange={setImage}
+        onError={setMessage}
+        showUrlInput
+        labelClassName={labelClass}
+        inputClassName={fieldClass}
+      />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <DateField
           label="Submissions open"
@@ -3143,68 +3152,22 @@ const RoundEditor = ({
           onChange={setMaxDescriptionLength}
         />
       </div>
-      <fieldset className="min-w-0 w-full max-w-full rounded-xl border border-skin-stroke bg-skin-muted p-4">
-        <legend className="px-1 font-heading text-base text-skin-base">
-          Voting power snapshot
-        </legend>
-        <p className="mt-1 text-sm leading-snug text-secondary">
-          Delegated Collective Noun voting power is fixed at this time. Dates
-          are entered in your local timezone.
-        </p>
-        <div className="mt-3 grid min-w-0 gap-3 md:grid-cols-2">
-          {[
-            {
-              value: "voting_start" as const,
-              label: "When voting begins",
-              note: "Recommended. Follows the Voting starts date.",
-            },
-            {
-              value: "custom" as const,
-              label: "Custom date",
-              note: "Use delegated voting power from an earlier date.",
-            },
-          ].map((option) => (
-            <label
-              key={option.value}
-              className="flex min-w-0 cursor-pointer items-start gap-3 rounded-xl border border-skin-stroke bg-white p-3"
-            >
-              <input
-                type="radio"
-                name={`round-${round.id}-voting-snapshot-mode`}
-                value={option.value}
-                checked={votingSnapshotMode === option.value}
-                onChange={() => setVotingSnapshotMode(option.value)}
-                disabled={round.votingSnapshotBlock !== null}
-                className="mt-1 h-4 w-4 shrink-0 accent-[#ffcc00]"
-              />
-              <span className="min-w-0">
-                <span className="block font-heading text-sm text-skin-base">
-                  {option.label}
-                </span>
-                <span className="mt-1 block text-xs leading-snug text-secondary">
-                  {option.note}
-                </span>
-              </span>
-            </label>
-          ))}
-        </div>
-        {votingSnapshotMode === "custom" && (
-          <div className="mt-3 max-w-sm">
-            <DateField
-              label="Custom snapshot date"
-              value={votingSnapshotAt}
-              onChange={setVotingSnapshotAt}
-              disabled={round.votingSnapshotBlock !== null}
-            />
-          </div>
-        )}
-        <p className="mt-3 text-sm text-secondary">
-          Effective snapshot: {effectiveSnapshotLabel}
-          {round.votingSnapshotBlock !== null
-            ? ` | Base block ${round.votingSnapshotBlock}. Snapshot timing is locked.`
-            : ""}
-        </p>
-      </fieldset>
+      <VotingPowerSnapshotFieldset
+        name={`round-${round.id}-voting-snapshot-mode`}
+        value={votingSnapshotMode}
+        onChange={setVotingSnapshotMode}
+        disabled={round.votingSnapshotBlock !== null}
+        customDateField={
+          <DateField
+            label="Custom snapshot date"
+            value={votingSnapshotAt}
+            onChange={setVotingSnapshotAt}
+            disabled={round.votingSnapshotBlock !== null}
+          />
+        }
+        effectiveSnapshotLabel={effectiveSnapshotLabel}
+        lockedSnapshotBlock={round.votingSnapshotBlock}
+      />
       <FormField
         label="Prizes, one per line as Position | Title | Value | Description"
         value={awardsText}

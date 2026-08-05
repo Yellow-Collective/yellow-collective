@@ -41,6 +41,10 @@ const requestPageSource = readFileSync(
   resolve(process.cwd(), "pages/rounds/request.tsx"),
   "utf8"
 );
+const votingPowerSnapshotFieldsetSource = readFileSync(
+  resolve(process.cwd(), "components/rounds/VotingPowerSnapshotFieldset.tsx"),
+  "utf8"
+);
 const adminPageSource = readFileSync(
   resolve(process.cwd(), "pages/admin/dashboard.tsx"),
   "utf8"
@@ -191,12 +195,12 @@ test("returns an explicit pending snapshot state before capture", () => {
 });
 
 test("exposes snapshot selection in admin and request interfaces", () => {
-  assert.match(adminPageSource, /Voting power snapshot/);
-  assert.match(adminPageSource, /When voting begins/);
-  assert.match(adminPageSource, /Custom date/);
-  assert.match(requestPageSource, /Voting power snapshot/);
-  assert.match(requestPageSource, /When voting begins/);
-  assert.match(requestPageSource, /Custom date/);
+  assert.match(adminPageSource, /VotingPowerSnapshotFieldset/);
+  assert.match(requestPageSource, /VotingPowerSnapshotFieldset/);
+  assert.match(votingPowerSnapshotFieldsetSource, /Voting power snapshot/);
+  assert.match(votingPowerSnapshotFieldsetSource, /font-bold/);
+  assert.match(votingPowerSnapshotFieldsetSource, /When voting begins/);
+  assert.match(votingPowerSnapshotFieldsetSource, /Custom date/);
 });
 
 test("exposes the hybrid strategy and base allocation controls", () => {
@@ -232,16 +236,24 @@ test("initializes new hybrid form allocations without resetting deliberate value
   );
 });
 
-test("contains the admin snapshot controls within their responsive fieldset", () => {
+test("contains snapshot controls within their responsive fieldset", () => {
   assert.match(
-    adminPageSource,
-    /<fieldset className="min-w-0 w-full max-w-full rounded-xl border border-skin-stroke bg-skin-muted p-4"/
+    votingPowerSnapshotFieldsetSource,
+    /<fieldset[\s\S]*min-w-0 w-full max-w-full rounded-xl border border-skin-stroke bg-skin-muted p-4/
   );
-  assert.match(adminPageSource, /mt-3 grid min-w-0 gap-3 md:grid-cols-2/);
   assert.match(
-    adminPageSource,
-    /flex min-w-0 cursor-pointer items-start gap-3 rounded-xl/
+    votingPowerSnapshotFieldsetSource,
+    /float-left mb-2 w-full px-0 font-heading text-base font-bold/
   );
+  assert.match(
+    votingPowerSnapshotFieldsetSource,
+    /mt-3 grid min-w-0 gap-3 md:grid-cols-2/
+  );
+  assert.match(
+    votingPowerSnapshotFieldsetSource,
+    /flex min-w-0 items-start gap-3 rounded-xl/
+  );
+  assert.match(votingPowerSnapshotFieldsetSource, /break-words/);
 });
 
 test("shows public snapshot timing", () => {
