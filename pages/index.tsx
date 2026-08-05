@@ -9,8 +9,16 @@ import Footer from "@/components/Footer";
 import Banner from "@/components/Banner";
 import Faq from "@/components/Faq";
 import Description from "@/components/Description";
+import { HomepageActiveRounds } from "@/components/rounds/HomepageActiveRounds";
 import { TOKEN_CONTRACT } from "constants/addresses";
 import { YELLOW_COLLECTIVE_CONTRACTS } from "data/contracts";
+import { getRoundsPublicEnabled, listPublicRounds } from "data/rounds";
+import {
+  selectHomepageActiveRounds,
+  selectHomepageUpcomingRounds,
+  type HomepageActiveRound,
+  type HomepageUpcomingRound,
+} from "@/utils/rounds/homepage";
 import { zeroAddress } from "viem";
 
 const fallbackContract: ContractInfo = {
@@ -45,6 +53,8 @@ export const getStaticProps = async (): Promise<
     contract: ContractInfo;
     token: TokenInfo;
     auction: AuctionInfo;
+    activeRounds: HomepageActiveRound[];
+    upcomingRounds: HomepageUpcomingRound[];
   }>
 > => {
   const tokenContract = TOKEN_CONTRACT as `0x${string}`;
@@ -52,6 +62,21 @@ export const getStaticProps = async (): Promise<
   const auction = fallbackAuction;
   const tokenId = auction.tokenId;
   const token = fallbackToken;
+  let activeRounds: HomepageActiveRound[] = [];
+  let upcomingRounds: HomepageUpcomingRound[] = [];
+
+  try {
+    const roundsPublicEnabled = await getRoundsPublicEnabled();
+    if (roundsPublicEnabled) {
+      const rounds = await listPublicRounds();
+      activeRounds = selectHomepageActiveRounds(rounds, true);
+      upcomingRounds = selectHomepageUpcomingRounds(rounds, true);
+    }
+  } catch (error) {
+    console.error("Unable to load active rounds for the homepage", error);
+    activeRounds = [];
+    upcomingRounds = [];
+  }
 
   if (!contract.image) contract.image = "";
 
@@ -62,6 +87,8 @@ export const getStaticProps = async (): Promise<
       contract,
       token,
       auction,
+      activeRounds,
+      upcomingRounds,
     },
     revalidate: 60,
   };
@@ -73,6 +100,8 @@ export default function SiteComponent({
   contract,
   token,
   auction,
+  activeRounds,
+  upcomingRounds,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const isMounted = useIsMounted();
 
@@ -93,6 +122,10 @@ export default function SiteComponent({
             <Header />
           </div>
           <Hero />
+          <HomepageActiveRounds
+            rounds={activeRounds}
+            upcomingRounds={upcomingRounds}
+          />
           <Description />
           <Faq />
           <Footer />
