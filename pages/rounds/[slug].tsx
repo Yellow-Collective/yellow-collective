@@ -12,6 +12,7 @@ import {
   type NoundrySubmission,
 } from "@/components/noundry/NoundryPreview";
 import type {
+  RoundAward,
   RoundSubmission,
   RoundVoteActivity,
   RoundWithSubmissions,
@@ -59,6 +60,9 @@ type RoundDetailProps = {
 };
 
 const ROUND_SIGNED_REQUEST_CHAIN_ID = Number(TOKEN_NETWORK);
+const COLLECTIVE_NOUNS_AWARD_ICON =
+  "/playground/yellow-collective/glasses/tns-yellow-noggles.png";
+const ETH_AWARD_ICON = "/playground/yellow-collective/heads/ethereum.png";
 
 type VotingPowerResponse = {
   votingPower: number;
@@ -555,7 +559,7 @@ export default function RoundDetailPage({
           </section>
         )}
 
-        <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-accent p-5 text-[#212529] shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] md:p-6">
+        <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-5 text-[#212529] shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] md:p-6">
           <div className="flex items-end justify-between gap-3">
             <h2 className="font-heading text-[34px] leading-none text-[#212529]">
               Submissions
@@ -1194,21 +1198,13 @@ const RoundDetailsPanel = ({
   stateLabel: string;
   votingStrategyLabel: string;
 }) => (
-  <section className="yc-dark-yellow-form-surface grid gap-3 rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm md:grid-cols-4">
+  <section className="yc-dark-yellow-form-surface grid gap-3 rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm md:grid-cols-3">
     <RoundStat label="Status" value={stateLabel} />
     <RoundStat
       label="Winners"
       value={`${round.winnerCount} winner${round.winnerCount === 1 ? "" : "s"}`}
     />
     <RoundStat label="Voting" value={votingStrategyLabel} />
-    <RoundStat
-      label="Submission type"
-      value={
-        round.isTraitContest && round.traitSubmissionsEnabled
-          ? "Noundry traits"
-          : "Projects"
-      }
-    />
   </section>
 );
 
@@ -1232,22 +1228,7 @@ const RoundAwardsPanel = ({ round }: { round: RoundWithSubmissions }) => (
       {round.awards && round.awards.length > 0 ? (
         round.awards.map((award) => (
           <div key={award.id} className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-accent">
-              {round.image ? (
-                <DeferredInlineImage
-                  src={round.image}
-                  alt=""
-                  className="h-full w-full object-cover"
-                  fallback={
-                    <span className="font-heading text-sm text-skin-base">
-                      YC
-                    </span>
-                  }
-                />
-              ) : (
-                <span className="font-heading text-sm text-skin-base">YC</span>
-              )}
-            </div>
+            <AwardIcon award={award} />
             <div className="min-w-0 flex-1">
               <div className="break-words font-heading text-xl leading-none text-skin-base">
                 {award.value || award.title}
@@ -1275,6 +1256,47 @@ const RoundAwardsPanel = ({ round }: { round: RoundWithSubmissions }) => (
     </div>
   </article>
 );
+
+const AwardIcon = ({ award }: { award: RoundAward }) => {
+  const icon = getAwardIcon(award);
+
+  return (
+    <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-accent">
+      {icon ? (
+        <DeferredInlineImage
+          src={icon.src}
+          alt={icon.alt}
+          className="h-16 w-16 max-w-none object-contain"
+          fallback={
+            <span className="font-heading text-sm text-skin-base">YC</span>
+          }
+        />
+      ) : (
+        <span className="font-heading text-sm text-skin-base">YC</span>
+      )}
+    </div>
+  );
+};
+
+const getAwardIcon = (award: RoundAward) => {
+  const awardText = `${award.title} ${award.value} ${award.description}`;
+
+  if (/\bcollective nouns?\b/i.test(awardText)) {
+    return {
+      src: COLLECTIVE_NOUNS_AWARD_ICON,
+      alt: "Collective Nouns prize",
+    };
+  }
+
+  if (/\beth\b/i.test(awardText)) {
+    return {
+      src: ETH_AWARD_ICON,
+      alt: "ETH prize",
+    };
+  }
+
+  return null;
+};
 
 const RoundActivityPanel = ({
   round,
