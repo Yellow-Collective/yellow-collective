@@ -439,6 +439,19 @@
     color: rgb(69, 74, 78) !important;
   }
 
+  [data-theme="dark"]
+    .yc-dark-yellow-form-surface
+    input[type="datetime-local"] {
+    color-scheme: light;
+  }
+
+  [data-theme="dark"]
+    .yc-dark-yellow-form-surface
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: none;
+    opacity: 1;
+  }
+
   [data-theme="dark"] .yc-dark-yellow-form-surface option {
     color: #212529 !important;
   }
