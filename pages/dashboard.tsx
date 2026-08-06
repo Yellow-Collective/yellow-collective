@@ -22,7 +22,7 @@ export default function DashboardPage() {
   const isMounted = useIsMounted();
   const { isConnected } = useAccount();
   const { data, error } = useSWR<DashboardPayload>(
-    isMounted && isConnected ? "/api/dashboard" : null,
+    "/api/dashboard",
     { refreshInterval: 60_000, revalidateOnFocus: true }
   );
 
@@ -41,19 +41,22 @@ export default function DashboardPage() {
           </p>
         </header>
 
-        {(!isMounted || !isConnected) ? (
-          <section className="yc-dark-yellow-form-surface flex flex-col items-start rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm md:p-8">
-            <h2 className="font-heading text-[30px] leading-none text-skin-base">
-              Connect your wallet
-            </h2>
-            <p className="mt-3 max-w-xl text-base text-secondary">
-              Connect to see active rounds and governance votes in one place.
-            </p>
-            {isMounted && (
-              <CustomConnectButton className="mt-5 min-h-11 rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base" />
-            )}
+        {isMounted && !isConnected && (
+          <section className="yc-dark-yellow-form-surface flex flex-col items-start rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm md:flex-row md:items-center md:justify-between md:gap-6 md:p-6">
+            <div>
+              <h2 className="font-heading text-[28px] leading-none text-skin-base">
+                Wallet not connected
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm leading-snug text-secondary">
+                You can browse active rounds, votes, and activity without a wallet.
+                Connect when you want to submit, vote, or use wallet-specific actions.
+              </p>
+            </div>
+            <CustomConnectButton className="mt-4 min-h-11 rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base md:mt-0" />
           </section>
-        ) : error ? (
+        )}
+
+        {error ? (
           <section role="alert" className="rounded-2xl border border-skin-proposal-danger bg-skin-muted p-6 text-skin-proposal-danger">
             Unable to load the dashboard. Please try again.
           </section>

@@ -161,11 +161,12 @@ test("maps Snapshot titles and canonical proposal links to Nouns proposal number
   );
 });
 
-test("dashboard page gates SWR on mounted connected wallet state", () => {
+test("dashboard page loads public dashboard data without wallet connection", () => {
   const source = readFileSync(resolve(process.cwd(), "pages/dashboard.tsx"), "utf8");
-  assert.match(source, /isMounted && isConnected \? "\/api\/dashboard" : null/);
+  assert.match(source, /useSWR<DashboardPayload>\(\s*"\/api\/dashboard"/);
   assert.match(source, /<CustomConnectButton/);
-  assert.match(source, /\(!isMounted \|\| !isConnected\) \?/);
+  assert.match(source, /isMounted && !isConnected &&/);
+  assert.doesNotMatch(source, /isMounted && isConnected \? "\/api\/dashboard" : null/);
   assert.match(source, /grid gap-5 lg:grid-cols-2/);
   assert.match(
     source,
@@ -176,7 +177,10 @@ test("dashboard page gates SWR on mounted connected wallet state", () => {
 
 test("header policy has desktop/mobile parity without exposing admin navigation", () => {
   const nav = loadTsModule(resolve(process.cwd(), "utils/header-navigation.ts"));
-  assert.equal(nav.getHomeNavigationItems(false, false), null);
+  assert.equal(
+    nav.getHomeNavigationItems(false, false).map(({ label }) => label).join(","),
+    "Home,Dashboard"
+  );
   assert.equal(
     nav.getHomeNavigationItems(true, false).map(({ label }) => label).join(","),
     "Home,Dashboard"
