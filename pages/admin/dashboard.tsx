@@ -2944,12 +2944,32 @@ const RoundEditor = ({
     try {
       setIsSaving(true);
       setMessage(null);
-      await sendAdminRequest(
-        `/api/admin/rounds/${round.id}`,
+      const result = await sendAdminRequest(
+        `/api/admin/rounds/${encodeURIComponent(round.id)}`,
         adminAuth,
         action === "remove" ? "DELETE" : "PATCH",
         action ? { action, round: roundPayload } : { round: roundPayload }
       );
+      const updatedRound = result.round as Round | undefined;
+      if (updatedRound && action !== "remove") {
+        await mutate(
+          (current) =>
+            current
+              ? {
+                  rounds: current.rounds.some(
+                    (cachedRound) => cachedRound.id === updatedRound.id
+                  )
+                    ? current.rounds.map((cachedRound) =>
+                        cachedRound.id === updatedRound.id
+                          ? updatedRound
+                          : cachedRound
+                      )
+                    : [updatedRound, ...current.rounds],
+                }
+              : { rounds: [updatedRound] },
+          { revalidate: false }
+        );
+      }
       await mutate();
       setMessage(
         action === "publish"

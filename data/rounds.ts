@@ -1565,6 +1565,7 @@ export const listAdminRounds = async () => {
           WHEN 'published' THEN 1
           ELSE 2
         END,
+        r.updated_at DESC,
         r.created_at DESC
     `,
     [DEMO_ROUND_SLUG_PATTERN]
