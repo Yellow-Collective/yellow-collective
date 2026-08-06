@@ -1,4 +1,5 @@
 import CustomConnectButton from "@/components/CustomConnectButton";
+import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { DashboardPanel } from "@/components/dashboard/DashboardPanel";
 import Layout from "@/components/Layout";
 import { useIsMounted } from "@/hooks/useIsMounted";
@@ -13,6 +14,9 @@ const panelDefinitions = [
   ["yellowProposals", "Yellow proposals", "Active Collective governance votes.", "No Yellow proposals are active.", "/proposals"],
   ["nounsProposals", "Nouns proposals", "Active Yellow Snapshot metagovernance votes.", "No Yellow Nouns votes are active.", "/proposals/nouns"],
 ] as const;
+
+const isFullWidthPanel = (key: (typeof panelDefinitions)[number][0]) =>
+  key === "yellowProposals" || key === "nounsProposals";
 
 export default function DashboardPage() {
   const isMounted = useIsMounted();
@@ -56,23 +60,35 @@ export default function DashboardPage() {
         ) : !data ? (
           <div aria-busy="true" aria-label="Loading dashboard" className="grid gap-5 lg:grid-cols-2">
             {panelDefinitions.map(([key]) => (
-              <div key={key} className="h-72 animate-pulse rounded-2xl border border-skin-stroke bg-skin-muted motion-reduce:animate-none" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid gap-5 lg:grid-cols-2">
-            {panelDefinitions.map(([key, title, description, emptyMessage, viewAllHref]) => (
-              <DashboardPanel
+              <div
                 key={key}
-                id={`dashboard-${key}`}
-                title={title}
-                description={description}
-                section={data[key]}
-                emptyMessage={emptyMessage}
-                viewAllHref={viewAllHref}
+                className={`h-72 animate-pulse rounded-2xl border border-skin-stroke bg-skin-muted motion-reduce:animate-none ${
+                  isFullWidthPanel(key) ? "lg:col-span-2" : ""
+                }`}
               />
             ))}
           </div>
+        ) : (
+          <>
+            <div className="grid gap-5 lg:grid-cols-2">
+              {panelDefinitions.map(([key, title, description, emptyMessage, viewAllHref]) => (
+                <div
+                  key={key}
+                  className={isFullWidthPanel(key) ? "lg:col-span-2" : ""}
+                >
+                  <DashboardPanel
+                    id={`dashboard-${key}`}
+                    title={title}
+                    description={description}
+                    section={data[key]}
+                    emptyMessage={emptyMessage}
+                    viewAllHref={viewAllHref}
+                  />
+                </div>
+              ))}
+            </div>
+            <ActivityFeed />
+          </>
         )}
       </main>
     </Layout>

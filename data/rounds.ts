@@ -145,6 +145,11 @@ export type ProfileRoundVote = RoundVoteActivity & {
   roundTitle: string;
 };
 
+export type PublicRoundActivity = {
+  submissions: ProfileRoundSubmission[];
+  votes: ProfileRoundVote[];
+};
+
 export type RoundAward = {
   id: string;
   roundId: string;
@@ -2641,6 +2646,82 @@ export const listRoundSubmissionVotes = async ({
     createdAt: formatDate(row.created_at) || "",
     updatedAt: formatDate(row.updated_at) || "",
   })) as RoundVoteActivity[];
+};
+
+export const listPublicRoundActivity = async (
+  limit = 100
+): Promise<PublicRoundActivity> => {
+  await ensureTables();
+
+  const safeLimit = Math.max(1, Math.min(Math.trunc(limit), 100));
+  const [submissionResult, voteResult] = await Promise.all([
+    getPool().query(
+      `
+        SELECT
+          ${submissionSelectFields},
+          r.slug AS round_slug,
+          r.title AS round_title
+        FROM round_submissions s
+        INNER JOIN rounds r ON r.id = s.round_id
+        ${voteTotalsJoin}
+        ${winnersJoin}
+        WHERE s.deleted_at IS NULL
+          AND s.status = 'approved'
+          AND r.deleted_at IS NULL
+          AND r.status = 'published'
+          AND r.active = true
+        ORDER BY s.created_at DESC, s.id ASC
+        LIMIT $1
+      `,
+      [safeLimit]
+    ),
+    getPool().query(
+      `
+        SELECT
+          v.id,
+          v.round_id,
+          v.wallet_address,
+          v.submission_id,
+          s.title AS submission_title,
+          v.vote_count,
+          v.created_at,
+          v.updated_at,
+          r.slug AS round_slug,
+          r.title AS round_title
+        FROM round_votes v
+        INNER JOIN round_submissions s ON s.id = v.submission_id
+        INNER JOIN rounds r ON r.id = v.round_id
+        WHERE s.deleted_at IS NULL
+          AND s.status = 'approved'
+          AND r.deleted_at IS NULL
+          AND r.status = 'published'
+          AND r.active = true
+        ORDER BY v.updated_at DESC, v.created_at DESC, v.id ASC
+        LIMIT $1
+      `,
+      [safeLimit]
+    ),
+  ]);
+
+  return {
+    submissions: submissionResult.rows.map((row) => ({
+      ...mapSubmission(row),
+      roundSlug: row.round_slug,
+      roundTitle: row.round_title,
+    })),
+    votes: voteResult.rows.map((row) => ({
+      id: row.id,
+      roundId: row.round_id,
+      walletAddress: row.wallet_address,
+      submissionId: row.submission_id,
+      submissionTitle: row.submission_title,
+      voteCount: Number(row.vote_count || 0),
+      createdAt: formatDate(row.created_at) || "",
+      updatedAt: formatDate(row.updated_at) || "",
+      roundSlug: row.round_slug,
+      roundTitle: row.round_title,
+    })),
+  };
 };
 
 export const listProfileRoundSubmissions = async (

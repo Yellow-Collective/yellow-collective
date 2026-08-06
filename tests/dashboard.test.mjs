@@ -167,6 +167,11 @@ test("dashboard page gates SWR on mounted connected wallet state", () => {
   assert.match(source, /<CustomConnectButton/);
   assert.match(source, /\(!isMounted \|\| !isConnected\) \?/);
   assert.match(source, /grid gap-5 lg:grid-cols-2/);
+  assert.match(
+    source,
+    /key === "yellowProposals" \|\| key === "nounsProposals"/
+  );
+  assert.match(source, /isFullWidthPanel\(key\) \? "lg:col-span-2"/);
 });
 
 test("header policy has desktop/mobile parity without exposing admin navigation", () => {
