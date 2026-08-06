@@ -487,6 +487,129 @@ const snapshotConstants = {
 }
 
 {
+  const safeVoting = loadTsModule(
+    "services/metagov/src/services/safe-voting.ts",
+    {
+      "@safe-global/protocol-kit": { __esModule: true, default: {} },
+      "@safe-global/api-kit": { __esModule: true, default: {} },
+      "@safe-global/safe-core-sdk-types": {},
+      ethers: { ethers: {} },
+      "../config": { config: {} },
+      "../listeners/nouns-proposals": {},
+      "../types": {},
+      "../utils/wallet": {},
+    }
+  );
+
+  assert.equal(
+    safeVoting.calculateBufferedGasLimit(200_000n, 30),
+    300_000n,
+    "Safe execution gas must respect the conservative minimum."
+  );
+  assert.equal(
+    safeVoting.calculateBufferedGasLimit(400_000n, 30),
+    520_000n,
+    "Safe execution gas must apply the configured buffer to the estimate."
+  );
+  assert.equal(safeVoting.isReceiptSuccessful(1), true);
+  assert.equal(safeVoting.isReceiptSuccessful("success"), true);
+  assert.equal(
+    safeVoting.isReceiptSuccessful("reverted"),
+    false,
+    "Viem reverted receipts must not be recorded as successful."
+  );
+  assert.equal(safeVoting.isReceiptSuccessful(0), false);
+  const safeVotingSource = read("services/metagov/src/services/safe-voting.ts");
+  assert.match(
+    safeVotingSource,
+    /estimateGas\([\s\S]*executeTransaction\(signedTx,\s*\{\s*gasLimit/,
+    "Safe execution must pass the buffered estimate as the outer transaction gas limit."
+  );
+  assert.match(
+    safeVotingSource,
+    /confirmedVoteStatus\s*=\s*await getVoteStatus[\s\S]*confirmedVoteStatus\s*!==\s*true[\s\S]*return null/,
+    "A mined transaction must not count as success until the Governor confirms hasVoted."
+  );
+  console.log("ok - Safe gas buffering and receipt status normalization cover GS013 regression");
+}
+
+{
+  const tempDir = mkdtempSync(join(tmpdir(), "yc-metagov-stale-execution-"));
+  try {
+    const statePath = join(tempDir, "metagov-state.json");
+    const { StateStore } = loadTsModule("services/metagov/src/services/state-store.ts", {
+      "../config": { config: { dataDir: tempDir } },
+      "../types": {},
+    });
+    writeFileSync(
+      statePath,
+      JSON.stringify({
+        version: 1,
+        updatedAt: "2026-08-05T00:00:00.000Z",
+        proposals: {
+          "987": {
+            nounsProposalId: "987",
+            nounsTitle: "Retry stale vote",
+            snapshotId: "snapshot-987",
+            snapshotTitle: "987: Retry stale vote",
+            snapshotUrl: "https://snapshot.box/proposal/snapshot-987",
+            status: "executed",
+            createdAt: "2026-08-04T00:00:00.000Z",
+            updatedAt: "2026-08-05T00:00:00.000Z",
+            winningChoice: "FOR",
+            executionMode: "safe",
+            voterAddress: "0xsafe",
+            safeTxHash: "0xfailed-safe",
+            executionTxHash: "0xreverted",
+          },
+          "986": {
+            nounsProposalId: "986",
+            nounsTitle: "Valid vote",
+            snapshotId: "snapshot-986",
+            snapshotTitle: "986: Valid vote",
+            snapshotUrl: "https://snapshot.box/proposal/snapshot-986",
+            status: "executed",
+            createdAt: "2026-08-03T00:00:00.000Z",
+            updatedAt: "2026-08-04T00:00:00.000Z",
+          },
+        },
+        executedVotes: [
+          { nounsProposalId: "987", snapshotId: "snapshot-987" },
+          { nounsProposalId: "986", snapshotId: "snapshot-986" },
+        ],
+        notifications: {},
+      })
+    );
+    const store = new StateStore(statePath);
+    assert.equal(store.removeStaleExecution("987"), true);
+    const reconciled = store.load();
+    assert.deepEqual(
+      reconciled.executedVotes.map((execution) => execution.nounsProposalId),
+      ["986"],
+      "Only the stale execution record must be removed."
+    );
+    assert.equal(reconciled.proposals["987"].status, "closed");
+    assert.equal(reconciled.proposals["987"].executionTxHash, undefined);
+    assert.equal(reconciled.proposals["986"].status, "executed");
+  } finally {
+    rmSync(tempDir, { recursive: true, force: true });
+  }
+
+  const metagovIndex = read("services/metagov/src/index.ts");
+  assert.match(
+    metagovIndex,
+    /voteStatus\s*===\s*false[\s\S]*removeStaleExecution/,
+    "Startup must requeue only executions authoritatively reported as not voted."
+  );
+  assert.match(
+    metagovIndex,
+    /configuredVoterStatus\s*===\s*null[\s\S]*continue/,
+    "Transient Governor receipt errors must defer rather than mutate execution state."
+  );
+  console.log("ok - Startup reconciliation removes only authoritative stale executions");
+}
+
+{
   const serviceSnapshot = read("services/metagov/src/services/snapshot.ts");
   assert.match(serviceSnapshot, /config\.dryRun[\s\S]*dry-run-\$\{proposal\.id\}/, "Snapshot creation must use DRY_RUN fake IDs.");
   assert.match(serviceSnapshot, /buildSnapshotProposalMessage/, "Snapshot creation must use the tested proposal message builder.");
@@ -530,7 +653,7 @@ const snapshotConstants = {
   const safeVoting = read("services/metagov/src/services/safe-voting.ts");
   assert.match(safeVoting, /executionMode:\s*"safe"/, "Final execution result must be Safe-only.");
   assert.match(safeVoting, /castRefundableVoteWithReason/, "Final execution must target the Nouns DAO vote method.");
-  assert.match(safeVoting, /hasAlreadyVoted\(proposalId,\s*config\.safeAddress\)/, "Already-voted detection must check the configured Safe address.");
+  assert.match(safeVoting, /getVoteStatus\(\s*proposalId,\s*config\.safeAddress\s*\)/, "Already-voted detection must check the configured Safe address with an authoritative receipt read.");
   assert.doesNotMatch(safeVoting, /getCurrentVotes|getPriorVotes/, "Final execution must not hard-block zero-weight Safe votes.");
   assert.doesNotMatch(safeVoting, /bot-wallet|executionMode:\s*"bot"/, "Final execution must not fall back to a bot-wallet vote.");
   console.log("ok - Final Nouns DAO execution path is dry-run capable, Safe-only, and zero-weight tolerant");

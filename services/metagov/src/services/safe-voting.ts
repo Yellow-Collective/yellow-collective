@@ -12,6 +12,31 @@ const NOUNS_DAO_ABI = [
   "function getReceipt(uint256 proposalId, address voter) view returns (bool hasVoted, uint8 support, uint96 votes)",
 ];
 
+const SAFE_EXEC_TRANSACTION_ABI = [
+  "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
+];
+
+export const SAFE_EXECUTION_GAS_MINIMUM = 300_000n;
+
+export const calculateBufferedGasLimit = (
+  estimate: bigint,
+  gasBufferPercent: number
+) => {
+  const bufferPercent = BigInt(Math.max(0, Math.ceil(gasBufferPercent)));
+  const bufferedEstimate = (estimate * (100n + bufferPercent) + 99n) / 100n;
+  return bufferedEstimate > SAFE_EXECUTION_GAS_MINIMUM
+    ? bufferedEstimate
+    : SAFE_EXECUTION_GAS_MINIMUM;
+};
+
+export const isReceiptSuccessful = (status: unknown) =>
+  status === 1 ||
+  status === 1n ||
+  status === true ||
+  status === "1" ||
+  status === "0x1" ||
+  status === "success";
+
 const SUPPORT_VALUES: Record<SnapshotChoice, 0 | 1 | 2> = {
   FOR: 1,
   AGAINST: 0,
@@ -54,10 +79,10 @@ const isProposalVoteable = async (proposalId: string) => {
   };
 };
 
-export const hasAlreadyVoted = async (
+export const getVoteStatus = async (
   proposalId: string,
   voterAddress: string
-) => {
+): Promise<boolean | null> => {
   try {
     const provider = getProvider();
     const nounsDao = new ethers.Contract(
@@ -67,13 +92,25 @@ export const hasAlreadyVoted = async (
     );
     const receipt = await nounsDao.getReceipt(proposalId, voterAddress);
     return Boolean(receipt.hasVoted || receipt[0]);
-  } catch {
-    return false;
+  } catch (error) {
+    console.error(
+      `Could not read Nouns vote receipt for #${proposalId} and ${voterAddress}`,
+      error
+    );
+    return null;
   }
 };
 
+export const hasAlreadyVoted = async (
+  proposalId: string,
+  voterAddress: string
+) => (await getVoteStatus(proposalId, voterAddress)) === true;
+
+export const getConfiguredVoterVoteStatus = async (proposalId: string) =>
+  getVoteStatus(proposalId, config.safeAddress);
+
 export const hasConfiguredVoterAlreadyVoted = async (proposalId: string) => {
-  if (await hasAlreadyVoted(proposalId, config.safeAddress)) {
+  if ((await getConfiguredVoterVoteStatus(proposalId)) === true) {
     console.log(`${config.safeAddress} already voted on Nouns #${proposalId}`);
     return true;
   }
@@ -94,7 +131,17 @@ export const executeFinalVote = async (
 
   if (!proposal) return null;
 
-  if (await hasAlreadyVoted(proposalId, config.safeAddress)) {
+  const existingVoteStatus = await getVoteStatus(
+    proposalId,
+    config.safeAddress
+  );
+  if (existingVoteStatus === null) {
+    console.warn(
+      `Deferring Nouns #${proposalId}; configured voter receipt could not be read.`
+    );
+    return null;
+  }
+  if (existingVoteStatus) {
     console.log(`${config.safeAddress} already voted on Nouns #${proposalId}`);
     return null;
   }
@@ -166,6 +213,38 @@ const attemptSafeExecution = async (
     });
     const signedTx = await protocolKit.signTransaction(safeTx);
     const safeTxHash = await protocolKit.getTransactionHash(signedTx);
+    const safeProvider = protocolKit.getSafeProvider();
+    const senderAddress = await safeProvider.getSignerAddress();
+
+    if (!senderAddress) {
+      throw new Error("Safe transaction signer address is unavailable");
+    }
+
+    const safeInterface = new ethers.Interface(SAFE_EXEC_TRANSACTION_ABI);
+    const executionData = safeInterface.encodeFunctionData("execTransaction", [
+      signedTx.data.to,
+      signedTx.data.value,
+      signedTx.data.data,
+      signedTx.data.operation,
+      signedTx.data.safeTxGas,
+      signedTx.data.baseGas,
+      signedTx.data.gasPrice,
+      signedTx.data.gasToken,
+      signedTx.data.refundReceiver,
+      signedTx.encodedSignatures(),
+    ]);
+    const estimatedGas = BigInt(
+      await safeProvider.estimateGas({
+        from: senderAddress,
+        to: config.safeAddress,
+        value: "0",
+        data: executionData,
+      })
+    );
+    const gasLimit = calculateBufferedGasLimit(
+      estimatedGas,
+      gasBufferPercent
+    );
 
     if (config.safeApiKey) {
       try {
@@ -173,9 +252,6 @@ const attemptSafeExecution = async (
           chainId: BigInt(config.chainId),
           apiKey: config.safeApiKey,
         });
-        const senderAddress = await protocolKit
-          .getSafeProvider()
-          .getSignerAddress();
         const senderSignature = Array.from(signedTx.signatures.values())[0]
           ?.data;
         if (senderAddress && senderSignature) {
@@ -193,9 +269,11 @@ const attemptSafeExecution = async (
     }
 
     console.log(
-      `Executing Safe transaction with ${gasBufferPercent}% configured gas buffer.`
+      `Executing Safe transaction with estimated gas ${estimatedGas}, ${gasBufferPercent}% buffer, and gas limit ${gasLimit}.`
     );
-    const executionResult = await protocolKit.executeTransaction(signedTx);
+    const executionResult = await protocolKit.executeTransaction(signedTx, {
+      gasLimit,
+    });
     const receipt = await (
       executionResult.transactionResponse as {
         wait: (confirms: number) => Promise<ethers.TransactionReceipt>;
@@ -203,8 +281,19 @@ const attemptSafeExecution = async (
     )?.wait(1);
     const executionTxHash = executionResult.hash || receipt?.hash;
 
-    if (!receipt || receipt.status === 0) {
+    if (!receipt || !isReceiptSuccessful(receipt.status)) {
       console.error(`Safe execution reverted: ${executionTxHash}`);
+      return null;
+    }
+
+    const confirmedVoteStatus = await getVoteStatus(
+      proposalId,
+      config.safeAddress
+    );
+    if (confirmedVoteStatus !== true) {
+      console.error(
+        `Safe execution was mined, but Nouns Governor does not confirm a vote for #${proposalId}.`
+      );
       return null;
     }
 

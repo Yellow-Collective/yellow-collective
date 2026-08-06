@@ -113,6 +113,34 @@ export class StateStore {
     this.save(state);
   }
 
+  removeStaleExecution(nounsProposalId: string) {
+    const state = this.load();
+    const nextExecutions = state.executedVotes.filter(
+      (execution) => execution.nounsProposalId !== nounsProposalId
+    );
+    if (nextExecutions.length === state.executedVotes.length) return false;
+
+    state.executedVotes = nextExecutions;
+    const existing = state.proposals[nounsProposalId];
+    if (existing) {
+      const {
+        executionMode: _executionMode,
+        voterAddress: _voterAddress,
+        safeTxHash: _safeTxHash,
+        executionTxHash: _executionTxHash,
+        failureReason: _failureReason,
+        ...proposal
+      } = existing;
+      state.proposals[nounsProposalId] = {
+        ...proposal,
+        status: "closed",
+        updatedAt: new Date().toISOString(),
+      };
+    }
+    this.save(state);
+    return true;
+  }
+
   markWinningChoice(
     nounsProposalId: string,
     winningChoice: SnapshotChoice | "NO_VOTES",
