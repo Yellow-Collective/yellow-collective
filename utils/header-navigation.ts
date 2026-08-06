@@ -6,7 +6,7 @@ export type HeaderHomeNavItem = {
 export const getHomeNavigationItems = (
   isConnected: boolean,
   isAdmin: boolean
-): HeaderHomeNavItem[] | null => {
+): HeaderHomeNavItem[] => {
   return [
     { label: "Home", href: "/" },
     { label: "Dashboard", href: "/dashboard" },

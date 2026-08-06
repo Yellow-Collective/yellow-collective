@@ -191,5 +191,7 @@ test("header policy has desktop/mobile parity without exposing admin navigation"
   );
 
   const header = readFileSync(resolve(process.cwd(), "components/Header.tsx"), "utf8");
-  assert.equal((header.match(/homeItems \?/g) || []).length, 2);
+  assert.match(header, /<NavDropdown label="Home" items=\{homeItems\} \/>/);
+  assert.match(header, /<MobileNavGroup\s+label="Home"\s+items=\{homeItems\}/);
+  assert.equal((header.match(/homeItems \?/g) || []).length, 0);
 });

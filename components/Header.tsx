@@ -148,16 +148,7 @@ export default function Header() {
         </div>
 
         <div className="hidden flex-1 items-center justify-end gap-2 px-4 lg:flex">
-          {homeItems ? (
-            <NavDropdown label="Home" items={homeItems} />
-          ) : (
-            <Link
-              href="/"
-              className="rounded-[18px] px-4 py-[13px] font-bold text-primary transition ease-in-out hover:bg-[#181818]/10"
-            >
-              <h6>Home</h6>
-            </Link>
-          )}
+          <NavDropdown label="Home" items={homeItems} />
           <NavDropdown label="Art" items={artItems} />
 
           <NavDropdown label="DAO" items={daoItems} />
@@ -193,21 +184,11 @@ export default function Header() {
               "calc(100dvh - 88px - env(safe-area-inset-bottom) - var(--miniapp-safe-area-bottom))",
           }}
         >
-          {homeItems ? (
-            <MobileNavGroup
-              label="Home"
-              items={homeItems}
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-          ) : (
-            <Link
-              href="/"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="header-dropdown-item rounded-xl px-4 py-3 font-bold text-primary transition hover:bg-[#fff7bf]"
-            >
-              Home
-            </Link>
-          )}
+          <MobileNavGroup
+            label="Home"
+            items={homeItems}
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
           <MobileNavGroup
             label="Art"
             items={artItems}
