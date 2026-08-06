@@ -16,6 +16,7 @@ import { ETHERSCAN_BASEURL } from "constants/urls";
 import type { PlaygroundArtwork } from "data/nouns-builder/artwork";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 import { getAddress, isAddress, type Address } from "viem";
@@ -89,14 +90,31 @@ const ActivityAvatar = ({ address }: { address?: string }) => {
     normalizedAddress ? "/api/playground/artwork" : null,
     fetchJson
   );
-  const [failedImage, setFailedImage] = useState("");
+  const avatarCandidates = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          [
+            profile?.profile?.avatarUrl,
+            ensAvatar?.ensAvatar,
+            profile?.fallbackAvatarUrl,
+          ]
+            .map((value) => value?.trim())
+            .filter((value): value is string => Boolean(value))
+        )
+      ),
+    [ensAvatar?.ensAvatar, profile?.fallbackAvatarUrl, profile?.profile?.avatarUrl]
+  );
+  const [failedImages, setFailedImages] = useState<string[]>([]);
   const avatarUrl =
-    profile?.profile?.avatarUrl ||
-    ensAvatar?.ensAvatar ||
-    profile?.fallbackAvatarUrl ||
+    avatarCandidates.find((candidate) => !failedImages.includes(candidate)) ||
     "";
 
-  useEffect(() => setFailedImage(""), [avatarUrl]);
+  useEffect(() => {
+    setFailedImages((current) =>
+      current.filter((failedUrl) => avatarCandidates.includes(failedUrl))
+    );
+  }, [avatarCandidates]);
 
   const traits = useMemo(
     () =>
@@ -105,6 +123,7 @@ const ActivityAvatar = ({ address }: { address?: string }) => {
         : {},
     [artwork, normalizedAddress]
   );
+  const hasGeneratedNounFallback = Object.keys(traits).length > 0;
   const submission = useMemo<NoundrySubmission | undefined>(
     () =>
       normalizedAddress
@@ -132,23 +151,29 @@ const ActivityAvatar = ({ address }: { address?: string }) => {
       aria-label={`View profile for ${normalizedAddress}`}
       className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-skin-stroke bg-[#ffcc00]"
     >
-      {avatarUrl && failedImage !== avatarUrl ? (
+      {avatarUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={avatarUrl}
           alt=""
           className="h-full w-full object-cover"
-          onError={() => setFailedImage(avatarUrl)}
+          onError={() =>
+            setFailedImages((current) =>
+              current.includes(avatarUrl) ? current : [...current, avatarUrl]
+            )
+          }
         />
-      ) : artwork && submission ? (
-        <NounPreviewTile
-          artwork={artwork}
-          submission={submission}
-          traits={traits}
-          showEditedTrait={false}
-        />
+      ) : artwork && submission && hasGeneratedNounFallback ? (
+        <div className="h-full w-full">
+          <NounPreviewTile
+            artwork={artwork}
+            submission={submission}
+            traits={traits}
+            showEditedTrait={false}
+          />
+        </div>
       ) : (
-        <span className="h-full w-full animate-pulse bg-[#fff7bf] motion-reduce:animate-none" />
+        <Jazzicon diameter={36} seed={jsNumberForAddress(normalizedAddress)} />
       )}
     </Link>
   );

@@ -147,6 +147,30 @@ test("dashboard feed uses ten-item pages, scroll containment, governance filters
   assert.match(source, /whitespace-pre-wrap/);
 });
 
+test("activity avatars advance through unique image candidates and always render a visible fallback", () => {
+  const source = readFileSync(
+    resolve(process.cwd(), "components/dashboard/ActivityFeed.tsx"),
+    "utf8"
+  );
+
+  assert.match(source, /const avatarCandidates = useMemo/);
+  assert.match(source, /new Set\(/);
+  assert.match(source, /profile\?\.profile\?\.avatarUrl/);
+  assert.match(source, /ensAvatar\?\.ensAvatar/);
+  assert.match(source, /profile\?\.fallbackAvatarUrl/);
+  assert.match(source, /avatarCandidates\.find/);
+  assert.match(source, /setFailedImages/);
+  assert.match(source, /hasGeneratedNounFallback/);
+  assert.match(source, /artwork && submission && hasGeneratedNounFallback/);
+  assert.match(source, /<div className="h-full w-full">/);
+  assert.match(source, /<Jazzicon/);
+  assert.doesNotMatch(source, /const \[failedImage, setFailedImage\]/);
+  assert.doesNotMatch(
+    source,
+    /<span className="h-full w-full animate-pulse bg-\[#fff7bf\]/
+  );
+});
+
 test("governance activity exposes titles and separate vote reasons without proposal bodies", () => {
   const source = readFileSync(resolve(process.cwd(), "data/activity.ts"), "utf8");
 
