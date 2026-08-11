@@ -45,6 +45,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 
@@ -821,21 +823,12 @@ const SubmissionDescription = ({
     : blocks;
 
   return (
-    <div className={`space-y-3 text-base leading-snug ${className}`}>
-      {visibleBlocks.map((block, index) => {
-        const heading = block.match(/^#{1,3}\s+(.+)$/);
-
-        if (heading) {
-          return (
-            <h3 key={index} className="font-heading text-xl leading-none">
-              {heading[1]}
-            </h3>
-          );
-        }
-
-        return <p key={index}>{block}</p>;
-      })}
-    </div>
+    <ReactMarkdown
+      className={`prose prose-skin max-w-none break-words text-base leading-snug prose-headings:font-heading prose-headings:leading-none prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-p:my-0 prose-ul:my-0 prose-ol:my-0 ${className}`}
+      remarkPlugins={[remarkGfm]}
+    >
+      {visibleBlocks.join("\n\n")}
+    </ReactMarkdown>
   );
 };
 
