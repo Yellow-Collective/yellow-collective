@@ -6,15 +6,19 @@ import vm from "node:vm";
 
 const require = createRequire(import.meta.url);
 const ts = require("typescript");
+const React = require("react");
+const { renderToStaticMarkup } = require("react-dom/server");
 
 const loadTsModule = (filePath) => {
   const source = readFileSync(filePath, "utf8");
   const transpiled = ts.transpileModule(source, {
     compilerOptions: {
       esModuleInterop: true,
+      jsx: ts.JsxEmit.ReactJSX,
       module: ts.ModuleKind.CommonJS,
       target: ts.ScriptTarget.ES2020,
     },
+    fileName: filePath,
   });
   const module = { exports: {} };
 
@@ -64,15 +68,12 @@ test("forces the submitted trait into every generated tile and one collection ti
   });
 
   assert.equal(
-    calls
-      .slice(0, 6)
-      .every(({ overrides }) => overrides.heads === "custom"),
+    calls.slice(0, 6).every(({ overrides }) => overrides.heads === "custom"),
     true
   );
   assert.equal(
-    calls
-      .slice(6)
-      .filter(({ overrides }) => overrides.heads === "custom").length,
+    calls.slice(6).filter(({ overrides }) => overrides.heads === "custom")
+      .length,
     1
   );
   assert.equal(
@@ -132,7 +133,7 @@ test("truncates derived text to the configured maximum", () => {
 
 test("escapes every SVG attribute metacharacter in stored pixel colors", () => {
   assert.equal(
-    helper.escapeSvgAttribute('red"/><script>&\''),
+    helper.escapeSvgAttribute("red\"/><script>&'"),
     "red&quot;/&gt;&lt;script&gt;&amp;&#39;"
   );
 });
@@ -191,6 +192,23 @@ test("accepts only the trusted generated image and canonical trait link", () => 
     }),
     /trait link is invalid/i
   );
+});
+
+test("renders the canonical Noundry trait page link in Round details", () => {
+  const { SubmissionLinks } = loadTsModule(
+    resolve(process.cwd(), "components/rounds/SubmissionLinks.tsx")
+  );
+  const markup = renderToStaticMarkup(
+    React.createElement(SubmissionLinks, {
+      submission: {
+        url: "/noundry/traits/trait-123",
+        submissionType: "trait",
+      },
+    })
+  );
+
+  assert.match(markup, /href="\/noundry\/traits\/trait-123"/);
+  assert.match(markup, />Noundry trait page</);
 });
 
 let failures = 0;
