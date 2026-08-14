@@ -8,6 +8,7 @@ import {
 } from "@/utils/rounds/round-image-upload";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getRoundState } from "@/utils/rounds/state";
+import { getRoundSubmissionPlaceholders } from "@/utils/rounds/submission-copy";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import { TOKEN_NETWORK } from "constants/addresses";
 import type {
@@ -80,6 +81,7 @@ export default function SubmitRoundPage({
     );
   }
 
+  const placeholders = getRoundSubmissionPlaceholders(round.title);
   const state = getRoundState(round);
   const canSubmit =
     state === "submissions_open" &&
@@ -187,20 +189,20 @@ export default function SubmitRoundPage({
               label="Submission title"
               value={values.title}
               onChange={(value) => updateValue("title", value)}
-              placeholder="Yellow public goods poster"
+              placeholder={placeholders.title}
             />
             <FormField
-              label="Project URL (optional)"
+              label="Submission URL (optional)"
               value={values.url}
               onChange={(value) => updateValue("url", value)}
-              placeholder="example.com"
+              placeholder={placeholders.url}
             />
           </div>
           <FormField
             label="Image URL"
             value={values.image}
             onChange={(value) => updateValue("image", value)}
-            placeholder="example.com/image.png"
+            placeholder={placeholders.image}
             className="mt-5"
             upload={{
               isUploading: isUploadingImage,
@@ -220,7 +222,7 @@ export default function SubmitRoundPage({
             value={values.description}
             onChange={(event) => updateValue("description", event.target.value)}
             rows={6}
-            placeholder="Describe the work and why it belongs in this round."
+            placeholder={placeholders.description}
             className="mt-2 w-full resize-y rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
           />
 
@@ -231,7 +233,7 @@ export default function SubmitRoundPage({
               disabled={!canSubmit || isSubmitting || isSigning}
               className="yc-dark-submit-blue flex items-center justify-center rounded-[18px] bg-accent px-5 py-3 font-heading text-lg text-skin-base shadow-[0px_4.02px_0px_0px_#b89400] transition hover:-translate-y-0.5 hover:bg-[#ffd84d] active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {isSubmitting || isSigning ? "Submitting..." : "Submit project"}
+              {isSubmitting || isSigning ? "Submitting..." : "Submit entry"}
             </button>
             <button
               type="button"
