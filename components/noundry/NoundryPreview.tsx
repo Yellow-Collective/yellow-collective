@@ -189,24 +189,16 @@ export const NounPreviewTile = ({
   submission,
   traits,
   showEditedTrait,
-  fullBleed = false,
 }: {
   artwork?: PlaygroundArtwork;
   submission: NoundrySubmission;
   traits: Record<string, string>;
   showEditedTrait: boolean;
-  fullBleed?: boolean;
 }) => {
   const collectionLayers = artwork ? getCollectionLayers(artwork, traits) : [];
 
   return (
-    <div
-      className={`aspect-square bg-[#d7d9e4] ${
-        fullBleed
-          ? ""
-          : "border border-[#d7d7d7] p-3 shadow-[0px_3px_0px_0px_#b8b8b8]"
-      }`}
-    >
+    <div className="aspect-square overflow-hidden bg-[#d7d9e4]">
       {artwork ? (
         <FullCharacterPreview
           collectionLayers={collectionLayers}
@@ -250,7 +242,6 @@ export const SubmissionGalleryCard = ({
         submission={submission}
         traits={getSubmissionPreviewTraits(submission)}
         showEditedTrait
-        fullBleed
       />
     </Link>
     <div className={`border-t border-skin-stroke ${compact ? "p-2 sm:p-3" : "p-4"}`}>

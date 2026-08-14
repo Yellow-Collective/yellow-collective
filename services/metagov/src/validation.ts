@@ -4,13 +4,19 @@ import Safe from "@safe-global/protocol-kit";
 import { ethers } from "ethers";
 import { config, validateConfig } from "./config";
 import { graphqlRequest } from "./utils/http";
-import { getBotWallet, getProvider, validateRpcEndpoint } from "./utils/wallet";
+import {
+  getBotWallet,
+  getProvider,
+  validateRpcEndpoint,
+  validateSnapshotRpcEndpoint,
+} from "./utils/wallet";
 
 const SPACE_QUERY = `
   query Space($id: String!) {
     space(id: $id) {
       id
       name
+      network
     }
   }
 `;
@@ -81,13 +87,27 @@ export const validateRuntime = async () => {
   const blockNumber = await validateRpcEndpoint();
   console.log(`Connected to Ethereum mainnet RPC at block ${blockNumber}`);
 
+  const snapshotBlockNumber = await validateSnapshotRpcEndpoint();
+  console.log(
+    `Connected to Snapshot RPC chain ${config.snapshotChainId} at block ${snapshotBlockNumber}`
+  );
+
   await validateSafeRuntime();
 
   await validateCurrentVotes("Safe", config.safeAddress, provider);
 
-  await graphqlRequest<{ space?: { id: string } | null }>(
+  const snapshotSpace = await graphqlRequest<{
+    space?: { id: string; network?: string | null } | null;
+  }>(
     config.snapshotGraphql,
     SPACE_QUERY,
     { id: config.snapshotSpaceId }
   );
+
+  const spaceNetwork = snapshotSpace.space?.network;
+  if (spaceNetwork && spaceNetwork !== String(config.snapshotChainId)) {
+    throw new Error(
+      `Snapshot space ${config.snapshotSpaceId} is on chain ${spaceNetwork}, but SNAPSHOT_CHAIN_ID is ${config.snapshotChainId}.`
+    );
+  }
 };

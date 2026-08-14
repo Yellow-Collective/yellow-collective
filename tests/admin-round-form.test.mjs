@@ -47,10 +47,7 @@ test("converts a changed date input into an ISO value", () => {
   const input = "2026-06-16T09:45";
 
   assert.equal(
-    form.dateInputToPreservedIso(
-      input,
-      "2026-06-15T14:30:45.123Z"
-    ),
+    form.dateInputToPreservedIso(input, "2026-06-15T14:30:45.123Z"),
     new Date(input).toISOString()
   );
 });
@@ -74,6 +71,42 @@ test("uses submissions open as the round start date in admin payloads", () => {
   assert.equal(dates.submissionsOpenAt, "2026-06-15T14:30:45.123Z");
   assert.equal(dates.votingStartsAt, "2026-06-20T14:30:30.000Z");
   assert.equal(dates.votingEndsAt, "2026-06-25T14:30:30.000Z");
+});
+
+test("preserves an unchanged custom snapshot ISO value", () => {
+  assert.equal(typeof form.getAdminRoundSnapshotPayload, "function");
+
+  const snapshot = form.getAdminRoundSnapshotPayload(
+    {
+      votingSnapshotMode: "custom",
+      votingSnapshotAt: "2026-06-18T09:15",
+    },
+    {
+      votingSnapshotMode: "custom",
+      votingSnapshotAt: "2026-06-18T09:15:45.123Z",
+    }
+  );
+
+  assert.equal(snapshot.votingSnapshotMode, "custom");
+  assert.equal(snapshot.votingSnapshotAt, "2026-06-18T09:15:45.123Z");
+});
+
+test("clears the custom timestamp for the voting-start preset", () => {
+  assert.equal(typeof form.getAdminRoundSnapshotPayload, "function");
+
+  const snapshot = form.getAdminRoundSnapshotPayload(
+    {
+      votingSnapshotMode: "voting_start",
+      votingSnapshotAt: "2026-06-18T09:15",
+    },
+    {
+      votingSnapshotMode: "custom",
+      votingSnapshotAt: "2026-06-18T09:15:45.123Z",
+    }
+  );
+
+  assert.equal(snapshot.votingSnapshotMode, "voting_start");
+  assert.equal(snapshot.votingSnapshotAt, null);
 });
 
 let failures = 0;

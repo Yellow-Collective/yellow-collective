@@ -2,7 +2,18 @@ import { randomUUID } from "crypto";
 import { Pool, type PoolClient } from "pg";
 import { getAddress, isAddress } from "viem";
 import { getRoundState } from "@/utils/rounds/state";
-import { getBlockNumberAtOrBeforeTimestamp } from "@/utils/rounds/getCollectiveNounVotingPower";
+import {
+  getBlockNumberAtOrBeforeTimestamp,
+  getLatestRoundVotingBlockTimestamp,
+} from "@/utils/rounds/getCollectiveNounVotingPower";
+import {
+  getEffectiveRoundVotingSnapshotAt,
+  hasRoundVotingSnapshotChanged,
+  isRoundVotingSnapshotMode,
+  isRoundVotingSnapshotReady,
+  validateRoundVotingSnapshot,
+  type RoundVotingSnapshotMode,
+} from "@/utils/rounds/voting-snapshot";
 import {
   getNoundrySubmissionById,
   type NoundrySubmission,
@@ -24,6 +35,7 @@ import {
   getDummyPublicRoundBySlug,
   getDummyPublicRounds,
 } from "data/dummy-content";
+import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
 
 export type RoundStatus = "draft" | "published" | "archived";
 export type RoundSubmissionStatus =
@@ -35,7 +47,9 @@ export type RoundRequestStatus = "pending" | "approved" | "rejected";
 export type RoundVotingStrategy =
   | "one_per_wallet"
   | "one_per_nft"
-  | "fixed_per_wallet";
+  | "fixed_per_wallet"
+  | "base_plus_voting_power";
+export type { RoundVotingSnapshotMode };
 export type RoundSubmissionType = "project" | "trait";
 
 export type Round = {
@@ -57,6 +71,8 @@ export type Round = {
   status: RoundStatus;
   votingStrategy: RoundVotingStrategy;
   votesPerWallet: number;
+  votingSnapshotMode: RoundVotingSnapshotMode;
+  votingSnapshotAt: string | null;
   votingSnapshotBlock: number | null;
   winnerCount: number;
   maxSubmissionsPerWallet: number;
@@ -107,6 +123,22 @@ export type RoundVoteActivity = {
   updatedAt: string;
 };
 
+export type AdminRoundVote = RoundVoteActivity & {
+  roundId: string;
+  submissionStatus: RoundSubmissionStatus | null;
+  submissionDeleted: boolean;
+};
+
+export type AdminRoundVoteSort = "newest" | "oldest" | "highest" | "lowest";
+
+export type AdminRoundVoteFilters = {
+  search: string;
+  submissionId: string;
+  walletAddress: string;
+  sort: AdminRoundVoteSort;
+  direction: "asc" | "desc";
+};
+
 export type ProfileRoundSubmission = RoundSubmission & {
   roundSlug: string;
   roundTitle: string;
@@ -116,6 +148,11 @@ export type ProfileRoundVote = RoundVoteActivity & {
   roundId: string;
   roundSlug: string;
   roundTitle: string;
+};
+
+export type PublicRoundActivity = {
+  submissions: ProfileRoundSubmission[];
+  votes: ProfileRoundVote[];
 };
 
 export type RoundAward = {
@@ -148,6 +185,8 @@ export type RoundRequest = {
   endsAt: string;
   votingStrategy: RoundVotingStrategy;
   votesPerWallet: number;
+  votingSnapshotMode: RoundVotingSnapshotMode;
+  votingSnapshotAt: string | null;
   winnerCount: number;
   maxSubmissionsPerWallet: number;
   isTraitContest: boolean;
@@ -185,6 +224,8 @@ export type RoundInput = Partial<
     | "status"
     | "votingStrategy"
     | "votesPerWallet"
+    | "votingSnapshotMode"
+    | "votingSnapshotAt"
     | "winnerCount"
     | "maxSubmissionsPerWallet"
     | "minTitleLength"
@@ -238,6 +279,8 @@ export type RoundRequestInput = Partial<
     | "endsAt"
     | "votingStrategy"
     | "votesPerWallet"
+    | "votingSnapshotMode"
+    | "votingSnapshotAt"
     | "winnerCount"
     | "maxSubmissionsPerWallet"
     | "isTraitContest"
@@ -250,7 +293,6 @@ export type RoundRequestInput = Partial<
 const DEFAULT_LIMITS = {
   maxSubmissionsPerWallet: 1,
   winnerCount: 1,
-  votesPerWallet: 1,
   minTitleLength: 3,
   maxTitleLength: 120,
   minDescriptionLength: 20,
@@ -311,6 +353,8 @@ const ensureTables = async () => {
             status text NOT NULL DEFAULT 'draft',
             voting_strategy text NOT NULL DEFAULT 'one_per_nft',
             votes_per_wallet integer NOT NULL DEFAULT 1,
+            voting_snapshot_mode text NOT NULL DEFAULT 'voting_start',
+            voting_snapshot_at timestamptz,
             voting_snapshot_block integer,
             winner_count integer NOT NULL DEFAULT 1,
             max_submissions_per_wallet integer NOT NULL DEFAULT 1,
@@ -322,7 +366,12 @@ const ensureTables = async () => {
             updated_at timestamptz NOT NULL DEFAULT now(),
             deleted_at timestamptz,
             CONSTRAINT rounds_status_check CHECK (status IN ('draft', 'published', 'archived')),
-            CONSTRAINT rounds_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet')),
+            CONSTRAINT rounds_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power')),
+            CONSTRAINT rounds_voting_snapshot_mode_check CHECK (voting_snapshot_mode IN ('voting_start', 'custom')),
+            CONSTRAINT rounds_voting_snapshot_date_check CHECK (
+              (voting_snapshot_mode = 'voting_start' AND voting_snapshot_at IS NULL)
+              OR (voting_snapshot_mode = 'custom' AND voting_snapshot_at IS NOT NULL AND voting_snapshot_at <= voting_starts_at)
+            ),
             CONSTRAINT rounds_votes_per_wallet_check CHECK (votes_per_wallet > 0),
             CONSTRAINT rounds_winner_count_check CHECK (winner_count > 0),
             CONSTRAINT rounds_submission_limit_check CHECK (max_submissions_per_wallet > 0),
@@ -372,6 +421,19 @@ const ensureTables = async () => {
             CONSTRAINT round_votes_unique_wallet_submission UNIQUE (round_id, submission_id, wallet_address)
           );
 
+          CREATE TABLE IF NOT EXISTS round_vote_admin_audit (
+            id text PRIMARY KEY,
+            round_id text NOT NULL,
+            vote_id text NOT NULL,
+            admin_wallet_address text NOT NULL,
+            action text NOT NULL,
+            before_state jsonb NOT NULL,
+            after_state jsonb,
+            reason text NOT NULL DEFAULT '',
+            created_at timestamptz NOT NULL DEFAULT now(),
+            CONSTRAINT round_vote_admin_audit_action_check CHECK (action IN ('update', 'delete'))
+          );
+
           CREATE TABLE IF NOT EXISTS round_awards (
             id text PRIMARY KEY,
             round_id text NOT NULL REFERENCES rounds(id) ON DELETE CASCADE,
@@ -416,6 +478,8 @@ const ensureTables = async () => {
             ends_at timestamptz,
             voting_strategy text NOT NULL DEFAULT 'one_per_nft',
             votes_per_wallet integer NOT NULL DEFAULT 1,
+            voting_snapshot_mode text NOT NULL DEFAULT 'voting_start',
+            voting_snapshot_at timestamptz,
             winner_count integer NOT NULL DEFAULT 1,
             max_submissions_per_wallet integer NOT NULL DEFAULT 1,
             is_trait_contest boolean NOT NULL DEFAULT false,
@@ -427,7 +491,12 @@ const ensureTables = async () => {
             reviewed_at timestamptz,
             deleted_at timestamptz,
             CONSTRAINT round_requests_status_check CHECK (status IN ('pending', 'approved', 'rejected')),
-            CONSTRAINT round_requests_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet')),
+            CONSTRAINT round_requests_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power')),
+            CONSTRAINT round_requests_voting_snapshot_mode_check CHECK (voting_snapshot_mode IN ('voting_start', 'custom')),
+            CONSTRAINT round_requests_voting_snapshot_date_check CHECK (
+              (voting_snapshot_mode = 'voting_start' AND voting_snapshot_at IS NULL)
+              OR (voting_snapshot_mode = 'custom' AND voting_snapshot_at IS NOT NULL AND voting_snapshot_at <= voting_starts_at)
+            ),
             CONSTRAINT round_requests_votes_per_wallet_check CHECK (votes_per_wallet > 0),
             CONSTRAINT round_requests_winner_count_check CHECK (winner_count > 0),
             CONSTRAINT round_requests_submission_limit_check CHECK (max_submissions_per_wallet > 0)
@@ -449,6 +518,10 @@ const ensureTables = async () => {
           CREATE INDEX IF NOT EXISTS round_votes_round_wallet_idx ON round_votes(round_id, wallet_address);
           CREATE UNIQUE INDEX IF NOT EXISTS round_votes_round_submission_wallet_idx
             ON round_votes(round_id, submission_id, wallet_address);
+          CREATE INDEX IF NOT EXISTS round_vote_admin_audit_round_created_idx
+            ON round_vote_admin_audit(round_id, created_at DESC);
+          CREATE INDEX IF NOT EXISTS round_vote_admin_audit_vote_idx
+            ON round_vote_admin_audit(vote_id);
           CREATE INDEX IF NOT EXISTS round_awards_round_position_idx ON round_awards(round_id, award_position);
           CREATE INDEX IF NOT EXISTS round_winners_round_position_idx ON round_winners(round_id, winner_position);
           CREATE INDEX IF NOT EXISTS round_requests_status_idx ON round_requests(status);
@@ -461,6 +534,8 @@ const ensureTables = async () => {
             ADD COLUMN IF NOT EXISTS winner_count integer NOT NULL DEFAULT 1,
             ADD COLUMN IF NOT EXISTS voting_strategy text NOT NULL DEFAULT 'one_per_nft',
             ADD COLUMN IF NOT EXISTS votes_per_wallet integer NOT NULL DEFAULT 1,
+            ADD COLUMN IF NOT EXISTS voting_snapshot_mode text NOT NULL DEFAULT 'voting_start',
+            ADD COLUMN IF NOT EXISTS voting_snapshot_at timestamptz,
             ADD COLUMN IF NOT EXISTS voting_snapshot_block integer,
             ADD COLUMN IF NOT EXISTS is_trait_contest boolean NOT NULL DEFAULT false,
             ADD COLUMN IF NOT EXISTS trait_submissions_enabled boolean NOT NULL DEFAULT false
@@ -495,11 +570,26 @@ const ensureTables = async () => {
             ADD COLUMN IF NOT EXISTS ends_at timestamptz,
             ADD COLUMN IF NOT EXISTS voting_strategy text NOT NULL DEFAULT 'one_per_nft',
             ADD COLUMN IF NOT EXISTS votes_per_wallet integer NOT NULL DEFAULT 1,
+            ADD COLUMN IF NOT EXISTS voting_snapshot_mode text NOT NULL DEFAULT 'voting_start',
+            ADD COLUMN IF NOT EXISTS voting_snapshot_at timestamptz,
             ADD COLUMN IF NOT EXISTS winner_count integer NOT NULL DEFAULT 1,
             ADD COLUMN IF NOT EXISTS max_submissions_per_wallet integer NOT NULL DEFAULT 1,
             ADD COLUMN IF NOT EXISTS is_trait_contest boolean NOT NULL DEFAULT false,
             ADD COLUMN IF NOT EXISTS trait_submissions_enabled boolean NOT NULL DEFAULT false,
             ADD COLUMN IF NOT EXISTS awards jsonb NOT NULL DEFAULT '[]'::jsonb
+        `)
+      )
+      .then(() =>
+        getPool().query(`
+          ALTER TABLE rounds
+            DROP CONSTRAINT IF EXISTS rounds_voting_strategy_check,
+            ADD CONSTRAINT rounds_voting_strategy_check
+            CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power'));
+
+          ALTER TABLE round_requests
+            DROP CONSTRAINT IF EXISTS round_requests_voting_strategy_check,
+            ADD CONSTRAINT round_requests_voting_strategy_check
+            CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power'));
         `)
       )
       .then(() =>
@@ -550,6 +640,30 @@ const ensureTables = async () => {
         `)
       )
       .then(() =>
+        getPool().query(`
+          ALTER TABLE rounds
+            DROP CONSTRAINT IF EXISTS rounds_voting_snapshot_mode_check,
+            DROP CONSTRAINT IF EXISTS rounds_voting_snapshot_date_check,
+            ADD CONSTRAINT rounds_voting_snapshot_mode_check CHECK (voting_snapshot_mode IN ('voting_start', 'custom')),
+            ADD CONSTRAINT rounds_voting_snapshot_date_check CHECK (
+              (voting_snapshot_mode = 'voting_start' AND voting_snapshot_at IS NULL)
+              OR (voting_snapshot_mode = 'custom' AND voting_snapshot_at IS NOT NULL AND voting_snapshot_at <= voting_starts_at)
+            )
+        `)
+      )
+      .then(() =>
+        getPool().query(`
+          ALTER TABLE round_requests
+            DROP CONSTRAINT IF EXISTS round_requests_voting_snapshot_mode_check,
+            DROP CONSTRAINT IF EXISTS round_requests_voting_snapshot_date_check,
+            ADD CONSTRAINT round_requests_voting_snapshot_mode_check CHECK (voting_snapshot_mode IN ('voting_start', 'custom')),
+            ADD CONSTRAINT round_requests_voting_snapshot_date_check CHECK (
+              (voting_snapshot_mode = 'voting_start' AND voting_snapshot_at IS NULL)
+              OR (voting_snapshot_mode = 'custom' AND voting_snapshot_at IS NOT NULL AND voting_snapshot_at <= voting_starts_at)
+            )
+        `)
+      )
+      .then(() =>
         getPool().query(
           `
             INSERT INTO site_settings (setting_key, setting_value)
@@ -594,6 +708,8 @@ const roundSelectFields = `
   r.status,
   r.voting_strategy,
   r.votes_per_wallet,
+  r.voting_snapshot_mode,
+  r.voting_snapshot_at,
   r.voting_snapshot_block,
   r.winner_count,
   r.max_submissions_per_wallet,
@@ -652,6 +768,8 @@ const requestSelectFields = `
   ends_at,
   voting_strategy,
   votes_per_wallet,
+  voting_snapshot_mode,
+  voting_snapshot_at,
   winner_count,
   max_submissions_per_wallet,
   is_trait_contest,
@@ -730,6 +848,10 @@ const mapRound = (row: Record<string, any>): Round => ({
   status: row.status,
   votingStrategy: row.voting_strategy || "one_per_nft",
   votesPerWallet: Number(row.votes_per_wallet || 1),
+  votingSnapshotMode: isRoundVotingSnapshotMode(row.voting_snapshot_mode)
+    ? row.voting_snapshot_mode
+    : "voting_start",
+  votingSnapshotAt: formatDate(row.voting_snapshot_at),
   votingSnapshotBlock: row.voting_snapshot_block
     ? Number(row.voting_snapshot_block)
     : null,
@@ -792,6 +914,10 @@ const mapRoundRequest = (row: Record<string, any>): RoundRequest => ({
   endsAt: formatDate(row.ends_at) || "",
   votingStrategy: row.voting_strategy || "one_per_nft",
   votesPerWallet: Number(row.votes_per_wallet || 1),
+  votingSnapshotMode: isRoundVotingSnapshotMode(row.voting_snapshot_mode)
+    ? row.voting_snapshot_mode
+    : "voting_start",
+  votingSnapshotAt: formatDate(row.voting_snapshot_at),
   winnerCount: Number(row.winner_count || 1),
   maxSubmissionsPerWallet: Number(row.max_submissions_per_wallet || 1),
   isTraitContest: Boolean(row.is_trait_contest),
@@ -828,6 +954,12 @@ const normalizeDate = (value: unknown, fallback: Date) => {
   return date.toISOString();
 };
 
+const normalizeOptionalDate = (value: unknown) => {
+  if (value === null || value === undefined || value === "") return null;
+  const date = new Date(String(value));
+  return Number.isNaN(date.getTime()) ? String(value) : date.toISOString();
+};
+
 const isSafeUrl = (value: string, { allowDataImage = false } = {}) => {
   if (!value) return true;
   return Boolean(
@@ -859,6 +991,26 @@ export const normalizeRoundInput = (
     input.votingEndsAt ?? current?.votingEndsAt,
     votingEndFallback
   );
+  const votingStartsAt = normalizeDate(
+    input.votingStartsAt ?? current?.votingStartsAt,
+    votingStartFallback
+  );
+  const votingSnapshotMode = (input.votingSnapshotMode ??
+    current?.votingSnapshotMode ??
+    "voting_start") as RoundVotingSnapshotMode;
+  const votingSnapshotAt =
+    votingSnapshotMode === "custom"
+      ? normalizeOptionalDate(
+          input.votingSnapshotAt ?? current?.votingSnapshotAt ?? null
+        )
+      : null;
+  const votingStrategy = (input.votingStrategy ??
+    current?.votingStrategy ??
+    "one_per_nft") as RoundVotingStrategy;
+  const currentVotesPerWallet =
+    current?.votingStrategy === votingStrategy
+      ? current.votesPerWallet
+      : undefined;
 
   return {
     slug: normalizeSlug(input.slug ?? current?.slug ?? `round-${Date.now()}`),
@@ -877,10 +1029,7 @@ export const normalizeRoundInput = (
       input.submissionsOpenAt ?? current?.submissionsOpenAt,
       submissionsFallback
     ),
-    votingStartsAt: normalizeDate(
-      input.votingStartsAt ?? current?.votingStartsAt,
-      votingStartFallback
-    ),
+    votingStartsAt,
     votingEndsAt,
     endsAt: votingEndsAt,
     active: Boolean(input.active ?? current?.active ?? false),
@@ -890,19 +1039,19 @@ export const normalizeRoundInput = (
     ),
     traitSubmissionsEnabled: Boolean(
       input.traitSubmissionsEnabled ??
-        current?.traitSubmissionsEnabled ??
-        input.isTraitContest ??
-        false
+      current?.traitSubmissionsEnabled ??
+      input.isTraitContest ??
+      false
     ),
     status: (input.status ?? current?.status ?? "draft") as RoundStatus,
-    votingStrategy: (input.votingStrategy ??
-      current?.votingStrategy ??
-      "one_per_nft") as RoundVotingStrategy,
+    votingStrategy,
     votesPerWallet: Number(
       input.votesPerWallet ??
-        current?.votesPerWallet ??
-        DEFAULT_LIMITS.votesPerWallet
+        currentVotesPerWallet ??
+        getDefaultRoundVotesPerWallet(votingStrategy)
     ),
+    votingSnapshotMode,
+    votingSnapshotAt,
     winnerCount: Number(
       input.winnerCount ?? current?.winnerCount ?? DEFAULT_LIMITS.winnerCount
     ),
@@ -954,14 +1103,18 @@ export const validateRoundInput = (input: NormalizedRoundInput) => {
   if (
     input.votingStrategy !== "one_per_wallet" &&
     input.votingStrategy !== "one_per_nft" &&
-    input.votingStrategy !== "fixed_per_wallet"
+    input.votingStrategy !== "fixed_per_wallet" &&
+    input.votingStrategy !== "base_plus_voting_power"
   ) {
     return "Voting type is invalid.";
   }
 
-  if (!Number.isInteger(input.votesPerWallet) || input.votesPerWallet < 1) {
-    return "Votes per wallet must be at least 1.";
+  if (!Number.isSafeInteger(input.votesPerWallet) || input.votesPerWallet < 1) {
+    return "Votes per wallet must be a positive safe whole number.";
   }
+
+  const snapshotValidationError = validateRoundVotingSnapshot(input);
+  if (snapshotValidationError) return snapshotValidationError;
 
   if (
     !Number.isInteger(input.maxSubmissionsPerWallet) ||
@@ -1197,6 +1350,14 @@ const normalizeRoundRequestInput = (input: RoundRequestInput) => {
     new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
   );
   const submissionsOpenAt = normalizeDate(input.submissionsOpenAt, new Date());
+  const votingStartsAt = normalizeDate(
+    input.votingStartsAt,
+    new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+  );
+  const votingSnapshotMode = (input.votingSnapshotMode ??
+    "voting_start") as RoundVotingSnapshotMode;
+  const votingStrategy = (input.votingStrategy ||
+    "one_per_nft") as RoundVotingStrategy;
 
   return {
     walletAddress:
@@ -1217,15 +1378,19 @@ const normalizeRoundRequestInput = (input: RoundRequestInput) => {
     timeline: String(input.timeline || "").trim(),
     startsAt: submissionsOpenAt,
     submissionsOpenAt,
-    votingStartsAt: normalizeDate(
-      input.votingStartsAt,
-      new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    ),
+    votingStartsAt,
     votingEndsAt,
     endsAt: votingEndsAt,
-    votingStrategy: (input.votingStrategy ||
-      "one_per_nft") as RoundVotingStrategy,
-    votesPerWallet: Number(input.votesPerWallet || 1),
+    votingStrategy,
+    votesPerWallet: Number(
+      input.votesPerWallet ??
+        getDefaultRoundVotesPerWallet(votingStrategy)
+    ),
+    votingSnapshotMode,
+    votingSnapshotAt:
+      votingSnapshotMode === "custom"
+        ? normalizeOptionalDate(input.votingSnapshotAt)
+        : null,
     winnerCount: Number(input.winnerCount || 1),
     maxSubmissionsPerWallet: Number(input.maxSubmissionsPerWallet || 1),
     isTraitContest: Boolean(input.isTraitContest),
@@ -1309,6 +1474,8 @@ export const validateRoundRequestInput = (input: RoundRequestInput) => {
     status: "published",
     votingStrategy: request.votingStrategy,
     votesPerWallet: request.votesPerWallet,
+    votingSnapshotMode: request.votingSnapshotMode,
+    votingSnapshotAt: request.votingSnapshotAt,
     winnerCount: request.winnerCount,
     maxSubmissionsPerWallet: request.maxSubmissionsPerWallet,
     minTitleLength: DEFAULT_LIMITS.minTitleLength,
@@ -1403,6 +1570,7 @@ export const listAdminRounds = async () => {
           WHEN 'published' THEN 1
           ELSE 2
         END,
+        r.updated_at DESC,
         r.created_at DESC
     `,
     [DEMO_ROUND_SLUG_PATTERN]
@@ -1463,9 +1631,11 @@ export const createRoundRequest = async (input: RoundRequestInput) => {
         max_submissions_per_wallet,
         is_trait_contest,
         trait_submissions_enabled,
-        awards
+        awards,
+        voting_snapshot_mode,
+        voting_snapshot_at
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
       RETURNING ${requestSelectFields}
     `,
     [
@@ -1492,6 +1662,8 @@ export const createRoundRequest = async (input: RoundRequestInput) => {
       request.isTraitContest,
       request.traitSubmissionsEnabled,
       JSON.stringify(request.awards),
+      request.votingSnapshotMode,
+      request.votingSnapshotAt,
     ]
   );
 
@@ -1571,6 +1743,8 @@ export const approveRoundRequest = async (id: string) => {
       status: "draft",
       votingStrategy: request.votingStrategy,
       votesPerWallet: request.votesPerWallet,
+      votingSnapshotMode: request.votingSnapshotMode,
+      votingSnapshotAt: request.votingSnapshotAt,
       winnerCount: request.winnerCount,
       maxSubmissionsPerWallet: request.maxSubmissionsPerWallet,
       minTitleLength: DEFAULT_LIMITS.minTitleLength,
@@ -1588,7 +1762,12 @@ export const approveRoundRequest = async (id: string) => {
 
     const existingRound = await client.query(
       `
-        SELECT id
+        SELECT
+          id,
+          voting_starts_at,
+          voting_snapshot_mode,
+          voting_snapshot_at,
+          voting_snapshot_block
         FROM rounds
         WHERE slug = $1 AND deleted_at IS NULL
         LIMIT 1
@@ -1598,6 +1777,43 @@ export const approveRoundRequest = async (id: string) => {
 
     if (existingRound.rows[0]?.id) {
       const existingRoundId = String(existingRound.rows[0].id);
+      await client.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+        `voting-snapshot:${existingRoundId}`,
+      ]);
+      const lockedRoundResult = await client.query(
+        `
+          SELECT
+            id,
+            voting_starts_at,
+            voting_snapshot_mode,
+            voting_snapshot_at,
+            voting_snapshot_block
+          FROM rounds
+          WHERE id = $1 AND deleted_at IS NULL
+          FOR UPDATE
+        `,
+        [existingRoundId]
+      );
+      const existingRoundRow = lockedRoundResult.rows[0];
+      if (
+        existingRoundRow?.voting_snapshot_block &&
+        hasRoundVotingSnapshotChanged(
+          {
+            votingStartsAt: formatDate(existingRoundRow.voting_starts_at) || "",
+            votingSnapshotMode: isRoundVotingSnapshotMode(
+              existingRoundRow.voting_snapshot_mode
+            )
+              ? existingRoundRow.voting_snapshot_mode
+              : "voting_start",
+            votingSnapshotAt: formatDate(existingRoundRow.voting_snapshot_at),
+          },
+          roundInput
+        )
+      ) {
+        throw new Error(
+          "Voting snapshot timing cannot change after its block is resolved."
+        );
+      }
       roundId = existingRoundId;
       await client.query(
         `
@@ -1624,6 +1840,8 @@ export const approveRoundRequest = async (id: string) => {
             max_title_length = $21,
             min_description_length = $22,
             max_description_length = $23,
+            voting_snapshot_mode = $24,
+            voting_snapshot_at = $25,
             updated_at = now()
           WHERE id = $1
         `,
@@ -1651,6 +1869,8 @@ export const approveRoundRequest = async (id: string) => {
           roundInput.maxTitleLength,
           roundInput.minDescriptionLength,
           roundInput.maxDescriptionLength,
+          roundInput.votingSnapshotMode,
+          roundInput.votingSnapshotAt,
         ]
       );
       await replaceRoundAwards(existingRoundId, request.awards, client);
@@ -1682,9 +1902,11 @@ export const approveRoundRequest = async (id: string) => {
             min_title_length,
             max_title_length,
             min_description_length,
-            max_description_length
+            max_description_length,
+            voting_snapshot_mode,
+            voting_snapshot_at
           )
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)
         `,
         [
           roundId,
@@ -1711,6 +1933,8 @@ export const approveRoundRequest = async (id: string) => {
           roundInput.maxTitleLength,
           roundInput.minDescriptionLength,
           roundInput.maxDescriptionLength,
+          roundInput.votingSnapshotMode,
+          roundInput.votingSnapshotAt,
         ]
       );
       await replaceRoundAwards(roundId, request.awards, client);
@@ -1933,7 +2157,6 @@ export const finalizeRoundWinners = async (round: Round) => {
 export const getOrCreateRoundVotingSnapshotBlock = async (round: Round) => {
   await ensureTables();
 
-  if (round.votingStrategy !== "one_per_nft") return null;
   if (round.votingSnapshotBlock) return round.votingSnapshotBlock;
 
   const client = await getPool().connect();
@@ -1946,7 +2169,11 @@ export const getOrCreateRoundVotingSnapshotBlock = async (round: Round) => {
 
     const current = await client.query(
       `
-        SELECT voting_snapshot_block
+        SELECT
+          voting_starts_at,
+          voting_snapshot_mode,
+          voting_snapshot_at,
+          voting_snapshot_block
         FROM rounds
         WHERE id = $1 AND deleted_at IS NULL
         LIMIT 1
@@ -1959,9 +2186,28 @@ export const getOrCreateRoundVotingSnapshotBlock = async (round: Round) => {
       return Number(existing);
     }
 
-    const blockNumber = await getBlockNumberAtOrBeforeTimestamp(
-      round.votingStartsAt
-    );
+    const snapshotConfig = {
+      votingStartsAt: formatDate(current.rows[0]?.voting_starts_at) || "",
+      votingSnapshotMode: isRoundVotingSnapshotMode(
+        current.rows[0]?.voting_snapshot_mode
+      )
+        ? current.rows[0].voting_snapshot_mode
+        : "voting_start",
+      votingSnapshotAt: formatDate(current.rows[0]?.voting_snapshot_at),
+    };
+    const effectiveSnapshotAt =
+      getEffectiveRoundVotingSnapshotAt(snapshotConfig);
+    const latestBlockTimestamp = await getLatestRoundVotingBlockTimestamp();
+
+    if (
+      !isRoundVotingSnapshotReady(effectiveSnapshotAt, latestBlockTimestamp)
+    ) {
+      await client.query("COMMIT");
+      return null;
+    }
+
+    const blockNumber =
+      await getBlockNumberAtOrBeforeTimestamp(effectiveSnapshotAt);
     await client.query(
       `
         UPDATE rounds
@@ -2015,6 +2261,357 @@ export const listRoundVoteActivity = async (roundId: string) => {
   })) as RoundVoteActivity[];
 };
 
+const mapAdminRoundVoteRow = (row: Record<string, any>): AdminRoundVote => ({
+  id: row.id,
+  roundId: row.round_id,
+  walletAddress: row.wallet_address,
+  submissionId: row.submission_id,
+  submissionTitle: row.submission_title || "Deleted submission",
+  submissionStatus: row.submission_status || null,
+  submissionDeleted: Boolean(row.submission_deleted),
+  voteCount: Number(row.vote_count || 0),
+  createdAt: formatDate(row.created_at) || "",
+  updatedAt: formatDate(row.updated_at) || "",
+});
+
+const ADMIN_ROUND_VOTE_ORDER_BY: Record<AdminRoundVoteSort, string> = {
+  newest: "v.updated_at DESC, v.created_at DESC, v.id ASC",
+  oldest: "v.created_at ASC, v.updated_at ASC, v.id ASC",
+  highest: "v.vote_count DESC, v.updated_at DESC, v.id ASC",
+  lowest: "v.vote_count ASC, v.updated_at DESC, v.id ASC",
+};
+
+export const listAdminRoundVotes = async (
+  roundId: string,
+  filters: Partial<AdminRoundVoteFilters> = {},
+  client: Pool | PoolClient = getPool()
+) => {
+  await ensureTables();
+
+  const conditions = ["v.round_id = $1"];
+  const values: unknown[] = [roundId];
+  const addCondition = (condition: string, value: unknown) => {
+    values.push(value);
+    conditions.push(condition.replace("?", `$${values.length}`));
+  };
+  const search = filters.search?.trim();
+  const submissionId = filters.submissionId?.trim();
+  const walletAddress = filters.walletAddress?.trim();
+
+  if (search) {
+    values.push(`%${search}%`);
+    const searchParameter = `$${values.length}`;
+    conditions.push(
+      `(v.id ILIKE ${searchParameter} OR v.submission_id ILIKE ${searchParameter} OR v.wallet_address ILIKE ${searchParameter} OR COALESCE(s.title, '') ILIKE ${searchParameter})`
+    );
+  }
+  if (submissionId) {
+    addCondition("v.submission_id = ?", submissionId);
+  }
+  if (walletAddress) {
+    addCondition("lower(v.wallet_address) = lower(?)", walletAddress);
+  }
+
+  const sort = filters.sort || "newest";
+  const orderBy = ADMIN_ROUND_VOTE_ORDER_BY[sort] || ADMIN_ROUND_VOTE_ORDER_BY.newest;
+  const result = await client.query(
+    `
+      SELECT
+        v.id,
+        v.round_id,
+        v.wallet_address,
+        v.submission_id,
+        COALESCE(s.title, 'Deleted submission') AS submission_title,
+        s.status AS submission_status,
+        (s.deleted_at IS NOT NULL) AS submission_deleted,
+        v.vote_count,
+        v.created_at,
+        v.updated_at
+      FROM round_votes v
+      LEFT JOIN round_submissions s
+        ON s.id = v.submission_id AND s.round_id = v.round_id
+      WHERE ${conditions.join(" AND ")}
+      ORDER BY ${orderBy}
+    `,
+    values
+  );
+
+  return result.rows.map(mapAdminRoundVoteRow);
+};
+
+export const getAdminRoundVote = async (
+  roundId: string,
+  voteId: string,
+  client: Pool | PoolClient = getPool()
+) => {
+  await ensureTables();
+
+  const result = await client.query(
+    `
+      SELECT
+        v.id,
+        v.round_id,
+        v.wallet_address,
+        v.submission_id,
+        COALESCE(s.title, 'Deleted submission') AS submission_title,
+        s.status AS submission_status,
+        (s.deleted_at IS NOT NULL) AS submission_deleted,
+        v.vote_count,
+        v.created_at,
+        v.updated_at
+      FROM round_votes v
+      LEFT JOIN round_submissions s
+        ON s.id = v.submission_id AND s.round_id = v.round_id
+      WHERE v.round_id = $1 AND v.id = $2
+      LIMIT 1
+    `,
+    [roundId, voteId]
+  );
+
+  return result.rows[0] ? mapAdminRoundVoteRow(result.rows[0]) : null;
+};
+
+type AdminRoundVoteMutationInput = {
+  roundId: string;
+  voteId: string;
+  adminWalletAddress: string;
+  reason?: string;
+};
+
+export class AdminRoundVoteConflictError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "AdminRoundVoteConflictError";
+  }
+}
+
+const getVoteWalletForAdminMutation = async (
+  client: PoolClient,
+  roundId: string,
+  voteId: string
+) => {
+  const result = await client.query(
+    `
+      SELECT v.wallet_address
+      FROM round_votes v
+      INNER JOIN rounds r ON r.id = v.round_id
+      WHERE v.round_id = $1
+        AND v.id = $2
+        AND r.deleted_at IS NULL
+      LIMIT 1
+    `,
+    [roundId, voteId]
+  );
+
+  return result.rows[0]?.wallet_address as string | undefined;
+};
+
+const insertRoundVoteAdminAudit = async ({
+  client,
+  roundId,
+  voteId,
+  adminWalletAddress,
+  action,
+  before,
+  after,
+  reason,
+}: AdminRoundVoteMutationInput & {
+  client: PoolClient;
+  action: "update" | "delete";
+  before: AdminRoundVote;
+  after: AdminRoundVote | null;
+}) => {
+  await client.query(
+    `
+      INSERT INTO round_vote_admin_audit (
+        id,
+        round_id,
+        vote_id,
+        admin_wallet_address,
+        action,
+        before_state,
+        after_state,
+        reason
+      )
+      VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb, $8)
+    `,
+    [
+      randomUUID(),
+      roundId,
+      voteId,
+      adminWalletAddress,
+      action,
+      JSON.stringify(before),
+      after ? JSON.stringify(after) : null,
+      reason?.trim() || "",
+    ]
+  );
+};
+
+export const updateAdminRoundVote = async ({
+  roundId,
+  voteId,
+  submissionId,
+  voteCount,
+  adminWalletAddress,
+  reason,
+}: AdminRoundVoteMutationInput & {
+  submissionId: string;
+  voteCount: number;
+}) => {
+  await ensureTables();
+  if (!Number.isInteger(voteCount) || voteCount < 1) {
+    throw new Error("Vote count must be a positive integer.");
+  }
+  const targetSubmissionId = submissionId.trim();
+  if (!targetSubmissionId) {
+    throw new Error("Selected submission is required.");
+  }
+
+  const client = await getPool().connect();
+  try {
+    await client.query("BEGIN");
+    const walletAddress = await getVoteWalletForAdminMutation(
+      client,
+      roundId,
+      voteId
+    );
+    if (!walletAddress) {
+      await client.query("ROLLBACK");
+      return null;
+    }
+
+    await client.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+      `${roundId}:${walletAddress.toLowerCase()}`,
+    ]);
+    const before = await getAdminRoundVote(roundId, voteId, client);
+    if (!before) {
+      await client.query("ROLLBACK");
+      return null;
+    }
+
+    const submissionResult = await client.query(
+      `
+        SELECT id
+        FROM round_submissions
+        WHERE round_id = $1 AND id = $2 AND deleted_at IS NULL
+        LIMIT 1
+      `,
+      [roundId, targetSubmissionId]
+    );
+    if (!submissionResult.rows[0]) {
+      throw new Error("Selected submission is not available in this round.");
+    }
+
+    if (targetSubmissionId !== before.submissionId) {
+      const conflictingVote = await client.query(
+        `
+          SELECT id
+          FROM round_votes
+          WHERE round_id = $1
+            AND submission_id = $2
+            AND lower(wallet_address) = lower($3)
+            AND id <> $4
+          LIMIT 1
+        `,
+        [roundId, targetSubmissionId, walletAddress, voteId]
+      );
+      if (conflictingVote.rows[0]) {
+        throw new AdminRoundVoteConflictError(
+          "This voter already has a vote allocation for that submission. Edit or delete that allocation first."
+        );
+      }
+    }
+
+    await client.query(
+      `
+        UPDATE round_votes
+        SET submission_id = $3,
+          vote_count = $4,
+          updated_at = now()
+        WHERE round_id = $1 AND id = $2
+      `,
+      [roundId, voteId, targetSubmissionId, voteCount]
+    );
+    const after = await getAdminRoundVote(roundId, voteId, client);
+    if (!after) throw new Error("Unable to reload updated vote.");
+
+    await insertRoundVoteAdminAudit({
+      client,
+      roundId,
+      voteId,
+      adminWalletAddress,
+      action: "update",
+      before,
+      after,
+      reason,
+    });
+    await client.query("COMMIT");
+    return after;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+};
+
+export const removeAdminRoundVote = async ({
+  roundId,
+  voteId,
+  adminWalletAddress,
+  reason,
+}: AdminRoundVoteMutationInput) => {
+  await ensureTables();
+  const client = await getPool().connect();
+
+  try {
+    await client.query("BEGIN");
+    const walletAddress = await getVoteWalletForAdminMutation(
+      client,
+      roundId,
+      voteId
+    );
+    if (!walletAddress) {
+      await client.query("ROLLBACK");
+      return null;
+    }
+
+    await client.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+      `${roundId}:${walletAddress.toLowerCase()}`,
+    ]);
+    const before = await getAdminRoundVote(roundId, voteId, client);
+    if (!before) {
+      await client.query("ROLLBACK");
+      return null;
+    }
+
+    const deleted = await client.query(
+      `DELETE FROM round_votes WHERE round_id = $1 AND id = $2 RETURNING id`,
+      [roundId, voteId]
+    );
+    if (!deleted.rows[0]) throw new Error("Unable to delete vote.");
+
+    await insertRoundVoteAdminAudit({
+      client,
+      roundId,
+      voteId,
+      adminWalletAddress,
+      action: "delete",
+      before,
+      after: null,
+      reason,
+    });
+    await client.query("COMMIT");
+    return before;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+};
+
 export const listRoundSubmissionVotes = async ({
   roundId,
   submissionId,
@@ -2055,6 +2652,82 @@ export const listRoundSubmissionVotes = async ({
     createdAt: formatDate(row.created_at) || "",
     updatedAt: formatDate(row.updated_at) || "",
   })) as RoundVoteActivity[];
+};
+
+export const listPublicRoundActivity = async (
+  limit = 100
+): Promise<PublicRoundActivity> => {
+  await ensureTables();
+
+  const safeLimit = Math.max(1, Math.min(Math.trunc(limit), 100));
+  const [submissionResult, voteResult] = await Promise.all([
+    getPool().query(
+      `
+        SELECT
+          ${submissionSelectFields},
+          r.slug AS round_slug,
+          r.title AS round_title
+        FROM round_submissions s
+        INNER JOIN rounds r ON r.id = s.round_id
+        ${voteTotalsJoin}
+        ${winnersJoin}
+        WHERE s.deleted_at IS NULL
+          AND s.status = 'approved'
+          AND r.deleted_at IS NULL
+          AND r.status = 'published'
+          AND r.active = true
+        ORDER BY s.created_at DESC, s.id ASC
+        LIMIT $1
+      `,
+      [safeLimit]
+    ),
+    getPool().query(
+      `
+        SELECT
+          v.id,
+          v.round_id,
+          v.wallet_address,
+          v.submission_id,
+          s.title AS submission_title,
+          v.vote_count,
+          v.created_at,
+          v.updated_at,
+          r.slug AS round_slug,
+          r.title AS round_title
+        FROM round_votes v
+        INNER JOIN round_submissions s ON s.id = v.submission_id
+        INNER JOIN rounds r ON r.id = v.round_id
+        WHERE s.deleted_at IS NULL
+          AND s.status = 'approved'
+          AND r.deleted_at IS NULL
+          AND r.status = 'published'
+          AND r.active = true
+        ORDER BY v.updated_at DESC, v.created_at DESC, v.id ASC
+        LIMIT $1
+      `,
+      [safeLimit]
+    ),
+  ]);
+
+  return {
+    submissions: submissionResult.rows.map((row) => ({
+      ...mapSubmission(row),
+      roundSlug: row.round_slug,
+      roundTitle: row.round_title,
+    })),
+    votes: voteResult.rows.map((row) => ({
+      id: row.id,
+      roundId: row.round_id,
+      walletAddress: row.wallet_address,
+      submissionId: row.submission_id,
+      submissionTitle: row.submission_title,
+      voteCount: Number(row.vote_count || 0),
+      createdAt: formatDate(row.created_at) || "",
+      updatedAt: formatDate(row.updated_at) || "",
+      roundSlug: row.round_slug,
+      roundTitle: row.round_title,
+    })),
+  };
 };
 
 export const listProfileRoundSubmissions = async (
@@ -2181,9 +2854,11 @@ export const createRound = async (input: RoundInput = {}) => {
           min_title_length,
           max_title_length,
           min_description_length,
-          max_description_length
+          max_description_length,
+          voting_snapshot_mode,
+          voting_snapshot_at
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)
         RETURNING id
       `,
       [
@@ -2211,6 +2886,8 @@ export const createRound = async (input: RoundInput = {}) => {
         round.maxTitleLength,
         round.minDescriptionLength,
         round.maxDescriptionLength,
+        round.votingSnapshotMode,
+        round.votingSnapshotAt,
       ]
     );
     await replaceRoundAwards(id, input.awards || [], client);
@@ -2241,11 +2918,46 @@ export const updateRound = async (id: string, input: RoundInput) => {
     round.winnerCount
   );
   if (awardsValidationError) throw new Error(awardsValidationError);
-
   const client = await getPool().connect();
 
   try {
     await client.query("BEGIN");
+    await client.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+      `voting-snapshot:${id}`,
+    ]);
+    const lockedSnapshotResult = await client.query(
+      `
+        SELECT
+          voting_starts_at,
+          voting_snapshot_mode,
+          voting_snapshot_at,
+          voting_snapshot_block
+        FROM rounds
+        WHERE id = $1 AND deleted_at IS NULL
+        FOR UPDATE
+      `,
+      [id]
+    );
+    const lockedSnapshot = lockedSnapshotResult.rows[0];
+    if (
+      lockedSnapshot?.voting_snapshot_block &&
+      hasRoundVotingSnapshotChanged(
+        {
+          votingStartsAt: formatDate(lockedSnapshot.voting_starts_at) || "",
+          votingSnapshotMode: isRoundVotingSnapshotMode(
+            lockedSnapshot.voting_snapshot_mode
+          )
+            ? lockedSnapshot.voting_snapshot_mode
+            : "voting_start",
+          votingSnapshotAt: formatDate(lockedSnapshot.voting_snapshot_at),
+        },
+        round
+      )
+    ) {
+      throw new Error(
+        "Voting snapshot timing cannot change after its block is resolved."
+      );
+    }
     const result = await client.query(
       `
         UPDATE rounds
@@ -2272,6 +2984,8 @@ export const updateRound = async (id: string, input: RoundInput) => {
           max_title_length = $22,
           min_description_length = $23,
           max_description_length = $24,
+          voting_snapshot_mode = $25,
+          voting_snapshot_at = $26,
           updated_at = now()
         WHERE id = $1
         RETURNING id
@@ -2301,6 +3015,8 @@ export const updateRound = async (id: string, input: RoundInput) => {
         round.maxTitleLength,
         round.minDescriptionLength,
         round.maxDescriptionLength,
+        round.votingSnapshotMode,
+        round.votingSnapshotAt,
       ]
     );
 

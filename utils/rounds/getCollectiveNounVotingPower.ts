@@ -31,6 +31,16 @@ export const getCollectiveNounVotingPower = async (
   return Number(votes.toString());
 };
 
+export const getLatestRoundVotingBlockTimestamp = async () => {
+  const latestNumber = await DefaultProvider.getBlockNumber();
+  const latestBlock = await DefaultProvider.getBlock(latestNumber);
+  if (!latestBlock) {
+    throw new Error("Unable to load the latest Base block.");
+  }
+
+  return Number(latestBlock.timestamp);
+};
+
 export const getBlockNumberAtOrBeforeTimestamp = async (timestamp: string) => {
   const target = Math.floor(new Date(timestamp).getTime() / 1000);
   if (!Number.isFinite(target)) {
@@ -39,7 +49,13 @@ export const getBlockNumberAtOrBeforeTimestamp = async (timestamp: string) => {
 
   const latestNumber = await DefaultProvider.getBlockNumber();
   const latestBlock = await DefaultProvider.getBlock(latestNumber);
-  if (!latestBlock || latestBlock.timestamp <= target) return latestNumber;
+  if (!latestBlock) {
+    throw new Error("Unable to load the latest Base block.");
+  }
+  if (latestBlock.timestamp < target) {
+    throw new Error("The voting snapshot block is not available yet.");
+  }
+  if (latestBlock.timestamp === target) return latestNumber;
 
   let low = 0;
   let high = latestNumber;

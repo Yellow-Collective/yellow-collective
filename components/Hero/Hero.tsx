@@ -179,9 +179,14 @@ const EndedAuction = ({
         <div className="flex flex-col gap-2 shrink-0 min-w-[165px] md:pr-6">
           <div className="font-light">Winning Bid</div>
           <h3>
-            {auctionData
-              ? `Ξ ${formatNumber(utils.formatEther(auctionData.amount || "0"), 4)}`
-              : "n/a"}
+            {auctionData &&
+            BigNumber.from(auctionData.amount || "0").isZero() ? (
+              "N/A - Burned🔥"
+            ) : auctionData ? (
+              `Ξ ${formatNumber(utils.formatEther(auctionData.amount || "0"), 4)}`
+            ) : (
+              "n/a"
+            )}
           </h3>
         </div>
         <div className="flex flex-col gap-2">

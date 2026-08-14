@@ -17,6 +17,7 @@ export default async function handler(
   try {
     const result = await pollWebNotifications({
       dryRun: req.query.dryRun === "true",
+      force: req.query.force === "true",
     });
     return res.status(200).json(result);
   } catch (error) {

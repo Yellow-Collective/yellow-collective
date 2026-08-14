@@ -12,6 +12,7 @@ import {
   type NoundrySubmission,
 } from "@/components/noundry/NoundryPreview";
 import type {
+  RoundAward,
   RoundSubmission,
   RoundVoteActivity,
   RoundWithSubmissions,
@@ -44,6 +45,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 
@@ -59,11 +62,17 @@ type RoundDetailProps = {
 };
 
 const ROUND_SIGNED_REQUEST_CHAIN_ID = Number(TOKEN_NETWORK);
+const COLLECTIVE_NOUNS_AWARD_ICON =
+  "/playground/yellow-collective/glasses/tns-yellow-noggles.png";
+const ETH_AWARD_ICON = "/playground/yellow-collective/heads/ethereum.png";
 
 type VotingPowerResponse = {
   votingPower: number;
   usedVotes: number;
   remainingVotes: number;
+  votingSnapshotBlock: number | null;
+  votingSnapshotAt: string;
+  votingSnapshotStatus: "pending" | "resolved";
 };
 
 type SubmissionVotesResponse = {
@@ -89,15 +98,18 @@ const getLockedVotesBySubmission = (
   if (!walletAddress) return {} as Record<string, number>;
 
   const normalizedWallet = walletAddress.toLowerCase();
-  return voteActivity.reduce<Record<string, number>>((lockedVotes, activity) => {
-    if (activity.walletAddress.toLowerCase() !== normalizedWallet) {
-      return lockedVotes;
-    }
+  return voteActivity.reduce<Record<string, number>>(
+    (lockedVotes, activity) => {
+      if (activity.walletAddress.toLowerCase() !== normalizedWallet) {
+        return lockedVotes;
+      }
 
-    lockedVotes[activity.submissionId] =
-      (lockedVotes[activity.submissionId] || 0) + activity.voteCount;
-    return lockedVotes;
-  }, {});
+      lockedVotes[activity.submissionId] =
+        (lockedVotes[activity.submissionId] || 0) + activity.voteCount;
+      return lockedVotes;
+    },
+    {}
+  );
 };
 
 const DeferredInlineImage = ({
@@ -341,7 +353,7 @@ export default function RoundDetailPage({
           </h1>
           <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px] lg:items-stretch">
             <div className="flex min-h-[230px] flex-col justify-center rounded-2xl border border-skin-stroke bg-[#fff7bf] p-5">
-              <div className="font-heading text-xl leading-none text-skin-base">
+              <div className="font-heading text-xl font-bold leading-none text-skin-base">
                 About this round
               </div>
               <p className="mt-2 max-w-3xl text-lg leading-snug text-secondary">
@@ -401,6 +413,24 @@ export default function RoundDetailPage({
 
         <RoundTimeline round={round} />
 
+        {state === "submissions_open" && (
+          <p className="rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-3 text-sm text-[#212529]">
+            Voting power snapshot:{" "}
+            {round.votingSnapshotMode === "custom"
+              ? "Custom date"
+              : "When voting begins"}{" "}
+            —{" "}
+            {new Date(
+              round.votingSnapshotMode === "custom" && round.votingSnapshotAt
+                ? round.votingSnapshotAt
+                : round.votingStartsAt
+            ).toLocaleString()}
+            {round.votingSnapshotBlock !== null
+              ? ` | Base block ${round.votingSnapshotBlock}`
+              : ""}
+          </p>
+        )}
+
         <RoundDetailsPanel
           round={round}
           stateLabel={getRoundStateLabel(state)}
@@ -413,7 +443,7 @@ export default function RoundDetailPage({
         </section>
 
         {winners.length > 0 && (
-          <section className="rounded-2xl border border-skin-stroke bg-accent p-6 text-[#212529] shadow-sm md:p-8">
+          <section className="rounded-2xl border border-skin-stroke bg-white p-6 text-[#212529] shadow-sm md:p-8">
             <h2 className="font-heading text-3xl leading-none text-[#212529]">
               Winners
             </h2>
@@ -524,7 +554,7 @@ export default function RoundDetailPage({
           </section>
         )}
 
-        <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-accent p-5 text-[#212529] shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] md:p-6">
+        <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-5 text-[#212529] shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] md:p-6">
           <div className="flex items-end justify-between gap-3">
             <h2 className="font-heading text-[34px] leading-none text-[#212529]">
               Submissions
@@ -671,7 +701,6 @@ const SubmissionCard = ({
               submission={noundrySubmission}
               traits={getSubmissionPreviewTraits(noundrySubmission)}
               showEditedTrait
-              fullBleed
             />
           </div>
         ) : (
@@ -794,21 +823,12 @@ const SubmissionDescription = ({
     : blocks;
 
   return (
-    <div className={`space-y-3 text-base leading-snug ${className}`}>
-      {visibleBlocks.map((block, index) => {
-        const heading = block.match(/^#{1,3}\s+(.+)$/);
-
-        if (heading) {
-          return (
-            <h3 key={index} className="font-heading text-xl leading-none">
-              {heading[1]}
-            </h3>
-          );
-        }
-
-        return <p key={index}>{block}</p>;
-      })}
-    </div>
+    <ReactMarkdown
+      className={`prose prose-skin max-w-none break-words text-base leading-snug prose-headings:font-heading prose-headings:leading-none prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-p:my-0 prose-ul:my-0 prose-ol:my-0 ${className}`}
+      remarkPlugins={[remarkGfm]}
+    >
+      {visibleBlocks.join("\n\n")}
+    </ReactMarkdown>
   );
 };
 
@@ -936,7 +956,6 @@ const SubmissionModal = ({
                   submission={noundrySubmission}
                   traits={noundryPreviewTraits}
                   showEditedTrait
-                  fullBleed
                 />
               ) : (
                 <DeferredInlineImage
@@ -1123,7 +1142,6 @@ const NoundryModalPreviewSet = ({
               submission={submission}
               traits={traitSet}
               showEditedTrait={editedIndexes.includes(index)}
-              fullBleed
             />
           </div>
         ))}
@@ -1166,7 +1184,7 @@ const RoundDetailsPanel = ({
   stateLabel: string;
   votingStrategyLabel: string;
 }) => (
-  <section className="yc-dark-yellow-form-surface grid gap-3 rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm md:grid-cols-4">
+  <section className="yc-dark-yellow-form-surface grid gap-3 rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm md:grid-cols-3">
     <RoundStat label="Status" value={stateLabel} />
     <RoundStat
       label="Winners"
@@ -1204,22 +1222,7 @@ const RoundAwardsPanel = ({ round }: { round: RoundWithSubmissions }) => (
       {round.awards && round.awards.length > 0 ? (
         round.awards.map((award) => (
           <div key={award.id} className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-accent">
-              {round.image ? (
-                <DeferredInlineImage
-                  src={round.image}
-                  alt=""
-                  className="h-full w-full object-cover"
-                  fallback={
-                    <span className="font-heading text-sm text-skin-base">
-                      YC
-                    </span>
-                  }
-                />
-              ) : (
-                <span className="font-heading text-sm text-skin-base">YC</span>
-              )}
-            </div>
+            <AwardIcon award={award} />
             <div className="min-w-0 flex-1">
               <div className="break-words font-heading text-xl leading-none text-skin-base">
                 {award.value || award.title}
@@ -1247,6 +1250,52 @@ const RoundAwardsPanel = ({ round }: { round: RoundWithSubmissions }) => (
     </div>
   </article>
 );
+
+const AwardIcon = ({ award }: { award: RoundAward }) => {
+  const icon = getAwardIcon(award);
+  const backgroundClass = icon?.backgroundClass || "bg-accent";
+
+  return (
+    <div
+      className={`flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl ${backgroundClass}`}
+    >
+      {icon ? (
+        <DeferredInlineImage
+          src={icon.src}
+          alt={icon.alt}
+          className="h-16 w-16 max-w-none object-contain"
+          fallback={
+            <span className="font-heading text-sm text-skin-base">YC</span>
+          }
+        />
+      ) : (
+        <span className="font-heading text-sm text-skin-base">YC</span>
+      )}
+    </div>
+  );
+};
+
+const getAwardIcon = (award: RoundAward) => {
+  const awardText = `${award.title} ${award.value} ${award.description}`;
+
+  if (/\bcollective nouns?\b/i.test(awardText)) {
+    return {
+      src: COLLECTIVE_NOUNS_AWARD_ICON,
+      alt: "Collective Nouns prize",
+      backgroundClass: "bg-black",
+    };
+  }
+
+  if (/\beth\b/i.test(awardText)) {
+    return {
+      src: ETH_AWARD_ICON,
+      alt: "ETH prize",
+      backgroundClass: "bg-accent",
+    };
+  }
+
+  return null;
+};
 
 const RoundActivityPanel = ({
   round,
@@ -1434,6 +1483,10 @@ const getVotingStrategyLabel = (round: RoundWithSubmissions | null) => {
 
   if (round.votingStrategy === "fixed_per_wallet") {
     return `${round.votesPerWallet} votes per wallet`;
+  }
+
+  if (round.votingStrategy === "base_plus_voting_power") {
+    return `${round.votesPerWallet} base votes + delegated voting power`;
   }
 
   return "1 vote per delegated Collective Noun vote";

@@ -34,15 +34,37 @@ const markPromptResponded = (fid?: number) => {
   }
 };
 
-const getNotificationDetails = (context?: MiniAppContext | null) =>
-  context?.notificationDetails || context?.client?.notificationDetails;
+const getNotificationDetails = (context?: unknown) => {
+  const miniAppContext = context as MiniAppContext | null | undefined;
+  return (
+    miniAppContext?.notificationDetails ||
+    miniAppContext?.client?.notificationDetails
+  );
+};
+
+type MiniAppNotificationDetails = ReturnType<typeof getNotificationDetails>;
+
+const getNotificationDetailPayload = (
+  notificationDetails?: MiniAppNotificationDetails
+) => {
+  if (!notificationDetails?.url) return {};
+
+  const updatedAt = new Date().toISOString();
+  return {
+    notificationUrl: notificationDetails.url,
+    notificationTokenCreatedAt: updatedAt,
+    notificationTokenUpdatedAt: updatedAt,
+  };
+};
 
 const saveMiniAppUser = async ({
   notificationsEnabled,
   walletAddress,
+  notificationDetails,
 }: {
   notificationsEnabled?: boolean;
   walletAddress?: string;
+  notificationDetails?: MiniAppNotificationDetails;
 }) => {
   const context = await getMiniAppContext();
   const fid = context?.user?.fid;
@@ -59,6 +81,7 @@ const saveMiniAppUser = async ({
       pfpUrl: context.user?.pfpUrl,
       walletAddress,
       notificationsEnabled,
+      ...getNotificationDetailPayload(notificationDetails),
     }),
   }).catch((error) => {
     console.warn("Unable to save Mini App user context", error);
@@ -86,6 +109,7 @@ export default function MiniAppNotificationsPrompt() {
       await saveMiniAppUser({
         notificationsEnabled: notificationDetails ? true : undefined,
         walletAddress: address,
+        notificationDetails,
       });
 
       if (
@@ -98,11 +122,13 @@ export default function MiniAppNotificationsPrompt() {
       }
 
       const sdk = await loadMiniAppSdk();
-      sdk?.on?.("notificationsEnabled", () => {
+      sdk?.on?.("notificationsEnabled", (event) => {
+        const eventDetails = getNotificationDetails(event);
         markPromptResponded(context?.user?.fid);
         void saveMiniAppUser({
           notificationsEnabled: true,
           walletAddress: address,
+          notificationDetails: eventDetails,
         });
         setVisible(false);
       });
@@ -135,22 +161,24 @@ export default function MiniAppNotificationsPrompt() {
     try {
       setIsAdding(true);
       setMessage("");
-      markPromptResponded(promptFid);
       const result = await addMiniAppWithNotifications();
       const notificationDetails = result?.notificationDetails;
       const notificationsEnabled = Boolean(notificationDetails);
       await saveMiniAppUser({
         notificationsEnabled: notificationDetails ? true : undefined,
         walletAddress: address,
+        notificationDetails,
       });
       setMessage(
         notificationsEnabled
           ? "Notifications enabled."
           : "Mini App added. Enable notifications in Farcaster settings."
       );
-      if (result?.added || notificationsEnabled) setVisible(false);
+      if (result?.added || notificationsEnabled) {
+        markPromptResponded(promptFid);
+        setVisible(false);
+      }
     } catch (error) {
-      markPromptResponded(promptFid);
       setMessage(
         error instanceof Error ? error.message : "Unable to enable notifications."
       );

@@ -9,6 +9,7 @@ import {
   normalizeSafeImageUrl,
   normalizeSafeProjectUrl,
 } from "@/utils/url-safety";
+import { normalizeCommunityProjectGalleryImages } from "@/utils/community-project-gallery";
 
 export type CommunityProjectStatus = "pending" | "approved" | "removed";
 
@@ -116,17 +117,60 @@ const isProjectLinks = (value: unknown): value is ProjectLinks =>
 const parseJson = <T>(value: T | string): T =>
   typeof value === "string" ? JSON.parse(value) : value;
 
-const normalizeOptionalStringArray = (value: unknown) =>
-  isStringArray(value)
-    ? value
-        .map((item) =>
-          normalizeSafeImageUrl(item, {
+const hasInvalidGalleryImages = (value: unknown) => {
+  if (value === undefined || value === null) return false;
+  if (!Array.isArray(value)) return true;
+
+  return value.some((item) => {
+    if (typeof item === "string") {
+      return Boolean(
+        item.trim() &&
+          !normalizeSafeImageUrl(item, {
             allowInternal: true,
             allowDataImages: true,
           })
-        )
-        .filter(Boolean)
-    : [];
+      );
+    }
+
+    if (!item || typeof item !== "object") return true;
+
+    const galleryImage = item as {
+      src?: unknown;
+      caption?: unknown;
+      sourceHref?: unknown;
+      sourceLabel?: unknown;
+    };
+
+    if (
+      typeof galleryImage.src !== "string" ||
+      (galleryImage.caption !== undefined &&
+        typeof galleryImage.caption !== "string") ||
+      (galleryImage.sourceHref !== undefined &&
+        typeof galleryImage.sourceHref !== "string") ||
+      (galleryImage.sourceLabel !== undefined &&
+        typeof galleryImage.sourceLabel !== "string")
+    ) {
+      return true;
+    }
+
+    if (
+      galleryImage.src.trim() &&
+      !normalizeSafeImageUrl(galleryImage.src, {
+        allowInternal: true,
+        allowDataImages: true,
+      })
+    ) {
+      return true;
+    }
+
+    return Boolean(
+      galleryImage.sourceHref?.trim() &&
+        !normalizeSafeProjectUrl(galleryImage.sourceHref, {
+          allowInternal: true,
+        })
+    );
+  });
+};
 
 const normalizeProjectLinks = (value: unknown): ProjectLinks =>
   isProjectLinks(value)
@@ -160,7 +204,9 @@ export const normalizeCommunityProjectInput = (
   memberAddresses: normalizeCommunityProjectMemberAddresses(
     input.memberAddresses
   ),
-  galleryImages: normalizeOptionalStringArray(input.galleryImages),
+  galleryImages: normalizeCommunityProjectGalleryImages(input.galleryImages, {
+    allowDataImages: true,
+  }),
   links: normalizeProjectLinks(input.links),
 });
 
@@ -210,18 +256,8 @@ export const validateCommunityProjectInput = (
     return "Project image must be a valid external, internal, or uploaded image URL.";
   }
 
-  if (
-    isStringArray(input.galleryImages) &&
-    input.galleryImages.some(
-      (image) =>
-        image.trim() &&
-        !normalizeSafeImageUrl(image, {
-          allowInternal: true,
-          allowDataImages: true,
-        })
-    )
-  ) {
-    return "Gallery images must use valid external, internal, or uploaded image URLs.";
+  if (hasInvalidGalleryImages(input.galleryImages)) {
+    return "Gallery images must use valid image URLs and valid source links.";
   }
 
   if (
@@ -276,7 +312,12 @@ const mapProject = (row: {
   memberAddresses: normalizeCommunityProjectMemberAddresses(
     row.member_addresses ? parseJson(row.member_addresses) : []
   ),
-  galleryImages: parseJson(row.gallery_images),
+  galleryImages: normalizeCommunityProjectGalleryImages(
+    parseJson(row.gallery_images),
+    {
+      allowDataImages: true,
+    }
+  ),
   links: parseJson(row.links),
   status: row.status,
   createdAt: formatDate(row.created_at) || "",

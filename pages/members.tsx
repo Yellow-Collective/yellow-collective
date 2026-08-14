@@ -10,11 +10,17 @@ type MembersPageProps = {
   members: DaoMember[];
 };
 
-type SortMode = "name" | "tokens" | "noundry" | "proposalVotes";
+type SortMode =
+  | "name"
+  | "tokens"
+  | "votingPower"
+  | "noundry"
+  | "proposalVotes";
 
 const sortOptions: { label: string; value: SortMode }[] = [
   { label: "Name", value: "name" },
   { label: "Tokens owned", value: "tokens" },
+  { label: "Voting power", value: "votingPower" },
   { label: "Noundry submissions", value: "noundry" },
   { label: "Proposals voted", value: "proposalVotes" },
 ];
@@ -46,6 +52,10 @@ const sortMembers = (members: DaoMember[], sort: SortMode) =>
 
     if (sort === "tokens") {
       return second.tokenCount - first.tokenCount || nameSort();
+    }
+
+    if (sort === "votingPower") {
+      return second.votingPower - first.votingPower || nameSort();
     }
 
     if (sort === "noundry") {
@@ -190,8 +200,9 @@ const MemberCard = ({ member }: { member: DaoMember }) => {
             </p>
           )}
         </div>
-        <div className="-mx-2 -mb-2 mt-auto grid w-[calc(100%+1rem)] grid-cols-3 gap-0 border-t border-skin-stroke text-center sm:-mx-4 sm:-mb-4 sm:w-[calc(100%+2rem)]">
+        <div className="-mx-2 -mb-2 mt-auto grid w-[calc(100%+1rem)] grid-cols-4 gap-0 border-t border-skin-stroke text-center sm:-mx-4 sm:-mb-4 sm:w-[calc(100%+2rem)]">
           <MemberStat label="Tokens" value={member.tokenCount} />
+          <MemberStat label="Power" value={member.votingPower} />
           <MemberStat label="Traits" value={member.noundrySubmissionCount} />
           <MemberStat label="Votes" value={member.proposalVoteCount} />
         </div>

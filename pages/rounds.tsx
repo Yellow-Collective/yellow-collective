@@ -54,9 +54,9 @@ export default function RoundsPage({
   const votingRounds = rounds.filter(
     (round) => getRoundState(round) === "voting_open"
   );
-  const upcomingRounds = rounds.filter(
-    (round) => getRoundState(round) === "upcoming"
-  );
+  const upcomingRounds = rounds
+    .filter((round) => getRoundState(round) === "upcoming")
+    .sort(compareRoundsBySubmissionsOpenAt);
   const completedRounds = rounds.filter(
     (round) => getRoundState(round) === "ended"
   );
@@ -164,3 +164,7 @@ const getRoundCountClassName = (title: string) => {
 
   return "border border-[#7f2219] bg-[#c93d2f] text-white shadow-[0px_3px_0px_0px_#7f2219]";
 };
+
+const compareRoundsBySubmissionsOpenAt = (left: Round, right: Round) =>
+  new Date(left.submissionsOpenAt).getTime() -
+  new Date(right.submissionsOpenAt).getTime();

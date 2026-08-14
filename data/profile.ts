@@ -24,10 +24,7 @@ import {
 } from "@/utils/profile/identity";
 import { getCommunityProjectsForMember } from "@/utils/community-projects";
 import type { CommunityProject } from "data/community";
-import {
-  listPublicGalleryCoinsByOwner,
-  type GalleryCoin,
-} from "data/coins";
+import { listPublicGalleryCoinsByOwner, type GalleryCoin } from "data/coins";
 import {
   listProfileRoundSubmissions,
   listProfileRoundVotes,
@@ -43,6 +40,7 @@ export type ProfileMetadata = NormalizedProfileMetadata & {
 
 export type ProfileDaoProposal = {
   proposalId: string;
+  proposalNumber: number;
   title: string;
   state: number;
   timeCreated: number;
@@ -50,6 +48,7 @@ export type ProfileDaoProposal = {
 
 export type ProfileDaoVote = {
   proposalId: string;
+  proposalNumber: number;
   proposalTitle: string;
   support: number;
   weight: number;
@@ -412,6 +411,16 @@ const getOwnedTokensForAddress = async (address: string) => {
   );
 };
 
+export const getFirstOwnedCollectiveNounImage = async (address: string) => {
+  const ownedTokens = await getOwnedTokensForAddress(address);
+
+  return (
+    [...ownedTokens]
+      .filter((token) => token.image)
+      .sort((first, second) => first.id - second.id)[0]?.image || ""
+  );
+};
+
 const getDaoActivityForAddress = async (address: string) => {
   const normalizedAddress = getAddress(address);
   const addresses = await getAddresses({
@@ -438,6 +447,7 @@ const getDaoActivityForAddress = async (address: string) => {
           )
           .map((vote) => ({
             proposalId: proposal.proposalId,
+            proposalNumber: proposal.proposalNumber,
             proposalTitle: getProposalName(proposal.description),
             support: vote.support,
             weight: vote.weight,
@@ -541,6 +551,7 @@ const getAuctionActivityForAddress = async (address: string) => {
 
 const mapProposal = (proposal: Proposal): ProfileDaoProposal => ({
   proposalId: proposal.proposalId,
+  proposalNumber: proposal.proposalNumber,
   title: getProposalName(proposal.description),
   state: proposal.state,
   timeCreated: proposal.proposal.timeCreated,
@@ -597,7 +608,7 @@ const buildActivity = ({
       id: `dao-proposal-${proposal.proposalId}`,
       type: "dao-proposal" as const,
       title: `Created proposal: ${proposal.title}`,
-      href: `/proposals/${proposal.proposalId}`,
+      href: `/proposals/${proposal.proposalNumber}`,
       timestamp: proposal.timeCreated
         ? new Date(proposal.timeCreated * 1000).toISOString()
         : undefined,
@@ -606,7 +617,7 @@ const buildActivity = ({
       id: `dao-vote-${vote.proposalId}`,
       type: "dao-vote" as const,
       title: `Voted ${supportLabel(vote.support)}`,
-      href: `/proposals/${vote.proposalId}`,
+      href: `/proposals/${vote.proposalNumber}`,
       timestamp: vote.timestamp,
       meta: vote.proposalTitle,
     })),

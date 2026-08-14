@@ -268,7 +268,32 @@ const snapshotConstants = {
   assert.match(voteCard, /submitError/, "Snapshot vote card must expose an error state after a mocked submit.");
   assert.match(voteCard, /Collective Noun required/, "Snapshot vote card must expose holder eligibility messaging.");
   assert.match(voteCard, /disabled=\{!canSubmitVote\}/, "Snapshot vote CTA must be disabled when voting is unavailable.");
+  assert.match(
+    voteCard,
+    /getMiniAppEthereumProvider/,
+    "Snapshot vote card must fall back to the Farcaster mini app provider when wagmi signer hydration lags."
+  );
+  assert.doesNotMatch(
+    voteCard,
+    /disabled=\{!choice \|\| !signer \|\| submitting\}/,
+    "Snapshot vote modal must not dead-end on a missing preloaded signer."
+  );
   console.log("ok - Snapshot vote UI exposes success, error, eligibility, and disabled states");
+}
+
+{
+  const modalWrapper = read("components/ModalWrapper.tsx");
+  assert.match(
+    modalWrapper,
+    /z-\[80\]/,
+    "Shared modal wrapper must sit above the site header and mobile menu stack."
+  );
+  assert.doesNotMatch(
+    modalWrapper,
+    /z-40/,
+    "Shared modal wrapper must not render below the header stack."
+  );
+  console.log("ok - Shared modal wrapper stays above header overlays");
 }
 
 {
@@ -351,6 +376,80 @@ const snapshotConstants = {
 }
 
 {
+  const core = loadTsModule("services/metagov/src/core.ts");
+  let snapshotVotes = [];
+  const { getSnapshotScores } = loadTsModule(
+    "services/metagov/src/services/snapshot.ts",
+    {
+      "../config": {
+        config: {
+          snapshotGraphql: "https://snapshot.test/graphql",
+          snapshotSequencer: "https://snapshot.test/seq",
+          snapshotSpaceId: "yellowcollective.eth",
+        },
+        snapshotVotingDuration: () => 432000,
+      },
+      "../core": core,
+      "../utils/http": {
+        graphqlRequest: async () => ({
+          proposal: {
+            state: "closed",
+            scores: [0, 0, 0],
+            scores_total: 0,
+          },
+          votes: snapshotVotes,
+        }),
+      },
+      "../utils/wallet": {
+        getBotWallet: () => {
+          throw new Error("getBotWallet should not be called by getSnapshotScores");
+        },
+        getCurrentSnapshotBlockNumber: () => {
+          throw new Error("getCurrentSnapshotBlockNumber should not be called by getSnapshotScores");
+        },
+      },
+    }
+  );
+
+  snapshotVotes = [];
+  const noParticipation = await getSnapshotScores("snapshot-no-votes");
+  assert.equal(
+    noParticipation.submittedVotesCount,
+    0,
+    "Closed Snapshot proposals with no submitted vote records must be detectable."
+  );
+
+  snapshotVotes = [
+    {
+      voter: "0x0000000000000000000000000000000000000001",
+      choice: 1,
+      vp: 0,
+    },
+  ];
+  const zeroPowerParticipation = await getSnapshotScores(
+    "snapshot-zero-power-vote"
+  );
+  assert.equal(
+    zeroPowerParticipation.submittedVotesCount,
+    1,
+    "A zero-voting-power Snapshot vote must still count as submitted participation."
+  );
+
+  const metagovIndex = read("services/metagov/src/index.ts");
+  assert.match(
+    metagovIndex,
+    /submittedVotesCount\s*===\s*0[\s\S]*No Snapshot votes were submitted\./,
+    "Closed Snapshot proposals with zero submitted votes must be skipped before final Nouns execution."
+  );
+  assert.match(
+    metagovIndex,
+    /submittedVotes\.add\(snapshotId\)[\s\S]*pendingVotes\.delete\(snapshotId\)/,
+    "No-participation skips must leave the in-memory pending/submitted sets consistent."
+  );
+  console.log("ok - Metagov skips final execution only when Snapshot has no submitted votes");
+}
+
+{
   const tempDir = mkdtempSync(join(tmpdir(), "yc-metagov-state-"));
   try {
     const statePath = join(tempDir, "metagov-state.json");
@@ -388,9 +487,163 @@ const snapshotConstants = {
 }
 
 {
+  const safeVoting = loadTsModule(
+    "services/metagov/src/services/safe-voting.ts",
+    {
+      "@safe-global/protocol-kit": { __esModule: true, default: {} },
+      "@safe-global/api-kit": { __esModule: true, default: {} },
+      "@safe-global/safe-core-sdk-types": {},
+      ethers: { ethers: {} },
+      "../config": { config: {} },
+      "../listeners/nouns-proposals": {},
+      "../types": {},
+      "../utils/wallet": {},
+    }
+  );
+
+  assert.equal(
+    safeVoting.calculateBufferedGasLimit(200_000n, 30),
+    300_000n,
+    "Safe execution gas must respect the conservative minimum."
+  );
+  assert.equal(
+    safeVoting.calculateBufferedGasLimit(400_000n, 30),
+    520_000n,
+    "Safe execution gas must apply the configured buffer to the estimate."
+  );
+  assert.equal(safeVoting.isReceiptSuccessful(1), true);
+  assert.equal(safeVoting.isReceiptSuccessful("success"), true);
+  assert.equal(
+    safeVoting.isReceiptSuccessful("reverted"),
+    false,
+    "Viem reverted receipts must not be recorded as successful."
+  );
+  assert.equal(safeVoting.isReceiptSuccessful(0), false);
+  const safeVotingSource = read("services/metagov/src/services/safe-voting.ts");
+  assert.match(
+    safeVotingSource,
+    /estimateGas\([\s\S]*executeTransaction\(signedTx,\s*\{\s*gasLimit/,
+    "Safe execution must pass the buffered estimate as the outer transaction gas limit."
+  );
+  assert.match(
+    safeVotingSource,
+    /confirmedVoteStatus\s*=\s*await getVoteStatus[\s\S]*confirmedVoteStatus\s*!==\s*true[\s\S]*return null/,
+    "A mined transaction must not count as success until the Governor confirms hasVoted."
+  );
+  console.log("ok - Safe gas buffering and receipt status normalization cover GS013 regression");
+}
+
+{
+  const tempDir = mkdtempSync(join(tmpdir(), "yc-metagov-stale-execution-"));
+  try {
+    const statePath = join(tempDir, "metagov-state.json");
+    const { StateStore } = loadTsModule("services/metagov/src/services/state-store.ts", {
+      "../config": { config: { dataDir: tempDir } },
+      "../types": {},
+    });
+    writeFileSync(
+      statePath,
+      JSON.stringify({
+        version: 1,
+        updatedAt: "2026-08-05T00:00:00.000Z",
+        proposals: {
+          "987": {
+            nounsProposalId: "987",
+            nounsTitle: "Retry stale vote",
+            snapshotId: "snapshot-987",
+            snapshotTitle: "987: Retry stale vote",
+            snapshotUrl: "https://snapshot.box/proposal/snapshot-987",
+            status: "executed",
+            createdAt: "2026-08-04T00:00:00.000Z",
+            updatedAt: "2026-08-05T00:00:00.000Z",
+            winningChoice: "FOR",
+            executionMode: "safe",
+            voterAddress: "0xsafe",
+            safeTxHash: "0xfailed-safe",
+            executionTxHash: "0xreverted",
+          },
+          "986": {
+            nounsProposalId: "986",
+            nounsTitle: "Valid vote",
+            snapshotId: "snapshot-986",
+            snapshotTitle: "986: Valid vote",
+            snapshotUrl: "https://snapshot.box/proposal/snapshot-986",
+            status: "executed",
+            createdAt: "2026-08-03T00:00:00.000Z",
+            updatedAt: "2026-08-04T00:00:00.000Z",
+          },
+        },
+        executedVotes: [
+          { nounsProposalId: "987", snapshotId: "snapshot-987" },
+          { nounsProposalId: "986", snapshotId: "snapshot-986" },
+        ],
+        notifications: {},
+      })
+    );
+    const store = new StateStore(statePath);
+    assert.equal(store.removeStaleExecution("987"), true);
+    const reconciled = store.load();
+    assert.deepEqual(
+      reconciled.executedVotes.map((execution) => execution.nounsProposalId),
+      ["986"],
+      "Only the stale execution record must be removed."
+    );
+    assert.equal(reconciled.proposals["987"].status, "closed");
+    assert.equal(reconciled.proposals["987"].executionTxHash, undefined);
+    assert.equal(reconciled.proposals["986"].status, "executed");
+  } finally {
+    rmSync(tempDir, { recursive: true, force: true });
+  }
+
+  const metagovIndex = read("services/metagov/src/index.ts");
+  assert.match(
+    metagovIndex,
+    /voteStatus\s*===\s*false[\s\S]*removeStaleExecution/,
+    "Startup must requeue only executions authoritatively reported as not voted."
+  );
+  assert.match(
+    metagovIndex,
+    /configuredVoterStatus\s*===\s*null[\s\S]*continue/,
+    "Transient Governor receipt errors must defer rather than mutate execution state."
+  );
+  console.log("ok - Startup reconciliation removes only authoritative stale executions");
+}
+
+{
   const serviceSnapshot = read("services/metagov/src/services/snapshot.ts");
   assert.match(serviceSnapshot, /config\.dryRun[\s\S]*dry-run-\$\{proposal\.id\}/, "Snapshot creation must use DRY_RUN fake IDs.");
   assert.match(serviceSnapshot, /buildSnapshotProposalMessage/, "Snapshot creation must use the tested proposal message builder.");
+  assert.match(
+    serviceSnapshot,
+    /getCurrentSnapshotBlockNumber/,
+    "Snapshot creation must use the Snapshot-space chain block number."
+  );
+  assert.doesNotMatch(
+    serviceSnapshot,
+    /getCurrentBlockNumber/,
+    "Snapshot creation must not use the Ethereum mainnet provider block number."
+  );
+  const metagovConfig = read("services/metagov/src/config.ts");
+  assert.match(metagovConfig, /snapshotRpcUrl/, "Metagov config must expose a Snapshot-chain RPC URL.");
+  assert.match(metagovConfig, /snapshotChainId/, "Metagov config must expose a Snapshot-chain id.");
+  const walletUtils = read("services/metagov/src/utils/wallet.ts");
+  assert.match(walletUtils, /getSnapshotProvider/, "Metagov wallet utils must have a Snapshot-chain provider.");
+  assert.match(
+    walletUtils,
+    /validateSnapshotRpcEndpoint/,
+    "Metagov startup validation must validate the Snapshot-chain RPC."
+  );
+  assert.match(
+    walletUtils,
+    /eth_chainId/,
+    "Metagov startup validation must verify the Snapshot RPC's actual chain id."
+  );
+  const validation = read("services/metagov/src/validation.ts");
+  assert.match(
+    validation,
+    /spaceNetwork[\s\S]*config\.snapshotChainId/,
+    "Metagov startup validation must compare the Snapshot space network to the configured Snapshot chain."
+  );
   assert.match(
     read("services/metagov/src/core.ts"),
     /discussion:\s*proposalLinkTemplate\.replace\("\{id\}", proposal\.id\)/,
@@ -400,7 +653,7 @@ const snapshotConstants = {
   const safeVoting = read("services/metagov/src/services/safe-voting.ts");
   assert.match(safeVoting, /executionMode:\s*"safe"/, "Final execution result must be Safe-only.");
   assert.match(safeVoting, /castRefundableVoteWithReason/, "Final execution must target the Nouns DAO vote method.");
-  assert.match(safeVoting, /hasAlreadyVoted\(proposalId,\s*config\.safeAddress\)/, "Already-voted detection must check the configured Safe address.");
+  assert.match(safeVoting, /getVoteStatus\(\s*proposalId,\s*config\.safeAddress\s*\)/, "Already-voted detection must check the configured Safe address with an authoritative receipt read.");
   assert.doesNotMatch(safeVoting, /getCurrentVotes|getPriorVotes/, "Final execution must not hard-block zero-weight Safe votes.");
   assert.doesNotMatch(safeVoting, /bot-wallet|executionMode:\s*"bot"/, "Final execution must not fall back to a bot-wallet vote.");
   console.log("ok - Final Nouns DAO execution path is dry-run capable, Safe-only, and zero-weight tolerant");

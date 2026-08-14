@@ -5,6 +5,7 @@ import {
 } from "data/rounds";
 import { getRoundVotingPower } from "@/utils/rounds/getRoundVotingPower";
 import { getRoundVoteUsage } from "@/utils/rounds/getRoundVoteUsage";
+import { getEffectiveRoundVotingSnapshotAt } from "@/utils/rounds/voting-snapshot";
 import { getAddress, isAddress } from "viem";
 
 const getSlug = (req: NextApiRequest) => {
@@ -39,10 +40,30 @@ export default async function handler(
     if (!round) return res.status(404).json({ error: "Round not found." });
 
     const walletAddress = getAddress(wallet);
-    const votingSnapshotBlock = await getOrCreateRoundVotingSnapshotBlock(round);
+    const votingSnapshotBlock =
+      await getOrCreateRoundVotingSnapshotBlock(round);
+    const votingSnapshotAt = getEffectiveRoundVotingSnapshotAt(round);
+
+    if (votingSnapshotBlock === null) {
+      const usedVotes = await getRoundVoteUsage({
+        roundId: round.id,
+        walletAddress,
+      });
+
+      return res.status(200).json({
+        walletAddress,
+        votingPower: 0,
+        usedVotes,
+        remainingVotes: 0,
+        votingSnapshotBlock: null,
+        votingSnapshotAt,
+        votingSnapshotStatus: "pending",
+      });
+    }
+
     const roundForVoting = {
       ...round,
-      votingSnapshotBlock: votingSnapshotBlock || round.votingSnapshotBlock,
+      votingSnapshotBlock: votingSnapshotBlock ?? round.votingSnapshotBlock,
     };
     const [votingPower, usedVotes] = await Promise.all([
       getRoundVotingPower(roundForVoting, walletAddress),
@@ -55,6 +76,8 @@ export default async function handler(
       usedVotes,
       remainingVotes: Math.max(votingPower - usedVotes, 0),
       votingSnapshotBlock: roundForVoting.votingSnapshotBlock,
+      votingSnapshotAt,
+      votingSnapshotStatus: "resolved",
     });
   } catch (error) {
     console.error("Round voting power failed", error);

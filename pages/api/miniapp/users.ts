@@ -28,6 +28,9 @@ export default async function handler(
       pfpUrl: req.body?.pfpUrl,
       walletAddress: req.body?.walletAddress,
       notificationsEnabled,
+      notificationUrl: req.body?.notificationUrl,
+      notificationTokenCreatedAt: req.body?.notificationTokenCreatedAt,
+      notificationTokenUpdatedAt: req.body?.notificationTokenUpdatedAt,
     });
 
     return res.status(200).json(result);

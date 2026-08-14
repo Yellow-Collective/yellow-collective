@@ -73,21 +73,22 @@ export const normalizeSignedRequestWallet = (walletAddress: string) => {
 
 export const buildSignedRequestMessage = (challenge: SignedRequestChallenge) =>
   [
-    "Yellow Collective signed request",
+    `${challenge.domain} wants you to sign in with your Ethereum account:`,
+    normalizeSignedRequestWallet(challenge.walletAddress),
     "",
-    `Domain: ${challenge.domain}`,
+    "Authorize this Yellow Collective request. Review the request resources before signing.",
+    "",
     `URI: ${challenge.uri}`,
-    `Path: ${challenge.path}`,
-    `Method: ${challenge.method}`,
-    `Action: ${challenge.action}`,
-    `Wallet: ${normalizeSignedRequestWallet(challenge.walletAddress)}`,
+    "Version: 1",
     `Chain ID: ${challenge.chainId}`,
     `Nonce: ${challenge.nonce}`,
     `Issued At: ${challenge.issuedAt}`,
     `Expiration Time: ${challenge.expirationTime}`,
-    `Payload Hash: ${challenge.payloadHash}`,
-    "",
-    "Only sign this if the domain, action, and request details match what you intend to do.",
+    "Resources:",
+    `- urn:yellow-collective:action:${encodeURIComponent(challenge.action)}`,
+    `- urn:yellow-collective:method:${challenge.method}`,
+    `- urn:yellow-collective:path:${encodeURIComponent(challenge.path)}`,
+    `- urn:yellow-collective:payload:${challenge.payloadHash}`,
   ].join("\n");
 
 const encodeBase64Url = (value: string) => {

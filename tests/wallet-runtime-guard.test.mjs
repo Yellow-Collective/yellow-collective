@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { providers } from "ethers";
+import { BigNumber, providers } from "ethers";
 import { Interface } from "ethers6";
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
@@ -31,6 +31,25 @@ test("Mini App wallet connection is explicit and gated by runtime detection", ()
   assert.match(customConnectButton, /Continue with Farcaster Wallet/);
   assert.match(placeBid, /isMiniApp[\s\S]*connectMiniAppWallet\(\)[\s\S]*openConnectModal\?\.\(\)/);
   assert.match(settleAuction, /isMiniApp[\s\S]*connectMiniAppWallet\(\)[\s\S]*openConnectModal\?\.\(\)/);
+});
+
+test("proposal vote modal can fall back to the Mini App wallet provider", () => {
+  const voteModal = read("components/VoteModal.tsx");
+
+  assert.match(voteModal, /getMiniAppEthereumProvider/);
+  assert.match(voteModal, /eth_sendTransaction/);
+  assert.match(voteModal, /encodeFunctionData\("castVote"/);
+  assert.match(voteModal, /encodeFunctionData\("castVoteWithReason"/);
+  assert.match(
+    voteModal,
+    /support !== undefined[\s\S]*\(isPreviewProposal \|\| write \|\| address\)/,
+    "Vote submit availability must not depend only on wagmi's prepared writer."
+  );
+  assert.doesNotMatch(
+    voteModal,
+    /support !== undefined && \(isPreviewProposal \|\| write\)/,
+    "Vote modal must not dead-end when the Mini App wallet is connected but wagmi prepare has no write function."
+  );
 });
 
 test("CSP allows the imported Google font stylesheet and font files", () => {
@@ -73,11 +92,16 @@ test("treasury API returns a primitive balance string", () => {
 test("previous auction fetch waits for auction contract and token id", () => {
   const previousAuctionHook = read("hooks/fetch/usePreviousAuctions.tsx");
   const hero = read("components/Hero/Hero.tsx");
+  const auctionData = read("data/nouns-builder/auction.ts");
 
   assert.equal(previousAuctionHook.includes("TOKEN_CONTRACT"), false);
   assert.match(previousAuctionHook, /enabled && auctionContract && tokenId/);
   assert.match(previousAuctionHook, /\/api\/auction\/\$\{auctionContract\}\/previous\/\$\{tokenId\}/);
   assert.match(hero, /usePreviousAuction\(\{\s*auctionContract,\s*enabled: !hidden,\s*tokenId,/);
+  assert.match(hero, /BigNumber\.from\(auctionData\.amount \|\| "0"\)\.isZero\(\)/);
+  assert.match(hero, /N\/A - Burned🔥/);
+  assert.match(auctionData, /const tokenContractId = `\$\{TOKEN_CONTRACT\.toLowerCase\(\)\}:\$\{normalizedTokenId\}`/);
+  assert.match(auctionData, /return Array\.from\(new Set\(\[tokenContractId, requestedAddressId\]\)\)/);
 });
 
 test("bid calldata uses ethers6-compatible token id values", () => {
@@ -108,4 +132,26 @@ test("bid calldata uses ethers6-compatible token id values", () => {
       "0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
     ])
   );
+});
+
+test("auction bid preparation uses serializable ethers v5 BigNumber values", () => {
+  const placeBid = read("components/Hero/PlaceBid.tsx");
+
+  assert.match(
+    placeBid,
+    /const parseBidAmount = \(value: string\): BigNumber \| undefined/
+  );
+  assert.match(
+    placeBid,
+    /BigNumber\.from\(utils\.parseEther\(value\)\.toString\(\)\)/
+  );
+  assert.equal(placeBid.includes("return value ? utils.parseEther(value)"), false);
+  assert.match(placeBid, /const isPreparedBidValid = parsedBid[\s\S]*parsedBid\.gt\(ZERO_BID\)[\s\S]*parsedBid\.gte\(nextBidAmount\)/);
+  assert.match(placeBid, /const canPrepareBid = Boolean\([\s\S]*isConnected[\s\S]*!commentError/);
+  assert.match(placeBid, /request: canPrepareBid && auction && finalBidCalldata && parsedBid/);
+  assert.match(placeBid, /const toSafeBigNumber/);
+  assert.match(placeBid, /const isZeroBalanceValue/);
+
+  assert.throws(() => JSON.stringify({ value: 1n }), /BigInt/);
+  assert.doesNotThrow(() => JSON.stringify({ value: BigNumber.from("1") }));
 });

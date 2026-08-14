@@ -35,7 +35,7 @@ export type SnapshotVote = {
   created: number;
 };
 
-type SnapshotProposalResponse = {
+export type SnapshotProposalResponse = {
   id: string;
   title: string;
   body?: string;
@@ -116,7 +116,9 @@ const normalizeSnapshotProposal = (
   link: `${SNAPSHOT_SPACE_URL}/proposal/${proposal.id}`,
 });
 
-const parseNounsProposalNumber = (proposal: SnapshotProposalResponse) => {
+export const parseNounsProposalNumber = (
+  proposal: Pick<SnapshotProposalResponse, "title" | "body">
+) => {
   const title = proposal.title.trim();
   const directMatch = title.match(/^(\d+)\s*:/);
   if (directMatch) return Number(directMatch[1]);
@@ -137,6 +139,14 @@ const parseNounsProposalNumber = (proposal: SnapshotProposalResponse) => {
   }
 
   return null;
+};
+
+export const getSnapshotProposals = async (): Promise<SnapshotProposal[]> => {
+  const data = await snapshotGraphql<{
+    proposals: SnapshotProposalResponse[];
+  }>(SNAPSHOT_PROPOSALS_QUERY, { space: SNAPSHOT_SPACE_ID });
+
+  return data.proposals.map(normalizeSnapshotProposal);
 };
 
 const snapshotGraphql = async <TData>(
@@ -172,15 +182,12 @@ const snapshotGraphql = async <TData>(
 export const getSnapshotProposalForNouns = async (
   proposalNumber: number
 ): Promise<SnapshotProposal | null> => {
-  const data = await snapshotGraphql<{
-    proposals: SnapshotProposalResponse[];
-  }>(SNAPSHOT_PROPOSALS_QUERY, { space: SNAPSHOT_SPACE_ID });
-
-  const match = data.proposals.find(
+  const proposals = await getSnapshotProposals();
+  const match = proposals.find(
     (proposal) => parseNounsProposalNumber(proposal) === proposalNumber
   );
 
-  return match ? normalizeSnapshotProposal(match) : null;
+  return match || null;
 };
 
 export const getSnapshotVotes = async (

@@ -30,6 +30,18 @@ const loadTsModule = (filePath) => {
 const upload = loadTsModule(
   resolve(process.cwd(), "utils/rounds/round-image-upload.ts")
 );
+const imageFieldSource = readFileSync(
+  resolve(process.cwd(), "components/rounds/RoundImageUploadField.tsx"),
+  "utf8"
+);
+const adminPageSource = readFileSync(
+  resolve(process.cwd(), "pages/admin/dashboard.tsx"),
+  "utf8"
+);
+const requestPageSource = readFileSync(
+  resolve(process.cwd(), "pages/rounds/request.tsx"),
+  "utf8"
+);
 
 const tests = [];
 const test = (name, run) => tests.push({ name, run });
@@ -71,6 +83,18 @@ test("rejects round image files above the size limit", () => {
       }),
     /Choose an image smaller than 8MB/
   );
+});
+
+test("uses one shared round image upload field across request and admin forms", () => {
+  assert.match(imageFieldSource, /export default function RoundImageUploadField/);
+  assert.match(imageFieldSource, /resizeRoundImageFile/);
+  assert.match(imageFieldSource, /accept=\{ROUND_IMAGE_UPLOAD_ACCEPT\}/);
+  assert.match(imageFieldSource, /Upload image/);
+  assert.match(imageFieldSource, /Round preview/);
+  assert.match(imageFieldSource, /showUrlInput/);
+  assert.match(adminPageSource, /<RoundImageUploadField/);
+  assert.match(adminPageSource, /showUrlInput/);
+  assert.match(requestPageSource, /<RoundImageUploadField/);
 });
 
 let failures = 0;

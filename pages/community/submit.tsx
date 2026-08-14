@@ -1,7 +1,10 @@
 import Layout from "@/components/Layout";
 import ProjectMemberSelector from "@/components/community/ProjectMemberSelector";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
-import type { CommunityProject } from "data/community";
+import type {
+  CommunityProject,
+  CommunityProjectGalleryImage,
+} from "data/community";
 import type { DaoMemberSummary } from "data/members";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -27,7 +30,7 @@ const initialValues = {
   date: "",
   href: "",
   image: "",
-  galleryImages: [""],
+  galleryImages: [{ src: "", caption: "", sourceHref: "", sourceLabel: "" }],
   links: [{ title: "", href: "" }],
 };
 
@@ -35,6 +38,9 @@ type UploadedImage = {
   name: string;
   type: string;
   dataUrl: string;
+  caption?: string;
+  sourceHref?: string;
+  sourceLabel?: string;
 };
 
 const MAX_GALLERY_UPLOADS = 6;
@@ -76,11 +82,20 @@ export default function SubmitCommunityProjectPage() {
     .map((line) => line.trim())
     .filter(Boolean);
   const galleryImages = values.galleryImages
-    .map((image) => image.trim())
-    .filter(Boolean);
-  const galleryImageUploads = uploadedGalleryImages.map(
-    (image) => image.dataUrl
-  );
+    .map((image) => ({
+      src: image.src.trim(),
+      caption: image.caption.trim(),
+      sourceHref: image.sourceHref.trim(),
+      sourceLabel: image.sourceLabel.trim(),
+    }))
+    .filter((image) => image.src);
+  const galleryImageUploads: CommunityProjectGalleryImage[] =
+    uploadedGalleryImages.map((image) => ({
+      src: image.dataUrl,
+      caption: image.caption?.trim() || "",
+      sourceHref: image.sourceHref?.trim() || "",
+      sourceLabel: image.sourceLabel?.trim() || "",
+    }));
   const links = values.links
     .map((link) => ({ title: link.title.trim(), href: link.href.trim() }))
     .filter((link) => link.title && link.href);
@@ -121,19 +136,42 @@ export default function SubmitCommunityProjectPage() {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
   };
   const updateGalleryImage = (index: number, value: string) => {
+    updateGalleryImageField(index, "src", value);
+  };
+  const updateGalleryImageField = (
+    index: number,
+    field: keyof (typeof initialValues.galleryImages)[number],
+    value: string
+  ) => {
     setSubmissionError("");
     setSubmissionMessage("");
     setValues((currentValues) => {
       const nextImages = [...currentValues.galleryImages];
-      nextImages[index] = value;
+      nextImages[index] = { ...nextImages[index], [field]: value };
       return { ...currentValues, galleryImages: nextImages };
     });
   };
   const addGalleryImage = () => {
     setValues((currentValues) => ({
       ...currentValues,
-      galleryImages: [...currentValues.galleryImages, ""],
+      galleryImages: [
+        ...currentValues.galleryImages,
+        { src: "", caption: "", sourceHref: "", sourceLabel: "" },
+      ],
     }));
+  };
+  const updateUploadedGalleryImage = (
+    index: number,
+    field: "caption" | "sourceHref" | "sourceLabel",
+    value: string
+  ) => {
+    setSubmissionError("");
+    setSubmissionMessage("");
+    setUploadedGalleryImages((currentImages) => {
+      const nextImages = [...currentImages];
+      nextImages[index] = { ...nextImages[index], [field]: value };
+      return nextImages;
+    });
   };
   const updateLink = (
     index: number,
@@ -491,15 +529,55 @@ export default function SubmitCommunityProjectPage() {
             </p>
             <div className="mt-2 flex flex-col gap-3">
               {values.galleryImages.map((image, index) => (
-                <input
+                <div
                   key={index}
-                  value={image}
-                  onChange={(event) =>
-                    updateGalleryImage(index, event.target.value)
-                  }
-                  placeholder="example.com/gallery-image.png"
-                  className="w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
-                />
+                  className="grid gap-3 rounded-xl border border-skin-stroke bg-white p-3 md:grid-cols-2"
+                >
+                  <input
+                    value={image.src}
+                    onChange={(event) =>
+                      updateGalleryImage(index, event.target.value)
+                    }
+                    placeholder="example.com/gallery-image.png"
+                    className="w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted md:col-span-2"
+                  />
+                  <input
+                    value={image.caption}
+                    onChange={(event) =>
+                      updateGalleryImageField(
+                        index,
+                        "caption",
+                        event.target.value
+                      )
+                    }
+                    placeholder="Caption or description"
+                    className="w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted md:col-span-2"
+                  />
+                  <input
+                    value={image.sourceHref}
+                    onChange={(event) =>
+                      updateGalleryImageField(
+                        index,
+                        "sourceHref",
+                        event.target.value
+                      )
+                    }
+                    placeholder="Source URL"
+                    className="w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+                  />
+                  <input
+                    value={image.sourceLabel}
+                    onChange={(event) =>
+                      updateGalleryImageField(
+                        index,
+                        "sourceLabel",
+                        event.target.value
+                      )
+                    }
+                    placeholder="Source label"
+                    className="w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+                  />
+                </div>
               ))}
             </div>
             <button
@@ -544,6 +622,44 @@ export default function SubmitCommunityProjectPage() {
                         >
                           Remove
                         </button>
+                      </div>
+                      <div className="mt-3 flex flex-col gap-2">
+                        <input
+                          value={image.caption || ""}
+                          onChange={(event) =>
+                            updateUploadedGalleryImage(
+                              index,
+                              "caption",
+                              event.target.value
+                            )
+                          }
+                          placeholder="Caption or description"
+                          className="w-full rounded-lg border border-skin-stroke bg-skin-muted px-3 py-2 text-sm text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+                        />
+                        <input
+                          value={image.sourceHref || ""}
+                          onChange={(event) =>
+                            updateUploadedGalleryImage(
+                              index,
+                              "sourceHref",
+                              event.target.value
+                            )
+                          }
+                          placeholder="Source URL"
+                          className="w-full rounded-lg border border-skin-stroke bg-skin-muted px-3 py-2 text-sm text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+                        />
+                        <input
+                          value={image.sourceLabel || ""}
+                          onChange={(event) =>
+                            updateUploadedGalleryImage(
+                              index,
+                              "sourceLabel",
+                              event.target.value
+                            )
+                          }
+                          placeholder="Source label"
+                          className="w-full rounded-lg border border-skin-stroke bg-skin-muted px-3 py-2 text-sm text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+                        />
                       </div>
                     </div>
                   ))}

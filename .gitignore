@@ -22,6 +22,7 @@
 
 # debug
 .codex-tmp/
+.tmp-vercel-cron/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -35,6 +36,7 @@ services/metagov/*.tmp
 
 # vercel
 .vercel
+.vercel-cli/
 
 # typescript
 *.tsbuildinfo

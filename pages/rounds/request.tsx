@@ -1,17 +1,15 @@
 import Layout from "@/components/Layout";
+import RoundImageUploadField from "@/components/rounds/RoundImageUploadField";
+import VotingPowerSnapshotFieldset from "@/components/rounds/VotingPowerSnapshotFieldset";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
-import {
-  ROUND_IMAGE_UPLOAD_ACCEPT,
-  resizeRoundImageFile,
-} from "@/utils/rounds/round-image-upload";
+import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import { TOKEN_NETWORK } from "constants/addresses";
 import type { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
-import type { ChangeEvent } from "react";
 import { useMemo, useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 
@@ -32,6 +30,8 @@ type FormValues = {
   submissionsOpenAt: string;
   votingStartsAt: string;
   votingEndsAt: string;
+  votingSnapshotMode: "voting_start" | "custom";
+  votingSnapshotAt: string;
   votingStrategy: string;
   votesPerWallet: string;
   winnerCount: string;
@@ -72,6 +72,8 @@ const createInitialValues = (): FormValues => ({
   submissionsOpenAt: "",
   votingStartsAt: "",
   votingEndsAt: "",
+  votingSnapshotMode: "voting_start",
+  votingSnapshotAt: "",
   votingStrategy: "one_per_nft",
   votesPerWallet: "1",
   winnerCount: "1",
@@ -100,6 +102,10 @@ const votingStrategyOptions = [
     value: "fixed_per_wallet",
     label: "Fixed votes per wallet",
   },
+  {
+    value: "base_plus_voting_power",
+    label: "Base votes + voting power",
+  },
 ];
 
 export default function RequestRoundPage() {
@@ -108,27 +114,33 @@ export default function RequestRoundPage() {
   const [values, setValues] = useState<FormValues>(() => createInitialValues());
   const [message, setMessage] = useState<MessageState>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasEditedVotesPerWallet, setHasEditedVotesPerWallet] =
+    useState(false);
   const prizeCount = Number(values.winnerCount) || 1;
 
   const canSubmit = useMemo(
     () =>
       Boolean(
         values.requesterName.trim() &&
-          values.requesterEmail.trim() &&
-          slugify(values.title).trim() &&
-          values.title.trim().length >= 3 &&
-          values.description.trim().length >= 20 &&
-          values.content.trim().length >= 20 &&
-          values.image.trim() &&
-          values.submissionsOpenAt &&
-          values.votingStartsAt &&
-          values.votingEndsAt &&
-          Number(values.winnerCount) > 0 &&
-          Number(values.maxSubmissionsPerWallet) > 0 &&
-          Number(values.votesPerWallet) > 0 &&
-          address &&
-          values.awards.length === Number(values.winnerCount) &&
-          values.awards.every((award) => award.value.trim())
+        values.requesterEmail.trim() &&
+        slugify(values.title).trim() &&
+        values.title.trim().length >= 3 &&
+        values.description.trim().length >= 20 &&
+        values.content.trim().length >= 20 &&
+        values.image.trim() &&
+        values.submissionsOpenAt &&
+        values.votingStartsAt &&
+        values.votingEndsAt &&
+        (values.votingSnapshotMode === "voting_start" ||
+          (Boolean(values.votingSnapshotAt) &&
+            new Date(values.votingSnapshotAt).getTime() <=
+              new Date(values.votingStartsAt).getTime())) &&
+        Number(values.winnerCount) > 0 &&
+        Number(values.maxSubmissionsPerWallet) > 0 &&
+        Number(values.votesPerWallet) > 0 &&
+        address &&
+        values.awards.length === Number(values.winnerCount) &&
+        values.awards.every((award) => award.value.trim())
       ),
     [address, values]
   );
@@ -146,6 +158,24 @@ export default function RequestRoundPage() {
 
       return { ...currentValues, [field]: value };
     });
+  };
+
+  const updateVotingStrategy = (nextStrategy: string) => {
+    setMessage(null);
+    setValues((currentValues) => ({
+      ...currentValues,
+      votingStrategy: nextStrategy,
+      votesPerWallet:
+        nextStrategy === "base_plus_voting_power" &&
+        !hasEditedVotesPerWallet
+          ? String(getDefaultRoundVotesPerWallet(nextStrategy))
+          : currentValues.votesPerWallet,
+    }));
+  };
+
+  const updateVotesPerWallet = (value: string) => {
+    setHasEditedVotesPerWallet(true);
+    updateValue("votesPerWallet", value);
   };
 
   const updatePrizeCount = (count: number) => {
@@ -198,6 +228,11 @@ export default function RequestRoundPage() {
           submissionsOpenAt: dateInputToIso(values.submissionsOpenAt),
           votingStartsAt: dateInputToIso(values.votingStartsAt),
           votingEndsAt: dateInputToIso(values.votingEndsAt),
+          votingSnapshotMode: values.votingSnapshotMode,
+          votingSnapshotAt:
+            values.votingSnapshotMode === "custom"
+              ? dateInputToIso(values.votingSnapshotAt)
+              : null,
           votesPerWallet: Number(values.votesPerWallet),
           winnerCount: Number(values.winnerCount),
           maxSubmissionsPerWallet: Number(values.maxSubmissionsPerWallet),
@@ -230,6 +265,7 @@ export default function RequestRoundPage() {
       }
 
       setValues(createInitialValues());
+      setHasEditedVotesPerWallet(false);
       setMessage({
         type: "success",
         text: "Round request submitted. An admin will review it and get back to you.",
@@ -312,7 +348,7 @@ export default function RequestRoundPage() {
               placeholder="example.com"
               note="If there is an announcement, proposal, etc that you want to link out to."
             />
-            <ImageUploadField
+            <RoundImageUploadField
               value={values.image}
               onChange={(value) => updateValue("image", value)}
               onError={(text) => setMessage({ type: "error", text })}
@@ -388,14 +424,27 @@ export default function RequestRoundPage() {
             />
           </div>
 
+          <VotingPowerSnapshotFieldset
+            name="votingSnapshotMode"
+            value={values.votingSnapshotMode}
+            onChange={(value) => updateValue("votingSnapshotMode", value)}
+            className="mt-6"
+            customDateField={
+              <DateField
+                label="Custom snapshot date"
+                value={values.votingSnapshotAt}
+                onChange={(value) => updateValue("votingSnapshotAt", value)}
+                required
+              />
+            }
+          />
+
           <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             <label className="font-heading text-base text-skin-base">
               Voting type *
               <select
                 value={values.votingStrategy}
-                onChange={(event) =>
-                  updateValue("votingStrategy", event.target.value)
-                }
+                onChange={(event) => updateVotingStrategy(event.target.value)}
                 className="mt-2 w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
               >
                 {votingStrategyOptions.map((option) => (
@@ -404,12 +453,26 @@ export default function RequestRoundPage() {
                   </option>
                 ))}
               </select>
+              {values.votingStrategy === "base_plus_voting_power" && (
+                <span className="mt-2 block text-sm font-normal leading-snug text-secondary">
+                  Each eligible wallet receives the base allocation plus its
+                  delegated Collective Noun voting power at the voting
+                  snapshot.
+                </span>
+              )}
             </label>
             <NumberField
-              label="Votes per wallet"
+              label={
+                values.votingStrategy === "base_plus_voting_power"
+                  ? "Base votes per wallet"
+                  : "Votes per wallet"
+              }
               value={values.votesPerWallet}
-              onChange={(value) => updateValue("votesPerWallet", value)}
-              disabled={values.votingStrategy !== "fixed_per_wallet"}
+              onChange={updateVotesPerWallet}
+              disabled={
+                values.votingStrategy !== "fixed_per_wallet" &&
+                values.votingStrategy !== "base_plus_voting_power"
+              }
               required
             />
             <NumberField
@@ -563,77 +626,6 @@ const FormField = ({
       {note && (
         <p className="mt-2 text-sm leading-snug text-secondary">{note}</p>
       )}
-    </div>
-  );
-};
-
-const ImageUploadField = ({
-  value,
-  onChange,
-  onError,
-  required = false,
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  onError: (message: string) => void;
-  required?: boolean;
-}) => {
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-      onChange(await resizeRoundImageFile(file));
-    } catch (error) {
-      onError(
-        error instanceof Error ? error.message : "Unable to upload image."
-      );
-    } finally {
-      event.target.value = "";
-    }
-  };
-
-  return (
-    <div>
-      <div className="font-heading text-base text-skin-base">
-        Image
-        {required ? " *" : ""}
-      </div>
-      <div className="mt-2 flex flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <label className="yc-dark-submit-blue flex w-fit cursor-pointer items-center justify-center rounded-[18px] bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none">
-              Upload image
-              <input
-                type="file"
-                accept={ROUND_IMAGE_UPLOAD_ACCEPT}
-                className="sr-only"
-                onChange={handleFileChange}
-              />
-            </label>
-            {value && (
-              <button
-                type="button"
-                onClick={() => onChange("")}
-                className="yc-dark-reset-red yc-dark-reset-white-hover rounded-[18px] border border-skin-stroke bg-white px-5 py-3 font-heading text-base text-skin-base shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition hover:-translate-y-0.5 hover:bg-[#fff7bf] active:translate-y-1 active:shadow-none"
-              >
-                Remove
-              </button>
-            )}
-          </div>
-          <p className="max-w-[260px] text-sm leading-snug text-secondary">
-            Image for the Round preview and banner.
-          </p>
-        </div>
-        {value && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={value}
-            alt="Round preview"
-            className="aspect-[16/9] w-full rounded-lg border border-skin-stroke bg-white object-cover"
-          />
-        )}
-      </div>
     </div>
   );
 };

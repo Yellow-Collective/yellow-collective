@@ -3,6 +3,7 @@ import { SITE_DOMAIN } from "@/utils/site";
 export const NOTIFICATIONS_SETTINGS_KEY = "notifications_settings_v1";
 export const NOTIFICATION_TITLE_LIMIT = 32;
 export const NOTIFICATION_BODY_LIMIT = 128;
+export const NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS = [1, 2, 4, 12, 24];
 
 export const NOTIFICATION_ALERT_KEYS = [
   "round_published",
@@ -12,6 +13,7 @@ export const NOTIFICATION_ALERT_KEYS = [
   "round_results_finalized",
   "auction_started",
   "auction_ending_soon_1h",
+  "auction_ended",
   "auction_settled",
   "yellow_proposal_created",
   "yellow_proposal_active",
@@ -34,6 +36,7 @@ export type NotificationAlertSettings = {
 export type NotificationSettings = {
   enabled: boolean;
   dryRun: boolean;
+  pollIntervalHours: number;
   alerts: Record<NotificationAlertKey, NotificationAlertSettings>;
 };
 
@@ -64,7 +67,12 @@ export const NOTIFICATION_ALERT_GROUPS: Array<{
     id: "auctions",
     label: "Auctions",
     variables: ["tokenId"],
-    alerts: ["auction_started", "auction_ending_soon_1h", "auction_settled"],
+    alerts: [
+      "auction_started",
+      "auction_ending_soon_1h",
+      "auction_ended",
+      "auction_settled",
+    ],
   },
   {
     id: "yellow_proposals",
@@ -126,6 +134,11 @@ const defaultAlerts: Record<NotificationAlertKey, NotificationAlertSettings> = {
     titleTemplate: "Auction ending",
     bodyTemplate: "Collective Noun #{tokenId} ends in about 1 hour.",
   },
+  auction_ended: {
+    enabled: true,
+    titleTemplate: "Auction ended",
+    bodyTemplate: "Collective Noun #{tokenId} auction ended.",
+  },
   auction_settled: {
     enabled: true,
     titleTemplate: "Auction settled",
@@ -176,6 +189,7 @@ const defaultAlerts: Record<NotificationAlertKey, NotificationAlertSettings> = {
 export const DEFAULT_NOTIFICATION_SETTINGS: NotificationSettings = {
   enabled: true,
   dryRun: false,
+  pollIntervalHours: 1,
   alerts: defaultAlerts,
 };
 
@@ -189,6 +203,13 @@ const normalizeTemplate = (value: unknown, fallback: string) => {
   if (typeof value !== "string") return fallback;
   const trimmed = value.trim();
   return trimmed || fallback;
+};
+
+const normalizePollIntervalHours = (value: unknown) => {
+  const interval = Number(value);
+  return NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS.includes(interval)
+    ? interval
+    : DEFAULT_NOTIFICATION_SETTINGS.pollIntervalHours;
 };
 
 export const normalizeNotificationSettings = (
@@ -236,6 +257,7 @@ export const normalizeNotificationSettings = (
       typeof input.dryRun === "boolean"
         ? input.dryRun
         : DEFAULT_NOTIFICATION_SETTINGS.dryRun,
+    pollIntervalHours: normalizePollIntervalHours(input.pollIntervalHours),
     alerts,
   };
 };
@@ -279,6 +301,7 @@ const sampleVariablesByAlert: Record<
   },
   auction_started: { tokenId: 1 },
   auction_ending_soon_1h: { tokenId: 1 },
+  auction_ended: { tokenId: 1 },
   auction_settled: { tokenId: 1 },
   yellow_proposal_created: {
     proposalTitle: "Test Proposal",

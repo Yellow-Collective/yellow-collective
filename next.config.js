@@ -22,6 +22,7 @@ const nobleHashesPath = path.join(
 // api.coingecko.com: token price reads.
 // nouns.build, evm.stupidtech.net: Builder app metadata and RPC reads.
 // *.g.alchemy.com, publicnode, cloudflare-eth, Base, Zora RPC: wallet/provider RPC traffic.
+// chain-proxy.wallet.coinbase.com: Coinbase Wallet Base JSON-RPC relay.
 // *.walletconnect.com, *.walletconnect.org: WalletConnect modal and relay traffic.
 // vitals.vercel-insights.com: Vercel Analytics.
 // api.zora.co, zora.co, IPFS/Arweave gateways, imagedelivery.net, wrpcd.net,
@@ -62,6 +63,7 @@ const contentSecurityPolicy = [
     "https://mainnet.base.org",
     "https://goerli.base.org",
     "https://sepolia.base.org",
+    "https://chain-proxy.wallet.coinbase.com",
     "https://rpc.zora.energy",
     "https://testnet.rpc.zora.energy",
     "https://*.walletconnect.com",

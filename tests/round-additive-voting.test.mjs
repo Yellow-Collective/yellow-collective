@@ -34,13 +34,57 @@ const loadTsModule = (filePath, requireOverrides = {}) => {
 const voteValidation = loadTsModule(
   resolve(process.cwd(), "utils/rounds/validateRoundVote.ts")
 );
-const loadRoundVotingPowerModule = (delegatedVotes) =>
+const votingStrategy = loadTsModule(
+  resolve(process.cwd(), "utils/rounds/voting-strategy.ts")
+);
+const roundTraitSubmission = loadTsModule(
+  resolve(process.cwd(), "utils/noundry/round-trait-submission.ts")
+);
+const loadRoundVotingPowerModule = (delegatedVotes, calls = []) =>
   loadTsModule(resolve(process.cwd(), "utils/rounds/getRoundVotingPower.ts"), {
     "./getCollectiveNounVotingPower": {
-      getCollectiveNounVotingPower: async () => delegatedVotes,
+      getCollectiveNounVotingPower: async (walletAddress, blockTag) => {
+        calls.push({ walletAddress, blockTag });
+        return delegatedVotes;
+      },
     },
   });
-const roundsSource = readFileSync(resolve(process.cwd(), "data/rounds.ts"), "utf8");
+const loadRoundsModule = () =>
+  loadTsModule(resolve(process.cwd(), "data/rounds.ts"), {
+    pg: { Pool: function Pool() {} },
+    viem: {
+      getAddress: (address) => address,
+      isAddress: () => true,
+    },
+    "@/utils/rounds/state": { getRoundState: () => "draft" },
+    "@/utils/rounds/getCollectiveNounVotingPower": {
+      getBlockNumberAtOrBeforeTimestamp: async () => 1,
+      getLatestRoundVotingBlockTimestamp: async () => 1,
+    },
+    "@/utils/rounds/voting-snapshot": {
+      getEffectiveRoundVotingSnapshotAt: () => "2026-08-01T00:00:00.000Z",
+      hasRoundVotingSnapshotChanged: () => false,
+      isRoundVotingSnapshotMode: () => true,
+      isRoundVotingSnapshotReady: () => true,
+      validateRoundVotingSnapshot: () => undefined,
+    },
+    "data/noundry/submissions": { getNoundrySubmissionById: async () => null },
+    "@/utils/noundry/round-trait-submission": roundTraitSubmission,
+    "@/utils/rounds/validateRoundVote": voteValidation,
+    "@/utils/url-safety": {
+      normalizeSafeImageUrl: (value) => String(value || ""),
+      normalizeSafeProjectUrl: (value) => String(value || ""),
+    },
+    "data/dummy-content": {
+      getDummyPublicRoundBySlug: () => null,
+      getDummyPublicRounds: () => [],
+    },
+    "@/utils/rounds/voting-strategy": votingStrategy,
+  });
+const roundsSource = readFileSync(
+  resolve(process.cwd(), "data/rounds.ts"),
+  "utf8"
+);
 const votingPowerApiSource = readFileSync(
   resolve(process.cwd(), "pages/api/rounds/[slug]/voting-power.ts"),
   "utf8"
@@ -139,10 +183,7 @@ test("round voting power reads getVotes from the Collective Noun contract", asyn
   );
 
   assert.equal(votingPower, 7);
-  assert.equal(
-    calls[0].address,
-    "0x220e41499CF4d93a3629a5509410CBf9E6E0B109"
-  );
+  assert.equal(calls[0].address, "0x220e41499CF4d93a3629a5509410CBf9E6E0B109");
   assert.match(calls[0].abi.join(" "), /getVotes/);
   assert.equal(calls[1].type, "getVotes");
   assert.equal(
@@ -167,6 +208,124 @@ test("fixed votes per wallet still return zero without delegated Collective Noun
   assert.equal(votingPower, 0);
 });
 
+test("base votes plus voting power adds the default base to one delegated vote", async () => {
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(1);
+
+  const votingPower = await getRoundVotingPower(
+    {
+      votingStrategy: "base_plus_voting_power",
+      votesPerWallet: 100,
+      votingSnapshotBlock: 123,
+    },
+    "0x0000000000000000000000000000000000000001"
+  );
+
+  assert.equal(votingPower, 101);
+});
+
+test("base votes plus voting power adds the default base to seven delegated votes", async () => {
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(7);
+
+  const votingPower = await getRoundVotingPower(
+    {
+      votingStrategy: "base_plus_voting_power",
+      votesPerWallet: 100,
+      votingSnapshotBlock: 123,
+    },
+    "0x0000000000000000000000000000000000000001"
+  );
+
+  assert.equal(votingPower, 107);
+});
+
+test("base votes plus voting power supports a custom base", async () => {
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(7);
+
+  const votingPower = await getRoundVotingPower(
+    {
+      votingStrategy: "base_plus_voting_power",
+      votesPerWallet: 25,
+      votingSnapshotBlock: 123,
+    },
+    "0x0000000000000000000000000000000000000001"
+  );
+
+  assert.equal(votingPower, 32);
+});
+
+test("base votes plus voting power remains unavailable without delegated votes", async () => {
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(0);
+
+  const votingPower = await getRoundVotingPower(
+    {
+      votingStrategy: "base_plus_voting_power",
+      votesPerWallet: 100,
+      votingSnapshotBlock: 123,
+    },
+    "0x0000000000000000000000000000000000000001"
+  );
+
+  assert.equal(votingPower, 0);
+});
+
+test("base votes plus voting power rejects unsafe final allocations", async () => {
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(1);
+
+  await assert.rejects(
+    () =>
+      getRoundVotingPower(
+        {
+          votingStrategy: "base_plus_voting_power",
+          votesPerWallet: Number.MAX_SAFE_INTEGER,
+          votingSnapshotBlock: 123,
+        },
+        "0x0000000000000000000000000000000000000001"
+      ),
+    /safe integer/i
+  );
+});
+
+test("new hybrid rounds and requests default to 100 base votes without rewriting existing values", () => {
+  const rounds = loadRoundsModule();
+
+  assert.equal(
+    votingStrategy.getDefaultRoundVotesPerWallet("base_plus_voting_power"),
+    100
+  );
+  assert.equal(votingStrategy.getDefaultRoundVotesPerWallet("one_per_nft"), 1);
+  assert.equal(
+    rounds.normalizeRoundInput({
+      votingStrategy: "base_plus_voting_power",
+    }).votesPerWallet,
+    100
+  );
+  assert.equal(
+    rounds.normalizeRoundInput({ votingStrategy: "one_per_nft" })
+      .votesPerWallet,
+    1
+  );
+  assert.equal(
+    rounds.normalizeRoundInput(
+      {},
+      {
+        votingStrategy: "base_plus_voting_power",
+        votesPerWallet: 25,
+      }
+    ).votesPerWallet,
+    25
+  );
+});
+
+test("hybrid base allocations must be positive safe whole numbers", () => {
+  const rounds = loadRoundsModule();
+  const normalized = rounds.normalizeRoundInput({
+    votingStrategy: "base_plus_voting_power",
+    votesPerWallet: Number.MAX_SAFE_INTEGER + 1,
+  });
+
+  assert.match(rounds.validateRoundInput(normalized), /safe whole number/i);
+});
+
 test("one vote per wallet still requires delegated Collective Noun votes", async () => {
   const { getRoundVotingPower } = loadRoundVotingPowerModule(0);
 
@@ -182,6 +341,34 @@ test("one vote per wallet still requires delegated Collective Noun votes", async
   assert.equal(votingPower, 0);
 });
 
+test("existing flat voting strategies retain their positive allocations", async () => {
+  const walletAddress = "0x0000000000000000000000000000000000000001";
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(7);
+
+  assert.equal(
+    await getRoundVotingPower(
+      {
+        votingStrategy: "one_per_wallet",
+        votesPerWallet: 1,
+        votingSnapshotBlock: 123,
+      },
+      walletAddress
+    ),
+    1
+  );
+  assert.equal(
+    await getRoundVotingPower(
+      {
+        votingStrategy: "fixed_per_wallet",
+        votesPerWallet: 5,
+        votingSnapshotBlock: 123,
+      },
+      walletAddress
+    ),
+    5
+  );
+});
+
 test("token-weighted rounds use delegated Collective Noun votes", async () => {
   const { getRoundVotingPower } = loadRoundVotingPowerModule(4);
 
@@ -195,6 +382,66 @@ test("token-weighted rounds use delegated Collective Noun votes", async () => {
   );
 
   assert.equal(votingPower, 4);
+});
+
+test("every voting strategy reads eligibility from the resolved snapshot block", async () => {
+  const calls = [];
+  const { getRoundVotingPower } = loadRoundVotingPowerModule(4, calls);
+  const walletAddress = "0x0000000000000000000000000000000000000001";
+
+  for (const votingStrategy of [
+    "one_per_nft",
+    "one_per_wallet",
+    "fixed_per_wallet",
+    "base_plus_voting_power",
+  ]) {
+    await getRoundVotingPower(
+      {
+        votingStrategy,
+        votesPerWallet: 5,
+        votingSnapshotBlock: 456,
+      },
+      walletAddress
+    );
+  }
+
+  assert.deepEqual(
+    calls.map((call) => call.blockTag),
+    [456, 456, 456, 456]
+  );
+});
+
+test("snapshot block lookup uses the block at or before the target and rejects future targets", async () => {
+  const blocks = [
+    { number: 0, timestamp: 100 },
+    { number: 1, timestamp: 200 },
+    { number: 2, timestamp: 300 },
+  ];
+  const votingPowerModule = loadTsModule(
+    resolve(process.cwd(), "utils/rounds/getCollectiveNounVotingPower.ts"),
+    {
+      "@/utils/DefaultProvider": {
+        getBlockNumber: async () => 2,
+        getBlock: async (blockNumber) => blocks[blockNumber] || null,
+      },
+      "@/utils/ethers-compat": { Contract: function Contract() {} },
+      viem: { getAddress: (address) => address, isAddress: () => true },
+    }
+  );
+
+  assert.equal(
+    await votingPowerModule.getBlockNumberAtOrBeforeTimestamp(
+      new Date(250 * 1000).toISOString()
+    ),
+    1
+  );
+  await assert.rejects(
+    () =>
+      votingPowerModule.getBlockNumberAtOrBeforeTimestamp(
+        new Date(350 * 1000).toISOString()
+      ),
+    /not available yet/
+  );
 });
 
 test("round vote persistence is additive and never deletes prior wallet votes", () => {
@@ -244,17 +491,30 @@ test("round voting UI separates locked votes, pending votes, and remaining votes
   assert.match(roundPageSource, /Previously submitted votes cannot be changed/);
   assert.match(roundPageSource, /votes remaining/);
   assert.match(roundPageSource, /lockedVotesBySubmission/);
-  assert.match(roundPageSource, /yc-round-locked-vote-pill[\s\S]*\{lockedVotes\} locked/);
-  assert.match(globalsSource, /yc-round-locked-vote-pill[\s\S]*color: #212529 !important/);
+  assert.match(
+    roundPageSource,
+    /yc-round-locked-vote-pill[\s\S]*\{lockedVotes\} locked/
+  );
+  assert.match(
+    globalsSource,
+    /yc-round-locked-vote-pill[\s\S]*color: #212529 !important/
+  );
   assert.match(roundPageSource, /2xl:w-\[640px\][\s\S]*votes submitted/);
   assert.match(roundPageSource, /min-w-\[9\.75rem\][\s\S]*pending votes/);
-  assert.match(roundPageSource, /whitespace-nowrap[\s\S]*\{submission\.voteCount\} votes/);
+  assert.match(
+    roundPageSource,
+    /whitespace-nowrap[\s\S]*\{submission\.voteCount\} votes/
+  );
   assert.match(roundPageSource, /New votes/);
 });
 
 test("round voting copy describes delegated Collective Noun voting power", () => {
   assert.doesNotMatch(roundPageSource, /Collective Noun held/);
   assert.match(roundPageSource, /delegated Collective Noun vote/);
+  assert.match(
+    roundPageSource,
+    /base votes \+ delegated voting power/
+  );
 });
 
 let failures = 0;

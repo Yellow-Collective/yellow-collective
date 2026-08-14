@@ -1,6 +1,9 @@
 import Layout from "@/components/Layout";
+import WalletIdentityLink from "@/components/WalletIdentityLink";
 import CoinMediaPreview from "@/components/coins/CoinMediaPreview";
 import ProjectMemberSelector from "@/components/community/ProjectMemberSelector";
+import RoundImageUploadField from "@/components/rounds/RoundImageUploadField";
+import VotingPowerSnapshotFieldset from "@/components/rounds/VotingPowerSnapshotFieldset";
 import {
   ADMIN_PERMISSION_DEFINITIONS,
   GLOBAL_ADMIN_WALLET_ADDRESS,
@@ -11,11 +14,21 @@ import {
 import { getAdminSessionSignedRequestAction } from "@/utils/admin-auth";
 import {
   getAdminRoundDatePayload,
+  getAdminRoundSnapshotPayload,
   toDateInput,
   type SavedRoundDates,
 } from "@/utils/rounds/admin-round-form";
+import { validateRoundVotingSnapshot } from "@/utils/rounds/voting-snapshot";
+import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
+import { isRoundExportable } from "@/utils/rounds/admin-submissions-export";
+import { groupAdminRoundVotesByWallet } from "@/utils/rounds/admin-votes";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getSafeLinkProps, normalizeSafeImageUrl } from "@/utils/url-safety";
+import {
+  formatCommunityProjectGalleryImages,
+  normalizeCommunityProjectGalleryImages,
+  parseCommunityProjectGalleryImages,
+} from "@/utils/community-project-gallery";
 import { TOKEN_NETWORK } from "constants/addresses";
 import type { CommunityProject } from "data/community";
 import type { CommunityProjectRecord } from "data/community-project-submissions";
@@ -25,6 +38,7 @@ import type { NoundrySubmission } from "data/noundry/submissions";
 import {
   DEFAULT_NOTIFICATION_SETTINGS,
   NOTIFICATION_ALERT_GROUPS,
+  NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS,
   buildNotificationCopy,
   validateNotificationSettings,
   validateNotificationCopy,
@@ -33,6 +47,7 @@ import {
 } from "@/utils/notifications/settings";
 import type {
   Round,
+  AdminRoundVote,
   RoundSubmission,
   RoundInput,
   RoundRequest,
@@ -51,6 +66,7 @@ type AdminSection = AdminPermissionSection | "access";
 type CommunityListMode = "queue" | "existing";
 type ProjectEditorMode = "edit" | "preview";
 type RoundListMode = "draft" | "published" | "archived";
+type RoundContentMode = "submissions" | "votes";
 
 type AdminAuth = {
   adminAddress: string;
@@ -275,6 +291,10 @@ const roundSubmissionsFetcher = createAdminFetcher<{
   submissions: RoundSubmission[];
 }>();
 
+const roundVotesFetcher = createAdminFetcher<{
+  votes: AdminRoundVote[];
+}>();
+
 const roundRequestsFetcher = createAdminFetcher<{
   requests: RoundRequest[];
 }>();
@@ -385,6 +405,8 @@ const formatVotingStrategy = (
     ? "1 vote per wallet"
     : strategy === "fixed_per_wallet"
       ? `${votesPerWallet} votes per wallet`
+      : strategy === "base_plus_voting_power"
+        ? `${votesPerWallet} base votes + delegated voting power`
       : "1 vote per delegated Collective Noun vote";
 
 const getQueryValue = (value: string | string[] | undefined) =>
@@ -410,46 +432,57 @@ export default function AdminDashboardPage() {
   const canAccessSection = (section: AdminSection) =>
     Boolean(
       adminAuth &&
-        (section === "access" ? adminAuth.isGlobal : hasPermission(section))
+      (section === "access" ? adminAuth.isGlobal : hasPermission(section))
     );
   const visibleAdminSections = adminAuth
     ? adminSections.filter((section) => canAccessSection(section.id))
     : adminSections;
   const activeSectionAllowed = canAccessSection(activeSection);
 
-  const communityKey = adminAuth && hasPermission("community")
-    ? (["/api/admin/community-projects", adminAuth] as const)
-    : null;
-  const noundryKey = adminAuth && hasPermission("noundry")
-    ? (["/api/admin/noundry-submissions", adminAuth] as const)
-    : null;
-  const galleryKey = adminAuth && hasPermission("gallery")
-    ? (["/api/admin/gallery", adminAuth] as const)
-    : null;
-  const roundsKey = adminAuth && hasPermission("rounds")
-    ? (["/api/admin/rounds", adminAuth] as const)
-    : null;
-  const roundsSettingsKey = adminAuth && hasPermission("rounds")
-    ? (["/api/admin/rounds/settings", adminAuth] as const)
-    : null;
-  const testingSettingsKey = adminAuth && hasPermission("testing")
-    ? (["/api/admin/testing/settings", adminAuth] as const)
-    : null;
-  const nounsSettingsKey = adminAuth && hasPermission("nouns")
-    ? (["/api/admin/nouns/settings", adminAuth] as const)
-    : null;
-  const notificationsSettingsKey = adminAuth && hasPermission("notifications")
-    ? (["/api/admin/notifications/settings", adminAuth] as const)
-    : null;
-  const notificationsEventsKey = adminAuth && hasPermission("notifications")
-    ? (["/api/admin/notifications/events", adminAuth] as const)
-    : null;
-  const notificationsAudienceKey = adminAuth && hasPermission("notifications")
-    ? (["/api/admin/notifications/audience", adminAuth] as const)
-    : null;
-  const roundRequestsKey = adminAuth && hasPermission("rounds")
-    ? (["/api/admin/rounds/requests", adminAuth] as const)
-    : null;
+  const communityKey =
+    adminAuth && hasPermission("community")
+      ? (["/api/admin/community-projects", adminAuth] as const)
+      : null;
+  const noundryKey =
+    adminAuth && hasPermission("noundry")
+      ? (["/api/admin/noundry-submissions", adminAuth] as const)
+      : null;
+  const galleryKey =
+    adminAuth && hasPermission("gallery")
+      ? (["/api/admin/gallery", adminAuth] as const)
+      : null;
+  const roundsKey =
+    adminAuth && hasPermission("rounds")
+      ? (["/api/admin/rounds", adminAuth] as const)
+      : null;
+  const roundsSettingsKey =
+    adminAuth && hasPermission("rounds")
+      ? (["/api/admin/rounds/settings", adminAuth] as const)
+      : null;
+  const testingSettingsKey =
+    adminAuth && hasPermission("testing")
+      ? (["/api/admin/testing/settings", adminAuth] as const)
+      : null;
+  const nounsSettingsKey =
+    adminAuth && hasPermission("nouns")
+      ? (["/api/admin/nouns/settings", adminAuth] as const)
+      : null;
+  const notificationsSettingsKey =
+    adminAuth && hasPermission("notifications")
+      ? (["/api/admin/notifications/settings", adminAuth] as const)
+      : null;
+  const notificationsEventsKey =
+    adminAuth && hasPermission("notifications")
+      ? (["/api/admin/notifications/events", adminAuth] as const)
+      : null;
+  const notificationsAudienceKey =
+    adminAuth && hasPermission("notifications")
+      ? (["/api/admin/notifications/audience", adminAuth] as const)
+      : null;
+  const roundRequestsKey =
+    adminAuth && hasPermission("rounds")
+      ? (["/api/admin/rounds/requests", adminAuth] as const)
+      : null;
   const adminAccessKey = adminAuth?.isGlobal
     ? (["/api/admin/access", adminAuth] as const)
     : null;
@@ -594,7 +627,11 @@ export default function AdminDashboardPage() {
   }, [address, adminAuth]);
 
   useEffect(() => {
-    if (!adminAuth || activeSectionAllowed || visibleAdminSections.length === 0) {
+    if (
+      !adminAuth ||
+      activeSectionAllowed ||
+      visibleAdminSections.length === 0
+    ) {
       return;
     }
 
@@ -661,7 +698,7 @@ export default function AdminDashboardPage() {
                     ? "Signing..."
                     : isCheckingSession
                       ? "Checking..."
-                    : "Unlock admin requests"}
+                      : "Unlock admin requests"}
               </button>
             )}
           </div>
@@ -729,17 +766,6 @@ export default function AdminDashboardPage() {
                   />
                 ) : (
                   <>
-                    {hasPermission("testing") && (
-                      <TestingSettingsPanel
-                        adminAuth={adminAuth}
-                        dummyContentEnabled={
-                          testingSettingsData?.dummyContentEnabled || false
-                        }
-                        error={testingSettingsError?.message}
-                        isLoading={!testingSettingsData && !testingSettingsError}
-                        mutate={mutateTestingSettings}
-                      />
-                    )}
                     {activeSection === "community" ? (
                       <CommunityAdminPanel
                         adminAuth={adminAuth}
@@ -827,6 +853,20 @@ export default function AdminDashboardPage() {
                         mutateRequests={mutateRoundRequests}
                       />
                     )}
+                    {hasPermission("testing") &&
+                      activeSection !== "notifications" && (
+                        <TestingSettingsPanel
+                          adminAuth={adminAuth}
+                          dummyContentEnabled={
+                            testingSettingsData?.dummyContentEnabled || false
+                          }
+                          error={testingSettingsError?.message}
+                          isLoading={
+                            !testingSettingsData && !testingSettingsError
+                          }
+                          mutate={mutateTestingSettings}
+                        />
+                      )}
                   </>
                 )}
               </>
@@ -919,7 +959,8 @@ const AdminAccessPanel = ({
 
     if (
       admins.some(
-        (admin) => admin.walletAddress.toLowerCase() === walletAddress.toLowerCase()
+        (admin) =>
+          admin.walletAddress.toLowerCase() === walletAddress.toLowerCase()
       )
     ) {
       setLocalError("That wallet is already an admin.");
@@ -1395,6 +1436,25 @@ const NotificationsAdminPanel = ({
             />
             Dry run
           </label>
+          <label className="flex flex-col gap-1 rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-2 text-sm font-semibold text-skin-base">
+            Poll every
+            <select
+              value={draft.pollIntervalHours}
+              onChange={(event) =>
+                setDraft((current) => ({
+                  ...current,
+                  pollIntervalHours: Number(event.target.value),
+                }))
+              }
+              className="rounded-lg border border-skin-stroke bg-white px-3 py-2 text-sm text-skin-base"
+            >
+              {NOTIFICATION_POLL_INTERVAL_HOUR_OPTIONS.map((hours) => (
+                <option key={hours} value={hours}>
+                  {hours === 1 ? "1 hour" : `${hours} hours`}
+                </option>
+              ))}
+            </select>
+          </label>
           <button
             type="button"
             onClick={saveSettings}
@@ -1426,7 +1486,8 @@ const NotificationsAdminPanel = ({
                   {group.label}
                 </h3>
                 <p className="mt-2 text-sm text-secondary">
-                  Variables: {group.variables.map((item) => `{${item}}`).join(", ")}
+                  Variables:{" "}
+                  {group.variables.map((item) => `{${item}}`).join(", ")}
                 </p>
               </div>
             </div>
@@ -1524,6 +1585,9 @@ const formatNotificationDate = (value?: string | null) => {
   });
 };
 
+const notificationLogScrollClass = "max-h-[35rem] overflow-y-auto pr-2";
+const notificationAudienceScrollClass = "max-h-[30rem] overflow-y-auto pr-2";
+
 const NotificationLogPanel = ({
   events,
   error,
@@ -1542,10 +1606,9 @@ const NotificationLogPanel = ({
           Sent notification log
         </h3>
         <p className="mt-2 max-w-3xl text-sm leading-snug text-secondary">
-          This shows every notification recorded by Yellow. It can show the
-          list of who received targeted notifications. Broadcast recipient lists
-          are not returned by Neynar, so broadcasts show aggregate delivery
-          counts and retryable FIDs only.
+          This shows every notification recorded by Yellow. It can show the list of who received targeted notifications.
+          Broadcast recipient lists are not returned by Neynar, so broadcasts
+          show aggregate delivery counts and retryable FIDs only.
         </p>
         {error && (
           <p className="mt-2 text-sm font-semibold text-skin-proposal-danger">
@@ -1571,80 +1634,84 @@ const NotificationLogPanel = ({
           No notifications have been recorded yet.
         </p>
       ) : (
-        <table className="w-full min-w-[920px] border-separate border-spacing-y-2 text-left">
-          <thead>
-            <tr className="text-sm text-secondary">
-              <th className="px-3 py-2">Sent</th>
-              <th className="px-3 py-2">Alert</th>
-              <th className="px-3 py-2">Copy</th>
-              <th className="px-3 py-2">Recipients</th>
-              <th className="px-3 py-2">Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => {
-              const response = event.response || {};
-              const retryableFids = response.retryable_fids || [];
+        <div className={notificationLogScrollClass}>
+          <table className="w-full min-w-[920px] border-separate border-spacing-y-2 text-left">
+            <thead>
+              <tr className="text-sm text-secondary">
+                <th className="px-3 py-2">Sent</th>
+                <th className="px-3 py-2">Alert</th>
+                <th className="px-3 py-2">Copy</th>
+                <th className="px-3 py-2">Recipients</th>
+                <th className="px-3 py-2">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.map((event) => {
+                const response = event.response || {};
+                const retryableFids = response.retryable_fids || [];
 
-              return (
-                <tr key={event.id} className="bg-[#fff7bf] align-top">
-                  <td className="rounded-l-2xl px-3 py-4 text-sm text-secondary">
-                    {formatNotificationDate(event.sentAt)}
-                    {event.dryRun && (
-                      <span className="mt-1 block font-semibold">Dry run</span>
-                    )}
-                  </td>
-                  <td className="px-3 py-4">
-                    <div className="font-semibold text-skin-base">
-                      {event.eventType.replaceAll("_", " ")}
-                    </div>
-                    <a
-                      href={event.targetUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-1 block break-all text-sm text-secondary underline"
-                    >
-                      {event.targetUrl}
-                    </a>
-                  </td>
-                  <td className="px-3 py-4">
-                    <div className="font-semibold text-skin-base">
-                      {event.title}
-                    </div>
-                    <div className="mt-1 text-sm text-secondary">
-                      {event.body}
-                    </div>
-                  </td>
-                  <td className="px-3 py-4 text-sm text-secondary">
-                    {event.targetFids.length > 0 ? (
-                      <span>FIDs: {event.targetFids.join(", ")}</span>
-                    ) : (
-                      <span>Broadcast to all enabled Mini App users</span>
-                    )}
-                    {retryableFids.length > 0 && (
-                      <span className="mt-1 block">
-                        Retryable: {retryableFids.join(", ")}
-                      </span>
-                    )}
-                  </td>
-                  <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
-                    <div>Success: {Number(response.success_count || 0)}</div>
-                    <div>Failed: {Number(response.failure_count || 0)}</div>
-                    <div>
-                      Not attempted:{" "}
-                      {Number(response.not_attempted_count || 0)}
-                    </div>
-                    {response.campaign_id && (
-                      <div className="mt-1 break-all">
-                        Campaign: {response.campaign_id}
+                return (
+                  <tr key={event.id} className="h-24 bg-[#fff7bf] align-top">
+                    <td className="rounded-l-2xl px-3 py-4 text-sm text-secondary">
+                      {formatNotificationDate(event.sentAt)}
+                      {event.dryRun && (
+                        <span className="mt-1 block font-semibold">
+                          Dry run
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-3 py-4">
+                      <div className="font-semibold text-skin-base">
+                        {event.eventType.replaceAll("_", " ")}
                       </div>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                      <a
+                        href={event.targetUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-1 block break-all text-sm text-secondary underline"
+                      >
+                        {event.targetUrl}
+                      </a>
+                    </td>
+                    <td className="px-3 py-4">
+                      <div className="font-semibold text-skin-base">
+                        {event.title}
+                      </div>
+                      <div className="mt-1 text-sm text-secondary">
+                        {event.body}
+                      </div>
+                    </td>
+                    <td className="px-3 py-4 text-sm text-secondary">
+                      {event.targetFids.length > 0 ? (
+                        <span>FIDs: {event.targetFids.join(", ")}</span>
+                      ) : (
+                        <span>Broadcast to all enabled Mini App users</span>
+                      )}
+                      {retryableFids.length > 0 && (
+                        <span className="mt-1 block">
+                          Retryable: {retryableFids.join(", ")}
+                        </span>
+                      )}
+                    </td>
+                    <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
+                      <div>Success: {Number(response.success_count || 0)}</div>
+                      <div>Failed: {Number(response.failure_count || 0)}</div>
+                      <div>
+                        Not attempted:{" "}
+                        {Number(response.not_attempted_count || 0)}
+                      </div>
+                      {response.campaign_id && (
+                        <div className="mt-1 break-all">
+                          Campaign: {response.campaign_id}
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   </section>
@@ -1668,8 +1735,9 @@ const NotificationAudiencePanel = ({
 }) => {
   const [isSyncing, setIsSyncing] = useState(false);
   const [message, setMessage] = useState("");
-  const enabledCount = audience.filter((user) => user.notificationsEnabled)
-    .length;
+  const enabledCount = audience.filter(
+    (user) => user.notificationsEnabled
+  ).length;
 
   const syncAudience = async () => {
     try {
@@ -1681,10 +1749,13 @@ const NotificationAudiencePanel = ({
         "POST",
         {}
       );
-      await mutate(response as {
-        audience: NotificationAudienceRecord[];
-        syncedCount?: number;
-      }, { revalidate: false });
+      await mutate(
+        response as {
+          audience: NotificationAudienceRecord[];
+          syncedCount?: number;
+        },
+        { revalidate: false }
+      );
       const syncedCount = Number(
         (response as { syncedCount?: number }).syncedCount || 0
       );
@@ -1756,56 +1827,58 @@ const NotificationAudiencePanel = ({
             No Mini App notification users have been synced yet.
           </p>
         ) : (
-          <table className="w-full min-w-[820px] border-separate border-spacing-y-2 text-left">
-            <thead>
-              <tr className="text-sm text-secondary">
-                <th className="px-3 py-2">FID</th>
-                <th className="px-3 py-2">User</th>
-                <th className="px-3 py-2">Status</th>
-                <th className="px-3 py-2">Token updated</th>
-                <th className="px-3 py-2">Last synced</th>
-              </tr>
-            </thead>
-            <tbody>
-              {audience.map((user) => (
-                <tr key={user.fid} className="bg-[#fff7bf] align-top">
-                  <td className="rounded-l-2xl px-3 py-4 font-semibold text-skin-base">
-                    {user.fid}
-                  </td>
-                  <td className="px-3 py-4 text-sm text-secondary">
-                    <div className="font-semibold text-skin-base">
-                      {user.displayName || user.username || "Unknown"}
-                    </div>
-                    {user.username && (
-                      <div className="mt-1">@{user.username}</div>
-                    )}
-                    {user.walletAddress && (
-                      <div className="mt-1 break-all">
-                        {user.walletAddress}
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-3 py-4">
-                    <StatusPill
-                      status={
-                        user.notificationsEnabled
-                          ? "enabled"
-                          : user.lastSyncedAt
-                            ? "no Neynar token"
-                            : "disabled"
-                      }
-                    />
-                  </td>
-                  <td className="px-3 py-4 text-sm text-secondary">
-                    {formatNotificationDate(user.tokenUpdatedAt)}
-                  </td>
-                  <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
-                    {formatNotificationDate(user.lastSyncedAt)}
-                  </td>
+          <div className={notificationAudienceScrollClass}>
+            <table className="w-full min-w-[820px] border-separate border-spacing-y-2 text-left">
+              <thead>
+                <tr className="text-sm text-secondary">
+                  <th className="px-3 py-2">FID</th>
+                  <th className="px-3 py-2">User</th>
+                  <th className="px-3 py-2">Status</th>
+                  <th className="px-3 py-2">Token updated</th>
+                  <th className="px-3 py-2">Last synced</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {audience.map((user) => (
+                  <tr key={user.fid} className="h-20 bg-[#fff7bf] align-top">
+                    <td className="rounded-l-2xl px-3 py-4 font-semibold text-skin-base">
+                      {user.fid}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-secondary">
+                      <div className="font-semibold text-skin-base">
+                        {user.displayName || user.username || "Unknown"}
+                      </div>
+                      {user.username && (
+                        <div className="mt-1">@{user.username}</div>
+                      )}
+                      {user.walletAddress && (
+                        <div className="mt-1 break-all">
+                          {user.walletAddress}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-3 py-4">
+                      <StatusPill
+                        status={
+                          user.notificationsEnabled
+                            ? "enabled"
+                            : user.lastSyncedAt
+                              ? "no Neynar token"
+                              : "disabled"
+                        }
+                      />
+                    </td>
+                    <td className="px-3 py-4 text-sm text-secondary">
+                      {formatNotificationDate(user.tokenUpdatedAt)}
+                    </td>
+                    <td className="rounded-r-2xl px-3 py-4 text-sm text-secondary">
+                      {formatNotificationDate(user.lastSyncedAt)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </section>
@@ -2217,6 +2290,8 @@ const RoundsAdminPanel = ({
 }) => {
   const router = useRouter();
   const [isUpdatingVisibility, setIsUpdatingVisibility] = useState(false);
+  const [roundContentMode, setRoundContentMode] =
+    useState<RoundContentMode>("submissions");
   const [selectedSubmission, setSelectedSubmission] =
     useState<RoundSubmission | null>(null);
   const requestedRoundId = getQueryValue(router.query.round);
@@ -2278,6 +2353,7 @@ const RoundsAdminPanel = ({
 
   useEffect(() => {
     setSelectedSubmission(null);
+    setRoundContentMode("submissions");
   }, [selectedRound?.id]);
 
   const selectRound = (round: Round) => {
@@ -2505,14 +2581,37 @@ const RoundsAdminPanel = ({
             round={selectedRound}
             mutate={mutate}
           />
-          <RoundSubmissionsManager
-            submissions={submissions}
-            isLoading={Boolean(
-              selectedRound && !submissionData && !submissionsError
-            )}
-            error={submissionsError?.message}
-            onSelect={setSelectedSubmission}
-          />
+          <div className="rounded-[28px] border border-skin-stroke bg-[#fff7bf] p-3">
+            <AdminModeTabs
+              modes={[
+                ["submissions", `Submissions (${submissions.length})`],
+                ["votes", `Votes (${selectedRound.totalVotes || 0} allocated)`],
+              ]}
+              activeMode={roundContentMode}
+              onChange={(mode) =>
+                setRoundContentMode(mode as RoundContentMode)
+              }
+            />
+          </div>
+          {roundContentMode === "submissions" ? (
+            <RoundSubmissionsManager
+              round={selectedRound}
+              submissions={submissions}
+              isLoading={Boolean(
+                selectedRound && !submissionData && !submissionsError
+              )}
+              error={submissionsError?.message}
+              onSelect={setSelectedSubmission}
+            />
+          ) : (
+            <RoundVotesManager
+              adminAuth={adminAuth}
+              round={selectedRound}
+              submissions={submissions}
+              mutateRounds={mutate}
+              mutateSubmissions={mutateSubmissions}
+            />
+          )}
         </div>
       ) : (
         <EmptyEditor
@@ -2605,7 +2704,10 @@ const getRoundPayloadFromForm = ({
   submissionsOpenAt,
   votingStartsAt,
   votingEndsAt,
+  votingSnapshotMode,
+  votingSnapshotAt,
   currentDates,
+  currentSnapshot,
   active,
   featured,
   isTraitContest,
@@ -2628,7 +2730,10 @@ const getRoundPayloadFromForm = ({
   submissionsOpenAt: string;
   votingStartsAt: string;
   votingEndsAt: string;
+  votingSnapshotMode: Round["votingSnapshotMode"];
+  votingSnapshotAt: string;
   currentDates: SavedRoundDates;
+  currentSnapshot: Pick<Round, "votingSnapshotMode" | "votingSnapshotAt">;
   active: boolean;
   featured: boolean;
   isTraitContest: boolean;
@@ -2651,6 +2756,10 @@ const getRoundPayloadFromForm = ({
     },
     currentDates
   );
+  const snapshot = getAdminRoundSnapshotPayload(
+    { votingSnapshotMode, votingSnapshotAt },
+    currentSnapshot
+  );
 
   return {
     title,
@@ -2659,6 +2768,7 @@ const getRoundPayloadFromForm = ({
     content,
     image,
     ...dates,
+    ...snapshot,
     active,
     featured,
     isTraitContest,
@@ -2705,6 +2815,13 @@ const validateRoundPublishForm = (round: RoundInput) => {
     return "Dates must be valid and ordered from start through voting end.";
   }
 
+  const snapshotValidationError = validateRoundVotingSnapshot({
+    votingStartsAt: String(round.votingStartsAt),
+    votingSnapshotMode: round.votingSnapshotMode || "voting_start",
+    votingSnapshotAt: round.votingSnapshotAt || null,
+  });
+  if (snapshotValidationError) return snapshotValidationError;
+
   return undefined;
 };
 
@@ -2731,6 +2848,12 @@ const RoundEditor = ({
   const [votingEndsAt, setVotingEndsAt] = useState(
     toDateInput(round.votingEndsAt)
   );
+  const [votingSnapshotMode, setVotingSnapshotMode] = useState<
+    Round["votingSnapshotMode"]
+  >(round.votingSnapshotMode);
+  const [votingSnapshotAt, setVotingSnapshotAt] = useState(
+    round.votingSnapshotAt ? toDateInput(round.votingSnapshotAt) : ""
+  );
   const [active, setActive] = useState(round.active);
   const [featured, setFeatured] = useState(round.featured);
   const [isTraitContest, setIsTraitContest] = useState(round.isTraitContest);
@@ -2739,6 +2862,10 @@ const RoundEditor = ({
     round.votingStrategy
   );
   const [votesPerWallet, setVotesPerWallet] = useState(round.votesPerWallet);
+  const [hasEditedVotesPerWallet, setHasEditedVotesPerWallet] = useState(
+    round.votingStrategy === "fixed_per_wallet" ||
+      round.votingStrategy === "base_plus_voting_power"
+  );
   const [winnerCount, setWinnerCount] = useState(round.winnerCount);
   const [maxSubmissionsPerWallet, setMaxSubmissionsPerWallet] = useState(
     round.maxSubmissionsPerWallet
@@ -2755,6 +2882,16 @@ const RoundEditor = ({
   const [message, setMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
+  const updateVotingStrategy = (nextStrategy: Round["votingStrategy"]) => {
+    if (
+      nextStrategy === "base_plus_voting_power" &&
+      !hasEditedVotesPerWallet
+    ) {
+      setVotesPerWallet(getDefaultRoundVotesPerWallet(nextStrategy));
+    }
+    setVotingStrategy(nextStrategy);
+  };
+
   const submit = async (action?: "publish" | "archive" | "remove") => {
     if (action === "remove" && !window.confirm("Remove this round?")) return;
     if (action === "archive" && !window.confirm("Archive this round?")) return;
@@ -2768,11 +2905,17 @@ const RoundEditor = ({
       submissionsOpenAt,
       votingStartsAt,
       votingEndsAt,
+      votingSnapshotMode,
+      votingSnapshotAt,
       currentDates: {
         startsAt: round.startsAt,
         submissionsOpenAt: round.submissionsOpenAt,
         votingStartsAt: round.votingStartsAt,
         votingEndsAt: round.votingEndsAt,
+      },
+      currentSnapshot: {
+        votingSnapshotMode: round.votingSnapshotMode,
+        votingSnapshotAt: round.votingSnapshotAt,
       },
       active,
       featured,
@@ -2801,12 +2944,32 @@ const RoundEditor = ({
     try {
       setIsSaving(true);
       setMessage(null);
-      await sendAdminRequest(
-        `/api/admin/rounds/${round.id}`,
+      const result = await sendAdminRequest(
+        `/api/admin/rounds/${encodeURIComponent(round.id)}`,
         adminAuth,
         action === "remove" ? "DELETE" : "PATCH",
         action ? { action, round: roundPayload } : { round: roundPayload }
       );
+      const updatedRound = result.round as Round | undefined;
+      if (updatedRound && action !== "remove") {
+        await mutate(
+          (current) =>
+            current
+              ? {
+                  rounds: current.rounds.some(
+                    (cachedRound) => cachedRound.id === updatedRound.id
+                  )
+                    ? current.rounds.map((cachedRound) =>
+                        cachedRound.id === updatedRound.id
+                          ? updatedRound
+                          : cachedRound
+                      )
+                    : [updatedRound, ...current.rounds],
+                }
+              : { rounds: [updatedRound] },
+          { revalidate: false }
+        );
+      }
       await mutate();
       setMessage(
         action === "publish"
@@ -2825,6 +2988,12 @@ const RoundEditor = ({
       setIsSaving(false);
     }
   };
+  const effectiveSnapshotValue =
+    votingSnapshotMode === "custom" ? votingSnapshotAt : votingStartsAt;
+  const effectiveSnapshotTime = new Date(effectiveSnapshotValue).getTime();
+  const effectiveSnapshotLabel = Number.isFinite(effectiveSnapshotTime)
+    ? new Date(effectiveSnapshotValue).toLocaleString()
+    : "Select a valid snapshot date";
 
   return (
     <EditorCard
@@ -2889,7 +3058,14 @@ const RoundEditor = ({
         onChange={setContent}
         rows={6}
       />
-      <FormField label="Image URL" value={image} onChange={setImage} />
+      <RoundImageUploadField
+        value={image}
+        onChange={setImage}
+        onError={setMessage}
+        showUrlInput
+        labelClassName={labelClass}
+        inputClassName={fieldClass}
+      />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <DateField
           label="Submissions open"
@@ -2927,7 +3103,9 @@ const RoundEditor = ({
           <select
             value={votingStrategy}
             onChange={(event) =>
-              setVotingStrategy(event.target.value as Round["votingStrategy"])
+              updateVotingStrategy(
+                event.target.value as Round["votingStrategy"]
+              )
             }
             className={`${fieldClass} mt-2`}
           >
@@ -2936,12 +3114,32 @@ const RoundEditor = ({
             </option>
             <option value="one_per_wallet">1 vote per wallet</option>
             <option value="fixed_per_wallet">Fixed votes per wallet</option>
+            <option value="base_plus_voting_power">
+              Base votes + voting power
+            </option>
           </select>
+          {votingStrategy === "base_plus_voting_power" && (
+            <span className="mt-2 block text-sm font-normal leading-snug text-secondary">
+              Each eligible wallet receives the base allocation plus its
+              delegated Collective Noun voting power at the voting snapshot.
+            </span>
+          )}
         </label>
         <NumberField
-          label="Votes / wallet"
+          label={
+            votingStrategy === "base_plus_voting_power"
+              ? "Base votes per wallet"
+              : "Votes / wallet"
+          }
           value={votesPerWallet}
-          onChange={setVotesPerWallet}
+          onChange={(value) => {
+            setHasEditedVotesPerWallet(true);
+            setVotesPerWallet(value);
+          }}
+          disabled={
+            votingStrategy !== "fixed_per_wallet" &&
+            votingStrategy !== "base_plus_voting_power"
+          }
         />
         <NumberField
           label="Winner count"
@@ -2974,6 +3172,22 @@ const RoundEditor = ({
           onChange={setMaxDescriptionLength}
         />
       </div>
+      <VotingPowerSnapshotFieldset
+        name={`round-${round.id}-voting-snapshot-mode`}
+        value={votingSnapshotMode}
+        onChange={setVotingSnapshotMode}
+        disabled={round.votingSnapshotBlock !== null}
+        customDateField={
+          <DateField
+            label="Custom snapshot date"
+            value={votingSnapshotAt}
+            onChange={setVotingSnapshotAt}
+            disabled={round.votingSnapshotBlock !== null}
+          />
+        }
+        effectiveSnapshotLabel={effectiveSnapshotLabel}
+        lockedSnapshotBlock={round.votingSnapshotBlock}
+      />
       <FormField
         label="Prizes, one per line as Position | Title | Value | Description"
         value={awardsText}
@@ -2998,74 +3212,628 @@ const RoundEditor = ({
 };
 
 const RoundSubmissionsManager = ({
+  round,
   submissions,
   isLoading,
   error,
   onSelect,
 }: {
+  round: Round;
   submissions: RoundSubmission[];
   isLoading: boolean;
   error?: string;
   onSelect: (submission: RoundSubmission) => void;
-}) => (
-  <EditorCard
-    title="Submitted projects"
-    status={`${submissions.length}`}
-    message={error || null}
-    showStatusInTitle={false}
-    surfaceClassName="yc-dark-yellow-form-surface"
-    actions={
-      <div className="rounded-full bg-[#1d9bf0] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99]">
-        {submissions.length} total
-      </div>
+}) => {
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
+
+  const exportSubmissionsZip = async () => {
+    try {
+      setIsExporting(true);
+      setExportError(null);
+      const response = await fetch(
+        `/api/admin/rounds/${encodeURIComponent(round.id)}/export`,
+        {
+          cache: "no-store",
+          credentials: "same-origin",
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Unable to export submissions.");
+      }
+
+      const disposition = response.headers.get("Content-Disposition") || "";
+      const filenameMatch = disposition.match(/filename="?([^";]+)"?/i);
+      const filename = filenameMatch?.[1] || `${round.slug}-submissions.zip`;
+      const objectUrl = URL.createObjectURL(await response.blob());
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+    } catch (exportFailure) {
+      setExportError(
+        exportFailure instanceof Error
+          ? exportFailure.message
+          : "Unable to export submissions."
+      );
+    } finally {
+      setIsExporting(false);
     }
-  >
-    {isLoading ? (
-      <p className="rounded-xl bg-white p-4 text-sm text-secondary">
-        Loading submissions...
-      </p>
-    ) : submissions.length > 0 ? (
-      <div className="grid gap-3">
-        {submissions.map((submission) => (
-          <button
-            key={submission.id}
-            type="button"
-            onClick={() => onSelect(submission)}
-            className="rounded-xl border border-skin-stroke bg-white p-4 text-left transition hover:-translate-y-0.5 hover:bg-[#fffbe0] hover:shadow-sm"
+  };
+  return (
+    <EditorCard
+      title="Submitted projects"
+      status={`${submissions.length}`}
+      message={exportError || error || null}
+      showStatusInTitle={false}
+      surfaceClassName="yc-dark-yellow-form-surface"
+      actions={
+        <>
+          <a
+            href={`/api/admin/rounds/${encodeURIComponent(round.id)}/submissions/export`}
+            download
+            className={secondaryButtonClass}
           >
-            <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-              <div className="min-w-0">
-                <div className="break-words font-heading text-xl leading-none text-skin-base">
-                  {submission.title}
+            Export CSV
+          </a>
+          {isRoundExportable(round) && (
+            <button
+              type="button"
+              onClick={exportSubmissionsZip}
+              disabled={isLoading || isExporting || submissions.length === 0}
+              className={secondaryButtonClass}
+            >
+              {isExporting ? "Preparing export…" : "Export submissions (.zip)"}
+            </button>
+          )}
+          <div className="flex items-center justify-center rounded-full bg-[#1d9bf0] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+            {submissions.length} total
+          </div>
+        </>
+      }
+    >
+      {isLoading ? (
+        <p className="rounded-xl bg-white p-4 text-sm text-secondary">
+          Loading submissions...
+        </p>
+      ) : submissions.length > 0 ? (
+        <div className="grid gap-3">
+          {submissions.map((submission) => (
+            <button
+              key={submission.id}
+              type="button"
+              onClick={() => onSelect(submission)}
+              className="rounded-xl border border-skin-stroke bg-white p-4 text-left transition hover:-translate-y-0.5 hover:bg-[#fffbe0] hover:shadow-sm"
+            >
+              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                <div className="min-w-0">
+                  <div className="break-words font-heading text-xl leading-none text-skin-base">
+                    {submission.title}
+                  </div>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-secondary">
+                    <span
+                      className={`rounded-full px-2 py-0.5 font-semibold ${
+                        submission.submissionType === "trait"
+                          ? "bg-[#dff3ff] text-[#0f5f99]"
+                          : "bg-[#fff7bf] text-skin-base"
+                      }`}
+                    >
+                      {submission.submissionType === "trait"
+                        ? "Trait"
+                        : "Project"}
+                    </span>
+                    <span>{submission.voteCount} votes</span>
+                    <span className="break-all">
+                      {submission.walletAddress}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-secondary">
-                  <span
-                    className={`rounded-full px-2 py-0.5 font-semibold ${
-                      submission.submissionType === "trait"
-                        ? "bg-[#dff3ff] text-[#0f5f99]"
-                        : "bg-[#fff7bf] text-skin-base"
-                    }`}
-                  >
-                    {submission.submissionType === "trait"
-                      ? "Trait"
-                      : "Project"}
-                  </span>
-                  <span>{submission.voteCount} votes</span>
-                  <span className="break-all">{submission.walletAddress}</span>
-                </div>
+                <StatusPill status={submission.status} />
               </div>
-              <StatusPill status={submission.status} />
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p className="rounded-xl bg-white p-4 text-sm leading-snug text-secondary">
+          No projects have been submitted to this round yet.
+        </p>
+      )}
+    </EditorCard>
+  );
+};
+
+const RoundVotesManager = ({
+  adminAuth,
+  round,
+  submissions,
+  mutateRounds,
+  mutateSubmissions,
+}: {
+  adminAuth: AdminAuth;
+  round: Round;
+  submissions: RoundSubmission[];
+  mutateRounds: KeyedMutator<{ rounds: Round[] }>;
+  mutateSubmissions: KeyedMutator<{ submissions: RoundSubmission[] }>;
+}) => {
+  const [search, setSearch] = useState("");
+  const [submissionId, setSubmissionId] = useState("");
+  const [sort, setSort] = useState("newest");
+  const [selectedVote, setSelectedVote] = useState<AdminRoundVote | null>(null);
+  const [editorMode, setEditorMode] = useState<"edit" | "delete">("edit");
+  const [message, setMessage] = useState<string | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const queryString = useMemo(() => {
+    const query = [
+      search.trim()
+        ? `search=${encodeURIComponent(search.trim())}`
+        : "",
+      submissionId
+        ? `submissionId=${encodeURIComponent(submissionId)}`
+        : "",
+      `sort=${encodeURIComponent(sort)}`,
+    ];
+    return query.filter(Boolean).join("&");
+  }, [search, sort, submissionId]);
+  const votesUrl = `/api/admin/rounds/${encodeURIComponent(
+    round.id
+  )}/votes${queryString ? `?${queryString}` : ""}`;
+  const { data, error, mutate: mutateVotes } = useSWR<
+    { votes: AdminRoundVote[] },
+    Error,
+    AdminSWRKey
+  >([votesUrl, adminAuth], roundVotesFetcher);
+  const votes = useMemo(() => data?.votes || [], [data?.votes]);
+  const voteGroups = useMemo(
+    () => groupAdminRoundVotesByWallet(votes),
+    [votes]
+  );
+  const totalAllocatedVotes = useMemo(
+    () => votes.reduce((total, vote) => total + vote.voteCount, 0),
+    [votes]
+  );
+
+  const openVoteEditor = (
+    vote: AdminRoundVote,
+    mode: "edit" | "delete"
+  ) => {
+    setSelectedVote(vote);
+    setEditorMode(mode);
+    setMessage(null);
+  };
+
+  const refreshVoteData = async (successMessage: string) => {
+    await Promise.all([mutateVotes(), mutateSubmissions(), mutateRounds()]);
+    setMessage(successMessage);
+    setSelectedVote(null);
+  };
+
+  const exportVotes = async () => {
+    try {
+      setIsExporting(true);
+      setMessage(null);
+      const exportUrl = `/api/admin/rounds/${encodeURIComponent(
+        round.id
+      )}/votes/export${queryString ? `?${queryString}` : ""}`;
+      const response = await fetch(exportUrl, {
+        cache: "no-store",
+        credentials: "same-origin",
+      });
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Unable to export round votes.");
+      }
+
+      const disposition = response.headers.get("Content-Disposition") || "";
+      const filenameMatch = disposition.match(/filename="?([^";]+)"?/i);
+      const filename = filenameMatch?.[1] || `${round.slug}-votes.csv`;
+      const objectUrl = URL.createObjectURL(await response.blob());
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+    } catch (exportError) {
+      setMessage(
+        exportError instanceof Error
+          ? exportError.message
+          : "Unable to export round votes."
+      );
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  return (
+    <>
+      <EditorCard
+        title="Stored votes"
+        status={`${votes.length}`}
+        message={message || error?.message || null}
+        showStatusInTitle={false}
+        surfaceClassName="yc-dark-yellow-form-surface"
+        actions={
+          <>
+            <button
+              type="button"
+              onClick={exportVotes}
+              disabled={isExporting || !data}
+              className={secondaryButtonClass}
+            >
+              {isExporting ? "Preparing export..." : "Export votes CSV"}
+            </button>
+            <div className="flex items-center justify-center rounded-full bg-[#1d9bf0] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#0f5f99]">
+              {votes.length} vote records
             </div>
-          </button>
-        ))}
+            <div className="flex items-center justify-center rounded-full bg-[#8a6d00] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#5c4800]">
+              {voteGroups.length} voters
+            </div>
+            <div className="flex items-center justify-center rounded-full bg-[#16a34a] px-3 py-1 text-center font-heading text-sm leading-none text-white shadow-[0px_3px_0px_0px_#15803d]">
+              {totalAllocatedVotes} allocated
+            </div>
+          </>
+        }
+      >
+        <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(180px,0.5fr)_minmax(180px,0.4fr)]">
+          <label className={labelClass}>
+            Search votes
+            <input
+              type="search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Wallet, submission, or vote ID"
+              className={`mt-2 ${fieldClass}`}
+            />
+          </label>
+          <label className={labelClass}>
+            Submission
+            <select
+              value={submissionId}
+              onChange={(event) => setSubmissionId(event.target.value)}
+              className={`mt-2 ${fieldClass}`}
+            >
+              <option value="">All submissions</option>
+              {submissions.map((submission) => (
+                <option key={submission.id} value={submission.id}>
+                  {submission.title}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className={labelClass}>
+            Sort
+            <select
+              value={sort}
+              onChange={(event) => setSort(event.target.value)}
+              className={`mt-2 ${fieldClass}`}
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="highest">Highest vote count</option>
+              <option value="lowest">Lowest vote count</option>
+            </select>
+          </label>
+        </div>
+
+        {!data && !error ? (
+          <p className="mt-4 rounded-xl bg-white p-4 text-sm text-secondary">
+            Loading votes...
+          </p>
+        ) : votes.length > 0 ? (
+          <div className="mt-4 grid gap-3">
+            {voteGroups.map((group) => (
+              <article
+                key={group.walletAddress.toLowerCase()}
+                className="rounded-xl border border-skin-stroke bg-white p-4"
+              >
+                <div className="flex flex-col gap-3 border-b border-skin-stroke pb-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <WalletIdentityLink
+                        address={group.walletAddress}
+                        fallback="short"
+                        className="break-all font-heading text-xl leading-none text-skin-base underline decoration-2 underline-offset-4"
+                      />
+                      <span className="rounded-full bg-[#fff7bf] px-2 py-0.5 text-xs font-semibold text-skin-base">
+                        {group.votes.length} allocation
+                        {group.votes.length === 1 ? "" : "s"}
+                      </span>
+                    </div>
+                    <div className="mt-2 break-all font-mono text-xs text-secondary">
+                      {group.walletAddress}
+                    </div>
+                  </div>
+                  <div className="shrink-0 text-left sm:text-right">
+                    <div className="font-heading text-2xl leading-none text-skin-base">
+                      {group.totalVoteCount} votes
+                    </div>
+                    <div className="mt-1 text-xs text-secondary">
+                      Updated {new Date(group.updatedAt).toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+                <div className="divide-y divide-skin-stroke">
+                  {group.votes.map((vote) => (
+                    <section
+                      key={vote.id}
+                      className="flex flex-col gap-3 py-4 last:pb-0 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-heading text-lg leading-none text-skin-base">
+                            {vote.submissionTitle}
+                          </span>
+                          {vote.submissionStatus && (
+                            <StatusPill status={vote.submissionStatus} />
+                          )}
+                          {vote.submissionDeleted && (
+                            <span className="rounded-full bg-[#fde2df] px-2 py-0.5 text-xs font-semibold text-[#8f2c22]">
+                              Submission deleted
+                            </span>
+                          )}
+                          <span className="rounded-full bg-[#dff3ff] px-2 py-0.5 text-xs font-semibold text-[#0f5f99]">
+                            {vote.voteCount} votes
+                          </span>
+                        </div>
+                        <div className="mt-2 break-all text-xs text-secondary">
+                          Vote ID: {vote.id} · Submission ID: {vote.submissionId}
+                        </div>
+                      </div>
+                      <div className="flex shrink-0 flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => openVoteEditor(vote, "edit")}
+                          className={secondaryButtonClass}
+                        >
+                          Edit vote
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => openVoteEditor(vote, "delete")}
+                          className={dangerButtonClass}
+                        >
+                          Delete vote
+                        </button>
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-4 rounded-xl bg-white p-4 text-sm leading-snug text-secondary">
+            No stored votes match these filters.
+          </p>
+        )}
+      </EditorCard>
+
+      {selectedVote && (
+        <RoundVoteEditorModal
+          key={`${selectedVote.id}-${editorMode}`}
+          adminAuth={adminAuth}
+          round={round}
+          submissions={submissions}
+          vote={selectedVote}
+          mode={editorMode}
+          onClose={() => setSelectedVote(null)}
+          onChanged={refreshVoteData}
+        />
+      )}
+    </>
+  );
+};
+
+const RoundVoteEditorModal = ({
+  adminAuth,
+  round,
+  submissions,
+  vote,
+  mode,
+  onClose,
+  onChanged,
+}: {
+  adminAuth: AdminAuth;
+  round: Round;
+  submissions: RoundSubmission[];
+  vote: AdminRoundVote;
+  mode: "edit" | "delete";
+  onClose: () => void;
+  onChanged: (message: string) => Promise<void>;
+}) => {
+  const [selectedSubmissionId, setSelectedSubmissionId] = useState(
+    vote.submissionId
+  );
+  const [voteCount, setVoteCount] = useState(String(vote.voteCount));
+  const [reason, setReason] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const submit = async () => {
+    const nextVoteCount = Number(voteCount);
+    if (mode === "edit" && (!Number.isInteger(nextVoteCount) || nextVoteCount < 1)) {
+      setMessage("Vote count must be a positive integer.");
+      return;
+    }
+    if (mode === "edit" && !selectedSubmissionId) {
+      setMessage("Select a submission for this vote allocation.");
+      return;
+    }
+
+    const selectedSubmission = submissions.find(
+      (submission) => submission.id === selectedSubmissionId
+    );
+
+    const actionLabel = mode === "delete" ? "delete" : "update";
+    const confirmation = [
+      `${actionLabel} this stored vote?`,
+      `Wallet: ${vote.walletAddress}`,
+      `Current submission: ${vote.submissionTitle}`,
+      mode === "edit"
+        ? `New submission: ${selectedSubmission?.title || vote.submissionTitle}`
+        : "",
+      `Current votes: ${vote.voteCount}`,
+      mode === "edit" ? `New votes: ${nextVoteCount}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+    if (!window.confirm(confirmation)) return;
+
+    try {
+      setIsSaving(true);
+      setMessage(null);
+      await sendAdminRequest(
+        `/api/admin/rounds/${encodeURIComponent(
+          round.id
+        )}/votes/${encodeURIComponent(vote.id)}`,
+        adminAuth,
+        mode === "delete" ? "DELETE" : "PATCH",
+        mode === "delete"
+          ? { reason }
+          : {
+              submissionId: selectedSubmissionId,
+              voteCount: nextVoteCount,
+              reason,
+            }
+      );
+      await onChanged(mode === "delete" ? "Vote deleted." : "Vote updated.");
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "Unable to update vote."
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 p-4 py-8"
+      role="dialog"
+      aria-modal="true"
+      aria-label={mode === "delete" ? "Delete vote" : "Edit vote"}
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-2xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <EditorCard
+          title={mode === "delete" ? "Delete vote" : "Edit vote"}
+          status={`${vote.voteCount} votes`}
+          message={message}
+          surfaceClassName="yc-dark-yellow-form-surface"
+          actions={
+            <>
+              <button
+                type="button"
+                onClick={submit}
+                disabled={isSaving}
+                className={mode === "delete" ? dangerButtonClass : saveButtonClass}
+              >
+                {isSaving
+                  ? mode === "delete"
+                    ? "Deleting..."
+                    : "Saving..."
+                  : mode === "delete"
+                    ? "Delete vote"
+                    : "Save vote"}
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={isSaving}
+                className={secondaryButtonClass}
+              >
+                Cancel
+              </button>
+            </>
+          }
+        >
+          <div className="grid gap-4">
+            <ReadonlyField label="Voter wallet" value={vote.walletAddress} />
+            {mode === "delete" ? (
+              <ReadonlyField
+                label="Submission"
+                value={`${vote.submissionTitle} (${vote.submissionId})`}
+              />
+            ) : (
+              <label className={labelClass}>
+                Submission
+                <select
+                  value={selectedSubmissionId}
+                  onChange={(event) =>
+                    setSelectedSubmissionId(event.target.value)
+                  }
+                  disabled={isSaving}
+                  className={`mt-2 ${fieldClass}`}
+                >
+                  {!submissions.some(
+                    (submission) => submission.id === vote.submissionId
+                  ) && (
+                    <option value={vote.submissionId}>
+                      {vote.submissionTitle} (unavailable)
+                    </option>
+                  )}
+                  {submissions
+                    .filter((submission) => !submission.deletedAt)
+                    .map((submission) => (
+                      <option key={submission.id} value={submission.id}>
+                        {submission.title}
+                      </option>
+                    ))}
+                </select>
+                <span className="mt-2 block text-xs font-normal leading-snug text-secondary">
+                  A voter can only have one stored allocation per submission.
+                </span>
+              </label>
+            )}
+            <ReadonlyField label="Vote ID" value={vote.id} />
+            {mode === "edit" && (
+              <label className={labelClass}>
+                Vote count
+                <input
+                  type="number"
+                  min="1"
+                  step="1"
+                  value={voteCount}
+                  onChange={(event) => setVoteCount(event.target.value)}
+                  disabled={isSaving}
+                  className={`mt-2 ${fieldClass}`}
+                />
+              </label>
+            )}
+            <label className={labelClass}>
+              Correction reason (optional)
+              <textarea
+                value={reason}
+                onChange={(event) => setReason(event.target.value)}
+                maxLength={1000}
+                rows={4}
+                disabled={isSaving}
+                placeholder="Why is this administrative correction needed?"
+                className={`mt-2 ${fieldClass}`}
+              />
+            </label>
+            {mode === "delete" && (
+              <p className="rounded-xl bg-[#fde2df] p-4 text-sm font-semibold leading-snug text-[#8f2c22]">
+                This permanently removes the stored vote allocation. It does not
+                delete the submission or round.
+              </p>
+            )}
+          </div>
+        </EditorCard>
       </div>
-    ) : (
-      <p className="rounded-xl bg-white p-4 text-sm leading-snug text-secondary">
-        No projects have been submitted to this round yet.
-      </p>
-    )}
-  </EditorCard>
-);
+    </div>
+  );
+};
 
 const RoundSubmissionModal = ({
   adminAuth,
@@ -3473,6 +4241,19 @@ const RoundRequestEditor = ({
             )}
           />
           <ReadonlyField
+            label="Voting power snapshot"
+            value={`${
+              request.votingSnapshotMode === "custom"
+                ? "Custom date"
+                : "When voting begins"
+            }: ${new Date(
+              request.votingSnapshotMode === "custom" &&
+                request.votingSnapshotAt
+                ? request.votingSnapshotAt
+                : request.votingStartsAt
+            ).toLocaleString()}`}
+          />
+          <ReadonlyField
             label="Winners"
             value={`${request.winnerCount} winner${
               request.winnerCount === 1 ? "" : "s"
@@ -3568,7 +4349,11 @@ const ProjectEditor = ({
   );
   const [details, setDetails] = useState(toLines(project.details));
   const [galleryImages, setGalleryImages] = useState(
-    toLines(project.galleryImages)
+    formatCommunityProjectGalleryImages(
+      normalizeCommunityProjectGalleryImages(project.galleryImages, {
+        allowDataImages: true,
+      })
+    )
   );
   const [links, setLinks] = useState(formatLinks(project.links));
   const [editorMode, setEditorMode] = useState<ProjectEditorMode>("edit");
@@ -3589,7 +4374,7 @@ const ProjectEditor = ({
     image,
     memberAddresses,
     details: fromLines(details),
-    galleryImages: fromLines(galleryImages),
+    galleryImages: parseCommunityProjectGalleryImages(galleryImages),
     links: parseLinks(links),
   };
   const isQueuedProject = project.status === "pending";
@@ -3609,7 +4394,7 @@ const ProjectEditor = ({
         image,
         memberAddresses,
         details: fromLines(details),
-        galleryImages: fromLines(galleryImages),
+        galleryImages: parseCommunityProjectGalleryImages(galleryImages),
         links: parseLinks(links),
       };
 
@@ -3741,7 +4526,7 @@ const ProjectEditor = ({
             rows={5}
           />
           <FormField
-            label="Gallery images, one URL per line"
+            label="Gallery images, one per line as URL | Caption | Source URL | Source label"
             value={galleryImages}
             onChange={setGalleryImages}
             rows={4}
@@ -3765,14 +4550,12 @@ const ProjectPreview = ({ project }: { project: CommunityProject }) => {
     allowInternal: true,
     allowDataImages: true,
   });
-  const galleryImages = (project.galleryImages || [])
-    .map((image) =>
-      normalizeSafeImageUrl(image, {
-        allowInternal: true,
-        allowDataImages: true,
-      })
-    )
-    .filter(Boolean);
+  const galleryImages = normalizeCommunityProjectGalleryImages(
+    project.galleryImages,
+    {
+      allowDataImages: true,
+    }
+  );
   const sourceLinkProps = getSafeLinkProps(project.href, {
     allowInternal: true,
   });
@@ -3810,12 +4593,12 @@ const ProjectPreview = ({ project }: { project: CommunityProject }) => {
             <div className="grid grid-cols-2 gap-4 pt-2">
               {galleryImages.map((image, index) => (
                 <div
-                  key={`${image}-${index}`}
+                  key={`${image.src}-${index}`}
                   className="overflow-hidden rounded-2xl border border-skin-stroke bg-skin-muted shadow-sm"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={image}
+                    src={image.src}
                     alt={`${project.title} gallery image ${index + 1}`}
                     className="aspect-square h-full w-full object-cover"
                   />
@@ -4269,10 +5052,12 @@ const DateField = ({
   label,
   value,
   onChange,
+  disabled = false,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 }) => (
   <label className={labelClass}>
     {label}
@@ -4280,6 +5065,7 @@ const DateField = ({
       type="datetime-local"
       value={value}
       onChange={(event) => onChange(event.target.value)}
+      disabled={disabled}
       className={`${fieldClass} mt-2`}
     />
   </label>
@@ -4289,10 +5075,12 @@ const NumberField = ({
   label,
   value,
   onChange,
+  disabled = false,
 }: {
   label: string;
   value: number;
   onChange: (value: number) => void;
+  disabled?: boolean;
 }) => (
   <label className={labelClass}>
     {label}
@@ -4301,6 +5089,7 @@ const NumberField = ({
       min={1}
       value={value}
       onChange={(event) => onChange(Number(event.target.value))}
+      disabled={disabled}
       className={`${fieldClass} mt-2`}
     />
   </label>

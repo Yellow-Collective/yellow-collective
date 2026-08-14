@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS rounds (
   updated_at timestamptz NOT NULL DEFAULT now(),
   deleted_at timestamptz,
   CONSTRAINT rounds_status_check CHECK (status IN ('draft', 'published', 'archived')),
-  CONSTRAINT rounds_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet')),
+  CONSTRAINT rounds_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power')),
   CONSTRAINT rounds_votes_per_wallet_check CHECK (votes_per_wallet > 0),
   CONSTRAINT rounds_winner_count_check CHECK (winner_count > 0),
   CONSTRAINT rounds_submission_limit_check CHECK (max_submissions_per_wallet > 0),
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS round_requests (
   reviewed_at timestamptz,
   deleted_at timestamptz,
   CONSTRAINT round_requests_status_check CHECK (status IN ('pending', 'approved', 'rejected')),
-  CONSTRAINT round_requests_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet')),
+  CONSTRAINT round_requests_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power')),
   CONSTRAINT round_requests_votes_per_wallet_check CHECK (votes_per_wallet > 0),
   CONSTRAINT round_requests_winner_count_check CHECK (winner_count > 0),
   CONSTRAINT round_requests_submission_limit_check CHECK (max_submissions_per_wallet > 0)
@@ -176,6 +176,16 @@ ALTER TABLE rounds
 ALTER TABLE round_requests
   ADD COLUMN IF NOT EXISTS is_trait_contest boolean NOT NULL DEFAULT false,
   ADD COLUMN IF NOT EXISTS trait_submissions_enabled boolean NOT NULL DEFAULT false;
+
+ALTER TABLE rounds
+  DROP CONSTRAINT IF EXISTS rounds_voting_strategy_check,
+  ADD CONSTRAINT rounds_voting_strategy_check
+  CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power'));
+
+ALTER TABLE round_requests
+  DROP CONSTRAINT IF EXISTS round_requests_voting_strategy_check,
+  ADD CONSTRAINT round_requests_voting_strategy_check
+  CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power'));
 
 ALTER TABLE round_submissions
   ADD COLUMN IF NOT EXISTS submission_type text NOT NULL DEFAULT 'project',

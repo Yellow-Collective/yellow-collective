@@ -19,6 +19,9 @@ export type MiniAppUserInput = {
   pfpUrl?: string;
   walletAddress?: string;
   notificationsEnabled?: boolean;
+  notificationUrl?: string | null;
+  notificationTokenCreatedAt?: string | Date | null;
+  notificationTokenUpdatedAt?: string | Date | null;
 };
 
 export type NotificationEventRecord = {
@@ -33,6 +36,14 @@ export type NotificationEventRecord = {
   response: Record<string, unknown> | null;
   sentAt: string | null;
   createdAt: string;
+  updatedAt: string;
+};
+
+export type NotificationAuctionCursor = {
+  tokenId: string;
+  startTime: number;
+  endTime: number;
+  settled: boolean;
   updatedAt: string;
 };
 
@@ -179,6 +190,23 @@ const mapMiniAppAudienceRecord = (row: any): MiniAppAudienceRecord => ({
   updatedAt: new Date(row.updated_at).toISOString(),
 });
 
+const parseOptionalDate = (value: unknown) => {
+  if (!value) return null;
+  const date = value instanceof Date ? value : new Date(String(value));
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+const normalizeNotificationUrl = (value: unknown) => {
+  if (typeof value !== "string" || !value.trim()) return null;
+
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === "https:" ? parsed.href : null;
+  } catch {
+    return null;
+  }
+};
+
 export const getNotificationSettings = async () => {
   const raw = await getTextSiteSetting(NOTIFICATIONS_SETTINGS_KEY, null);
   if (!raw) return DEFAULT_NOTIFICATION_SETTINGS;
@@ -188,6 +216,79 @@ export const getNotificationSettings = async () => {
   } catch {
     return DEFAULT_NOTIFICATION_SETTINGS;
   }
+};
+
+export const NOTIFICATIONS_LAST_POLLED_AT_KEY =
+  "notifications_last_polled_at_v1";
+
+export const NOTIFICATIONS_AUCTION_CURSOR_KEY =
+  "notifications_auction_cursor_v1";
+
+const normalizeAuctionCursor = (
+  value: unknown
+): NotificationAuctionCursor | null => {
+  if (!value || typeof value !== "object") return null;
+
+  const cursor = value as Partial<NotificationAuctionCursor>;
+  const tokenId =
+    typeof cursor.tokenId === "string" ? cursor.tokenId.trim() : "";
+  const startTime = Number(cursor.startTime);
+  const endTime = Number(cursor.endTime);
+  const updatedAt =
+    typeof cursor.updatedAt === "string" && cursor.updatedAt.trim()
+      ? cursor.updatedAt
+      : new Date().toISOString();
+
+  if (!tokenId || !Number.isFinite(startTime) || !Number.isFinite(endTime)) {
+    return null;
+  }
+
+  return {
+    tokenId,
+    startTime,
+    endTime,
+    settled: Boolean(cursor.settled),
+    updatedAt,
+  };
+};
+
+export const getLastNotificationPollAt = async () => {
+  const raw = await getTextSiteSetting(NOTIFICATIONS_LAST_POLLED_AT_KEY, null);
+  if (!raw) return null;
+
+  const date = new Date(raw);
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+export const setLastNotificationPollAt = async (value = new Date()) =>
+  setTextSiteSetting(NOTIFICATIONS_LAST_POLLED_AT_KEY, value.toISOString());
+
+export const getAuctionNotificationCursor = async () => {
+  const raw = await getTextSiteSetting(NOTIFICATIONS_AUCTION_CURSOR_KEY, null);
+  if (!raw) return null;
+
+  try {
+    return normalizeAuctionCursor(JSON.parse(raw));
+  } catch {
+    return null;
+  }
+};
+
+export const setAuctionNotificationCursor = async (
+  cursor: Omit<NotificationAuctionCursor, "updatedAt">
+) => {
+  const normalized = normalizeAuctionCursor({
+    ...cursor,
+    updatedAt: new Date().toISOString(),
+  });
+  if (!normalized)
+    throw new Error("A valid auction notification cursor is required.");
+
+  await setTextSiteSetting(
+    NOTIFICATIONS_AUCTION_CURSOR_KEY,
+    JSON.stringify(normalized)
+  );
+  return normalized;
 };
 
 export const setNotificationSettings = async (
@@ -213,6 +314,14 @@ export const upsertMiniAppUser = async (input: MiniAppUserInput) => {
     input.walletAddress && isAddress(input.walletAddress)
       ? getAddress(input.walletAddress)
       : null;
+  const notificationUrl = normalizeNotificationUrl(input.notificationUrl);
+  const notificationTokenCreatedAt = parseOptionalDate(
+    input.notificationTokenCreatedAt
+  );
+  const notificationTokenUpdatedAt =
+    parseOptionalDate(input.notificationTokenUpdatedAt) ||
+    (notificationUrl ? new Date() : null);
+  const shouldClearNotificationDetails = input.notificationsEnabled === false;
 
   await getPool().query(
     `
@@ -223,10 +332,13 @@ export const upsertMiniAppUser = async (input: MiniAppUserInput) => {
         pfp_url,
         wallet_address,
         notifications_enabled,
+        notification_url,
+        notification_token_created_at,
+        notification_token_updated_at,
         last_seen_at,
         updated_at
       )
-      VALUES ($1, $2, $3, $4, $5, COALESCE($6::boolean, false), now(), now())
+      VALUES ($1, $2, $3, $4, $5, COALESCE($6::boolean, false), $7, $8, $9, now(), now())
       ON CONFLICT (fid)
       DO UPDATE SET
         username = EXCLUDED.username,
@@ -234,6 +346,21 @@ export const upsertMiniAppUser = async (input: MiniAppUserInput) => {
         pfp_url = EXCLUDED.pfp_url,
         wallet_address = COALESCE(EXCLUDED.wallet_address, miniapp_users.wallet_address),
         notifications_enabled = COALESCE($6::boolean, miniapp_users.notifications_enabled),
+        notification_url = CASE
+          WHEN $10::boolean THEN null
+          WHEN $7::text IS NOT NULL THEN EXCLUDED.notification_url
+          ELSE miniapp_users.notification_url
+        END,
+        notification_token_created_at = CASE
+          WHEN $10::boolean THEN null
+          WHEN $8::timestamptz IS NOT NULL THEN EXCLUDED.notification_token_created_at
+          ELSE miniapp_users.notification_token_created_at
+        END,
+        notification_token_updated_at = CASE
+          WHEN $10::boolean THEN null
+          WHEN $9::timestamptz IS NOT NULL THEN EXCLUDED.notification_token_updated_at
+          ELSE miniapp_users.notification_token_updated_at
+        END,
         last_seen_at = now(),
         updated_at = now()
     `,
@@ -246,6 +373,10 @@ export const upsertMiniAppUser = async (input: MiniAppUserInput) => {
       typeof input.notificationsEnabled === "boolean"
         ? input.notificationsEnabled
         : null,
+      notificationUrl,
+      notificationTokenCreatedAt,
+      notificationTokenUpdatedAt,
+      shouldClearNotificationDetails,
     ]
   );
 

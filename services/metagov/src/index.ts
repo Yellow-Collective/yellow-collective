@@ -14,7 +14,7 @@ import {
 } from "./services/snapshot";
 import {
   executeFinalVote,
-  hasConfiguredVoterAlreadyVoted,
+  getConfiguredVoterVoteStatus,
 } from "./services/safe-voting";
 import { StateStore } from "./services/state-store";
 import { sendMetagovNotification } from "./services/notifications";
@@ -49,7 +49,20 @@ const buildTrackedProposal = (
 });
 
 const loadStateIntoMemory = async () => {
-  const state = store.load();
+  let state = store.load();
+  for (const execution of state.executedVotes) {
+    const voteStatus = await getConfiguredVoterVoteStatus(
+      execution.nounsProposalId
+    );
+    if (voteStatus === false) {
+      console.warn(
+        `Removing stale execution record for Nouns #${execution.nounsProposalId}; Governor reports hasVoted=false.`
+      );
+      store.removeStaleExecution(execution.nounsProposalId);
+    }
+  }
+  state = store.load();
+
   for (const proposal of Object.values(state.proposals)) {
     processedProposals.add(proposal.nounsProposalId);
     if (!["executed", "skipped", "failed", "cancelled"].includes(proposal.status)) {
@@ -150,7 +163,15 @@ const checkForClosedVotes = async () => {
     for (const [snapshotId, nounsId] of Array.from(pendingVotes.entries())) {
       if (submittedVotes.has(snapshotId)) continue;
 
-      if (await hasConfiguredVoterAlreadyVoted(nounsId)) {
+      const configuredVoterStatus =
+        await getConfiguredVoterVoteStatus(nounsId);
+      if (configuredVoterStatus === null) {
+        console.warn(
+          `Deferring Nouns #${nounsId}; configured voter receipt could not be read.`
+        );
+        continue;
+      }
+      if (configuredVoterStatus) {
         store.markProposal(nounsId, "skipped", {
           failureReason:
             "Configured metagov voter already voted on this Nouns proposal.",
@@ -163,7 +184,8 @@ const checkForClosedVotes = async () => {
       const result = await getSnapshotResults(snapshotId);
       if (!result) continue;
 
-      const { scores, scoresTotal } = await getSnapshotScores(snapshotId);
+      const { scores, scoresTotal, submittedVotesCount } =
+        await getSnapshotScores(snapshotId);
       store.markWinningChoice(nounsId, result, scores, scoresTotal);
       await sendMetagovNotification({
         store,
@@ -176,6 +198,15 @@ const checkForClosedVotes = async () => {
           winningChoice: result || "NO_VOTES",
         },
       }).catch(console.error);
+
+      if (submittedVotesCount === 0) {
+        store.markProposal(nounsId, "skipped", {
+          failureReason: "No Snapshot votes were submitted.",
+        });
+        submittedVotes.add(snapshotId);
+        pendingVotes.delete(snapshotId);
+        continue;
+      }
 
       if (result === "NO_VOTES" && config.noVotesAction === "skip") {
         store.markProposal(nounsId, "skipped", {

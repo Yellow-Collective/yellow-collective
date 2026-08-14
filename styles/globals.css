@@ -262,6 +262,23 @@
     color: #212529 !important;
   }
 
+  .header-submenu-panel {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-0.25rem);
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease,
+      visibility 150ms ease;
+  }
+
+  .header-submenu-parent:hover > .header-submenu-panel,
+  .header-submenu-parent:focus-within > .header-submenu-panel {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   [data-theme="dark"] .yc-dark-yellow-surface {
     --color-text-base: 33, 37, 41;
     --color-text-muted: 69, 74, 78;
@@ -422,6 +439,19 @@
     color: rgb(69, 74, 78) !important;
   }
 
+  [data-theme="dark"]
+    .yc-dark-yellow-form-surface
+    input[type="datetime-local"] {
+    color-scheme: light;
+  }
+
+  [data-theme="dark"]
+    .yc-dark-yellow-form-surface
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: none;
+    opacity: 1;
+  }
+
   [data-theme="dark"] .yc-dark-yellow-form-surface option {
     color: #212529 !important;
   }
@@ -439,9 +469,22 @@
     box-shadow: 0px 6px 0px 0px rgb(0, 76, 153) !important;
   }
 
+  [data-theme="dark"] .yc-dark-submit-blue.yc-proposal-submit-inactive,
+  [data-theme="dark"] .yc-dark-submit-blue.yc-proposal-submit-inactive:hover {
+    background-color: rgb(219, 234, 254) !important;
+    border-color: rgb(185, 199, 216) !important;
+    color: rgb(95, 117, 144) !important;
+    box-shadow: 0px 4.02px 0px 0px rgb(185, 199, 216) !important;
+  }
+
   [data-theme="dark"] .yc-dark-submit-blue *,
   [data-theme="dark"] .yc-dark-submit-blue:hover * {
     color: rgb(255, 255, 255) !important;
+  }
+
+  [data-theme="dark"] .yc-dark-submit-blue.yc-proposal-submit-inactive *,
+  [data-theme="dark"] .yc-dark-submit-blue.yc-proposal-submit-inactive:hover * {
+    color: rgb(95, 117, 144) !important;
   }
 
   [data-theme="dark"] .yc-dark-reset-red {
@@ -767,6 +810,37 @@
     .yc-dark-yellow-form-surface[class*="hover:shadow-"]:hover,
   [data-theme="dark"] .yc-dark-yellow-surface[class*="hover:shadow-"]:hover {
     box-shadow: 0px 6px 0px 0px rgb(var(--color-shadow-accent)) !important;
+  }
+
+  [data-theme="dark"] .yc-noundry-artist-card {
+    --color-text-base: 33, 37, 41;
+    --color-text-muted: 69, 74, 78;
+    background-color: rgb(255, 255, 255) !important;
+    border-color: rgb(var(--color-shadow-neutral)) !important;
+    color: #212529 !important;
+  }
+
+  [data-theme="dark"] .yc-noundry-artist-card:hover {
+    background-color: rgb(247, 247, 247) !important;
+  }
+
+  [data-theme="dark"] .yc-noundry-remix-button {
+    --color-text-base: 33, 37, 41;
+    --color-text-muted: 69, 74, 78;
+    background-color: rgb(255, 255, 255) !important;
+    border-color: rgb(var(--color-shadow-neutral)) !important;
+    color: #212529 !important;
+    box-shadow: 0px 3px 0px 0px rgb(var(--color-shadow-neutral)) !important;
+  }
+
+  [data-theme="dark"] .yc-noundry-remix-button:hover {
+    background-color: rgb(247, 247, 247) !important;
+    color: #212529 !important;
+    box-shadow: 0px 5px 0px 0px rgb(var(--color-shadow-neutral)) !important;
+  }
+
+  [data-theme="dark"] .yc-noundry-remix-button:active {
+    box-shadow: none !important;
   }
 
   @media (max-width: 767px) {
