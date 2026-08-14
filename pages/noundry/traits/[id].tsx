@@ -423,7 +423,7 @@ const SubmitTraitToRoundModal = ({
       onClick={onClose}
     >
       <div
-        className="max-h-[90vh] w-full max-w-[620px] overflow-y-auto rounded-2xl border border-skin-stroke bg-white p-6 shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral))]"
+        className="yc-dark-noundry-submit-text max-h-[90vh] w-full max-w-[620px] overflow-y-auto rounded-2xl border border-skin-stroke bg-white p-6 shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral))]"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
