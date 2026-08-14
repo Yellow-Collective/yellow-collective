@@ -16,7 +16,10 @@ import type { Round } from "data/rounds";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
-import { buildRoundTraitModalPreviewPlan } from "@/utils/noundry/round-trait-submission";
+import {
+  buildRoundTraitModalPreviewPlan,
+  buildRoundTraitSubmissionPayload,
+} from "@/utils/noundry/round-trait-submission";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -368,10 +371,10 @@ const SubmitTraitToRoundModal = ({
       setIsSubmitting(true);
       setMessage("");
       const path = `/api/rounds/${selectedRound.slug}/submit-trait`;
-      const payload = {
-        traitId: submission.id,
-        description,
-      };
+      const payload = buildRoundTraitSubmissionPayload(
+        submission.id,
+        description
+      );
       const authorization = await createSignedRequestAuthHeader({
         walletAddress: address,
         chainId: ROUND_SIGNED_REQUEST_CHAIN_ID,
@@ -501,7 +504,7 @@ const SubmitTraitToRoundModal = ({
               </span>
             </div>
             <label className="block font-heading text-base text-skin-base">
-              Submission description
+              Submission description (optional)
               <textarea
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}

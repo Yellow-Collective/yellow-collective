@@ -99,6 +99,100 @@ test("uses stable and distinct seeds for both preview sets", () => {
   assert.equal(seeds[6], "trait-123-round-collection-0");
 });
 
+test("derives bounded text when optional input is blank or short", () => {
+  const blank = helper.fitRoundTraitText({
+    value: "   ",
+    fallback: "Noundry head trait",
+    minLength: 30,
+    maxLength: 48,
+  });
+  const short = helper.fitRoundTraitText({
+    value: "Nice trait",
+    fallback: "Noundry head trait",
+    minLength: 20,
+    maxLength: 24,
+  });
+
+  assert.ok(blank.length >= 30 && blank.length <= 48);
+  assert.ok(short.startsWith("Nice trait"));
+  assert.ok(short.length >= 20 && short.length <= 24);
+});
+
+test("truncates derived text to the configured maximum", () => {
+  assert.equal(
+    helper.fitRoundTraitText({
+      value: "A very long canonical Noundry trait title",
+      fallback: "Noundry trait",
+      minLength: 3,
+      maxLength: 12,
+    }),
+    "A very long "
+  );
+});
+
+test("escapes every SVG attribute metacharacter in stored pixel colors", () => {
+  assert.equal(
+    helper.escapeSvgAttribute('red"/><script>&\''),
+    "red&quot;/&gt;&lt;script&gt;&amp;&#39;"
+  );
+});
+
+test("omits blank optional text from the trait submission payload", () => {
+  assert.deepEqual(
+    { ...helper.buildRoundTraitSubmissionPayload("trait-123", "   ") },
+    { traitId: "trait-123" }
+  );
+});
+
+test("trims and includes a provided optional description", () => {
+  assert.deepEqual(
+    {
+      ...helper.buildRoundTraitSubmissionPayload(
+        "trait-123",
+        "  Made for this round.  "
+      ),
+    },
+    { traitId: "trait-123", description: "Made for this round." }
+  );
+});
+
+test("accepts only the trusted generated image and canonical trait link", () => {
+  const valid = {
+    title: "Yellow head",
+    description: "Noundry head trait submitted to this round.",
+    image: "data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=",
+    url: "/noundry/traits/trait-123",
+  };
+  const bounds = {
+    traitId: "trait-123",
+    minTitleLength: 3,
+    maxTitleLength: 80,
+    minDescriptionLength: 20,
+    maxDescriptionLength: 400,
+  };
+
+  assert.equal(
+    helper.validateDerivedRoundTraitSubmission({ ...valid, ...bounds }),
+    undefined
+  );
+  assert.match(
+    helper.validateDerivedRoundTraitSubmission({
+      ...valid,
+      ...bounds,
+      image: "data:image/png;base64,abcd",
+    }),
+    /preview image is invalid/i
+  );
+  assert.match(
+    helper.validateDerivedRoundTraitSubmission({
+      ...valid,
+      ...bounds,
+      url: "/noundry/traits/someone-else",
+    }),
+    /trait link is invalid/i
+  );
+});
+
 let failures = 0;
 
 for (const { name, run } of tests) {
