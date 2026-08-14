@@ -16,6 +16,11 @@ import {
   normalizeSafeProjectUrl,
 } from "@/utils/url-safety";
 import {
+  escapeSvgAttribute,
+  fitRoundTraitText,
+  validateDerivedRoundTraitSubmission,
+} from "@/utils/noundry/round-trait-submission";
+import {
   getDummyPublicRoundBySlug,
   getDummyPublicRounds,
 } from "data/dummy-content";
@@ -1068,7 +1073,7 @@ const createTraitImageDataUri = (submission: NoundrySubmission) => {
       if (!color || color === "transparent") return "";
       const x = index % 32;
       const y = Math.floor(index / 32);
-      const fill = String(color).replace(/"/g, "");
+      const fill = escapeSvgAttribute(String(color));
       return `<rect x="${x}" y="${y}" width="1" height="1" fill="${fill}" />`;
     })
     .join("");
@@ -2531,24 +2536,43 @@ export const createRoundTraitSubmission = async ({
     throw new Error("Connected wallet is not the trait creator.");
   }
 
-  const fallbackDescription = `Noundry ${trait.traitType} trait submitted by ${normalizedArtist}.`;
-  const submissionDescription = String(description || "").trim();
+  const title = fitRoundTraitText({
+    value: trait.title,
+    fallback: `Noundry ${trait.traitType} trait`,
+    minLength: round.minTitleLength,
+    maxLength: round.maxTitleLength,
+  });
+  const submissionDescription = fitRoundTraitText({
+    value: description,
+    fallback: `Noundry ${trait.traitType} trait submitted by ${normalizedArtist}.`,
+    minLength: round.minDescriptionLength,
+    maxLength: round.maxDescriptionLength,
+  });
+  const image = createTraitImageDataUri(trait);
+  const url = `/noundry/traits/${trait.id}`;
   const input: RoundSubmissionInput = {
     walletAddress: normalizedWallet,
-    title: trait.title,
-    description: submissionDescription || fallbackDescription,
-    image: createTraitImageDataUri(trait),
-    url: `/noundry/traits/${trait.id}`,
+    title,
+    description: submissionDescription,
+    image,
+    url,
     submissionType: "trait",
     traitId: trait.id,
     traitType: trait.traitType,
     source: "noundry",
     sourcePayload: trait,
   };
-  if (String(input.description || "").length < round.minDescriptionLength) {
-    input.description = `${input.description} Submitted from the Noundry Gallery.`;
-  }
-  const validationError = validateRoundSubmissionInput(round, input);
+  const validationError = validateDerivedRoundTraitSubmission({
+    traitId: trait.id,
+    title,
+    description: submissionDescription,
+    image,
+    url,
+    minTitleLength: round.minTitleLength,
+    maxTitleLength: round.maxTitleLength,
+    minDescriptionLength: round.minDescriptionLength,
+    maxDescriptionLength: round.maxDescriptionLength,
+  });
   if (validationError) throw new Error(validationError);
 
   const client = await getPool().connect();

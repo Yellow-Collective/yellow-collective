@@ -16,6 +16,10 @@ import type { Round } from "data/rounds";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
+import {
+  buildRoundTraitModalPreviewPlan,
+  buildRoundTraitSubmissionPayload,
+} from "@/utils/noundry/round-trait-submission";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -315,30 +319,22 @@ const SubmitTraitToRoundModal = ({
         : {},
     [submission.traitType, traits]
   );
-  const generatedTraits = useMemo(
+  const previewPlan = useMemo(
     () =>
       artwork
-        ? Array.from({ length: 4 }, (_, index) =>
-            buildRandomTraits(
-              artwork,
-              `${submission.id}-round-generated-${index}`,
-              submittedTraitBase
-            )
-          )
-        : [],
+        ? buildRoundTraitModalPreviewPlan({
+            seedPrefix: submission.id,
+            submittedTraitOverride: submittedTraitBase,
+            buildTraits: (seed, overrides) =>
+              buildRandomTraits(artwork, seed, overrides),
+          })
+        : {
+            generatedTraits: [],
+            collectionTraits: [],
+            generatedEditedIndexes: [],
+            collectionEditedIndexes: [],
+          },
     [artwork, submission.id, submittedTraitBase]
-  );
-  const collectionTraits = useMemo(
-    () =>
-      artwork
-        ? Array.from({ length: 4 }, (_, index) =>
-            buildRandomTraits(
-              artwork,
-              `${submission.id}-round-collection-${index}`
-            )
-          )
-        : [],
-    [artwork, submission.id]
   );
 
   useEffect(() => {
@@ -375,10 +371,10 @@ const SubmitTraitToRoundModal = ({
       setIsSubmitting(true);
       setMessage("");
       const path = `/api/rounds/${selectedRound.slug}/submit-trait`;
-      const payload = {
-        traitId: submission.id,
-        description,
-      };
+      const payload = buildRoundTraitSubmissionPayload(
+        submission.id,
+        description
+      );
       const authorization = await createSignedRequestAuthHeader({
         walletAddress: address,
         chainId: ROUND_SIGNED_REQUEST_CHAIN_ID,
@@ -508,7 +504,7 @@ const SubmitTraitToRoundModal = ({
               </span>
             </div>
             <label className="block font-heading text-base text-skin-base">
-              Submission description
+              Submission description (optional)
               <textarea
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
@@ -526,15 +522,15 @@ const SubmitTraitToRoundModal = ({
               artwork={artwork}
               submission={submission}
               title="Generated with this trait"
-              traits={generatedTraits}
-              showEditedTrait
+              traits={previewPlan.generatedTraits}
+              editedIndexes={previewPlan.generatedEditedIndexes}
             />
             <RoundTraitPreviewGrid
               artwork={artwork}
               submission={submission}
               title="Randomized from the collection"
-              traits={collectionTraits}
-              showEditedTrait={false}
+              traits={previewPlan.collectionTraits}
+              editedIndexes={previewPlan.collectionEditedIndexes}
             />
           </div>
         )}
@@ -595,13 +591,13 @@ const RoundTraitPreviewGrid = ({
   submission,
   title,
   traits,
-  showEditedTrait,
+  editedIndexes,
 }: {
   artwork?: PlaygroundArtwork;
   submission: NoundrySubmission;
   title: string;
   traits: Record<string, string>[];
-  showEditedTrait: boolean;
+  editedIndexes: number[];
 }) => (
   <section className="rounded-2xl border border-skin-stroke bg-[#f7f7f7] p-3">
     <h3 className="mb-3 font-heading text-base leading-none text-skin-base">
@@ -614,7 +610,7 @@ const RoundTraitPreviewGrid = ({
           artwork={artwork}
           submission={submission}
           traits={traitSet}
-          showEditedTrait={showEditedTrait}
+          showEditedTrait={editedIndexes.includes(index)}
         />
       ))}
     </div>
