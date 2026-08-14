@@ -1173,7 +1173,7 @@ export const validateRoundSubmissionInput = (
   }
 
   if (url && !normalizedUrl) {
-    return "Project URL must be a valid URL.";
+    return "Submission URL must be a valid URL.";
   }
 
   if (!normalizedImage) {

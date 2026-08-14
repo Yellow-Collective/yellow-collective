@@ -393,7 +393,7 @@ export default function RoundDetailPage({
               >
                 {round.isTraitContest && round.traitSubmissionsEnabled
                   ? "Submit Noundry trait"
-                  : "Submit project"}
+                  : "Submit entry"}
               </Link>
             )}
           </div>
@@ -1082,7 +1082,7 @@ const SubmissionLinks = ({ submission }: { submission: RoundSubmission }) => (
         <span>
           {submission.submissionType === "trait"
             ? "Noundry trait page"
-            : "Project link"}
+            : "Submission link"}
         </span>
         <span className="truncate text-sm font-sans text-secondary">
           {submission.url}
@@ -1178,7 +1178,7 @@ const RoundDetailsPanel = ({
       value={
         round.isTraitContest && round.traitSubmissionsEnabled
           ? "Noundry traits"
-          : "Projects"
+          : "Submissions"
       }
     />
   </section>
@@ -1379,7 +1379,7 @@ const getRoundActivityItems = (
       title:
         submission.submissionType === "trait"
           ? "Trait submitted"
-          : "Project submitted",
+          : "Submission submitted",
       description: submission.title,
       walletAddress: submission.walletAddress,
     }))
