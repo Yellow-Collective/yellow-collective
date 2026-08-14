@@ -49,6 +49,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
+import { isRoundTraitAutoDescription } from "@/utils/noundry/round-trait-submission";
+import { getRoundVotingStrategyLabel } from "@/utils/rounds/voting-strategy";
 
 const CustomConnectButton = dynamic(
   () => import("@/components/CustomConnectButton"),
@@ -78,6 +80,10 @@ type VotingPowerResponse = {
 type SubmissionVotesResponse = {
   votes?: RoundVoteActivity[];
   error?: string;
+};
+
+type ProfileIdentityResponse = {
+  profile?: { username?: string } | null;
 };
 
 const fetcher = async (url: string) => {
@@ -219,7 +225,7 @@ export default function RoundDetailPage({
     () => getLockedVotesBySubmission(round?.voteActivity || [], address),
     [round?.voteActivity, address]
   );
-  const votingStrategyLabel = getVotingStrategyLabel(round);
+  const votingStrategyLabel = getRoundVotingStrategyLabel(round);
   const winners =
     round && state === "ended"
       ? round.submissions.slice(0, round.winnerCount)
@@ -723,7 +729,7 @@ const SubmissionCard = ({
           <div>
             {submission.submissionType === "trait" && (
               <div
-                className={`mb-2 w-fit rounded-full px-2 py-0.5 font-heading text-xs ${
+                className={`yc-round-trait-tag mb-2 w-fit rounded-full px-2 py-0.5 font-heading text-xs ${
                   isRoundEnded || isWinner
                     ? "bg-white/90 text-[#212529]"
                     : "bg-[#dff3ff] text-[#0f5f99]"
@@ -748,7 +754,7 @@ const SubmissionCard = ({
           )}
         </div>
         <SubmissionDescription
-          description={submission.description}
+          submission={submission}
           className={secondaryTextClass}
           compact
         />
@@ -806,14 +812,44 @@ const SubmissionCard = ({
 };
 
 const SubmissionDescription = ({
-  description,
+  submission,
   className = "",
   compact = false,
 }: {
-  description: string;
+  submission: RoundSubmission;
   className?: string;
   compact?: boolean;
 }) => {
+  const isAutoTraitDescription = isRoundTraitAutoDescription(submission);
+  const storedIdentityLabel =
+    typeof submission.sourcePayload?.roundSubmissionIdentityLabel === "string"
+      ? submission.sourcePayload.roundSubmissionIdentityLabel
+      : undefined;
+  const { data: submitterProfile } = useSWR<ProfileIdentityResponse>(
+    isAutoTraitDescription
+      ? `/api/profile/${submission.walletAddress}`
+      : null,
+    fetcher
+  );
+
+  if (isAutoTraitDescription) {
+    return (
+      <p className={`break-words text-base leading-snug ${className}`}>
+        Noundry {submission.traitType} trait submitted by{" "}
+        <WalletIdentityLink
+          address={submission.walletAddress}
+          profileName={
+            submitterProfile?.profile?.username || storedIdentityLabel
+          }
+          fallback="full"
+          className="font-semibold underline"
+        />
+        .
+      </p>
+    );
+  }
+
+  const { description } = submission;
   const blocks = description
     .split(/\n{2,}/)
     .map((block) => block.trim())
@@ -917,11 +953,11 @@ const SubmissionModal = ({
               {submission.title}
             </h2>
             <SubmissionDescription
-              description={submission.description}
+              submission={submission}
               className="mt-6 max-w-3xl text-secondary"
             />
             {submission.submissionType === "trait" && (
-              <div className="mt-4 w-fit rounded-full bg-[#dff3ff] px-3 py-1 font-heading text-sm text-[#0f5f99]">
+              <div className="yc-round-trait-tag mt-4 w-fit rounded-full bg-[#dff3ff] px-3 py-1 font-heading text-sm text-[#0f5f99]">
                 Noundry trait
                 {submission.traitType ? `: ${submission.traitType}` : ""}
               </div>
@@ -934,7 +970,7 @@ const SubmissionModal = ({
                   </div>
                   <div className="rounded-xl bg-[#fff7bf] p-4">
                     <SubmissionDescription
-                      description={submission.description}
+                      submission={submission}
                       className="text-secondary"
                     />
                   </div>
@@ -1104,7 +1140,9 @@ const SubmissionLinks = ({ submission }: { submission: RoundSubmission }) => (
             : "Submission link"}
         </span>
         <span className="truncate text-sm font-sans text-secondary">
-          {submission.url}
+          {submission.submissionType === "trait"
+            ? submission.title
+            : submission.url}
         </span>
       </a>
     </div>
@@ -1191,14 +1229,6 @@ const RoundDetailsPanel = ({
       value={`${round.winnerCount} winner${round.winnerCount === 1 ? "" : "s"}`}
     />
     <RoundStat label="Voting" value={votingStrategyLabel} />
-    <RoundStat
-      label="Submission type"
-      value={
-        round.isTraitContest && round.traitSubmissionsEnabled
-          ? "Noundry traits"
-          : "Submissions"
-      }
-    />
   </section>
 );
 
@@ -1472,24 +1502,6 @@ const getRoundActivityItems = (
     const bTime = new Date(b.timestamp).getTime();
     return bTime - aTime;
   });
-};
-
-const getVotingStrategyLabel = (round: RoundWithSubmissions | null) => {
-  if (!round) return "the configured voting rules";
-
-  if (round.votingStrategy === "one_per_wallet") {
-    return "1 vote per wallet";
-  }
-
-  if (round.votingStrategy === "fixed_per_wallet") {
-    return `${round.votesPerWallet} votes per wallet`;
-  }
-
-  if (round.votingStrategy === "base_plus_voting_power") {
-    return `${round.votesPerWallet} base votes + delegated voting power`;
-  }
-
-  return "1 vote per delegated Collective Noun vote";
 };
 
 const getRoundNoundrySubmission = (

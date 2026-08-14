@@ -80,6 +80,7 @@ const loadRoundsModule = () =>
       getDummyPublicRounds: () => [],
     },
     "@/utils/rounds/voting-strategy": votingStrategy,
+    "data/ens": { getEnsName: async () => ({}) },
   });
 const roundsSource = readFileSync(
   resolve(process.cwd(), "data/rounds.ts"),
@@ -316,6 +317,16 @@ test("new hybrid rounds and requests default to 100 base votes without rewriting
   );
 });
 
+test("hybrid round info uses concise voting copy", () => {
+  assert.equal(
+    votingStrategy.getRoundVotingStrategyLabel({
+      votingStrategy: "base_plus_voting_power",
+      votesPerWallet: 100,
+    }),
+    "100 votes + voting power"
+  );
+});
+
 test("hybrid base allocations must be positive safe whole numbers", () => {
   const rounds = loadRoundsModule();
   const normalized = rounds.normalizeRoundInput({
@@ -510,11 +521,14 @@ test("round voting UI separates locked votes, pending votes, and remaining votes
 
 test("round voting copy describes delegated Collective Noun voting power", () => {
   assert.doesNotMatch(roundPageSource, /Collective Noun held/);
-  assert.match(roundPageSource, /delegated Collective Noun vote/);
-  assert.match(
-    roundPageSource,
-    /base votes \+ delegated voting power/
+  assert.equal(
+    votingStrategy.getRoundVotingStrategyLabel({
+      votingStrategy: "one_per_nft",
+      votesPerWallet: 1,
+    }),
+    "1 vote per delegated Collective Noun vote"
   );
+  assert.match(roundPageSource, /getRoundVotingStrategyLabel\(round\)/);
 });
 
 let failures = 0;

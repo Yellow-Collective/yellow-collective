@@ -6,6 +6,10 @@ const pageSource = readFileSync(
   resolve(process.cwd(), "pages/noundry/traits/[id].tsx"),
   "utf8"
 );
+const roundPageSource = readFileSync(
+  resolve(process.cwd(), "pages/rounds/[slug].tsx"),
+  "utf8"
+);
 const globalStyles = readFileSync(
   resolve(process.cwd(), "styles/globals.css"),
   "utf8"
@@ -27,6 +31,14 @@ test("round submission modal keeps its text dark in dark mode", () => {
   assert.match(
     globalStyles,
     /\[data-theme="dark"\] \.yc-dark-noundry-submit-text[\s\S]*?color: #212529 !important;/
+  );
+});
+
+test("round trait tags keep dark text in dark mode", () => {
+  assert.match(roundPageSource, /yc-round-trait-tag/);
+  assert.match(
+    globalStyles,
+    /\[data-theme="dark"\] \.yc-round-submission-card \.yc-round-trait-tag[\s\S]*?color: #212529 !important;/
   );
 });
 

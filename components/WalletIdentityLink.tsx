@@ -10,6 +10,7 @@ import { Address, getAddress, isAddress } from "viem";
 type WalletIdentityLinkProps = {
   address: string;
   ensName?: string | null;
+  profileName?: string | null;
   className?: string;
   children?: ReactNode;
   fallback?: "short" | "full";
@@ -19,6 +20,7 @@ type WalletIdentityLinkProps = {
 export default function WalletIdentityLink({
   address,
   ensName,
+  profileName,
   className,
   children,
   fallback = "short",
@@ -34,7 +36,7 @@ export default function WalletIdentityLink({
   const resolvedEnsName = ensName || data?.ensName;
   const fallbackLabel =
     fallback === "full" ? normalizedAddress : shortenWalletAddress(normalizedAddress);
-  const label = children || resolvedEnsName || fallbackLabel;
+  const label = children || resolvedEnsName || profileName || fallbackLabel;
 
   if (!link) return <span className={className}>{label}</span>;
 

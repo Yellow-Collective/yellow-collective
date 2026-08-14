@@ -74,6 +74,45 @@ export const fitRoundTraitText = ({
   return text;
 };
 
+export const selectRoundTraitSubmitterLabel = ({
+  ensName,
+  profileName,
+  walletAddress,
+}: {
+  ensName?: string | null;
+  profileName?: string | null;
+  walletAddress: string;
+}) =>
+  String(ensName || "").trim() ||
+  String(profileName || "").trim() ||
+  walletAddress;
+
+export const isRoundTraitAutoDescription = ({
+  submissionType,
+  traitType,
+  walletAddress,
+  description,
+  sourcePayload,
+}: {
+  submissionType: string;
+  traitType?: string | null;
+  walletAddress: string;
+  description: string;
+  sourcePayload?: Record<string, unknown> | null;
+}) => {
+  if (submissionType !== "trait" || !traitType) return false;
+  if (sourcePayload?.roundSubmissionAutoDescription === true) return true;
+
+  const prefix = `Noundry ${traitType} trait submitted by `;
+  if (!description.startsWith(prefix)) return false;
+
+  const legacyIdentity = description.slice(prefix.length).split(".", 1)[0];
+  return Boolean(
+    legacyIdentity &&
+      walletAddress.toLowerCase().startsWith(legacyIdentity.toLowerCase())
+  );
+};
+
 const SVG_ATTRIBUTE_ENTITIES: Record<string, string> = {
   "&": "&amp;",
   '"': "&quot;",

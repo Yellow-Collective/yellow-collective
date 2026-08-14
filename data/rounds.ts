@@ -29,6 +29,7 @@ import {
 import {
   escapeSvgAttribute,
   fitRoundTraitText,
+  selectRoundTraitSubmitterLabel,
   validateDerivedRoundTraitSubmission,
 } from "@/utils/noundry/round-trait-submission";
 import {
@@ -36,6 +37,7 @@ import {
   getDummyPublicRounds,
 } from "data/dummy-content";
 import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
+import { getEnsName } from "data/ens";
 
 export type RoundStatus = "draft" | "published" | "archived";
 export type RoundSubmissionStatus =
@@ -3252,6 +3254,32 @@ export const createRoundTraitSubmission = async ({
     throw new Error("Connected wallet is not the trait creator.");
   }
 
+  const hasCustomDescription = Boolean(description?.trim());
+  const [{ ensName }, profileName] = await Promise.all([
+    getEnsName({ address: normalizedArtist }).catch(() => ({
+      ensName: undefined,
+    })),
+    getPool()
+      .query(
+        `
+          SELECT username
+          FROM profile_metadata
+          WHERE lower(wallet_address) = lower($1)
+          LIMIT 1
+        `,
+        [normalizedArtist]
+      )
+      .then((profileResult) =>
+        String(profileResult.rows[0]?.username || "").trim()
+      )
+      .catch(() => ""),
+  ]);
+  const submitterLabel = selectRoundTraitSubmitterLabel({
+    ensName,
+    profileName,
+    walletAddress: normalizedArtist,
+  });
+
   const title = fitRoundTraitText({
     value: trait.title,
     fallback: `Noundry ${trait.traitType} trait`,
@@ -3260,7 +3288,7 @@ export const createRoundTraitSubmission = async ({
   });
   const submissionDescription = fitRoundTraitText({
     value: description,
-    fallback: `Noundry ${trait.traitType} trait submitted by ${normalizedArtist}.`,
+    fallback: `Noundry ${trait.traitType} trait submitted by ${submitterLabel}.`,
     minLength: round.minDescriptionLength,
     maxLength: round.maxDescriptionLength,
   });
@@ -3276,7 +3304,11 @@ export const createRoundTraitSubmission = async ({
     traitId: trait.id,
     traitType: trait.traitType,
     source: "noundry",
-    sourcePayload: trait,
+    sourcePayload: {
+      ...trait,
+      roundSubmissionAutoDescription: !hasCustomDescription,
+      roundSubmissionIdentityLabel: submitterLabel,
+    },
   };
   const validationError = validateDerivedRoundTraitSubmission({
     traitId: trait.id,
