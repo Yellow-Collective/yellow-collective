@@ -149,10 +149,14 @@ export const FullCharacterPreview = ({
   showEditedTrait: boolean;
 }) => {
   const glassesLayers = collectionLayers.filter(
-    (image) => image.trait === "glasses"
+    (image) =>
+      image.trait === "glasses" &&
+      (!showEditedTrait || image.trait !== submission.traitType)
   );
   const baseLayers = collectionLayers.filter(
-    (image) => image.trait !== "glasses"
+    (image) =>
+      image.trait !== "glasses" &&
+      (!showEditedTrait || image.trait !== submission.traitType)
   );
 
   return (

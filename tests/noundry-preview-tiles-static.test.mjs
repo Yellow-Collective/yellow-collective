@@ -23,4 +23,15 @@ assert.doesNotMatch(
   "Noundry preview tiles must always render the full artwork without optional framing."
 );
 
+assert.match(
+  previewComponent,
+  /const baseLayers = collectionLayers\.filter\(\s*\(image\) =>\s*image\.trait !== "glasses"\s*&&\s*\(!showEditedTrait \|\| image\.trait !== submission\.traitType\)\s*\);/,
+  "Noundry preview tiles must replace the collection image only while rendering an edited trait."
+);
+assert.match(
+  previewComponent,
+  /const glassesLayers = collectionLayers\.filter\(\s*\(image\) =>\s*image\.trait === "glasses"\s*&&\s*\(!showEditedTrait \|\| image\.trait !== submission\.traitType\)\s*\);/,
+  "Noundry preview tiles must replace glasses only while rendering a custom glasses trait."
+);
+
 console.log("ok - Noundry previews stay clipped and borderless");

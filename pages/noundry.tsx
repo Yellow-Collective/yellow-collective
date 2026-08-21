@@ -534,6 +534,13 @@ export default function NoundryPage() {
     if (selectedTraits[traitType] !== CUSTOM_TRAIT_NAME) return;
     setCustomTraitPixels(traitType, nextPixels);
   };
+  const activateActiveCustomTrait = (nextPixels: string[]) => {
+    setCustomTraitPixels(traitType, nextPixels);
+    setSelectedTraits((currentTraits) => ({
+      ...currentTraits,
+      [traitType]: CUSTOM_TRAIT_NAME,
+    }));
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -728,7 +735,7 @@ export default function NoundryPage() {
   const commitPixels = (nextPixels: string[]) => {
     setUndoStack((currentStack) => [...currentStack.slice(-24), pixels]);
     setRedoStack([]);
-    persistActiveCustomPixels(nextPixels);
+    activateActiveCustomTrait(nextPixels);
     setPixels(nextPixels);
   };
 
@@ -776,7 +783,7 @@ export default function NoundryPage() {
     if (!isPainting || isShapeTool(tool) || tool === "eyedropper") return;
     setPixels((currentPixels) => {
       const nextPixels = applyDrawingTool(currentPixels, index);
-      persistActiveCustomPixels(nextPixels);
+      setCustomTraitPixels(traitType, nextPixels);
       return nextPixels;
     });
   };
