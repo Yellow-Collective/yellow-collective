@@ -562,22 +562,47 @@ export default function NoundryPage() {
   useEffect(() => {
     if (!artwork || Object.keys(selectedTraits).length > 0) return;
 
-    setSelectedTraits(
-      Object.fromEntries(
-        artwork.orderedLayers.map((layer) => [layer.trait, layer.properties[0]])
-      )
+    const remixLayer =
+      typeof router.query.remixLayer === "string"
+        ? router.query.remixLayer
+        : undefined;
+    const remixTrait =
+      typeof router.query.remixTrait === "string"
+        ? router.query.remixTrait
+        : undefined;
+    const remixTarget = artwork.orderedLayers.find(
+      (layer) =>
+        layer.trait === remixLayer &&
+        remixTrait !== undefined &&
+        layer.properties.includes(remixTrait)
     );
+    const initialTraits = Object.fromEntries(
+      artwork.orderedLayers.map((layer) => [layer.trait, layer.properties[0]])
+    );
+    if (remixTarget && remixTrait)
+      initialTraits[remixTarget.trait] = remixTrait;
+
+    setSelectedTraits(initialTraits);
     setVisibleTraits(
       Object.fromEntries(
         artwork.orderedLayers.map((layer) => [layer.trait, true])
       )
     );
     setTraitType(
-      editableLayers.find((layer) => layer.trait === "heads")?.trait ||
+      (remixTarget && isEditableLayer(remixTarget.trait)
+        ? remixTarget.trait
+        : undefined) ||
+        editableLayers.find((layer) => layer.trait === "heads")?.trait ||
         editableLayers[0]?.trait ||
         "heads"
     );
-  }, [artwork, editableLayers, selectedTraits]);
+  }, [
+    artwork,
+    editableLayers,
+    router.query.remixLayer,
+    router.query.remixTrait,
+    selectedTraits,
+  ]);
 
   useEffect(() => {
     const stopPainting = () => {
@@ -1554,6 +1579,7 @@ export default function NoundryPage() {
 
         {activeTab === "gallery" && (
           <GalleryView
+            address={address}
             artwork={artwork}
             submissions={submissions}
             error={submissionsError?.message}
@@ -2609,12 +2635,14 @@ const LayerControl = ({
 };
 
 const GalleryView = ({
+  address,
   artwork,
   submissions,
   error,
   onRemix,
   isAdmin,
 }: {
+  address?: string;
   artwork?: PlaygroundArtwork;
   submissions: NoundrySubmission[];
   error?: string;
@@ -2730,6 +2758,9 @@ const GalleryView = ({
               key={submission.id}
               artwork={artwork}
               submission={submission}
+              showRoundSubmissionAction={
+                address?.toLowerCase() === submission.artist.toLowerCase()
+              }
               footer={
                 <>
                   <button

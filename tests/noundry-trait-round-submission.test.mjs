@@ -43,6 +43,22 @@ const walletIdentitySource = readFileSync(
   resolve(process.cwd(), "components/WalletIdentityLink.tsx"),
   "utf8"
 );
+const noundryGallerySource = readFileSync(
+  resolve(process.cwd(), "pages/noundry.tsx"),
+  "utf8"
+);
+const profilePageSource = readFileSync(
+  resolve(process.cwd(), "pages/profile/[addressOrEns].tsx"),
+  "utf8"
+);
+const previewComponentSource = readFileSync(
+  resolve(process.cwd(), "components/noundry/NoundryPreview.tsx"),
+  "utf8"
+);
+const traitPageSource = readFileSync(
+  resolve(process.cwd(), "pages/noundry/traits/[id].tsx"),
+  "utf8"
+);
 
 const tests = [];
 const test = (name, run) => tests.push({ name, run });
@@ -295,6 +311,29 @@ test("accepts only the trusted generated image and canonical trait link", () => 
       url: "/noundry/traits/someone-else",
     }),
     /trait link is invalid/i
+  );
+});
+
+test("shows trait round actions only to the connected trait author", () => {
+  assert.match(
+    previewComponentSource,
+    /getTraitRoundSubmissionPath\(submission\.id\)/,
+    "Trait cards must link to the existing trait round-submission flow."
+  );
+  assert.match(
+    noundryGallerySource,
+    /address\?\.toLowerCase\(\) === submission\.artist\.toLowerCase\(\)/,
+    "Gallery cards must compare the connected wallet to the trait author."
+  );
+  assert.match(
+    profilePageSource,
+    /isConnected && isOwnProfile/,
+    "Profile cards must only show the action for the connected profile owner."
+  );
+  assert.match(
+    traitPageSource,
+    /router\.query\.submitRound === "1" && isCreator/,
+    "The trait page must open its existing round-submission modal from card links only for the author."
   );
 });
 

@@ -528,6 +528,7 @@ export default function ProfilePage({
         <GalleryTab
           artwork={artwork}
           submissions={profile.noundrySubmissions}
+          showRoundSubmissionActions={isConnected && isOwnProfile}
         />
         <DaoActivityFeed
           proposals={profile.submittedProposals}
@@ -862,9 +863,11 @@ const ProfileAvatarUpload = ({
 const GalleryTab = ({
   artwork,
   submissions,
+  showRoundSubmissionActions,
 }: {
   artwork?: PlaygroundArtwork;
   submissions: NoundrySubmission[];
+  showRoundSubmissionActions: boolean;
 }) => (
   <ProfileSection
     title="Noundry Gallery"
@@ -881,6 +884,7 @@ const GalleryTab = ({
           compact
           showArtist={false}
           profileTone
+          showRoundSubmissionAction={showRoundSubmissionActions}
         />
       ))}
     </div>

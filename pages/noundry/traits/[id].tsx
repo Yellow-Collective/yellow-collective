@@ -126,6 +126,11 @@ export default function NoundryTraitPage() {
   const isCreator =
     Boolean(address && submission) &&
     address?.toLowerCase() === submission?.artist.toLowerCase();
+  useEffect(() => {
+    if (router.query.submitRound === "1" && isCreator) {
+      setIsSubmitModalOpen(true);
+    }
+  }, [isCreator, router.query.submitRound]);
   const eligibleRoundsKey =
     isConnected && isCreator && submission && address
       ? `/api/rounds/eligible-trait-rounds?wallet=${address}&traitId=${submission.id}`

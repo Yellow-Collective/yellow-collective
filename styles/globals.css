@@ -321,6 +321,13 @@
     background-color: rgb(var(--color-accent-hover)) !important;
   }
 
+  [data-theme="dark"] .yc-dark-yellow-surface .yc-trait-browser-card {
+    --color-text-base: 247, 247, 247;
+    --color-text-muted: 191, 199, 204;
+    background-color: rgb(34, 34, 34) !important;
+    color: rgb(247, 247, 247) !important;
+  }
+
   [data-theme="dark"] .yc-vote-options-panel {
     background-color: rgb(var(--color-accent)) !important;
   }

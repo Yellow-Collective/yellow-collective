@@ -50,6 +50,9 @@ export const getArtistPath = (artist: string) =>
 export const getTraitPath = (id: string) =>
   `/noundry/traits/${encodeURIComponent(id)}`;
 
+export const getTraitRoundSubmissionPath = (id: string) =>
+  `${getTraitPath(id)}?submitRound=1`;
+
 export const formatRelativeTime = (dateValue: string) => {
   const timestamp = new Date(dateValue).getTime();
   if (!Number.isFinite(timestamp)) return "";
@@ -223,6 +226,7 @@ export const SubmissionGalleryCard = ({
   compact = false,
   showArtist = true,
   profileTone = false,
+  showRoundSubmissionAction = false,
 }: {
   artwork?: PlaygroundArtwork;
   submission: NoundrySubmission;
@@ -230,6 +234,7 @@ export const SubmissionGalleryCard = ({
   compact?: boolean;
   showArtist?: boolean;
   profileTone?: boolean;
+  showRoundSubmissionAction?: boolean;
 }) => (
   <div
     className={`yc-dark-yellow-surface overflow-hidden border border-skin-stroke bg-white shadow-sm ${
@@ -276,6 +281,14 @@ export const SubmissionGalleryCard = ({
           }`}
         >
           <WalletIdentityLink address={submission.artist} link={false} />
+        </Link>
+      )}
+      {showRoundSubmissionAction && (
+        <Link
+          href={getTraitRoundSubmissionPath(submission.id)}
+          className="mt-3 flex w-full items-center justify-center rounded-xl border border-[#0f5f99] bg-[#1d9bf0] px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none"
+        >
+          Submit to round
         </Link>
       )}
       {footer}

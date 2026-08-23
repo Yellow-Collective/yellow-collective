@@ -1,10 +1,18 @@
 import Layout from "@/components/Layout";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/Dialog";
 import type {
   PlaygroundArtwork,
   PlaygroundImage,
 } from "data/nouns-builder/artwork";
+import { getTraitRemixHref } from "@/utils/playground/trait-assets";
 import { isInMiniApp } from "@/utils/farcasterMiniApp";
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 
@@ -136,6 +144,11 @@ export default function PlaygroundPage() {
   const [selectedGeneration, setSelectedGeneration] =
     useState<GeneratedToken | null>(null);
   const [downloadError, setDownloadError] = useState("");
+  const [isTraitBrowserOpen, setIsTraitBrowserOpen] = useState(false);
+  const [isDownloadingTraitAssets, setIsDownloadingTraitAssets] =
+    useState(false);
+  const [traitAssetDownloadError, setTraitAssetDownloadError] = useState("");
+  const [traitAssetDownloadStatus, setTraitAssetDownloadStatus] = useState("");
   const galleryRef = useRef<GeneratedToken[]>([]);
   const controlLayers = useMemo(() => {
     if (!data) return [];
@@ -307,6 +320,33 @@ export default function PlaygroundPage() {
     }
   };
 
+  const downloadTraitAssets = async () => {
+    if (isDownloadingTraitAssets) return;
+
+    setTraitAssetDownloadError("");
+    setTraitAssetDownloadStatus("");
+    setIsDownloadingTraitAssets(true);
+    try {
+      const response = await fetch("/api/playground/trait-assets", {
+        method: "HEAD",
+      });
+      if (!response.ok) throw new Error("Trait asset download is unavailable.");
+
+      downloadUrl("/api/playground/trait-assets", "noundry-trait-assets.zip");
+      setTraitAssetDownloadStatus("Download started.");
+      window.setTimeout(() => {
+        setIsDownloadingTraitAssets(false);
+      }, 1_000);
+    } catch (error) {
+      setIsDownloadingTraitAssets(false);
+      setTraitAssetDownloadError(
+        error instanceof Error
+          ? error.message
+          : "Unable to download trait assets. Please try again."
+      );
+    }
+  };
+
   return (
     <Layout>
       <Head>
@@ -315,12 +355,53 @@ export default function PlaygroundPage() {
 
       <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-7 pb-12">
         <section className="yc-dark-yellow-surface rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm md:p-8">
-          <h1 className="font-heading text-[42px] leading-none text-skin-base md:text-[56px]">
-            Playground
-          </h1>
-          <p className="mt-4 max-w-3xl text-base leading-snug text-[#212529] md:text-lg">
-            Generate combinations from the Yellow Collective onchain artwork.
-          </p>
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h1 className="font-heading text-[42px] leading-none text-skin-base md:text-[56px]">
+                Playground
+              </h1>
+              <p className="mt-4 max-w-3xl text-base leading-snug text-[#212529] md:text-lg">
+                Generate combinations from the Yellow Collective onchain
+                artwork.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:items-end">
+              <button
+                type="button"
+                onClick={() => setIsTraitBrowserOpen(true)}
+                disabled={!data}
+                className="rounded-xl border border-[#0f5f99] bg-[#1d9bf0] px-4 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                View all traits
+              </button>
+              <button
+                type="button"
+                onClick={downloadTraitAssets}
+                disabled={isDownloadingTraitAssets}
+                className="rounded-xl bg-[#e53e3e] px-4 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#9b2c2c] transition hover:-translate-y-0.5 hover:bg-[#c53030] active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isDownloadingTraitAssets
+                  ? "Preparing trait assets…"
+                  : "Download trait assets"}
+              </button>
+              {traitAssetDownloadError && (
+                <p
+                  role="alert"
+                  className="max-w-xs text-right text-sm text-skin-proposal-danger"
+                >
+                  {traitAssetDownloadError}
+                </p>
+              )}
+              {traitAssetDownloadStatus && (
+                <p
+                  role="status"
+                  className="max-w-xs text-right text-sm text-secondary"
+                >
+                  {traitAssetDownloadStatus}
+                </p>
+              )}
+            </div>
+          </div>
         </section>
 
         {isLoading && (
@@ -439,6 +520,79 @@ export default function PlaygroundPage() {
           </div>
         </div>
       )}
+
+      <Dialog open={isTraitBrowserOpen} onOpenChange={setIsTraitBrowserOpen}>
+        <DialogContent className="yc-dark-yellow-surface max-h-[90vh] max-w-6xl border border-skin-stroke bg-white p-5 pr-14 text-skin-base shadow-xl sm:p-6 sm:pr-16">
+          <DialogHeader>
+            <DialogTitle className="font-heading text-3xl leading-none">
+              All traits
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-5 overflow-y-auto pr-1">
+            {!data ? (
+              <p role="status" className="text-secondary">
+                Loading trait artwork...
+              </p>
+            ) : (
+              <div className="space-y-8 pb-2">
+                {data.orderedLayers.map((layer) => {
+                  const images = data.images.filter(
+                    (image) => image.trait === layer.trait
+                  );
+                  return (
+                    <section
+                      key={layer.trait}
+                      aria-labelledby={`traits-${layer.trait}`}
+                    >
+                      <h2
+                        id={`traits-${layer.trait}`}
+                        className="font-heading text-2xl capitalize"
+                      >
+                        {layer.trait}
+                      </h2>
+                      {images.length === 0 ? (
+                        <p className="mt-3 text-sm text-secondary">
+                          No traits available in this layer.
+                        </p>
+                      ) : (
+                        <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                          {images.map((image) => (
+                            <article
+                              key={`${image.trait}-${image.name}`}
+                              className="yc-trait-browser-card rounded-xl border border-skin-stroke bg-[#fff2a3] p-3"
+                            >
+                              <div className="aspect-square overflow-hidden rounded-lg bg-[#ffffff] bg-[linear-gradient(45deg,#e0e0e0_25%,transparent_25%,transparent_75%,#e0e0e0_75%),linear-gradient(45deg,#e0e0e0_25%,transparent_25%,transparent_75%,#e0e0e0_75%)] bg-[length:16px_16px] bg-[position:0_0,8px_8px]">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={image.uri}
+                                  alt={`${image.name} ${image.trait} trait`}
+                                  className="h-full w-full object-contain [image-rendering:pixelated]"
+                                />
+                              </div>
+                              <h3 className="mt-3 break-words font-heading text-sm leading-tight">
+                                {image.name}
+                              </h3>
+                              <Link
+                                href={getTraitRemixHref(
+                                  image.trait,
+                                  image.name
+                                )}
+                                className="mt-3 flex w-full items-center justify-center rounded-lg bg-[#1d9bf0] px-3 py-2 font-heading text-sm text-white shadow-[0px_2px_0px_0px_#0f5f99] transition hover:bg-[#45adf5] active:translate-y-0.5 active:shadow-none"
+                              >
+                                Remix
+                              </Link>
+                            </article>
+                          ))}
+                        </div>
+                      )}
+                    </section>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 }
