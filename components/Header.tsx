@@ -71,9 +71,6 @@ export default function Header() {
   const [isMounted, setIsMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | undefined>();
-  const { data: roundsSettings } = useSWR<{
-    roundsPublicEnabled: boolean;
-  }>("/api/rounds/settings", fetcher);
   const { data: gallerySettings } = useSWR<{
     galleryPublicEnabled: boolean;
   }>("/api/gallery/settings", fetcher);
@@ -93,28 +90,20 @@ export default function Header() {
         ? baseArtItems
         : baseArtItems.slice(1);
 
-    if (isAdmin || roundsSettings?.roundsPublicEnabled) {
-      const projectsIndex = visibleBaseArtItems.findIndex(
-        (item) => item.href === "/projects"
-      );
+    const projectsIndex = visibleBaseArtItems.findIndex(
+      (item) => item.href === "/projects"
+    );
 
-      if (projectsIndex >= 0) {
-        return [
-          ...visibleBaseArtItems.slice(0, projectsIndex + 1),
-          roundsNavItem,
-          ...visibleBaseArtItems.slice(projectsIndex + 1),
-        ];
-      }
-
-      return [roundsNavItem, ...visibleBaseArtItems];
+    if (projectsIndex >= 0) {
+      return [
+        ...visibleBaseArtItems.slice(0, projectsIndex + 1),
+        roundsNavItem,
+        ...visibleBaseArtItems.slice(projectsIndex + 1),
+      ];
     }
 
-    return visibleBaseArtItems;
-  }, [
-    gallerySettings?.galleryPublicEnabled,
-    isAdmin,
-    roundsSettings?.roundsPublicEnabled,
-  ]);
+    return [roundsNavItem, ...visibleBaseArtItems];
+  }, [gallerySettings?.galleryPublicEnabled, isAdmin]);
 
   return (
     <header className="relative z-50 w-full">

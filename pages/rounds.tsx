@@ -1,9 +1,7 @@
 import Layout from "@/components/Layout";
 import { RoundCard } from "@/components/rounds/RoundCard";
-import { useIsMounted } from "@/hooks/useIsMounted";
-import { isAdminAddress } from "@/utils/admin";
 import type { Round } from "data/rounds";
-import { getRoundsPublicEnabled, listPublicRounds } from "data/rounds";
+import { listPublicRounds } from "data/rounds";
 import { getRoundState } from "@/utils/rounds/state";
 import type {
   GetServerSidePropsResult,
@@ -11,11 +9,9 @@ import type {
 } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useAccount } from "wagmi";
 
 type RoundsPageProps = {
   rounds: Round[];
-  roundsPublicEnabled: boolean;
   error?: string;
 };
 
@@ -23,17 +19,12 @@ export const getServerSideProps = async (): Promise<
   GetServerSidePropsResult<RoundsPageProps>
 > => {
   try {
-    const [rounds, roundsPublicEnabled] = await Promise.all([
-      listPublicRounds(),
-      getRoundsPublicEnabled(),
-    ]);
-    return { props: { rounds, roundsPublicEnabled } };
+    return { props: { rounds: await listPublicRounds() } };
   } catch (error) {
     console.error("Unable to load rounds page", error);
     return {
       props: {
         rounds: [],
-        roundsPublicEnabled: false,
         error: "Rounds are not available right now.",
       },
     };
@@ -42,12 +33,8 @@ export const getServerSideProps = async (): Promise<
 
 export default function RoundsPage({
   rounds,
-  roundsPublicEnabled,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { address } = useAccount();
-  const isMounted = useIsMounted();
-  const isAdmin = isMounted && isAdminAddress(address);
   const openRounds = rounds.filter(
     (round) => getRoundState(round) === "submissions_open"
   );
@@ -68,17 +55,7 @@ export default function RoundsPage({
       </Head>
 
       <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-7 pb-12">
-        {!roundsPublicEnabled && !isAdmin ? (
-          <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm md:p-8">
-            <h1 className="font-heading text-[42px] leading-none text-skin-base md:text-[58px]">
-              Rounds
-            </h1>
-            <p className="mt-4 max-w-3xl text-lg leading-snug text-secondary">
-              Rounds are currently admin-only.
-            </p>
-          </section>
-        ) : (
-          <>
+        <>
             <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm md:p-8">
               <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                 <div>
@@ -108,8 +85,7 @@ export default function RoundsPage({
             <RoundSection title="Voting" rounds={votingRounds} />
             <RoundSection title="Upcoming" rounds={upcomingRounds} />
             <RoundSection title="Completed" rounds={completedRounds} />
-          </>
-        )}
+        </>
       </div>
     </Layout>
   );

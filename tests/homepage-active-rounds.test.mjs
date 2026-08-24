@@ -128,7 +128,7 @@ test("selects the next two upcoming rounds in opening order", () => {
 });
 
 test("loads rounds defensively without changing homepage ISR", () => {
-  assert.match(homepageSource, /getRoundsPublicEnabled\(\)/);
+  assert.doesNotMatch(homepageSource, /getRoundsPublicEnabled\(\)/);
   assert.match(homepageSource, /listPublicRounds\(\)/);
   assert.match(
     homepageSource,

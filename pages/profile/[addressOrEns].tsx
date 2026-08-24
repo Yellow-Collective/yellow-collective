@@ -246,15 +246,11 @@ export default function ProfilePage({
     fetcher,
     { fallbackData: initialArtwork || undefined }
   );
-  const { data: roundsSettings } = useSWR<{ roundsPublicEnabled: boolean }>(
-    "/api/rounds/settings",
-    fetcher
-  );
   const { data: gallerySettings } = useSWR<{ galleryPublicEnabled: boolean }>(
     "/api/gallery/settings",
     fetcher
   );
-  const showRoundsActivity = roundsSettings?.roundsPublicEnabled === true;
+  const showRoundsActivity = true;
   const showContentCoins = gallerySettings?.galleryPublicEnabled === true;
 
   const isOwnProfile = areSameWalletAddress(connectedAddress, profile?.address);

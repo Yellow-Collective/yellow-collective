@@ -303,7 +303,6 @@ const DEFAULT_LIMITS = {
 
 let pool: Pool | null = null;
 let tableReady: Promise<void> | null = null;
-const ROUNDS_PUBLIC_SETTING_KEY = "rounds_public_enabled";
 const DEMO_ROUND_SLUG_PATTERN = "demo-%";
 
 const getConnectionString = () =>
@@ -664,16 +663,6 @@ const ensureTables = async () => {
               OR (voting_snapshot_mode = 'custom' AND voting_snapshot_at IS NOT NULL AND voting_snapshot_at <= voting_starts_at)
             )
         `)
-      )
-      .then(() =>
-        getPool().query(
-          `
-            INSERT INTO site_settings (setting_key, setting_value)
-            VALUES ($1, 'false')
-            ON CONFLICT (setting_key) DO NOTHING
-          `,
-          [ROUNDS_PUBLIC_SETTING_KEY]
-        )
       )
       .then(() => undefined);
   }
@@ -1523,38 +1512,7 @@ export const listPublicRounds = async () => {
   return [...dummyRounds, ...rounds];
 };
 
-export const getRoundsPublicEnabled = async () => {
-  await ensureTables();
-
-  const result = await getPool().query(
-    `
-      SELECT setting_value
-      FROM site_settings
-      WHERE setting_key = $1
-      LIMIT 1
-    `,
-    [ROUNDS_PUBLIC_SETTING_KEY]
-  );
-
-  return result.rows[0]?.setting_value === "true";
-};
-
-export const setRoundsPublicEnabled = async (enabled: boolean) => {
-  await ensureTables();
-
-  const result = await getPool().query(
-    `
-      INSERT INTO site_settings (setting_key, setting_value, updated_at)
-      VALUES ($1, $2, now())
-      ON CONFLICT (setting_key)
-      DO UPDATE SET setting_value = EXCLUDED.setting_value, updated_at = now()
-      RETURNING setting_value
-    `,
-    [ROUNDS_PUBLIC_SETTING_KEY, enabled ? "true" : "false"]
-  );
-
-  return result.rows[0]?.setting_value === "true";
-};
+export const getRoundsPublicEnabled = async () => true;
 
 export const listAdminRounds = async () => {
   await ensureTables();

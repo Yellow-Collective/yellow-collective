@@ -260,10 +260,6 @@ const roundsFetcher = createAdminFetcher<{
   rounds: Round[];
 }>();
 
-const roundsSettingsFetcher = createAdminFetcher<{
-  roundsPublicEnabled: boolean;
-}>();
-
 const testingSettingsFetcher = createAdminFetcher<{
   dummyContentEnabled: boolean;
 }>();
@@ -455,10 +451,6 @@ export default function AdminDashboardPage() {
     adminAuth && hasPermission("rounds")
       ? (["/api/admin/rounds", adminAuth] as const)
       : null;
-  const roundsSettingsKey =
-    adminAuth && hasPermission("rounds")
-      ? (["/api/admin/rounds/settings", adminAuth] as const)
-      : null;
   const testingSettingsKey =
     adminAuth && hasPermission("testing")
       ? (["/api/admin/testing/settings", adminAuth] as const)
@@ -520,14 +512,6 @@ export default function AdminDashboardPage() {
   } = useSWR<{ rounds: Round[] }, Error, AdminSWRKey | null>(
     roundsKey,
     roundsFetcher
-  );
-  const {
-    data: roundsSettingsData,
-    error: roundsSettingsError,
-    mutate: mutateRoundsSettings,
-  } = useSWR<{ roundsPublicEnabled: boolean }, Error, AdminSWRKey | null>(
-    roundsSettingsKey,
-    roundsSettingsFetcher
   );
   const {
     data: testingSettingsData,
@@ -835,21 +819,15 @@ export default function AdminDashboardPage() {
                         adminAuth={adminAuth}
                         rounds={roundsData?.rounds || []}
                         requests={roundRequestsData?.requests || []}
-                        roundsPublicEnabled={
-                          roundsSettingsData?.roundsPublicEnabled || false
-                        }
                         error={
                           roundsError?.message ||
-                          roundsSettingsError?.message ||
                           roundRequestsError?.message
                         }
                         isLoading={
                           (!roundsData && !roundsError) ||
-                          (!roundsSettingsData && !roundsSettingsError) ||
                           (!roundRequestsData && !roundRequestsError)
                         }
                         mutate={mutateRounds}
-                        mutateSettings={mutateRoundsSettings}
                         mutateRequests={mutateRoundRequests}
                       />
                     )}
@@ -2271,25 +2249,20 @@ const RoundsAdminPanel = ({
   adminAuth,
   rounds,
   requests,
-  roundsPublicEnabled,
   error,
   isLoading,
   mutate,
-  mutateSettings,
   mutateRequests,
 }: {
   adminAuth: AdminAuth;
   rounds: Round[];
   requests: RoundRequest[];
-  roundsPublicEnabled: boolean;
   error?: string;
   isLoading: boolean;
   mutate: KeyedMutator<{ rounds: Round[] }>;
-  mutateSettings: KeyedMutator<{ roundsPublicEnabled: boolean }>;
   mutateRequests: KeyedMutator<{ requests: RoundRequest[] }>;
 }) => {
   const router = useRouter();
-  const [isUpdatingVisibility, setIsUpdatingVisibility] = useState(false);
   const [roundContentMode, setRoundContentMode] =
     useState<RoundContentMode>("submissions");
   const [selectedSubmission, setSelectedSubmission] =
@@ -2433,36 +2406,11 @@ const RoundsAdminPanel = ({
     }
   };
 
-  const updateRoundsVisibility = async (enabled: boolean) => {
-    try {
-      setIsUpdatingVisibility(true);
-      await sendAdminRequest("/api/admin/rounds/settings", adminAuth, "PATCH", {
-        roundsPublicEnabled: enabled,
-      });
-      await mutateSettings();
-    } catch (visibilityError) {
-      window.alert(
-        visibilityError instanceof Error
-          ? visibilityError.message
-          : "Unable to update rounds visibility."
-      );
-    } finally {
-      setIsUpdatingVisibility(false);
-    }
-  };
-
   return (
     <section className="grid gap-5 xl:grid-cols-[360px_minmax(0,1fr)]">
       <AdminList
         title="Rounds"
         surfaceClassName="yc-dark-yellow-form-surface"
-        titleAction={
-          <RoundsVisibilitySwitch
-            enabled={roundsPublicEnabled}
-            isUpdating={isUpdatingVisibility}
-            onChange={updateRoundsVisibility}
-          />
-        }
         error={error || submissionsError?.message}
         isLoading={
           isLoading ||

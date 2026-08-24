@@ -12,7 +12,7 @@ import Description from "@/components/Description";
 import { HomepageActiveRounds } from "@/components/rounds/HomepageActiveRounds";
 import { TOKEN_CONTRACT } from "constants/addresses";
 import { YELLOW_COLLECTIVE_CONTRACTS } from "data/contracts";
-import { getRoundsPublicEnabled, listPublicRounds } from "data/rounds";
+import { listPublicRounds } from "data/rounds";
 import {
   selectHomepageActiveRounds,
   selectHomepageUpcomingRounds,
@@ -66,12 +66,9 @@ export const getStaticProps = async (): Promise<
   let upcomingRounds: HomepageUpcomingRound[] = [];
 
   try {
-    const roundsPublicEnabled = await getRoundsPublicEnabled();
-    if (roundsPublicEnabled) {
-      const rounds = await listPublicRounds();
-      activeRounds = selectHomepageActiveRounds(rounds, true);
-      upcomingRounds = selectHomepageUpcomingRounds(rounds, true);
-    }
+    const rounds = await listPublicRounds();
+    activeRounds = selectHomepageActiveRounds(rounds, true);
+    upcomingRounds = selectHomepageUpcomingRounds(rounds, true);
   } catch (error) {
     console.error("Unable to load active rounds for the homepage", error);
     activeRounds = [];

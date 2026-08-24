@@ -3,7 +3,6 @@ import WalletIdentityLink from "@/components/WalletIdentityLink";
 import { RoundStatusPill } from "@/components/rounds/RoundCard";
 import { RoundTimeline } from "@/components/rounds/RoundTimeline";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import { isAdminAddress } from "@/utils/admin";
 import {
   NounPreviewTile,
   PixelPreview,
@@ -19,7 +18,6 @@ import type {
 } from "data/rounds";
 import type { PlaygroundArtwork } from "data/nouns-builder/artwork";
 import { getPublicRoundBySlug } from "data/rounds";
-import { getRoundsPublicEnabled } from "data/rounds";
 import {
   getRoundState,
   getRoundStateLabel,
@@ -59,7 +57,6 @@ const CustomConnectButton = dynamic(
 
 type RoundDetailProps = {
   round: RoundWithSubmissions | null;
-  roundsPublicEnabled: boolean;
   error?: string;
 };
 
@@ -147,16 +144,12 @@ export const getServerSideProps = async ({
   const slug = typeof params?.slug === "string" ? params.slug : "";
 
   try {
-    const [round, roundsPublicEnabled] = await Promise.all([
-      getPublicRoundBySlug(slug),
-      getRoundsPublicEnabled(),
-    ]);
+    const round = await getPublicRoundBySlug(slug);
     if (!round) return { notFound: true };
 
     return {
       props: {
         round: stripRoundInlineMediaForSsr(round),
-        roundsPublicEnabled,
       },
     };
   } catch (error) {
@@ -164,7 +157,6 @@ export const getServerSideProps = async ({
     return {
       props: {
         round: null,
-        roundsPublicEnabled: false,
         error: "Unable to load this round.",
       },
     };
@@ -173,13 +165,10 @@ export const getServerSideProps = async ({
 
 export default function RoundDetailPage({
   round: initialRound,
-  roundsPublicEnabled,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const { address, isConnected } = useAccount();
-  const isMounted = useIsMounted();
-  const isAdmin = isMounted && isAdminAddress(address);
   const { signMessageAsync, isLoading: isSigning } = useSignMessage();
   const [allocations, setAllocations] = useState<Record<string, number>>({});
   const [selectedSubmission, setSelectedSubmission] =
@@ -237,16 +226,6 @@ export default function RoundDetailPage({
       <Layout>
         <div className="mx-auto max-w-[980px] rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm">
           {error || "Round not found."}
-        </div>
-      </Layout>
-    );
-  }
-
-  if (!roundsPublicEnabled && !isAdmin) {
-    return (
-      <Layout>
-        <div className="mx-auto max-w-[980px] rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm">
-          Rounds are currently admin-only.
         </div>
       </Layout>
     );
