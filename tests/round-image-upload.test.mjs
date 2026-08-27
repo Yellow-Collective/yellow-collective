@@ -85,6 +85,14 @@ test("rejects round image files above the size limit", () => {
   );
 });
 
+test("keeps encoded round images below the submission payload budget", () => {
+  assert.equal(upload.ROUND_IMAGE_UPLOAD_MAX_OUTPUT_BYTES, 5 * 1024 * 1024);
+  assert.match(
+    readFileSync(resolve(process.cwd(), "utils/rounds/round-image-upload.ts"), "utf8"),
+    /getDataUrlByteLength\(dataUrl\) <= ROUND_IMAGE_UPLOAD_MAX_OUTPUT_BYTES/
+  );
+});
+
 test("uses one shared round image upload field across request and admin forms", () => {
   assert.match(imageFieldSource, /export default function RoundImageUploadField/);
   assert.match(imageFieldSource, /resizeRoundImageFile/);

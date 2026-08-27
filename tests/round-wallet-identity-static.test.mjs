@@ -39,6 +39,12 @@ test("round wallet connect buttons are client-only during SSR", () => {
   }
 });
 
+test("round submission distinguishes wallet confirmation from network submission", () => {
+  assert.match(submitSource, /Confirm the signature in your wallet/);
+  assert.match(submitSource, /Confirm in wallet\.\.\./);
+  assert.match(submitSource, /setSubmissionStage\("submitting"\)/);
+});
+
 let failures = 0;
 
 for (const { name, run } of tests) {

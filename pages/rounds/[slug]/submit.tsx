@@ -70,6 +70,9 @@ export default function SubmitRoundPage({
   const [message, setMessage] = useState("");
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStage, setSubmissionStage] = useState<
+    "signing" | "submitting" | null
+  >(null);
 
   if (!round) {
     return (
@@ -102,7 +105,8 @@ export default function SubmitRoundPage({
     if (!canSubmit || !address) return;
 
     setIsSubmitting(true);
-    setMessage("");
+    setSubmissionStage("signing");
+    setMessage("Confirm the signature in your wallet to submit your entry.");
 
     try {
       const path = `/api/rounds/${round.slug}/submit`;
@@ -116,6 +120,8 @@ export default function SubmitRoundPage({
         payload,
         signMessageAsync,
       });
+      setSubmissionStage("submitting");
+      setMessage("Submitting your entry...");
       const response = await fetch(path, {
         method: "POST",
         headers: {
@@ -139,6 +145,7 @@ export default function SubmitRoundPage({
       );
     } finally {
       setIsSubmitting(false);
+      setSubmissionStage(null);
     }
   };
 
@@ -233,7 +240,11 @@ export default function SubmitRoundPage({
               disabled={!canSubmit || isSubmitting || isSigning}
               className="yc-dark-submit-blue flex items-center justify-center rounded-[18px] bg-accent px-5 py-3 font-heading text-lg text-skin-base shadow-[0px_4.02px_0px_0px_#b89400] transition hover:-translate-y-0.5 hover:bg-[#ffd84d] active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {isSubmitting || isSigning ? "Submitting..." : "Submit entry"}
+              {submissionStage === "signing" || isSigning
+                ? "Confirm in wallet..."
+                : submissionStage === "submitting"
+                  ? "Submitting..."
+                  : "Submit entry"}
             </button>
             <button
               type="button"
