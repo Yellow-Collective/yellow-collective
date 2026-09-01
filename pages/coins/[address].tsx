@@ -244,6 +244,7 @@ export default function CoinDetailPage({
             `Owner: ${coin.ownerAddress}`,
           ].join("\n"),
           image: coin.mediaUrl || coin.imageUrl,
+          images: [coin.mediaUrl || coin.imageUrl],
           url: `/coins/${coin.address}`,
           submissionType: "project",
           source: "content_coin",

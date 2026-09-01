@@ -46,6 +46,10 @@ const submitPageSource = readFileSync(
   resolve(process.cwd(), "pages/rounds/[slug]/submit.tsx"),
   "utf8"
 );
+const coinDetailPageSource = readFileSync(
+  resolve(process.cwd(), "pages/coins/[address].tsx"),
+  "utf8"
+);
 
 const tests = [];
 const test = (name, run) => tests.push({ name, run });
@@ -70,6 +74,32 @@ test("preserves explicit submission image order", () => {
       })
     ),
     ["https://example.com/one.png", "https://example.com/two.png"]
+  );
+});
+
+test("appends sequential image uploads without replacing earlier images", () => {
+  const firstUpload = ["data:image/jpeg;base64,first"];
+  const secondUpload = ["data:image/jpeg;base64,second"];
+
+  const afterFirstUpload = submissionImages.appendRoundSubmissionImages(
+    [],
+    firstUpload
+  );
+  const afterSecondUpload = submissionImages.appendRoundSubmissionImages(
+    afterFirstUpload,
+    secondUpload
+  );
+
+  assert.deepEqual(Array.from(afterSecondUpload), [
+    firstUpload[0],
+    secondUpload[0],
+  ]);
+  assert.equal(
+    submissionImages.appendRoundSubmissionImages(
+      Array.from({ length: 10 }, (_, index) => `image-${index}`),
+      ["image-10"]
+    ).length,
+    10
   );
 });
 
@@ -123,6 +153,17 @@ test("submission UI uploads multiple files and exposes ordered removal", () => {
   assert.match(submitPageSource, /Upload images/);
   assert.match(submitPageSource, /Remove image/);
   assert.match(submitPageSource, /images: values\.images/);
+  assert.match(
+    submitPageSource,
+    /appendRoundSubmissionImages\([\s\S]*current\.images,[\s\S]*addedImages[\s\S]*\)/
+  );
+});
+
+test("every project submission entry point sends ordered images and a legacy cover", () => {
+  assert.match(
+    coinDetailPageSource,
+    /image: coin\.mediaUrl \|\| coin\.imageUrl,[\s\S]*images: \[coin\.mediaUrl \|\| coin\.imageUrl\]/
+  );
 });
 
 let failures = 0;

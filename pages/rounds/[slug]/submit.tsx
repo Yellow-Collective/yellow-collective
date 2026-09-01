@@ -7,6 +7,7 @@ import {
   resizeRoundImageFile,
 } from "@/utils/rounds/round-image-upload";
 import {
+  appendRoundSubmissionImages,
   getRoundSubmissionImagesPayloadBytes,
   ROUND_SUBMISSION_MAX_IMAGES,
   ROUND_SUBMISSION_MAX_TOTAL_IMAGE_BYTES,
@@ -225,9 +226,24 @@ export default function SubmitRoundPage({
           </div>
           <SubmissionImagesField
             images={values.images}
-            onChange={(images) => {
+            onAdd={(addedImages) => {
               setMessage("");
-              setValues((current) => ({ ...current, images }));
+              setValues((current) => ({
+                ...current,
+                images: appendRoundSubmissionImages(
+                  current.images,
+                  addedImages
+                ),
+              }));
+            }}
+            onRemove={(index) => {
+              setMessage("");
+              setValues((current) => ({
+                ...current,
+                images: current.images.filter(
+                  (_, imageIndex) => imageIndex !== index
+                ),
+              }));
             }}
             placeholder={placeholders.image}
             className="mt-5"
@@ -318,7 +334,8 @@ const FormField = ({
 
 const SubmissionImagesField = ({
   images,
-  onChange,
+  onAdd,
+  onRemove,
   placeholder,
   className = "",
   isUploading,
@@ -326,7 +343,8 @@ const SubmissionImagesField = ({
   onError,
 }: {
   images: string[];
-  onChange: (images: string[]) => void;
+  onAdd: (images: string[]) => void;
+  onRemove: (index: number) => void;
   placeholder: string;
   className?: string;
   isUploading: boolean;
@@ -343,7 +361,7 @@ const SubmissionImagesField = ({
       onError(`Choose up to ${ROUND_SUBMISSION_MAX_IMAGES} images.`);
       return;
     }
-    onChange([...images, value]);
+    onAdd([value]);
     setImageUrl("");
   };
 
@@ -364,7 +382,7 @@ const SubmissionImagesField = ({
       for (const file of files) {
         resizedImages.push(await resizeRoundImageFile(file));
       }
-      const nextImages = [...images, ...resizedImages];
+      const nextImages = appendRoundSubmissionImages(images, resizedImages);
       if (
         getRoundSubmissionImagesPayloadBytes(nextImages) >
         ROUND_SUBMISSION_MAX_TOTAL_IMAGE_BYTES
@@ -373,7 +391,7 @@ const SubmissionImagesField = ({
           "The combined image size is too large. Remove an image or choose smaller files."
         );
       }
-      onChange(nextImages);
+      onAdd(resizedImages);
     } catch (error) {
       onError(
         error instanceof Error
@@ -454,11 +472,7 @@ const SubmissionImagesField = ({
                 </span>
                 <button
                   type="button"
-                  onClick={() =>
-                    onChange(
-                      images.filter((_, imageIndex) => imageIndex !== index)
-                    )
-                  }
+                  onClick={() => onRemove(index)}
                   className="font-heading text-sm text-[#a3281d] underline underline-offset-2"
                   aria-label={`Remove image ${index + 1}`}
                 >

@@ -23,6 +23,12 @@ export const normalizeRoundSubmissionImages = ({
 export const getRoundSubmissionImagesPayloadBytes = (images: string[]) =>
   images.reduce((total, image) => total + image.length, 0);
 
+export const appendRoundSubmissionImages = (
+  currentImages: string[],
+  addedImages: string[]
+) =>
+  [...currentImages, ...addedImages].slice(0, ROUND_SUBMISSION_MAX_IMAGES);
+
 export const getRoundSubmissionImagesValidationError = (images: string[]) => {
   if (images.length === 0) return "At least one image is required.";
 
