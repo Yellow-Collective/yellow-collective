@@ -10,6 +10,26 @@ type MembersPageProps = {
   members: DaoMember[];
 };
 
+const MEMBERS_STATIC_GENERATION_TIMEOUT_MS = 20_000;
+
+const withTimeout = async <T,>(promise: Promise<T>, timeoutMs: number) => {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timeout = setTimeout(
+          () => reject(new Error("DAO members request timed out.")),
+          timeoutMs
+        );
+      }),
+    ]);
+  } finally {
+    if (timeout) clearTimeout(timeout);
+  }
+};
+
 type SortMode =
   | "name"
   | "tokens"
@@ -75,10 +95,22 @@ const sortMembers = (members: DaoMember[], sort: SortMode) =>
 export const getStaticProps = async (): Promise<
   GetStaticPropsResult<MembersPageProps>
 > => {
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return {
+      props: {
+        members: [],
+      },
+      revalidate: 1,
+    };
+  }
+
   try {
     return {
       props: {
-        members: await getDaoMembers(),
+        members: await withTimeout(
+          getDaoMembers(),
+          MEMBERS_STATIC_GENERATION_TIMEOUT_MS
+        ),
       },
       revalidate: 300,
     };

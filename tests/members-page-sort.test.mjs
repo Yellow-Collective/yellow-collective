@@ -75,4 +75,28 @@ assert.doesNotMatch(
   "Owned token count must not be used as voting power because holders can delegate away their votes."
 );
 
+assert.match(
+  membersPage,
+  /const MEMBERS_STATIC_GENERATION_TIMEOUT_MS = 20_000/,
+  "Members static generation must finish before the hosting platform timeout."
+);
+
+assert.match(
+  membersPage,
+  /withTimeout\([\s\S]*getDaoMembers\(\),[\s\S]*MEMBERS_STATIC_GENERATION_TIMEOUT_MS[\s\S]*\)/,
+  "Members data loading must be bounded during ISR generation."
+);
+
+assert.match(
+  membersPage,
+  /process\.env\.NEXT_PHASE === "phase-production-build"[\s\S]*members: \[\],[\s\S]*revalidate: 1/,
+  "Production builds must not start member RPC work that can outlive a page timeout."
+);
+
+assert.match(
+  membersPage,
+  /members: \[\],[\s\S]*revalidate: 60/,
+  "A timed-out members build must render the existing empty fallback and retry soon."
+);
+
 console.log("ok - members page supports voting power sort");
