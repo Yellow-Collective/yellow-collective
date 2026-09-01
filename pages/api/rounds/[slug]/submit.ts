@@ -7,6 +7,7 @@ type SubmitRoundBody = {
     title?: string;
     description?: string;
     image?: string;
+    images?: string[];
     url?: string;
     submissionType?: "project" | "trait";
     source?: string;

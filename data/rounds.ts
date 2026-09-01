@@ -38,6 +38,11 @@ import {
 } from "data/dummy-content";
 import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
 import { getEnsName } from "data/ens";
+import {
+  getRoundSubmissionImagesValidationError,
+  normalizeRoundSubmissionImages,
+  ROUND_SUBMISSION_MAX_IMAGES,
+} from "@/utils/rounds/submission-images";
 
 export type RoundStatus = "draft" | "published" | "archived";
 export type RoundSubmissionStatus =
@@ -98,6 +103,7 @@ export type RoundSubmission = {
   title: string;
   description: string;
   image: string;
+  images: string[];
   url: string;
   submissionType: RoundSubmissionType;
   traitId: string | null;
@@ -252,6 +258,7 @@ export type RoundSubmissionInput = Partial<
     | "title"
     | "description"
     | "image"
+    | "images"
     | "url"
     | "submissionType"
     | "traitId"
@@ -393,6 +400,7 @@ const ensureTables = async () => {
             title text NOT NULL,
             description text NOT NULL,
             image text NOT NULL,
+            images jsonb NOT NULL DEFAULT '[]'::jsonb,
             url text NOT NULL,
             submission_type text NOT NULL DEFAULT 'project',
             trait_id text,
@@ -549,7 +557,15 @@ const ensureTables = async () => {
             ADD COLUMN IF NOT EXISTS trait_id text,
             ADD COLUMN IF NOT EXISTS trait_type text,
             ADD COLUMN IF NOT EXISTS source text NOT NULL DEFAULT 'project',
-            ADD COLUMN IF NOT EXISTS source_payload jsonb NOT NULL DEFAULT '{}'::jsonb
+            ADD COLUMN IF NOT EXISTS source_payload jsonb NOT NULL DEFAULT '{}'::jsonb,
+            ADD COLUMN IF NOT EXISTS images jsonb NOT NULL DEFAULT '[]'::jsonb
+        `)
+      )
+      .then(() =>
+        getPool().query(`
+          UPDATE round_submissions
+          SET images = jsonb_build_array(image)
+          WHERE jsonb_array_length(images) = 0 AND image <> ''
         `)
       )
       .then(() =>
@@ -723,6 +739,7 @@ const submissionSelectFields = `
   s.title,
   s.description,
   s.image,
+  s.images,
   s.url,
   s.submission_type,
   s.trait_id,
@@ -860,31 +877,39 @@ const mapRound = (row: Record<string, any>): Round => ({
   totalVotes: Number(row.total_votes || 0),
 });
 
-const mapSubmission = (row: Record<string, any>): RoundSubmission => ({
-  id: row.id,
-  roundId: row.round_id,
-  walletAddress: row.wallet_address,
-  title: row.title,
-  description: row.description,
-  image: row.image,
-  url: row.url,
-  submissionType: row.submission_type || "project",
-  traitId: row.trait_id || null,
-  traitType: row.trait_type || null,
-  source: row.source || "project",
-  sourcePayload: row.source_payload
-    ? parseJson<Record<string, any>>(row.source_payload)
-    : null,
-  status: row.status,
-  createdAt: formatDate(row.created_at) || "",
-  updatedAt: formatDate(row.updated_at) || "",
-  approvedAt: formatDate(row.approved_at),
-  rejectedAt: formatDate(row.rejected_at),
-  hiddenAt: formatDate(row.hidden_at),
-  deletedAt: formatDate(row.deleted_at),
-  voteCount: Number(row.vote_count || 0),
-  winnerPosition: row.winner_position ? Number(row.winner_position) : null,
-});
+const mapSubmission = (row: Record<string, any>): RoundSubmission => {
+  const images = normalizeRoundSubmissionImages({
+    image: row.image,
+    images: row.images ? parseJson<unknown>(row.images) : undefined,
+  });
+
+  return {
+    id: row.id,
+    roundId: row.round_id,
+    walletAddress: row.wallet_address,
+    title: row.title,
+    description: row.description,
+    image: images[0] || row.image,
+    images,
+    url: row.url,
+    submissionType: row.submission_type || "project",
+    traitId: row.trait_id || null,
+    traitType: row.trait_type || null,
+    source: row.source || "project",
+    sourcePayload: row.source_payload
+      ? parseJson<Record<string, any>>(row.source_payload)
+      : null,
+    status: row.status,
+    createdAt: formatDate(row.created_at) || "",
+    updatedAt: formatDate(row.updated_at) || "",
+    approvedAt: formatDate(row.approved_at),
+    rejectedAt: formatDate(row.rejected_at),
+    hiddenAt: formatDate(row.hidden_at),
+    deletedAt: formatDate(row.deleted_at),
+    voteCount: Number(row.vote_count || 0),
+    winnerPosition: row.winner_position ? Number(row.winner_position) : null,
+  };
+};
 
 const mapRoundRequest = (row: Record<string, any>): RoundRequest => ({
   id: row.id,
@@ -1290,12 +1315,20 @@ export const validateRoundSubmissionInput = (
 ) => {
   const title = String(input.title || "").trim();
   const description = String(input.description || "").trim();
-  const image = String(input.image || "").trim();
+  if (input.images !== undefined && !Array.isArray(input.images)) {
+    return "Images must be provided as an array.";
+  }
+  if (
+    Array.isArray(input.images) &&
+    input.images.length > ROUND_SUBMISSION_MAX_IMAGES
+  ) {
+    return `Choose up to ${ROUND_SUBMISSION_MAX_IMAGES} images.`;
+  }
+
+  const images = normalizeRoundSubmissionImages(input);
+  const imageValidationError = getRoundSubmissionImagesValidationError(images);
+  if (imageValidationError) return imageValidationError;
   const url = String(input.url || "").trim();
-  const normalizedImage = normalizeSafeImageUrl(image, {
-    allowInternal: true,
-    allowDataImages: true,
-  });
   const normalizedUrl = normalizeSafeProjectUrl(url, { allowInternal: true });
   const submissionType = input.submissionType || "project";
 
@@ -1325,8 +1358,16 @@ export const validateRoundSubmissionInput = (
     return "Submission URL must be a valid URL.";
   }
 
-  if (!normalizedImage) {
-    return "Image must be a valid URL.";
+  if (
+    images.some(
+      (image) =>
+        !normalizeSafeImageUrl(image, {
+          allowInternal: true,
+          allowDataImages: true,
+        })
+    )
+  ) {
+    return "Every image must be a valid URL.";
   }
 
   return undefined;
@@ -3037,6 +3078,12 @@ export const createRoundSubmission = async (
   if (validationError) throw new Error(validationError);
 
   const walletAddress = getAddress(String(input.walletAddress));
+  const images = normalizeRoundSubmissionImages(input).map((image) =>
+    normalizeSafeImageUrl(image, {
+      allowInternal: true,
+      allowDataImages: true,
+    })
+  );
   const client = await getPool().connect();
 
   try {
@@ -3072,6 +3119,7 @@ export const createRoundSubmission = async (
           title,
           description,
           image,
+          images,
           url,
           submission_type,
           trait_id,
@@ -3081,7 +3129,7 @@ export const createRoundSubmission = async (
           status,
           approved_at
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12::jsonb, 'approved', now())
+        VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9, $10, $11, $12, $13::jsonb, 'approved', now())
         RETURNING id
       `,
       [
@@ -3090,10 +3138,8 @@ export const createRoundSubmission = async (
         walletAddress,
         String(input.title || "").trim(),
         String(input.description || "").trim(),
-        normalizeSafeImageUrl(input.image, {
-          allowInternal: true,
-          allowDataImages: true,
-        }),
+        images[0],
+        JSON.stringify(images),
         normalizeSafeProjectUrl(input.url, { allowInternal: true }),
         input.submissionType || "project",
         input.traitId || null,
@@ -3335,6 +3381,7 @@ export const createRoundTraitSubmission = async ({
           title,
           description,
           image,
+          images,
           url,
           submission_type,
           trait_id,
@@ -3344,7 +3391,7 @@ export const createRoundTraitSubmission = async ({
           status,
           approved_at
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, 'trait', $8, $9, 'noundry', $10::jsonb, 'approved', now())
+        VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, 'trait', $9, $10, 'noundry', $11::jsonb, 'approved', now())
         RETURNING id
       `,
       [
@@ -3354,6 +3401,7 @@ export const createRoundTraitSubmission = async ({
         input.title,
         input.description,
         input.image,
+        JSON.stringify([input.image]),
         input.url,
         trait.id,
         trait.traitType,
@@ -3400,11 +3448,20 @@ export const updateRoundSubmission = async (
     : null;
   if (!current) return null;
 
+  const images =
+    input.images !== undefined
+      ? normalizeRoundSubmissionImages(input)
+      : input.image !== undefined
+        ? normalizeRoundSubmissionImages({
+            images: [input.image, ...current.images.slice(1)],
+          })
+        : current.images;
   const merged = {
     walletAddress: input.walletAddress ?? current.walletAddress,
     title: input.title ?? current.title,
     description: input.description ?? current.description,
-    image: input.image ?? current.image,
+    image: images[0] || input.image || current.image,
+    images,
     url: input.url ?? current.url,
     submissionType: input.submissionType ?? current.submissionType,
     traitId: input.traitId ?? current.traitId,
@@ -3414,6 +3471,12 @@ export const updateRoundSubmission = async (
   };
   const validationError = validateRoundSubmissionInput(round, merged);
   if (validationError) throw new Error(validationError);
+  const normalizedImages = images.map((image) =>
+    normalizeSafeImageUrl(image, {
+      allowInternal: true,
+      allowDataImages: true,
+    })
+  );
 
   const result = await getPool().query(
     `
@@ -3422,12 +3485,13 @@ export const updateRoundSubmission = async (
         title = $4,
         description = $5,
         image = $6,
-        url = $7,
-        submission_type = $8,
-        trait_id = $9,
-        trait_type = $10,
-        source = $11,
-        source_payload = $12::jsonb,
+        images = $7::jsonb,
+        url = $8,
+        submission_type = $9,
+        trait_id = $10,
+        trait_type = $11,
+        source = $12,
+        source_payload = $13::jsonb,
         updated_at = now()
       WHERE round_id = $1 AND id = $2
       RETURNING id
@@ -3438,10 +3502,8 @@ export const updateRoundSubmission = async (
       getAddress(merged.walletAddress as string),
       String(merged.title || "").trim(),
       String(merged.description || "").trim(),
-      normalizeSafeImageUrl(merged.image, {
-        allowInternal: true,
-        allowDataImages: true,
-      }),
+      normalizedImages[0],
+      JSON.stringify(normalizedImages),
       normalizeSafeProjectUrl(merged.url, { allowInternal: true }),
       merged.submissionType || "project",
       merged.traitId || null,

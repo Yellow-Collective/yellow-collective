@@ -1,16 +1,15 @@
 export const ROUND_IMAGE_UPLOAD_MAX_BYTES = 8 * 1024 * 1024;
 // Round submissions store uploaded images inline in a JSON request. Keep the
 // encoded image well below the API route's 8 MB request limit.
-export const ROUND_IMAGE_UPLOAD_MAX_OUTPUT_BYTES = 5 * 1024 * 1024;
+export const ROUND_IMAGE_UPLOAD_MAX_OUTPUT_BYTES = 500 * 1024;
 export const ROUND_IMAGE_UPLOAD_ACCEPT_TYPES = [
   "image/png",
   "image/jpeg",
   "image/webp",
   "image/gif",
 ] as const;
-export const ROUND_IMAGE_UPLOAD_ACCEPT = ROUND_IMAGE_UPLOAD_ACCEPT_TYPES.join(
-  ","
-);
+export const ROUND_IMAGE_UPLOAD_ACCEPT =
+  ROUND_IMAGE_UPLOAD_ACCEPT_TYPES.join(",");
 
 type RoundImageUploadFile = Pick<File, "type" | "size">;
 

@@ -689,18 +689,25 @@ const SubmissionCard = ({
             />
           </div>
         ) : (
-          <DeferredInlineImage
-            src={submission.image}
-            alt={submission.title}
-            className={`aspect-square w-full object-cover ${imageClass}`}
-            fallback={
-              <div
-                className={`flex aspect-square w-full items-center justify-center p-6 text-center font-heading text-2xl ${imageClass}`}
-              >
-                {submission.title}
-              </div>
-            }
-          />
+          <div className="relative">
+            <DeferredInlineImage
+              src={submission.image}
+              alt={submission.title}
+              className={`aspect-square w-full object-cover ${imageClass}`}
+              fallback={
+                <div
+                  className={`flex aspect-square w-full items-center justify-center p-6 text-center font-heading text-2xl ${imageClass}`}
+                >
+                  {submission.title}
+                </div>
+              }
+            />
+            {submission.images.length > 1 && (
+              <span className="absolute bottom-3 right-3 rounded-full bg-black/75 px-3 py-1 font-heading text-sm text-white">
+                {submission.images.length} images
+              </span>
+            )}
+          </div>
         )}
       </button>
       <div className="flex flex-1 flex-col gap-4 p-5">
@@ -964,25 +971,40 @@ const SubmissionModal = ({
                 </div>
               </div>
             )}
-            <div className="mx-auto mt-6 w-full max-w-[420px] overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]">
+            <div
+              className={`mx-auto mt-6 grid w-full gap-3 ${
+                submission.images.length > 1
+                  ? "max-w-4xl sm:grid-cols-2"
+                  : "max-w-[420px]"
+              }`}
+            >
               {noundrySubmission ? (
-                <NounPreviewTile
-                  artwork={artwork}
-                  submission={noundrySubmission}
-                  traits={noundryPreviewTraits}
-                  showEditedTrait
-                />
+                <div className="overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]">
+                  <NounPreviewTile
+                    artwork={artwork}
+                    submission={noundrySubmission}
+                    traits={noundryPreviewTraits}
+                    showEditedTrait
+                  />
+                </div>
               ) : (
-                <DeferredInlineImage
-                  src={submission.image}
-                  alt={submission.title}
-                  className="max-h-[520px] w-full object-contain"
-                  fallback={
-                    <div className="flex aspect-square w-full items-center justify-center bg-[#fff7bf] p-6 text-center font-heading text-2xl text-skin-base">
-                      {submission.title}
-                    </div>
-                  }
-                />
+                submission.images.map((image, index) => (
+                  <div
+                    key={`${submission.id}-image-${index}`}
+                    className="overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]"
+                  >
+                    <DeferredInlineImage
+                      src={image}
+                      alt={`${submission.title} image ${index + 1}`}
+                      className="max-h-[520px] w-full object-contain"
+                      fallback={
+                        <div className="flex aspect-square w-full items-center justify-center bg-[#fff7bf] p-6 text-center font-heading text-2xl text-skin-base">
+                          {submission.title}
+                        </div>
+                      }
+                    />
+                  </div>
+                ))
               )}
             </div>
             {noundrySubmission && (

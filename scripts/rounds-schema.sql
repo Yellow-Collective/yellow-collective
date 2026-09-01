@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS round_submissions (
   title text NOT NULL,
   description text NOT NULL,
   image text NOT NULL,
+  images jsonb NOT NULL DEFAULT '[]'::jsonb,
   url text NOT NULL,
   submission_type text NOT NULL DEFAULT 'project',
   trait_id text,
@@ -192,7 +193,12 @@ ALTER TABLE round_submissions
   ADD COLUMN IF NOT EXISTS trait_id text,
   ADD COLUMN IF NOT EXISTS trait_type text,
   ADD COLUMN IF NOT EXISTS source text NOT NULL DEFAULT 'project',
-  ADD COLUMN IF NOT EXISTS source_payload jsonb NOT NULL DEFAULT '{}'::jsonb;
+  ADD COLUMN IF NOT EXISTS source_payload jsonb NOT NULL DEFAULT '{}'::jsonb,
+  ADD COLUMN IF NOT EXISTS images jsonb NOT NULL DEFAULT '[]'::jsonb;
+
+UPDATE round_submissions
+SET images = jsonb_build_array(image)
+WHERE jsonb_array_length(images) = 0 AND image <> '';
 
 CREATE UNIQUE INDEX IF NOT EXISTS round_submissions_round_trait_unique_idx
   ON round_submissions(round_id, trait_id)

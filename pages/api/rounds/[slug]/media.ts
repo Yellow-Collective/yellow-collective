@@ -2,6 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getPublicRoundBySlug } from "data/rounds";
 import { createRoundMediaPayload } from "@/utils/rounds/roundMediaPayload";
 
+export const config = {
+  api: {
+    responseLimit: false,
+  },
+};
+
 const getSlug = (req: NextApiRequest) => {
   const slug = req.query.slug;
   return typeof slug === "string" ? slug : slug?.[0];

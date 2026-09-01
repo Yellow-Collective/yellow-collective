@@ -6,6 +6,11 @@ import {
   ROUND_IMAGE_UPLOAD_ACCEPT,
   resizeRoundImageFile,
 } from "@/utils/rounds/round-image-upload";
+import {
+  getRoundSubmissionImagesPayloadBytes,
+  ROUND_SUBMISSION_MAX_IMAGES,
+  ROUND_SUBMISSION_MAX_TOTAL_IMAGE_BYTES,
+} from "@/utils/rounds/submission-images";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { getRoundState } from "@/utils/rounds/state";
 import { getRoundSubmissionPlaceholders } from "@/utils/rounds/submission-copy";
@@ -56,7 +61,7 @@ export const getServerSideProps = async ({
 const initialValues = {
   title: "",
   description: "",
-  image: "",
+  images: [] as string[],
   url: "",
 };
 
@@ -90,13 +95,18 @@ export default function SubmitRoundPage({
     state === "submissions_open" &&
     Boolean(
       values.title.trim() &&
-        values.description.trim() &&
-        values.image.trim() &&
-        !isUploadingImage &&
-        address
+      values.description.trim() &&
+      values.images.length > 0 &&
+      getRoundSubmissionImagesPayloadBytes(values.images) <=
+        ROUND_SUBMISSION_MAX_TOTAL_IMAGE_BYTES &&
+      !isUploadingImage &&
+      address
     );
 
-  const updateValue = (field: keyof typeof values, value: string) => {
+  const updateValue = (
+    field: Exclude<keyof typeof values, "images">,
+    value: string
+  ) => {
     setMessage("");
     setValues((current) => ({ ...current, [field]: value }));
   };
@@ -110,7 +120,13 @@ export default function SubmitRoundPage({
 
     try {
       const path = `/api/rounds/${round.slug}/submit`;
-      const payload = { submission: values };
+      const payload = {
+        submission: {
+          ...values,
+          image: values.images[0],
+          images: values.images,
+        },
+      };
       const authorization = await createSignedRequestAuthHeader({
         walletAddress: address,
         chainId: ROUND_SIGNED_REQUEST_CHAIN_ID,
@@ -141,7 +157,9 @@ export default function SubmitRoundPage({
       setValues(initialValues);
     } catch (submitError) {
       setMessage(
-        submitError instanceof Error ? submitError.message : "Submission failed."
+        submitError instanceof Error
+          ? submitError.message
+          : "Submission failed."
       );
     } finally {
       setIsSubmitting(false);
@@ -205,18 +223,17 @@ export default function SubmitRoundPage({
               placeholder={placeholders.url}
             />
           </div>
-          <FormField
-            label="Image URL"
-            value={values.image}
-            onChange={(value) => updateValue("image", value)}
+          <SubmissionImagesField
+            images={values.images}
+            onChange={(images) => {
+              setMessage("");
+              setValues((current) => ({ ...current, images }));
+            }}
             placeholder={placeholders.image}
             className="mt-5"
-            upload={{
-              isUploading: isUploadingImage,
-              onUploadStart: () => setIsUploadingImage(true),
-              onUploadEnd: () => setIsUploadingImage(false),
-              onError: setMessage,
-            }}
+            isUploading={isUploadingImage}
+            onUploadingChange={setIsUploadingImage}
+            onError={setMessage}
           />
           <label
             htmlFor="round-submission-description"
@@ -248,7 +265,10 @@ export default function SubmitRoundPage({
             </button>
             <button
               type="button"
-              onClick={() => setValues(initialValues)}
+              onClick={() => {
+                setValues(initialValues);
+                setMessage("");
+              }}
               className="yc-dark-reset-red flex items-center justify-center rounded-[18px] border border-skin-stroke bg-white px-5 py-3 font-heading text-lg text-skin-base shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition hover:-translate-y-0.5 hover:bg-[#fff7bf] active:translate-y-1 active:shadow-none"
             >
               Reset
@@ -271,38 +291,14 @@ const FormField = ({
   onChange,
   placeholder,
   className = "",
-  upload,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
   className?: string;
-  upload?: {
-    isUploading: boolean;
-    onUploadStart: () => void;
-    onUploadEnd: () => void;
-    onError: (message: string) => void;
-  };
 }) => {
   const id = `round-submission-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file || !upload) return;
-
-    upload.onUploadStart();
-    try {
-      onChange(await resizeRoundImageFile(file));
-    } catch (error) {
-      upload.onError(
-        error instanceof Error ? error.message : "Unable to upload image."
-      );
-    } finally {
-      upload.onUploadEnd();
-      event.target.value = "";
-    }
-  };
 
   return (
     <div className={className}>
@@ -316,37 +312,166 @@ const FormField = ({
         placeholder={placeholder}
         className="mt-2 w-full rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
       />
-      {upload && (
-        <div className="mt-3 flex flex-wrap items-center gap-3">
-          <label className="yc-dark-submit-blue flex w-fit cursor-pointer items-center justify-center rounded-[18px] bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none">
-            {upload.isUploading ? "Uploading..." : "Upload image"}
-            <input
-              type="file"
-              accept={ROUND_IMAGE_UPLOAD_ACCEPT}
-              className="sr-only"
-              onChange={handleFileChange}
-              disabled={upload.isUploading}
-            />
-          </label>
-          {value && (
-            <button
-              type="button"
-              onClick={() => onChange("")}
-              className="yc-dark-reset-red flex items-center justify-center rounded-[18px] border border-skin-stroke bg-white px-5 py-3 font-heading text-base text-skin-base shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition hover:-translate-y-0.5 hover:bg-[#fff7bf] active:translate-y-1 active:shadow-none"
+    </div>
+  );
+};
+
+const SubmissionImagesField = ({
+  images,
+  onChange,
+  placeholder,
+  className = "",
+  isUploading,
+  onUploadingChange,
+  onError,
+}: {
+  images: string[];
+  onChange: (images: string[]) => void;
+  placeholder: string;
+  className?: string;
+  isUploading: boolean;
+  onUploadingChange: (isUploading: boolean) => void;
+  onError: (message: string) => void;
+}) => {
+  const [imageUrl, setImageUrl] = useState("");
+  const remaining = ROUND_SUBMISSION_MAX_IMAGES - images.length;
+
+  const addImageUrl = () => {
+    const value = imageUrl.trim();
+    if (!value) return;
+    if (remaining <= 0) {
+      onError(`Choose up to ${ROUND_SUBMISSION_MAX_IMAGES} images.`);
+      return;
+    }
+    onChange([...images, value]);
+    setImageUrl("");
+  };
+
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    event.target.value = "";
+    if (files.length === 0) return;
+    if (files.length > remaining) {
+      onError(
+        `You can add ${remaining} more image${remaining === 1 ? "" : "s"}.`
+      );
+      return;
+    }
+
+    onUploadingChange(true);
+    try {
+      const resizedImages: string[] = [];
+      for (const file of files) {
+        resizedImages.push(await resizeRoundImageFile(file));
+      }
+      const nextImages = [...images, ...resizedImages];
+      if (
+        getRoundSubmissionImagesPayloadBytes(nextImages) >
+        ROUND_SUBMISSION_MAX_TOTAL_IMAGE_BYTES
+      ) {
+        throw new Error(
+          "The combined image size is too large. Remove an image or choose smaller files."
+        );
+      }
+      onChange(nextImages);
+    } catch (error) {
+      onError(
+        error instanceof Error
+          ? `No images were added. ${error.message}`
+          : "No images were added. Unable to upload images."
+      );
+    } finally {
+      onUploadingChange(false);
+    }
+  };
+
+  return (
+    <fieldset className={className}>
+      <legend className="font-heading text-base text-skin-base">
+        Submission images
+      </legend>
+      <p className="mt-1 text-sm text-secondary">
+        Add up to {ROUND_SUBMISSION_MAX_IMAGES} images. The first image is the
+        cover. Images stay in the order you add them.
+      </p>
+      <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+        <input
+          value={imageUrl}
+          onChange={(event) => setImageUrl(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              addImageUrl();
+            }
+          }}
+          placeholder={placeholder}
+          aria-label="Image URL"
+          className="min-w-0 flex-1 rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-skin-highlighted"
+          disabled={remaining <= 0 || isUploading}
+        />
+        <button
+          type="button"
+          onClick={addImageUrl}
+          disabled={!imageUrl.trim() || remaining <= 0 || isUploading}
+          className="yc-dark-yellow-button rounded-[18px] border border-skin-stroke bg-white px-5 py-3 font-heading text-base text-skin-base shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition hover:-translate-y-0.5 hover:bg-[#fff7bf] active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Add URL
+        </button>
+        <label
+          className={`yc-dark-submit-blue flex w-fit items-center justify-center rounded-[18px] bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:-translate-y-0.5 hover:bg-[#45adf5] active:translate-y-1 active:shadow-none ${
+            isUploading || remaining <= 0
+              ? "cursor-not-allowed opacity-50"
+              : "cursor-pointer"
+          }`}
+        >
+          {isUploading ? "Processing images..." : "Upload images"}
+          <input
+            type="file"
+            accept={ROUND_IMAGE_UPLOAD_ACCEPT}
+            className="sr-only"
+            onChange={handleFileChange}
+            disabled={isUploading || remaining <= 0}
+            multiple
+          />
+        </label>
+      </div>
+      {images.length > 0 && (
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {images.map((image, index) => (
+            <div
+              key={`${image.slice(0, 80)}-${index}`}
+              className="overflow-hidden rounded-xl border border-skin-stroke bg-white"
             >
-              Remove image
-            </button>
-          )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={image}
+                alt={`Submission preview ${index + 1}`}
+                className="aspect-[16/9] w-full object-cover"
+              />
+              <div className="flex items-center justify-between gap-3 p-3">
+                <span className="text-sm text-secondary">
+                  {index === 0 ? "Cover image" : `Image ${index + 1}`}
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    onChange(
+                      images.filter((_, imageIndex) => imageIndex !== index)
+                    )
+                  }
+                  className="font-heading text-sm text-[#a3281d] underline underline-offset-2"
+                  aria-label={`Remove image ${index + 1}`}
+                >
+                  Remove image
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
-      {upload && value && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={value}
-          alt="Submission preview"
-          className="mt-3 aspect-[16/9] w-full rounded-lg border border-skin-stroke bg-white object-cover"
-        />
-      )}
-    </div>
+      <p className="mt-3 text-sm text-secondary" aria-live="polite">
+        {images.length} of {ROUND_SUBMISSION_MAX_IMAGES} images added
+      </p>
+    </fieldset>
   );
 };

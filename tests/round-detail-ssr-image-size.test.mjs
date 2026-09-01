@@ -40,9 +40,12 @@ const test = (name, run) => tests.push({ name, run });
 
 test("round detail defers inline data images out of SSR markup", () => {
   assert.equal(source.includes("const DeferredInlineImage"), true);
-  assert.equal(source.includes('src={round.image}'), true);
-  assert.equal(source.includes('src={submission.image}'), true);
-  assert.equal(source.includes('src.startsWith("data:image/") && !isMounted'), true);
+  assert.equal(source.includes("src={round.image}"), true);
+  assert.equal(source.includes("src={submission.image}"), true);
+  assert.equal(
+    source.includes('src.startsWith("data:image/") && !isMounted'),
+    true
+  );
   assert.equal(source.includes("stripRoundInlineMediaForSsr(round)"), true);
 });
 
@@ -63,10 +66,12 @@ test("round detail SSR props strip inline data images before serialization", () 
       {
         id: "submission-1",
         image: largeDataImage,
+        images: [largeDataImage, "https://example.com/second.png"],
       },
       {
         id: "submission-2",
         image: "https://example.com/image.png",
+        images: ["https://example.com/image.png"],
       },
     ],
     voteActivity: [],
@@ -79,6 +84,10 @@ test("round detail SSR props strip inline data images before serialization", () 
   assert.ok(Buffer.byteLength(serialized, "utf8") < 4096);
   assert.equal(stripped.image, "");
   assert.equal(stripped.submissions[0].image, "");
+  assert.deepEqual(Array.from(stripped.submissions[0].images), [
+    "",
+    "https://example.com/second.png",
+  ]);
   assert.equal(stripped.submissions[1].image, "https://example.com/image.png");
 });
 
@@ -88,6 +97,12 @@ test("round media payload restores stripped inline images client-side", () => {
     submissionImages: {
       "submission-1": "data:image/jpeg;base64,submission",
     },
+    submissionImageSets: {
+      "submission-1": [
+        "data:image/jpeg;base64,submission",
+        "data:image/jpeg;base64,second",
+      ],
+    },
   };
   const round = {
     image: "",
@@ -95,6 +110,7 @@ test("round media payload restores stripped inline images client-side", () => {
       {
         id: "submission-1",
         image: "",
+        images: ["", ""],
       },
     ],
   };
@@ -102,7 +118,14 @@ test("round media payload restores stripped inline images client-side", () => {
   const hydrated = mediaPayload.hydrateRoundInlineMedia(round, media);
 
   assert.equal(hydrated.image, media.roundImage);
-  assert.equal(hydrated.submissions[0].image, media.submissionImages["submission-1"]);
+  assert.equal(
+    hydrated.submissions[0].image,
+    media.submissionImages["submission-1"]
+  );
+  assert.deepEqual(Array.from(hydrated.submissions[0].images), [
+    "data:image/jpeg;base64,submission",
+    "data:image/jpeg;base64,second",
+  ]);
 });
 
 let failures = 0;

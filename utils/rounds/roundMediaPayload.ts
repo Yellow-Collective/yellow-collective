@@ -3,6 +3,7 @@ import type { RoundWithSubmissions } from "data/rounds";
 export type RoundMediaPayload = {
   roundImage: string;
   submissionImages: Record<string, string>;
+  submissionImageSets: Record<string, string[]>;
 };
 
 export const isInlineDataImage = (src?: string | null) =>
@@ -19,6 +20,7 @@ export const stripRoundInlineMediaForSsr = (
   submissions: round.submissions.map((submission) => ({
     ...submission,
     image: stripInlineDataImage(submission.image),
+    images: (submission.images || [submission.image]).map(stripInlineDataImage),
   })),
 });
 
@@ -27,7 +29,16 @@ export const createRoundMediaPayload = (
 ): RoundMediaPayload => ({
   roundImage: round.image || "",
   submissionImages: Object.fromEntries(
-    round.submissions.map((submission) => [submission.id, submission.image || ""])
+    round.submissions.map((submission) => [
+      submission.id,
+      submission.image || "",
+    ])
+  ),
+  submissionImageSets: Object.fromEntries(
+    round.submissions.map((submission) => [
+      submission.id,
+      submission.images || [submission.image],
+    ])
   ),
 });
 
@@ -40,10 +51,22 @@ export const hydrateRoundInlineMedia = (
   return {
     ...round,
     image: round.image || media.roundImage || "",
-    submissions: round.submissions.map((submission) => ({
-      ...submission,
-      image:
-        submission.image || media.submissionImages[submission.id] || "",
-    })),
+    submissions: round.submissions.map((submission) => {
+      const mediaImages = media.submissionImageSets?.[submission.id] || [];
+      const images = (submission.images || [submission.image]).map(
+        (image, index) => image || mediaImages[index] || ""
+      );
+      const legacyImage =
+        submission.image ||
+        media.submissionImages[submission.id] ||
+        images[0] ||
+        "";
+
+      return {
+        ...submission,
+        image: legacyImage,
+        images: images.length > 0 ? images : legacyImage ? [legacyImage] : [],
+      };
+    }),
   };
 };

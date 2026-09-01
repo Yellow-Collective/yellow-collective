@@ -288,6 +288,7 @@ const makeSubmission = (
     title: project.title,
     description: project.submissionDescription,
     image: project.image,
+    images: [project.image],
     url: `/projects/${project.slug}`,
     submissionType: "project",
     traitId: null,

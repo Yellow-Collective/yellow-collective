@@ -40,6 +40,9 @@ const votingStrategy = loadTsModule(
 const roundTraitSubmission = loadTsModule(
   resolve(process.cwd(), "utils/noundry/round-trait-submission.ts")
 );
+const submissionImages = loadTsModule(
+  resolve(process.cwd(), "utils/rounds/submission-images.ts")
+);
 const loadRoundVotingPowerModule = (delegatedVotes, calls = []) =>
   loadTsModule(resolve(process.cwd(), "utils/rounds/getRoundVotingPower.ts"), {
     "./getCollectiveNounVotingPower": {
@@ -80,6 +83,7 @@ const loadRoundsModule = () =>
       getDummyPublicRounds: () => [],
     },
     "@/utils/rounds/voting-strategy": votingStrategy,
+    "@/utils/rounds/submission-images": submissionImages,
     "data/ens": { getEnsName: async () => ({}) },
   });
 const roundsSource = readFileSync(

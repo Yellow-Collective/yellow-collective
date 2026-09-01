@@ -3952,13 +3952,20 @@ const RoundSubmissionEditor = ({
     >
       <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
         <div>
-          <div className="overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={submission.image}
-              alt={submission.title}
-              className="aspect-square w-full object-cover"
-            />
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+            {submission.images.map((submissionImage, index) => (
+              <div
+                key={`${submission.id}-admin-image-${index}`}
+                className="overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={submissionImage}
+                  alt={`${submission.title} image ${index + 1}`}
+                  className="aspect-square w-full object-cover"
+                />
+              </div>
+            ))}
           </div>
           <div className="mt-3 rounded-xl bg-[#fff7bf] p-3 text-sm text-secondary">
             <span className="font-heading text-lg text-skin-base">
@@ -4003,7 +4010,11 @@ const RoundSubmissionEditor = ({
             value={walletAddress}
             onChange={setWalletAddress}
           />
-          <FormField label="Image URL" value={image} onChange={setImage} />
+          <FormField
+            label="Cover image URL"
+            value={image}
+            onChange={setImage}
+          />
           <FormField label="Project URL" value={url} onChange={setUrl} />
           <FormField
             label="Description"
