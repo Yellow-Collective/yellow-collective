@@ -213,6 +213,19 @@ const resolveEnsNames = async (addresses: string[]) => {
 export const getStaticProps = async (): Promise<
   GetStaticPropsResult<AboutPageProps>
 > => {
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return {
+      props: {
+        contract: getFallbackContract(),
+        addresses: getFallbackAddresses(),
+        founders: [],
+        delegates: [],
+        treasuryBalance: null,
+      },
+      revalidate: 1,
+    };
+  }
+
   const tokenContract = TOKEN_CONTRACT as `0x${string}`;
   let contract = getFallbackContract();
   try {
