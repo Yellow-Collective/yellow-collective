@@ -140,11 +140,16 @@ const getAttributesFromImageUrl = (image?: string) => {
   }
 };
 
-const getTokenFromId = async (id: number): Promise<ProbeToken | null> => {
+const getTokenFromId = async (
+  id: number,
+  includeOwner = true
+): Promise<ProbeToken | null> => {
   try {
     const [tokenUri, owner] = await Promise.all([
       tokenContract.tokenURI(id),
-      tokenContract.ownerOf(id).catch(() => undefined),
+      includeOwner
+        ? tokenContract.ownerOf(id).catch(() => undefined)
+        : Promise.resolve(undefined),
     ]);
     const metadata = parseTokenUri(tokenUri);
     const attributes = Object.fromEntries(
@@ -173,6 +178,13 @@ const getTokenFromId = async (id: number): Promise<ProbeToken | null> => {
     return null;
   }
 };
+
+export const getCollectiveNounTokensByIds = async (tokenIds: number[]) =>
+  (
+    await Promise.all(
+      Array.from(new Set(tokenIds)).map((id) => getTokenFromId(id, false))
+    )
+  ).filter((token): token is ProbeToken => Boolean(token));
 
 const getTokenIds = async () => {
   const totalSupply = Number(
@@ -262,14 +274,14 @@ export const getCollectiveNounTokens =
 
     const { totalSupply, zeroIndexedIds, oneIndexedIds } = await getTokenIds();
     const zeroIndexedTokens = (
-      await Promise.all(zeroIndexedIds.map(getTokenFromId))
+      await Promise.all(zeroIndexedIds.map((id) => getTokenFromId(id)))
     ).filter((token): token is ProbeToken => Boolean(token));
 
     const tokens =
       zeroIndexedTokens.length > 0
         ? zeroIndexedTokens
         : (
-            await Promise.all(oneIndexedIds.map(getTokenFromId))
+            await Promise.all(oneIndexedIds.map((id) => getTokenFromId(id)))
           ).filter((token): token is ProbeToken => Boolean(token));
 
     tokens.sort((a, b) => b.id - a.id);
