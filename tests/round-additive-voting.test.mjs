@@ -26,6 +26,7 @@ const loadTsModule = (filePath, requireOverrides = {}) => {
     require: localRequire,
     module,
     exports: module.exports,
+    process: { env: { DATABASE_URL: "postgres://test" } },
   });
 
   return module.exports;
@@ -52,7 +53,7 @@ const loadRoundVotingPowerModule = (delegatedVotes, calls = []) =>
       },
     },
   });
-const loadRoundsModule = () =>
+const loadRoundsModule = (requireOverrides = {}) =>
   loadTsModule(resolve(process.cwd(), "data/rounds.ts"), {
     pg: { Pool: function Pool() {} },
     viem: {
@@ -85,6 +86,7 @@ const loadRoundsModule = () =>
     "@/utils/rounds/voting-strategy": votingStrategy,
     "@/utils/rounds/submission-images": submissionImages,
     "data/ens": { getEnsName: async () => ({}) },
+    ...requireOverrides,
   });
 const roundsSource = readFileSync(
   resolve(process.cwd(), "data/rounds.ts"),
@@ -468,6 +470,124 @@ test("round vote persistence is additive and never deletes prior wallet votes", 
   assert.match(
     section,
     /ON CONFLICT[\s\S]*vote_count\s*=\s*round_votes\.vote_count\s*\+\s*EXCLUDED\.vote_count/
+  );
+});
+
+test("round voting UI hides owner allocation controls only while voting is open", () => {
+  assert.match(
+    roundPageSource,
+    /const isSameWalletAddress = \([\s\S]*typeof first !== "string"[\s\S]*typeof second !== "string"/
+  );
+  assert.match(
+    roundPageSource,
+    /isOwnSubmission=\{isSameWalletAddress\(\s*address,\s*submission\.walletAddress\s*\)\}/
+  );
+  assert.match(roundPageSource, /isVotingOpen=\{state === "voting_open"\}/);
+  assert.match(
+    roundPageSource,
+    /isVotingOpen && isOwnSubmission[\s\S]*You cannot vote for your own entry\./
+  );
+  assert.match(
+    roundPageSource,
+    /!isOwnSubmission\s*&&\s*canVote[\s\S]*yc-round-vote-controls/
+  );
+});
+
+test("castRoundVotes rejects a case-insensitive self-vote before inserting votes", async () => {
+  const queries = [];
+  class FakePool {
+    async query(text, values) {
+      queries.push({ text, values });
+      return { rows: [] };
+    }
+
+    async connect() {
+      return {
+        query: async (text, values) => {
+          queries.push({ text, values });
+          if (text.includes("SELECT id, wallet_address, status")) {
+            return {
+              rows: [
+                {
+                  id: "submission-1",
+                  wallet_address: "0xAbC0000000000000000000000000000000000000",
+                  status: "approved",
+                },
+              ],
+            };
+          }
+          return { rows: [] };
+        },
+        release: () => undefined,
+      };
+    }
+  }
+
+  const rounds = loadRoundsModule({
+    pg: { Pool: FakePool },
+    "@/utils/rounds/state": { getRoundState: () => "voting_open" },
+  });
+
+  await assert.rejects(
+    () =>
+      rounds.castRoundVotes({
+        round: { id: "round-1" },
+        walletAddress: "0xabc0000000000000000000000000000000000000",
+        votingPower: 1,
+        votes: [{ submissionId: "submission-1", voteCount: 1 }],
+      }),
+    /You cannot vote for your own entry\./
+  );
+  assert.equal(
+    queries.some(({ text }) => text.includes("INSERT INTO round_votes")),
+    false
+  );
+});
+
+test("castRoundVotes allows a wallet to vote for another submitter", async () => {
+  const queries = [];
+  class FakePool {
+    async query(text, values) {
+      queries.push({ text, values });
+      return { rows: [] };
+    }
+
+    async connect() {
+      return {
+        query: async (text, values) => {
+          queries.push({ text, values });
+          if (text.includes("SELECT id, wallet_address, status")) {
+            return {
+              rows: [
+                {
+                  id: "submission-1",
+                  wallet_address: "0xdef0000000000000000000000000000000000000",
+                  status: "approved",
+                },
+              ],
+            };
+          }
+          return { rows: [] };
+        },
+        release: () => undefined,
+      };
+    }
+  }
+
+  const rounds = loadRoundsModule({
+    pg: { Pool: FakePool },
+    "@/utils/rounds/state": { getRoundState: () => "voting_open" },
+  });
+
+  await rounds.castRoundVotes({
+    round: { id: "round-1" },
+    walletAddress: "0xabc0000000000000000000000000000000000000",
+    votingPower: 1,
+    votes: [{ submissionId: "submission-1", voteCount: 1 }],
+  });
+  assert.equal(
+    queries.some(({ text }) => text.includes("INSERT INTO round_votes")),
+    true
   );
 });
 

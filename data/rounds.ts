@@ -3618,6 +3618,14 @@ export const getRoundVoteUsage = async (
   return Number(result.rows[0]?.used_votes || 0);
 };
 
+const isSameWalletAddress = (first: unknown, second: unknown) => {
+  if (typeof first !== "string" || typeof second !== "string") return false;
+
+  const normalizedFirst = first.trim().toLowerCase();
+  const normalizedSecond = second.trim().toLowerCase();
+  return Boolean(normalizedFirst) && normalizedFirst === normalizedSecond;
+};
+
 export const castRoundVotes = async ({
   round,
   walletAddress,
@@ -3651,19 +3659,29 @@ export const castRoundVotes = async ({
     ]);
 
     const submissionIds = votes.map((vote) => vote.submissionId);
-    const approvedResult = await client.query(
+    const submissionResult = await client.query(
       `
-        SELECT id
+        SELECT id, wallet_address, status
         FROM round_submissions
         WHERE round_id = $1
-          AND status = 'approved'
           AND deleted_at IS NULL
           AND id = ANY($2::text[])
       `,
       [round.id, submissionIds]
     );
+
+    if (
+      submissionResult.rows.some((submission) =>
+        isSameWalletAddress(submission.wallet_address, normalizedWallet)
+      )
+    ) {
+      throw new Error("You cannot vote for your own entry.");
+    }
+
     const approvedIds = new Set<string>(
-      approvedResult.rows.map((row) => row.id)
+      submissionResult.rows
+        .filter((submission) => submission.status === "approved")
+        .map((submission) => submission.id)
     );
 
     if (approvedIds.size !== submissionIds.length) {

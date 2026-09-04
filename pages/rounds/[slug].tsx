@@ -115,6 +115,14 @@ const getLockedVotesBySubmission = (
   );
 };
 
+const isSameWalletAddress = (first?: string, second?: string) => {
+  if (typeof first !== "string" || typeof second !== "string") return false;
+
+  const normalizedFirst = first.trim().toLowerCase();
+  const normalizedSecond = second.trim().toLowerCase();
+  return Boolean(normalizedFirst) && normalizedFirst === normalizedSecond;
+};
+
 const DeferredInlineImage = ({
   src,
   alt,
@@ -557,6 +565,11 @@ export default function RoundDetailPage({
                   rank={index + 1}
                   isWinner={state === "ended" && index < round.winnerCount}
                   isRoundEnded={isRoundEnded}
+                  isVotingOpen={state === "voting_open"}
+                  isOwnSubmission={isSameWalletAddress(
+                    address,
+                    submission.walletAddress
+                  )}
                   canVote={state === "voting_open" && availableVotes > 0}
                   allocation={allocations[submission.id] || 0}
                   lockedVotes={lockedVotesBySubmission[submission.id] || 0}
@@ -622,6 +635,8 @@ const SubmissionCard = ({
   rank,
   isWinner,
   isRoundEnded,
+  isVotingOpen,
+  isOwnSubmission,
   canVote,
   allocation,
   lockedVotes,
@@ -636,6 +651,8 @@ const SubmissionCard = ({
   rank: number;
   isWinner: boolean;
   isRoundEnded: boolean;
+  isVotingOpen: boolean;
+  isOwnSubmission: boolean;
   canVote: boolean;
   allocation: number;
   lockedVotes: number;
@@ -756,7 +773,15 @@ const SubmissionCard = ({
               </div>
             )}
           </div>
-          {canVote && (
+          {isVotingOpen && isOwnSubmission && (
+            <p
+              role="status"
+              className="rounded-xl border border-amber-200 bg-amber-100 px-3 py-2 text-sm font-semibold text-[#212529]"
+            >
+              You cannot vote for your own entry.
+            </p>
+          )}
+          {!isOwnSubmission && canVote && (
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/20 bg-black/20 p-2">
               <span className="font-heading text-sm text-white">New votes</span>
               <div className="yc-round-vote-controls flex items-center gap-2 rounded-xl border border-skin-stroke bg-[#f1f1f1] p-1">
