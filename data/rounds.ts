@@ -680,7 +680,12 @@ const ensureTables = async () => {
             )
         `)
       )
-      .then(() => undefined);
+      .then(() => undefined)
+      .catch((error) => {
+        // Let the next request retry instead of caching a transient failure.
+        tableReady = null;
+        throw error;
+      });
   }
 
   return tableReady;

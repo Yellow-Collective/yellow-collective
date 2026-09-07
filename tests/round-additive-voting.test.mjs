@@ -108,6 +108,43 @@ const globalsSource = readFileSync(
 const tests = [];
 const test = (name, run) => tests.push({ name, run });
 
+for (const failedQuery of [1, 3]) {
+  test(`rounds recover after initialization query ${failedQuery} fails`, async () => {
+    const failure = new Error("Temporary database connection failure");
+    let queryCount = 0;
+    let initializationCount = 0;
+    const rounds = loadRoundsModule({
+      pg: {
+        Pool: function Pool() {
+          this.query = async (sql) => {
+            queryCount += 1;
+            if (sql.includes("CREATE TABLE IF NOT EXISTS rounds (")) {
+              initializationCount += 1;
+            }
+            if (queryCount === failedQuery) throw failure;
+            return { rows: [] };
+          };
+        },
+      },
+    });
+
+    const failures = await Promise.allSettled([
+      rounds.listPublicRounds(),
+      rounds.listPublicRounds(),
+    ]);
+    for (const result of failures) {
+      assert.equal(result.status, "rejected");
+      assert.equal(result.reason, failure);
+    }
+    assert.equal(initializationCount, 1, "concurrent callers share initialization");
+
+    await assert.doesNotReject(() => rounds.listPublicRounds());
+    assert.equal(initializationCount, 2, "the next request retries initialization");
+    await assert.doesNotReject(() => rounds.listPublicRounds());
+    assert.equal(initializationCount, 2, "successful initialization stays cached");
+  });
+}
+
 test("allows a partial vote allocation", () => {
   assert.equal(
     voteValidation.validateRoundVoteAllocation({
