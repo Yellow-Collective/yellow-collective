@@ -558,6 +558,14 @@ const ensureTables = async () => {
       )
       .then(() =>
         getPool().query(`
+          UPDATE rounds
+          SET max_votes_per_entry = 25
+          WHERE slug IN ('comic-strips', 'sticker-packs')
+            AND max_votes_per_entry IS NULL
+        `)
+      )
+      .then(() =>
+        getPool().query(`
           ALTER TABLE round_submissions
             ADD COLUMN IF NOT EXISTS submission_type text NOT NULL DEFAULT 'project',
             ADD COLUMN IF NOT EXISTS trait_id text,

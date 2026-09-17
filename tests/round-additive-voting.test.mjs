@@ -377,6 +377,28 @@ test("new rounds default to a 25-vote per-entry cap without rewriting legacy rou
   );
 });
 
+test("initialization backfills the 25-vote cap only for Comic Strips and Sticker Packs", async () => {
+  const queries = [];
+  const rounds = loadRoundsModule({
+    pg: {
+      Pool: function Pool() {
+        this.query = async (sql) => {
+          queries.push(sql);
+          return { rows: [] };
+        };
+      },
+    },
+  });
+
+  await rounds.listPublicRounds();
+
+  const backfillQuery = queries.find((sql) =>
+    sql.includes("SET max_votes_per_entry = 25")
+  );
+  assert.match(backfillQuery, /slug IN \('comic-strips', 'sticker-packs'\)/);
+  assert.match(backfillQuery, /max_votes_per_entry IS NULL/);
+});
+
 test("hybrid round info uses concise voting copy", () => {
   assert.equal(
     votingStrategy.getRoundVotingStrategyLabel({
