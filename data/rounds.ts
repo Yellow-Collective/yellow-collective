@@ -1544,6 +1544,7 @@ export const validateRoundRequestInput = (input: RoundRequestInput) => {
     status: "published",
     votingStrategy: request.votingStrategy,
     votesPerWallet: request.votesPerWallet,
+    maxVotesPerEntry: DEFAULT_LIMITS.maxVotesPerEntry,
     votingSnapshotMode: request.votingSnapshotMode,
     votingSnapshotAt: request.votingSnapshotAt,
     winnerCount: request.winnerCount,
