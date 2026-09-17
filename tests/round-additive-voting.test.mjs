@@ -360,6 +360,23 @@ test("new hybrid rounds and requests default to 100 base votes without rewriting
   );
 });
 
+test("new rounds default to a 25-vote per-entry cap without rewriting legacy rounds", () => {
+  const rounds = loadRoundsModule();
+
+  assert.equal(rounds.normalizeRoundInput({}).maxVotesPerEntry, 25);
+  assert.equal(rounds.normalizeRoundInput({ maxVotesPerEntry: null }).maxVotesPerEntry, 25);
+  assert.equal(
+    rounds.normalizeRoundInput({}, { maxVotesPerEntry: null }).maxVotesPerEntry,
+    null
+  );
+  assert.match(
+    rounds.validateRoundInput(
+      rounds.normalizeRoundInput({ maxVotesPerEntry: 0 })
+    ),
+    /Maximum votes per entry must be a positive safe whole number\./
+  );
+});
+
 test("hybrid round info uses concise voting copy", () => {
   assert.equal(
     votingStrategy.getRoundVotingStrategyLabel({
@@ -508,6 +525,16 @@ test("round vote persistence is additive and never deletes prior wallet votes", 
     section,
     /ON CONFLICT[\s\S]*vote_count\s*=\s*round_votes\.vote_count\s*\+\s*EXCLUDED\.vote_count/
   );
+  assert.match(section, /getRoundSubmissionVoteUsage/);
+  assert.match(section, /pg_advisory_xact_lock\(hashtext\(\$1\)\)/);
+  assert.match(section, /You can allocate up to \$\{round\.maxVotesPerEntry\} votes per entry\./);
+});
+
+test("round voting UI and info bar enforce and disclose the configured per-entry cap", () => {
+  assert.match(roundPageSource, /maxVotesPerEntry=\{round\.maxVotesPerEntry\}/);
+  assert.match(roundPageSource, /Math\.min\(\s*availableVotes - usedByOtherSubmissions,[\s\S]*round\.maxVotesPerEntry - lockedVotes/);
+  assert.match(roundPageSource, /Maximum votes per entry/);
+  assert.match(roundPageSource, /Maximum \$\{round\.maxVotesPerEntry\} votes per entry/);
 });
 
 test("round voting UI hides owner allocation controls only while voting is open", () => {
@@ -527,6 +554,14 @@ test("round voting UI hides owner allocation controls only while voting is open"
   assert.match(
     roundPageSource,
     /!isOwnSubmission\s*&&\s*canVote[\s\S]*yc-round-vote-controls/
+  );
+  assert.match(
+    roundPageSource,
+    /You cannot vote for your own entry\.[\s\S]*?\n\s*<\/p>/
+  );
+  assert.match(
+    roundPageSource,
+    /text-\[\#212529\] !text-\[\#212529\]/
   );
 });
 
@@ -574,6 +609,61 @@ test("castRoundVotes rejects a case-insensitive self-vote before inserting votes
         votes: [{ submissionId: "submission-1", voteCount: 1 }],
       }),
     /You cannot vote for your own entry\./
+  );
+  assert.equal(
+    queries.some(({ text }) => text.includes("INSERT INTO round_votes")),
+    false
+  );
+});
+
+test("castRoundVotes rejects an additive allocation above the per-entry cap", async () => {
+  const queries = [];
+  class FakePool {
+    async query() {
+      return { rows: [] };
+    }
+
+    async connect() {
+      return {
+        query: async (text, values) => {
+          queries.push({ text, values });
+          if (text.includes("SELECT id, wallet_address, status")) {
+            return {
+              rows: [
+                {
+                  id: "submission-1",
+                  wallet_address: "0xdef0000000000000000000000000000000000000",
+                  status: "approved",
+                },
+              ],
+            };
+          }
+          if (text.includes("SELECT submission_id, COALESCE(SUM(vote_count)")) {
+            return {
+              rows: [{ submission_id: "submission-1", vote_count: 25 }],
+            };
+          }
+          return { rows: [] };
+        },
+        release: () => undefined,
+      };
+    }
+  }
+
+  const rounds = loadRoundsModule({
+    pg: { Pool: FakePool },
+    "@/utils/rounds/state": { getRoundState: () => "voting_open" },
+  });
+
+  await assert.rejects(
+    () =>
+      rounds.castRoundVotes({
+        round: { id: "round-1", maxVotesPerEntry: 25 },
+        walletAddress: "0xabc0000000000000000000000000000000000000",
+        votingPower: 100,
+        votes: [{ submissionId: "submission-1", voteCount: 1 }],
+      }),
+    /up to 25 votes per entry/
   );
   assert.equal(
     queries.some(({ text }) => text.includes("INSERT INTO round_votes")),

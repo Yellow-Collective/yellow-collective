@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS rounds (
   status text NOT NULL DEFAULT 'draft',
   voting_strategy text NOT NULL DEFAULT 'one_per_nft',
   votes_per_wallet integer NOT NULL DEFAULT 1,
+  max_votes_per_entry integer,
   voting_snapshot_block integer,
   winner_count integer NOT NULL DEFAULT 1,
   max_submissions_per_wallet integer NOT NULL DEFAULT 1,
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS rounds (
   CONSTRAINT rounds_status_check CHECK (status IN ('draft', 'published', 'archived')),
   CONSTRAINT rounds_voting_strategy_check CHECK (voting_strategy IN ('one_per_wallet', 'one_per_nft', 'fixed_per_wallet', 'base_plus_voting_power')),
   CONSTRAINT rounds_votes_per_wallet_check CHECK (votes_per_wallet > 0),
+  CONSTRAINT rounds_max_votes_per_entry_check CHECK (max_votes_per_entry IS NULL OR max_votes_per_entry > 0),
   CONSTRAINT rounds_winner_count_check CHECK (winner_count > 0),
   CONSTRAINT rounds_submission_limit_check CHECK (max_submissions_per_wallet > 0),
   CONSTRAINT rounds_title_lengths_check CHECK (min_title_length >= 1 AND max_title_length >= min_title_length),
@@ -172,7 +174,13 @@ CREATE INDEX IF NOT EXISTS round_requests_created_at_idx ON round_requests(creat
 
 ALTER TABLE rounds
   ADD COLUMN IF NOT EXISTS is_trait_contest boolean NOT NULL DEFAULT false,
-  ADD COLUMN IF NOT EXISTS trait_submissions_enabled boolean NOT NULL DEFAULT false;
+  ADD COLUMN IF NOT EXISTS trait_submissions_enabled boolean NOT NULL DEFAULT false,
+  ADD COLUMN IF NOT EXISTS max_votes_per_entry integer;
+
+ALTER TABLE rounds
+  DROP CONSTRAINT IF EXISTS rounds_max_votes_per_entry_check,
+  ADD CONSTRAINT rounds_max_votes_per_entry_check
+  CHECK (max_votes_per_entry IS NULL OR max_votes_per_entry > 0);
 
 ALTER TABLE round_requests
   ADD COLUMN IF NOT EXISTS is_trait_contest boolean NOT NULL DEFAULT false,

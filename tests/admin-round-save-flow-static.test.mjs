@@ -45,3 +45,13 @@ assert.match(
   /\{ revalidate: false \}[\s\S]*await mutate\(\)/,
   "round saves should update local admin state before revalidating"
 );
+assert.match(
+  roundEditorSource,
+  /Maximum votes per entry/,
+  "eligible round editors should expose the per-entry vote cap"
+);
+assert.match(
+  roundEditorSource,
+  /maxVotesPerEntry/,
+  "round save payloads should include the per-entry vote cap"
+);

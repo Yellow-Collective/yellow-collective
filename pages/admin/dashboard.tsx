@@ -20,6 +20,7 @@ import {
 } from "@/utils/rounds/admin-round-form";
 import { validateRoundVotingSnapshot } from "@/utils/rounds/voting-snapshot";
 import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
+import { getRoundState } from "@/utils/rounds/state";
 import { isRoundExportable } from "@/utils/rounds/admin-submissions-export";
 import { groupAdminRoundVotesByWallet } from "@/utils/rounds/admin-votes";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
@@ -2662,6 +2663,7 @@ const getRoundPayloadFromForm = ({
   status,
   votingStrategy,
   votesPerWallet,
+  maxVotesPerEntry,
   winnerCount,
   maxSubmissionsPerWallet,
   minTitleLength,
@@ -2688,6 +2690,7 @@ const getRoundPayloadFromForm = ({
   status: Round["status"];
   votingStrategy: Round["votingStrategy"];
   votesPerWallet: number;
+  maxVotesPerEntry: number | null;
   winnerCount: number;
   maxSubmissionsPerWallet: number;
   minTitleLength: number;
@@ -2724,6 +2727,7 @@ const getRoundPayloadFromForm = ({
     status,
     votingStrategy,
     votesPerWallet,
+    maxVotesPerEntry,
     winnerCount,
     maxSubmissionsPerWallet,
     minTitleLength,
@@ -2810,6 +2814,9 @@ const RoundEditor = ({
     round.votingStrategy
   );
   const [votesPerWallet, setVotesPerWallet] = useState(round.votesPerWallet);
+  const [maxVotesPerEntry, setMaxVotesPerEntry] = useState(
+    round.maxVotesPerEntry ?? 25
+  );
   const [hasEditedVotesPerWallet, setHasEditedVotesPerWallet] = useState(
     round.votingStrategy === "fixed_per_wallet" ||
       round.votingStrategy === "base_plus_voting_power"
@@ -2829,6 +2836,11 @@ const RoundEditor = ({
   );
   const [message, setMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const canEditMaxVotesPerEntry = ![
+    "voting_open",
+    "ended",
+    "archived",
+  ].includes(getRoundState(round));
 
   const updateVotingStrategy = (nextStrategy: Round["votingStrategy"]) => {
     if (
@@ -2871,6 +2883,9 @@ const RoundEditor = ({
       status,
       votingStrategy,
       votesPerWallet,
+      maxVotesPerEntry: canEditMaxVotesPerEntry
+        ? maxVotesPerEntry
+        : round.maxVotesPerEntry,
       winnerCount,
       maxSubmissionsPerWallet,
       minTitleLength,
@@ -3089,6 +3104,18 @@ const RoundEditor = ({
             votingStrategy !== "base_plus_voting_power"
           }
         />
+        {canEditMaxVotesPerEntry && (
+          <div>
+            <NumberField
+              label="Maximum votes per entry"
+              value={maxVotesPerEntry}
+              onChange={setMaxVotesPerEntry}
+            />
+            <span className="mt-2 block text-sm font-normal leading-snug text-secondary">
+              Maximum votes one wallet may allocate to a single submission.
+            </span>
+          </div>
+        )}
         <NumberField
           label="Winner count"
           value={winnerCount}

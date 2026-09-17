@@ -247,10 +247,17 @@ export default function RoundDetailPage({
           currentSubmissionId === submissionId ? total : total + voteCount,
         0
       );
-      const maxForSubmission = Math.max(
-        availableVotes - usedByOtherSubmissions,
-        0
-      );
+      const lockedVotes = lockedVotesBySubmission[submissionId] || 0;
+      const maxForSubmissionWithEntryCap =
+        round.maxVotesPerEntry === null
+          ? Math.max(availableVotes - usedByOtherSubmissions, 0)
+          : Math.min(
+              availableVotes - usedByOtherSubmissions,
+              Math.max(
+                round.maxVotesPerEntry - lockedVotes,
+                0
+              )
+            );
       const normalizedValue = Number.isFinite(nextValue)
         ? Math.floor(nextValue)
         : 0;
@@ -259,7 +266,7 @@ export default function RoundDetailPage({
         ...current,
         [submissionId]: Math.max(
           0,
-          Math.min(maxForSubmission, normalizedValue)
+          Math.min(maxForSubmissionWithEntryCap, normalizedValue)
         ),
       };
     });
@@ -574,6 +581,7 @@ export default function RoundDetailPage({
                   allocation={allocations[submission.id] || 0}
                   lockedVotes={lockedVotesBySubmission[submission.id] || 0}
                   remainingVotes={remainingVotes}
+                  maxVotesPerEntry={round.maxVotesPerEntry}
                   onChange={(value) => updateAllocation(submission.id, value)}
                   onOpen={() => setSelectedSubmission(submission)}
                   artwork={artwork}
@@ -641,6 +649,7 @@ const SubmissionCard = ({
   allocation,
   lockedVotes,
   remainingVotes,
+  maxVotesPerEntry,
   onChange,
   onOpen,
   artwork,
@@ -657,6 +666,7 @@ const SubmissionCard = ({
   allocation: number;
   lockedVotes: number;
   remainingVotes: number;
+  maxVotesPerEntry: number | null;
   onChange: (value: number) => void;
   onOpen: () => void;
   artwork?: PlaygroundArtwork;
@@ -665,7 +675,13 @@ const SubmissionCard = ({
 }) => {
   const winnerStyle = isWinner ? getWinnerCardStyle(rank) : null;
   const noundrySubmission = getRoundNoundrySubmission(submission);
-  const maxAllocation = allocation + remainingVotes;
+  const maxAllocation =
+    maxVotesPerEntry === null
+      ? allocation + remainingVotes
+      : Math.min(
+          allocation + remainingVotes,
+          Math.max(maxVotesPerEntry - lockedVotes, 0)
+        );
   const cardClass = isWinner
     ? winnerStyle?.cardClass
     : "border-[#555b60] bg-[#212529] text-white shadow-[0px_4.02px_0px_0px_#4b5563]";
@@ -776,7 +792,7 @@ const SubmissionCard = ({
           {isVotingOpen && isOwnSubmission && (
             <p
               role="status"
-              className="rounded-xl border border-amber-200 bg-amber-100 px-3 py-2 text-sm font-semibold text-[#212529]"
+              className="rounded-xl border border-amber-200 bg-amber-100 px-3 py-2 text-sm font-semibold text-[#212529] !text-[#212529]"
             >
               You cannot vote for your own entry.
             </p>
@@ -807,7 +823,7 @@ const SubmissionCard = ({
                 <button
                   type="button"
                   onClick={() => onChange(allocation + 1)}
-                  disabled={remainingVotes <= 0}
+                  disabled={allocation >= maxAllocation}
                   className="yc-round-vote-add h-9 w-9 rounded-lg font-heading text-xl disabled:opacity-40"
                   aria-label={`Add draft vote to ${submission.title}`}
                 >
@@ -1248,13 +1264,23 @@ const RoundDetailsPanel = ({
   stateLabel: string;
   votingStrategyLabel: string;
 }) => (
-  <section className="yc-dark-yellow-form-surface grid gap-3 rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm md:grid-cols-3">
+  <section
+    className={`yc-dark-yellow-form-surface grid gap-3 rounded-2xl border border-skin-stroke bg-white p-5 shadow-sm ${
+      round.maxVotesPerEntry === null ? "md:grid-cols-3" : "md:grid-cols-4"
+    }`}
+  >
     <RoundStat label="Status" value={stateLabel} />
     <RoundStat
       label="Winners"
       value={`${round.winnerCount} winner${round.winnerCount === 1 ? "" : "s"}`}
     />
     <RoundStat label="Voting" value={votingStrategyLabel} />
+    {round.maxVotesPerEntry !== null && (
+      <RoundStat
+        label="Maximum votes per entry"
+        value={`Maximum ${round.maxVotesPerEntry} votes per entry`}
+      />
+    )}
   </section>
 );
 
