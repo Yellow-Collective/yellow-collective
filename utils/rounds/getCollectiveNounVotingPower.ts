@@ -1,5 +1,5 @@
 import DefaultProvider from "@/utils/DefaultProvider";
-import { Contract } from "@/utils/ethers-compat";
+import { Contract } from "ethers";
 import { getAddress, isAddress } from "viem";
 
 export const ROUND_VOTING_TOKEN_CONTRACT =

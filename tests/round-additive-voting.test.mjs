@@ -203,7 +203,7 @@ test("round voting power reads getVotes from the Collective Noun contract", asyn
         },
       },
       "@/utils/DefaultProvider": { default: {} },
-      "@/utils/ethers-compat": {
+      ethers: {
         Contract: function Contract(address, abi) {
           calls.push({ type: "constructor", address, abi });
           return {
@@ -235,6 +235,43 @@ test("round voting power reads getVotes from the Collective Noun contract", asyn
     "0x0000000000000000000000000000000000000001"
   );
   assert.equal(calls[1].options.blockTag, 123);
+});
+
+test("historical voting power sends the snapshot block to the RPC call", async () => {
+  const ethers = require("ethers");
+  const snapshotBlock = 48_314_679;
+  const rpcCalls = [];
+  const provider = new ethers.providers.JsonRpcProvider();
+  provider.send = async (method, params) => {
+    rpcCalls.push({ method, params });
+    if (method === "eth_chainId") return "0x2105";
+    if (method === "eth_call") {
+      return ethers.utils.defaultAbiCoder.encode(["uint256"], ["7"]);
+    }
+    throw new Error(`Unexpected RPC method: ${method}`);
+  };
+
+  const votingPowerModule = loadTsModule(
+    resolve(process.cwd(), "utils/rounds/getCollectiveNounVotingPower.ts"),
+    {
+      "@/utils/DefaultProvider": provider,
+      viem: {
+        getAddress: (address) => address,
+        isAddress: () => true,
+      },
+    }
+  );
+
+  const votingPower = await votingPowerModule.getCollectiveNounVotingPower(
+    "0x0000000000000000000000000000000000000001",
+    snapshotBlock
+  );
+
+  assert.equal(votingPower, 7);
+  assert.equal(rpcCalls.length, 2);
+  assert.equal(rpcCalls[0].method, "eth_chainId");
+  assert.equal(rpcCalls[1].method, "eth_call");
+  assert.equal(parseInt(rpcCalls[1].params[1], 16), snapshotBlock);
 });
 
 test("fixed votes per wallet still return zero without delegated Collective Noun votes", async () => {
