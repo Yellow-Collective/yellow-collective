@@ -28,14 +28,30 @@ const nobleHashesPath = path.join(
 // api.zora.co, zora.co, IPFS/Arweave gateways, imagedelivery.net, wrpcd.net,
 // postimg, hackmd, Farcaster/Warpcast, twimg, metadata.ens.domains: existing
 // token, project, Farcaster, ENS, and legacy community media.
-// Farcaster/Warpcast frame ancestors are required for Mini App embedding, so
-// X-Frame-Options is intentionally omitted because DENY would break that flow.
+// Farcaster/Warpcast frame ancestors are required for Mini App embedding.
+// Approved portfolio ancestors apply only to public pages; admin/API/internal
+// routes retain this original policy. X-Frame-Options would break embedding.
+const restrictedFrameAncestors =
+  "frame-ancestors 'self' https://farcaster.xyz https://*.farcaster.xyz https://warpcast.com https://*.warpcast.com";
+const publicFrameAncestors = [
+  restrictedFrameAncestors,
+  "https://satori.wtf",
+  "https://www.satori.wtf",
+  ...(process.env.NODE_ENV === "development"
+    ? [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3002",
+        "http://127.0.0.1:3002",
+      ]
+    : []),
+].join(" ");
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
   "form-action 'self'",
-  "frame-ancestors 'self' https://farcaster.xyz https://*.farcaster.xyz https://warpcast.com https://*.warpcast.com",
+  restrictedFrameAncestors,
   [
     "script-src",
     "'self'",
@@ -108,6 +124,10 @@ const contentSecurityPolicy = [
   "media-src 'self' data: blob:",
   "upgrade-insecure-requests",
 ].join("; ");
+const publicContentSecurityPolicy = contentSecurityPolicy.replace(
+  restrictedFrameAncestors,
+  publicFrameAncestors
+);
 
 const securityHeaders = [
   {
@@ -206,6 +226,17 @@ const nextConfig = {
       {
         source: "/:path*",
         headers: securityHeaders,
+      },
+      {
+        // Next replaces the earlier CSP key, emitting one effective policy.
+        // https://nextjs.org/docs/15/pages/api-reference/config/next-config-js/headers#header-overriding-behavior
+        source: "/:path((?!admin(?:/|$)|api(?:/|$)|_next(?:/|$)).*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: publicContentSecurityPolicy,
+          },
+        ],
       },
       {
         source: "/sw.js",

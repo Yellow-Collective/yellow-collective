@@ -223,12 +223,12 @@ export default function CommunityDetailPage({
               </Link>
             )}
             {isAdmin && (
-              <Link
+              <a
                 href={`/admin/dashboard?section=community&mode=existing&project=${project.slug}`}
                 className="yc-project-admin-edit-button mt-3 flex w-full items-center justify-center rounded-[18px] border border-skin-stroke bg-white px-5 py-3 font-heading text-lg text-white shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition hover:-translate-y-0.5 hover:shadow-[0px_6px_0px_0px_rgb(var(--color-shadow-neutral))] active:translate-y-1 active:shadow-none"
               >
                 Admin edit
-              </Link>
+              </a>
             )}
             {project.links && project.links.length > 0 && (
               <div className="mt-5 flex flex-col gap-3">

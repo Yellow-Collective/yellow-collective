@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from "@/components/Dialog";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
+import { useAdminControlsAllowed } from "@/hooks/useAdminControlsAllowed";
 import { isAdminAddress } from "@/utils/admin";
 import { getAdminSessionSignedRequestAction } from "@/utils/admin-auth";
 import {
@@ -157,7 +158,8 @@ export default function CoinDetailPage({
   const [isSubmittingRound, setIsSubmittingRound] = useState(false);
   const [isHidingCoin, setIsHidingCoin] = useState(false);
   const rounds = roundsData?.rounds || [];
-  const isAdmin = isAdminAddress(address);
+  const adminControlsAllowed = useAdminControlsAllowed();
+  const isAdmin = adminControlsAllowed && isAdminAddress(address);
 
   const isOwner = useMemo(
     () =>

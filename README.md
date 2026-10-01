@@ -189,3 +189,88 @@ MAX_RETRIES="3"
 Start with `DRY_RUN=true`. After the bot creates the expected preview state and
 the Safe owner/threshold checks pass, switch to `DRY_RUN=false`.
 >>>>>>> Stashed changes
+
+## Public website embedding
+
+Public pages, including routes reached through the site's navigation, allow these
+exact portfolio parents through the CSP `frame-ancestors` directive:
+
+- `https://satori.wtf`
+- `https://www.satori.wtf`
+
+The existing `'self'`, `https://farcaster.xyz`, `https://*.farcaster.xyz`,
+`https://warpcast.com`, and `https://*.warpcast.com` ancestors remain allowed.
+`/admin`, `/api`, and `/_next` routes retain that original restricted policy;
+portfolio parents receive no administrative framing permission. Other CSP
+directives, security headers, admin authentication, and cookies are unchanged.
+`X-Frame-Options` stays omitted to preserve sanctioned embedding.
+Desktop and mobile administrative navigation uses a full document load so the
+browser enforces the administrative CSP even after browsing a public page.
+Inline coin administration is unavailable in ordinary cross-origin frames;
+public coin browsing remains available. Those controls remain available in
+standalone pages, same-origin self frames, and SDK-confirmed Farcaster Mini Apps.
+This UI restriction supplements the existing server authorization.
+
+Only `NODE_ENV=development` adds these exact public-page parents:
+`http://localhost:3000`, `http://127.0.0.1:3000`, `http://localhost:3002`, and
+`http://127.0.0.1:3002`. Production builds and `yarn start` exclude them. The
+header rules live in `next.config.js`: the public rule replaces the global CSP
+header using [Next.js 15's header precedence](https://nextjs.org/docs/15/pages/api-reference/config/next-config-js/headers#header-overriding-behavior),
+so there is one effective CSP. `vercel.json` adds no competing header.
+
+The portfolio iframe can use
+`sandbox="allow-scripts allow-same-origin allow-forms allow-popups"` and
+`referrerPolicy="no-referrer"` with normal pointer and keyboard interaction.
+Internal links navigate within the frame. Top-level portfolio navigation is not
+required. An ordinary iframe is not a Farcaster Mini App: SDK context detection
+continues to control genuine Mini App behavior. Connect uses the existing
+RainbowKit/Wagmi chooser; browser wallet injection, storage, and popup behavior
+can differ inside cross-origin frames. Real wallet connection and signing require
+separate manual testing.
+Ordinary cross-origin public previews show a current-page **Open Yellow
+Collective** link in the header. Standalone pages, same-origin frames, and
+SDK-confirmed Mini Apps keep their existing header behavior.
+Clipboard copying may be blocked by the parent iframe's permissions policy.
+The Contracts page reports that failure, keeps its displayed addresses selectable,
+and offers a user-triggered **Open Yellow Collective** link to the current page
+in a new tab. No clipboard permission is added to the iframe or site policy.
+
+The exact sandbox above permits popups but makes them inherit its restrictions.
+With the preserved `Cross-Origin-Opener-Policy: same-origin-allow-popups` header,
+the local browser blocked the new tab opened by this link. The
+[HTML navigation rules](https://html.spec.whatwg.org/multipage/browsing-the-web.html#creating-navigation-params-by-fetching)
+reject sandboxed top-level responses with an opener policy other than
+`unsafe-none`. A reliable portfolio fallback must be a parent-owned external
+link outside the iframe. Alternatively, a separately authorized portfolio
+change could add `allow-popups-to-escape-sandbox`; this does not grant top-level
+portfolio navigation. Neither the sandbox nor Yellow's security headers were
+weakened here. Browser wallet injection and real wallet popups still need manual
+testing in the intended browsers.
+
+For local, read-only interaction checks, run Yellow on a separate port and the
+loopback-only parent harness in another terminal:
+
+```bash
+node ./node_modules/next/dist/bin/next dev -p 3001 --hostname 127.0.0.1
+node scripts/embed-harness.mjs --child-port 3001
+```
+
+Open `http://127.0.0.1:3002`, or append `?width=390` for the narrow iframe. Test
+scrolling, focus/keyboard controls, navigation, and opening/closing Connect
+without selecting a wallet or submitting any mutation. The focused effective
+policy regression check is `node tests/security-static.test.mjs` and also runs
+with `yarn test`.
+For the negative-origin check, start a second harness with
+`node scripts/embed-harness.mjs --port 3004 --child-port 3001`; its iframe must be
+blocked. At the allowed parent, `?path=/admin/dashboard` must also be blocked.
+
+These local changes do not unblock the live site until a separately authorized
+Yellow Collective deployment. After deployment, the portfolio's Yellow entry
+can switch from its screenshot to:
+
+```ts
+embedSupported: true,
+embedSrc: "https://www.yellowcollective.art/",
+```
+
+That portfolio update is a separate change in the portfolio project.

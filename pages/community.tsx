@@ -88,12 +88,12 @@ export default function CommunityPage({
                   </Link>
                   {isAdmin && (
                     <div className="border-t border-skin-stroke bg-white p-3">
-                      <Link
+                      <a
                         href={`/admin/dashboard?section=community&mode=existing&project=${project.slug}`}
                         className="yc-project-admin-edit-button flex w-full items-center justify-center rounded-xl border border-skin-stroke bg-white px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_rgb(var(--color-shadow-neutral))] transition hover:-translate-y-0.5 active:translate-y-1 active:shadow-none"
                       >
                         Admin edit
-                      </Link>
+                      </a>
                     </div>
                   )}
                 </div>

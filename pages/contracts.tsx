@@ -5,6 +5,7 @@ import {
   YELLOW_COLLECTIVE_CONTRACT_LIST,
 } from "data/contracts";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import {
   ArrowTopRightOnSquareIcon,
   ClipboardDocumentIcon,
@@ -14,15 +15,20 @@ import { useState } from "react";
 const githubUrl = "https://github.com/BuilderOSS";
 
 export default function ContractsPage() {
+  const router = useRouter();
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
+  const [clipboardUnavailableAddress, setClipboardUnavailableAddress] =
+    useState<string | null>(null);
 
   const copyAddress = async (address: string) => {
+    setCopiedAddress(null);
+    setClipboardUnavailableAddress(null);
     try {
       await navigator.clipboard.writeText(address);
       setCopiedAddress(address);
       window.setTimeout(() => setCopiedAddress(null), 1400);
-    } catch (error) {
-      console.error("Failed to copy contract address", error);
+    } catch {
+      setClipboardUnavailableAddress(address);
     }
   };
 
@@ -66,7 +72,7 @@ export default function ContractsPage() {
               </h2>
 
               <div className="flex min-h-[88px] items-center justify-between gap-4 rounded-2xl border border-skin-stroke bg-skin-muted px-6 py-5 shadow-sm">
-                <div className="min-w-0 break-all text-base text-skin-base md:text-lg">
+                <div className="min-w-0 select-text break-all text-base text-skin-base md:text-lg">
                   <AddressLink
                     address={contract.address}
                     fallback="full"
@@ -99,6 +105,26 @@ export default function ContractsPage() {
                   </button>
                 </div>
               </div>
+              {clipboardUnavailableAddress === contract.address && (
+                <div
+                  role="status"
+                  className="rounded-xl border border-skin-stroke bg-skin-muted p-4 text-sm text-skin-base md:col-start-2"
+                >
+                  <p>
+                    Copy is unavailable in this browser or embedded view. Select
+                    the address to copy it manually, or open this page in a new
+                    tab.
+                  </p>
+                  <a
+                    href={router.asPath}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-block font-bold underline underline-offset-4"
+                  >
+                    Open Yellow Collective
+                  </a>
+                </div>
+              )}
             </div>
           ))}
         </div>

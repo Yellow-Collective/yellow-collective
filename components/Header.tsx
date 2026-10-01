@@ -1,4 +1,5 @@
 import { useThemeMode } from "@/hooks/useThemeMode";
+import { usePublicEmbed } from "@/hooks/usePublicEmbed";
 import { isAdminAddress } from "@/utils/admin";
 import { getHomeNavigationItems } from "@/utils/header-navigation";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
@@ -11,13 +12,27 @@ import ThemeToggle from "./ThemeToggle";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 import useSWR from "swr";
 
 type NavItem = {
   label: string;
   href: string;
   children?: NavItem[];
+};
+
+const HeaderNavigationLink = ({
+  href,
+  ...props
+}: Omit<ComponentPropsWithoutRef<"a">, "href"> & { href: string }) => {
+  // Client routing would retain a public document's framing permission.
+  // Admin entry must load its own document so its restricted CSP is enforced.
+  if (href === "/admin" || href.startsWith("/admin/")) {
+    return <a href={href} {...props} />;
+  }
+  return <Link href={href} {...props} />;
 };
 
 const daoItems = [
@@ -67,6 +82,8 @@ const CustomConnectButton = dynamic(() => import("./CustomConnectButton"), {
 });
 
 export default function Header() {
+  const router = useRouter();
+  const isPublicEmbed = usePublicEmbed();
   const { isDarkMode } = useThemeMode();
   const [isMounted, setIsMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -112,7 +129,7 @@ export default function Header() {
       ) : null}
       <div className="flex h-[80px] w-full items-center justify-between gap-2 px-4 py-2 md:px-10">
         <div className="flex flex-row items-center justify-start gap-4 md:gap-8">
-          <Link href="/" aria-label="Yellow Collective home">
+          <HeaderNavigationLink href="/" aria-label="Yellow Collective home">
             <Image
               src={isDarkMode ? "/noggles-darkmode.png" : "/noggles.svg"}
               width={80}
@@ -120,7 +137,7 @@ export default function Header() {
               alt="Yellow"
               className="h-[30px] w-[80px]"
             />
-          </Link>
+          </HeaderNavigationLink>
           <div className="hidden lg:block">
             {isMounted ? (
               <TreasuryPill />
@@ -188,14 +205,14 @@ export default function Header() {
               DAO
             </div>
             {daoItems.map((item) => (
-              <Link
+              <HeaderNavigationLink
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="header-dropdown-item block rounded-xl px-4 py-3 font-bold text-primary transition hover:bg-[#fff7bf]"
               >
                 {item.label}
-              </Link>
+              </HeaderNavigationLink>
             ))}
           </div>
           <div className="flex items-center gap-2 border-t border-skin-stroke pt-3">
@@ -209,6 +226,22 @@ export default function Header() {
             </div>
             <ThemeToggle className="h-11 w-11" />
           </div>
+        </div>
+      )}
+      {isPublicEmbed && (
+        <div className="px-4 pb-3 text-sm text-skin-base md:px-10">
+          <a
+            href={router.asPath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold underline underline-offset-4"
+          >
+            Open Yellow Collective
+          </a>
+          <p className="mt-1 text-xs text-secondary">
+            If the new tab is blocked, use the link&apos;s context menu to open it
+            outside this preview.
+          </p>
         </div>
       )}
     </header>
@@ -236,34 +269,34 @@ const NavDropdown = ({ label, items }: { label: string; items: NavItem[] }) => (
 const NavDropdownItem = ({ item }: { item: NavItem }) => {
   if (!item.children?.length) {
     return (
-      <Link
+      <HeaderNavigationLink
         href={item.href}
         className="header-dropdown-item rounded-xl px-4 py-3 font-bold text-primary transition hover:bg-[#fff7bf]"
       >
         <h6>{item.label}</h6>
-      </Link>
+      </HeaderNavigationLink>
     );
   }
 
   return (
     <div className="header-submenu-parent relative">
-      <Link
+      <HeaderNavigationLink
         href={item.href}
         className="header-dropdown-item flex items-center justify-between gap-3 rounded-xl px-4 py-3 font-bold text-primary transition hover:bg-[#fff7bf]"
       >
         <h6>{item.label}</h6>
         <ChevronRightIcon className="h-4 w-4 shrink-0 stroke-[3]" />
-      </Link>
+      </HeaderNavigationLink>
 
       <div className="header-submenu-panel absolute left-[calc(100%-2px)] top-0 z-50 flex w-44 flex-col rounded-2xl border border-skin-stroke bg-skin-muted p-2 shadow-lg">
         {item.children.map((child) => (
-          <Link
+          <HeaderNavigationLink
             key={child.href}
             href={child.href}
             className="header-dropdown-item rounded-xl px-4 py-3 font-bold text-primary transition hover:bg-[#fff7bf]"
           >
             <h6>{child.label}</h6>
-          </Link>
+          </HeaderNavigationLink>
         ))}
       </div>
     </div>
@@ -288,25 +321,25 @@ const MobileNavGroup = ({
             {item.label}
           </div>
           {item.children.map((child) => (
-            <Link
+            <HeaderNavigationLink
               key={child.href}
               href={child.href}
               onClick={onClick}
               className="header-dropdown-item block rounded-xl px-7 py-3 font-bold text-primary transition hover:bg-[#fff7bf]"
             >
               {child.label}
-            </Link>
+            </HeaderNavigationLink>
           ))}
         </div>
       ) : (
-        <Link
+        <HeaderNavigationLink
           key={item.href}
           href={item.href}
           onClick={onClick}
           className="header-dropdown-item block rounded-xl px-4 py-3 font-bold text-primary transition hover:bg-[#fff7bf]"
         >
           {item.label}
-        </Link>
+        </HeaderNavigationLink>
       )
     )}
   </div>

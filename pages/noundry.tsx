@@ -2771,12 +2771,12 @@ const GalleryView = ({
                     Remix
                   </button>
                   {isAdmin && (
-                    <Link
+                    <a
                       href={`/admin/dashboard?section=noundry&submission=${submission.id}`}
                       className="mt-3 flex w-full items-center justify-center rounded-xl border border-[#a90f0c] bg-skin-proposal-danger px-3 py-2 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#a90f0c] transition hover:-translate-y-0.5 hover:bg-[#f43a35] active:translate-y-1 active:shadow-none"
                     >
                       Admin edit
-                    </Link>
+                    </a>
                   )}
                 </>
               }
