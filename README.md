@@ -227,9 +227,8 @@ continues to control genuine Mini App behavior. Connect uses the existing
 RainbowKit/Wagmi chooser; browser wallet injection, storage, and popup behavior
 can differ inside cross-origin frames. Real wallet connection and signing require
 separate manual testing.
-Ordinary cross-origin public previews show a current-page **Open Yellow
-Collective** link in the header. Standalone pages, same-origin frames, and
-SDK-confirmed Mini Apps keep their existing header behavior.
+Embedded public pages use the same header as standalone pages, without an
+embedding banner or extra preview instructions.
 Clipboard copying may be blocked by the parent iframe's permissions policy.
 The Contracts page reports that failure, keeps its displayed addresses selectable,
 and offers a user-triggered **Open Yellow Collective** link to the current page

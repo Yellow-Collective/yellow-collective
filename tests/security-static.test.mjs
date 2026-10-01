@@ -225,10 +225,7 @@ assert.equal(await loadAdminControls(sameOriginWindow, sdkMustNotRun).detectPubl
 assert.equal(await loadAdminControls(ordinaryFrameWindow, async () => false).detectPublicEmbed(), true);
 assert.equal(await loadAdminControls(ordinaryFrameWindow, async () => true).detectPublicEmbed(), false);
 assert.equal(await loadAdminControls(ordinaryFrameWindow, async () => { throw new Error("SDK unavailable"); }).detectPublicEmbed(), true);
-assert.match(header, /const isPublicEmbed = usePublicEmbed\(\)/);
-assert.match(header, /isPublicEmbed && \([\s\S]*<a\s+href=\{router\.asPath\}\s+target="_blank"\s+rel="noopener noreferrer"/);
-assert.match(header, /link&apos;s context menu/);
-console.log("ok - ordinary public frames receive a current-page browser fallback without treating them as Mini Apps");
+console.log("ok - ordinary public frames remain distinct from SDK-confirmed Mini Apps");
 
 const contractsModule = { exports: {} };
 const contractStates = [];

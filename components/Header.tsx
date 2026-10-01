@@ -1,5 +1,4 @@
 import { useThemeMode } from "@/hooks/useThemeMode";
-import { usePublicEmbed } from "@/hooks/usePublicEmbed";
 import { isAdminAddress } from "@/utils/admin";
 import { getHomeNavigationItems } from "@/utils/header-navigation";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
@@ -12,7 +11,6 @@ import ThemeToggle from "./ThemeToggle";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import type { ComponentPropsWithoutRef } from "react";
 import useSWR from "swr";
@@ -82,8 +80,6 @@ const CustomConnectButton = dynamic(() => import("./CustomConnectButton"), {
 });
 
 export default function Header() {
-  const router = useRouter();
-  const isPublicEmbed = usePublicEmbed();
   const { isDarkMode } = useThemeMode();
   const [isMounted, setIsMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -226,22 +222,6 @@ export default function Header() {
             </div>
             <ThemeToggle className="h-11 w-11" />
           </div>
-        </div>
-      )}
-      {isPublicEmbed && (
-        <div className="px-4 pb-3 text-sm text-skin-base md:px-10">
-          <a
-            href={router.asPath}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-bold underline underline-offset-4"
-          >
-            Open Yellow Collective
-          </a>
-          <p className="mt-1 text-xs text-secondary">
-            If the new tab is blocked, use the link&apos;s context menu to open it
-            outside this preview.
-          </p>
         </div>
       )}
     </header>
