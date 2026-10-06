@@ -42,9 +42,9 @@ a:focus-visible{outline:3px solid #326be6;outline-offset:3px}
 </style></head><body>
 <header><strong>Local verification only</strong>
 <a href="/">Desktop</a><a href="/?width=390">390px frame</a>
-<a href="http://127.0.0.1:${childPort}/" target="_blank" rel="noopener noreferrer">Standalone</a>
+<a href="http://localhost:${childPort}/" target="_blank" rel="noopener noreferrer">Standalone</a>
 <span>Parent port ${port}; child port ${childPort}</span></header>
-<iframe title="Yellow Collective" src="http://127.0.0.1:${childPort}${childPath}"
+<iframe title="Yellow Collective" src="http://localhost:${childPort}${childPath}"
 sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
 referrerpolicy="no-referrer"></iframe>
 </body></html>`);
@@ -54,5 +54,5 @@ server.on("error", (error) => {
   process.exitCode = 1;
 });
 server.listen(port, "127.0.0.1", () => {
-  console.log(`Embedding harness: http://127.0.0.1:${port}/ (child port ${childPort})`);
+  console.log(`Embedding harness: http://localhost:${port}/ (child port ${childPort})`);
 });

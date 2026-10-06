@@ -47,24 +47,34 @@ const preservedAncestors = [
   "https://warpcast.com",
   "https://*.warpcast.com",
 ];
-const portfolioAncestors = ["https://satori.wtf", "https://www.satori.wtf"];
-const developmentAncestors = [
+const portfolioAncestors = [
+  "https://satori.wtf",
+  "https://www.satori.wtf",
   "http://localhost:3000",
+  "http://localhost:3001",
+];
+const configuredPortfolioOrigin = "https://portfolio.example";
+const developmentAncestors = [
   "http://127.0.0.1:3000",
   "http://localhost:3002",
   "http://127.0.0.1:3002",
 ];
 
-async function loadHeaderRules(nodeEnv) {
+async function loadHeaderRules(nodeEnv, embedOrigin) {
   const previousNodeEnv = process.env.NODE_ENV;
+  const previousEmbedOrigin = process.env.YELLOW_COLLECTIVE_EMBED_ORIGIN;
   const configPath = require.resolve("../next.config.js");
   try {
     process.env.NODE_ENV = nodeEnv;
+    if (embedOrigin === undefined) delete process.env.YELLOW_COLLECTIVE_EMBED_ORIGIN;
+    else process.env.YELLOW_COLLECTIVE_EMBED_ORIGIN = embedOrigin;
     delete require.cache[configPath];
     return await require(configPath).headers();
   } finally {
     if (previousNodeEnv === undefined) delete process.env.NODE_ENV;
     else process.env.NODE_ENV = previousNodeEnv;
+    if (previousEmbedOrigin === undefined) delete process.env.YELLOW_COLLECTIVE_EMBED_ORIGIN;
+    else process.env.YELLOW_COLLECTIVE_EMBED_ORIGIN = previousEmbedOrigin;
     delete require.cache[configPath];
   }
 }
@@ -103,36 +113,61 @@ const publicPaths = [
 ];
 const protectedPaths = [
   "/admin", "/admin/", "/admin/dashboard", "/admin/future/nested", "/ADMIN/dashboard",
-  "/api", "/api/admin/session", "/api/admin/access", "/api/admin/rounds/1",
-  "/api/auth/nonce", "/_next/data/build/admin/dashboard.json",
+  "/api", "/api/", "/api/admin/session", "/api/admin/access", "/api/admin/rounds/1",
+  "/api/auth/nonce", "/_next", "/_next/", "/_next/static/chunks/example.js",
+  "/_next/data/build/admin/dashboard.json",
 ];
 
 for (const nodeEnv of ["production", "development", "test"]) {
-  const rules = await loadHeaderRules(nodeEnv);
-  const expectedPublicAncestors = [
-    ...preservedAncestors,
-    ...portfolioAncestors,
-    ...(nodeEnv === "development" ? developmentAncestors : []),
-  ];
-  for (const pathname of publicPaths) {
-    const headers = effectiveHeaders(rules, pathname);
-    assert.deepEqual(framingAncestors(headers), expectedPublicAncestors, `${nodeEnv} ${pathname}`);
-    assert.equal(headers.get("x-content-type-options"), "nosniff");
-    assert.equal(headers.get("referrer-policy"), "strict-origin-when-cross-origin");
-    assert.equal(headers.get("cross-origin-opener-policy"), "same-origin-allow-popups");
-    assert.equal(headers.get("permissions-policy"), "camera=(), microphone=(), geolocation=(), usb=(), payment=(), bluetooth=(), accelerometer=(), gyroscope=()");
-    const withoutFraming = (csp) => csp.split("; ").filter((directive) => !directive.startsWith("frame-ancestors "));
-    assert.deepEqual(
-      withoutFraming(headers.get("content-security-policy")),
-      withoutFraming(effectiveHeaders(rules, "/admin/dashboard").get("content-security-policy")),
-      "The public override must preserve every other CSP directive."
-    );
-  }
-  for (const pathname of protectedPaths) {
-    assert.deepEqual(framingAncestors(effectiveHeaders(rules, pathname)), preservedAncestors, `${nodeEnv} ${pathname}`);
+  for (const embedOrigin of [undefined, "", configuredPortfolioOrigin]) {
+    const rules = await loadHeaderRules(nodeEnv, embedOrigin);
+    const expectedPublicAncestors = [
+      ...preservedAncestors,
+      ...portfolioAncestors,
+      ...(embedOrigin ? [embedOrigin] : []),
+      ...(nodeEnv === "development" ? developmentAncestors : []),
+    ];
+    for (const pathname of publicPaths) {
+      const headers = effectiveHeaders(rules, pathname);
+      assert.deepEqual(framingAncestors(headers), expectedPublicAncestors, `${nodeEnv} ${pathname}`);
+      for (const excludedOrigin of [
+        "https://www.portfolio.example", "http://localhost:3003", "http://127.0.0.1:3001",
+        "https://example.com", "*", "http://localhost:*",
+      ]) {
+        assert.equal(framingAncestors(headers).includes(excludedOrigin), false, `${nodeEnv} excludes ${excludedOrigin}`);
+      }
+      assert.equal(headers.get("x-content-type-options"), "nosniff");
+      assert.equal(headers.get("referrer-policy"), "strict-origin-when-cross-origin");
+      assert.equal(headers.get("cross-origin-opener-policy"), "same-origin-allow-popups");
+      assert.equal(headers.get("permissions-policy"), "camera=(), microphone=(), geolocation=(), usb=(), payment=(), bluetooth=(), accelerometer=(), gyroscope=()");
+      const withoutFraming = (csp) => csp.split("; ").filter((directive) => !directive.startsWith("frame-ancestors "));
+      assert.deepEqual(
+        withoutFraming(headers.get("content-security-policy")),
+        withoutFraming(effectiveHeaders(rules, "/admin/dashboard").get("content-security-policy")),
+        "The public override must preserve every other CSP directive."
+      );
+    }
+    for (const pathname of protectedPaths) {
+      assert.deepEqual(framingAncestors(effectiveHeaders(rules, pathname)), preservedAncestors, `${nodeEnv} ${pathname}`);
+    }
   }
   console.log(`ok - ${nodeEnv} effective framing permits only approved public ancestors and preserves administrative protection`);
 }
+
+for (const invalidOrigin of [
+  "http://portfolio.example", "https://*.portfolio.example", "*",
+  "https://user:password@portfolio.example", " https://portfolio.example",
+  "https://portfolio.example ", "https://portfolio.example https://other.example",
+  "https://portfolio.example,https://other.example", "https://portfolio.example/",
+  "https://portfolio.example/path", "https://portfolio.example?query=1",
+  "https://portfolio.example#fragment", "not-a-url",
+  "https://portfolio.example,other.example", "https://portfolio.example;object-src",
+]) {
+  await assert.rejects(loadHeaderRules("production", invalidOrigin), {
+    message: "YELLOW_COLLECTIVE_EMBED_ORIGIN must be one exact HTTPS origin without credentials, wildcard, whitespace, path, query, or fragment.",
+  });
+}
+console.log("ok - optional portfolio origin defaults off and rejects malformed or expanded framing permission");
 
 const vercelConfig = JSON.parse(read("vercel.json"));
 assert.equal(vercelConfig.headers, undefined, "Vercel must not add a conflicting CSP.");

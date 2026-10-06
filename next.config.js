@@ -33,13 +33,35 @@ const nobleHashesPath = path.join(
 // routes retain this original policy. X-Frame-Options would break embedding.
 const restrictedFrameAncestors =
   "frame-ancestors 'self' https://farcaster.xyz https://*.farcaster.xyz https://warpcast.com https://*.warpcast.com";
+const configuredEmbedOrigin = process.env.YELLOW_COLLECTIVE_EMBED_ORIGIN;
+if (configuredEmbedOrigin) {
+  let validOrigin = false;
+  try {
+    const url = new URL(configuredEmbedOrigin);
+    validOrigin =
+      url.protocol === "https:" &&
+      url.origin === configuredEmbedOrigin &&
+      /^[a-z0-9.:[\]-]+$/i.test(url.hostname) &&
+      !/[\s*]/.test(configuredEmbedOrigin);
+  } catch {
+    // Invalid configuration must fail closed without printing its value.
+  }
+  if (!validOrigin) {
+    throw new Error(
+      "YELLOW_COLLECTIVE_EMBED_ORIGIN must be one exact HTTPS origin without credentials, wildcard, whitespace, path, query, or fragment."
+    );
+  }
+}
 const publicFrameAncestors = [
   restrictedFrameAncestors,
   "https://satori.wtf",
   "https://www.satori.wtf",
+  // Local portfolios embed the live production site directly.
+  "http://localhost:3000",
+  "http://localhost:3001",
+  ...(configuredEmbedOrigin ? [configuredEmbedOrigin] : []),
   ...(process.env.NODE_ENV === "development"
     ? [
-        "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:3002",
         "http://127.0.0.1:3002",

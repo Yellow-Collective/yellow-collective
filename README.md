@@ -197,6 +197,23 @@ exact portfolio parents through the CSP `frame-ancestors` directive:
 
 - `https://satori.wtf`
 - `https://www.satori.wtf`
+- `http://localhost:3000`
+- `http://localhost:3001`
+
+One additional exact HTTPS portfolio origin can be configured with the
+server-side `YELLOW_COLLECTIVE_EMBED_ORIGIN` environment variable. It has no
+default. Set it in Vercel for the intended environment before building/deploying;
+Next.js generates the response-header policy at build time. For local testing,
+use a process environment variable or an untracked `.env.local` entry.
+The value must be one canonical HTTPS origin without a trailing slash,
+credentials, wildcards, whitespace, path, query, or fragment. Invalid values
+fail configuration loading without printing the value. Empty or unset adds
+no additional parent. Subdomains require their own explicit configuration.
+
+Both specific localhost origins are intentionally permitted in production as
+well as development: local portfolios embed `https://www.yellowcollective.art/`
+directly. Other localhost ports and arbitrary parents are not permitted by
+the production policy.
 
 The existing `'self'`, `https://farcaster.xyz`, `https://*.farcaster.xyz`,
 `https://warpcast.com`, and `https://*.warpcast.com` ancestors remain allowed.
@@ -212,8 +229,10 @@ standalone pages, same-origin self frames, and SDK-confirmed Farcaster Mini Apps
 This UI restriction supplements the existing server authorization.
 
 Only `NODE_ENV=development` adds these exact public-page parents:
-`http://localhost:3000`, `http://127.0.0.1:3000`, `http://localhost:3002`, and
-`http://127.0.0.1:3002`. Production builds and `yarn start` exclude them. The
+`http://127.0.0.1:3000`, `http://localhost:3002`, and
+`http://127.0.0.1:3002`. Production builds and `yarn start` exclude those
+development-only origins while retaining `http://localhost:3000` and
+`http://localhost:3001`. The
 header rules live in `next.config.js`: the public rule replaces the global CSP
 header using [Next.js 15's header precedence](https://nextjs.org/docs/15/pages/api-reference/config/next-config-js/headers#header-overriding-behavior),
 so there is one effective CSP. `vercel.json` adds no competing header.
@@ -246,21 +265,25 @@ portfolio navigation. Neither the sandbox nor Yellow's security headers were
 weakened here. Browser wallet injection and real wallet popups still need manual
 testing in the intended browsers.
 
-For local, read-only interaction checks, run Yellow on a separate port and the
-loopback-only parent harness in another terminal:
+For local, read-only production interaction checks, build Yellow and run it on
+a separate port, then run the loopback-only parent harness in two other terminals:
 
 ```bash
-node ./node_modules/next/dist/bin/next dev -p 3001 --hostname 127.0.0.1
-node scripts/embed-harness.mjs --child-port 3001
+yarn build
+yarn node ./node_modules/next/dist/bin/next start -p 3100 --hostname 127.0.0.1
+node scripts/embed-harness.mjs --port 3000 --child-port 3100
+node scripts/embed-harness.mjs --port 3001 --child-port 3100
 ```
 
-Open `http://127.0.0.1:3002`, or append `?width=390` for the narrow iframe. Test
+Open both `http://localhost:3000` and `http://localhost:3001`, or append
+`?width=390` for the narrow iframe. Use the exact localhost hostname rather than
+`127.0.0.1` to exercise the production-approved parent origins. Test
 scrolling, focus/keyboard controls, navigation, and opening/closing Connect
 without selecting a wallet or submitting any mutation. The focused effective
 policy regression check is `node tests/security-static.test.mjs` and also runs
 with `yarn test`.
 For the negative-origin check, start a second harness with
-`node scripts/embed-harness.mjs --port 3004 --child-port 3001`; its iframe must be
+`node scripts/embed-harness.mjs --port 3004 --child-port 3100`; its iframe must be
 blocked. At the allowed parent, `?path=/admin/dashboard` must also be blocked.
 
 These local changes do not unblock the live site until a separately authorized
