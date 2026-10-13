@@ -3861,6 +3861,7 @@ const RoundSubmissionEditor = ({
 }) => {
   const [title, setTitle] = useState(submission.title);
   const [description, setDescription] = useState(submission.description);
+  const [videoUrl, setVideoUrl] = useState("");
   const [image, setImage] = useState(submission.image);
   const [url, setUrl] = useState(submission.url);
   const [walletAddress, setWalletAddress] = useState(submission.walletAddress);
@@ -3980,6 +3981,37 @@ const RoundSubmissionEditor = ({
       <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
         <div>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+            {submission.video && (
+              <div className="space-y-2">
+                <button
+                  type="button"
+                  className="rounded-xl border border-skin-stroke px-3 py-2"
+                  onClick={async () => {
+                    try {
+                      const response = await fetch(
+                        `/api/admin/rounds/${round.id}/submissions/${submission.id}/video`,
+                        { cache: "no-store", credentials: "same-origin", signal: AbortSignal.timeout(15000) }
+                      );
+                      const result = await response.json();
+                      if (!response.ok) throw new Error("Preview failed");
+                      setVideoUrl(result.url);
+                    } catch {
+                      setMessage("Unable to load video preview.");
+                    }
+                  }}
+                >
+                  Open video preview
+                </button>
+                {videoUrl && (
+                  <video
+                    controls playsInline preload="none"
+                    poster={submission.image} src={videoUrl}
+                    className="w-full rounded-xl"
+                    aria-label={`${submission.title} video preview`}
+                  />
+                )}
+              </div>
+            )}
             {submission.images.map((submissionImage, index) => (
               <div
                 key={`${submission.id}-admin-image-${index}`}

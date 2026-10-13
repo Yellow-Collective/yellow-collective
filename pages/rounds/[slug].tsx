@@ -1,3 +1,4 @@
+import { RoundVideoPlayer } from "@/components/rounds/RoundVideoPlayer";
 import Layout from "@/components/Layout";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import { RoundStatusPill } from "@/components/rounds/RoundCard";
@@ -735,6 +736,9 @@ const SubmissionCard = ({
                 </div>
               }
             />
+            {submission.video && (
+              <span className="absolute left-3 top-3 rounded-full bg-black/75 px-3 py-1 text-xs text-white">Video</span>
+            )}
             {submission.images.length > 1 && (
               <span className="absolute bottom-3 right-3 rounded-full bg-black/75 px-3 py-1 font-heading text-sm text-white">
                 {submission.images.length} images
@@ -1011,6 +1015,12 @@ const SubmissionModal = ({
                   </div>
                 </div>
               </div>
+            )}
+            {submission.video && (
+              <RoundVideoPlayer
+                slug={round.slug} id={submission.id}
+                poster={submission.image} title={submission.title}
+              />
             )}
             <div
               className={`mx-auto mt-6 grid w-full gap-3 ${

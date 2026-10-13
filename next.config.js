@@ -68,6 +68,28 @@ const publicFrameAncestors = [
       ]
     : []),
 ].join(" ");
+let videoOrigins = [];
+if (process.env.ROUND_VIDEOS_ENABLED === "true") {
+  try {
+    const endpoint = new URL(process.env.ROUND_VIDEO_S3_ENDPOINT);
+    const bucket = process.env.ROUND_VIDEO_S3_BUCKET;
+    if (
+      endpoint.protocol === "https:" &&
+      !endpoint.username &&
+      !endpoint.password &&
+      /^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$/.test(bucket || "")
+    ) {
+      videoOrigins = [
+        endpoint.origin,
+        ...(process.env.ROUND_VIDEO_S3_FORCE_PATH_STYLE === "true"
+          ? []
+          : [endpoint.protocol + "//" + bucket + "." + endpoint.host]),
+      ];
+    }
+  } catch {
+    // Incomplete disabled configuration must preserve image submissions.
+  }
+}
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -88,6 +110,7 @@ const contentSecurityPolicy = [
   ].join(" "),
   [
     "connect-src",
+    ...videoOrigins,
     "'self'",
     "https://api.goldsky.com",
     "https://api.coingecko.com",
@@ -143,7 +166,7 @@ const contentSecurityPolicy = [
   "frame-src 'self' https://*.walletconnect.com https://*.walletconnect.org",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
-  "media-src 'self' data: blob:",
+  ["media-src 'self' data: blob:", ...videoOrigins].join(" "),
   "upgrade-insecure-requests",
 ].join("; ");
 const publicContentSecurityPolicy = contentSecurityPolicy.replace(

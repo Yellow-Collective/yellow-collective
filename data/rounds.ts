@@ -98,6 +98,7 @@ export type Round = {
 };
 
 export type RoundSubmission = {
+  video?: import("@/utils/rounds/video-policy").RoundVideo | null;
   id: string;
   roundId: string;
   walletAddress: string;
@@ -268,7 +269,7 @@ export type RoundSubmissionInput = Partial<
     | "source"
     | "sourcePayload"
   >
->;
+> & { videoUploadId?: string };
 
 export type RoundRequestInput = Partial<
   Pick<
@@ -422,6 +423,23 @@ const ensureTables = async () => {
             CONSTRAINT round_submissions_status_check CHECK (status IN ('pending', 'approved', 'rejected', 'hidden')),
             CONSTRAINT round_submissions_type_check CHECK (submission_type IN ('project', 'trait'))
           );
+
+          ALTER TABLE round_submissions ADD COLUMN IF NOT EXISTS video jsonb;
+          CREATE TABLE IF NOT EXISTS round_video_uploads (
+            id uuid PRIMARY KEY,
+            round_id text NOT NULL REFERENCES rounds(id) ON DELETE CASCADE,
+            wallet_address text NOT NULL,
+            staging_key text NOT NULL UNIQUE,
+            object_key text NOT NULL UNIQUE,
+            status text NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','validating','ready','attached','rejected','cancelled','cleaned')),
+            metadata jsonb,
+            submission_id text REFERENCES round_submissions(id) ON DELETE SET NULL,
+            created_at timestamptz NOT NULL DEFAULT now(),
+            expires_at timestamptz NOT NULL DEFAULT now() + interval '30 minutes'
+          );
+          ALTER TABLE round_video_uploads ADD COLUMN IF NOT EXISTS staging_cleaned_at timestamptz;
+          CREATE INDEX IF NOT EXISTS round_video_uploads_staging_cleanup ON round_video_uploads(created_at,id) WHERE status='attached' AND staging_cleaned_at IS NULL;
+          CREATE INDEX IF NOT EXISTS round_video_uploads_owner ON round_video_uploads(round_id, lower(wallet_address), expires_at);
 
           CREATE TABLE IF NOT EXISTS round_votes (
             id text PRIMARY KEY,
@@ -768,6 +786,7 @@ const submissionSelectFields = `
   s.description,
   s.image,
   s.images,
+  s.video,
   s.url,
   s.submission_type,
   s.trait_id,
@@ -923,6 +942,7 @@ const mapSubmission = (row: Record<string, any>): RoundSubmission => {
     description: row.description,
     image: images[0] || row.image,
     images,
+    video: row.video || null,
     url: row.url,
     submissionType: row.submission_type || "project",
     traitId: row.trait_id || null,
@@ -1359,6 +1379,13 @@ export const validateRoundSubmissionInput = (
   round: Round,
   input: RoundSubmissionInput
 ) => {
+  if (
+    input.videoUploadId !== undefined &&
+    (typeof input.videoUploadId !== "string" ||
+      !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(input.videoUploadId))
+  ) {
+    return "Video upload ID is invalid.";
+  }
   const title = String(input.title || "").trim();
   const description = String(input.description || "").trim();
   if (input.images !== undefined && !Array.isArray(input.images)) {
@@ -3178,6 +3205,8 @@ export const createRoundSubmission = async (
     })
   );
   const client = await getPool().connect();
+  let committed = false;
+  let released = false;
 
   try {
     await client.query("BEGIN");
@@ -3185,6 +3214,32 @@ export const createRoundSubmission = async (
       `submission:${round.id}:${walletAddress.toLowerCase()}`,
     ]);
 
+    const freshRoundRow = await client.query(
+      "SELECT * FROM rounds WHERE id=$1 FOR SHARE", [round.id]
+    );
+    const freshRound = freshRoundRow.rows[0] && mapRound(freshRoundRow.rows[0]);
+    if (!freshRound || getRoundState(freshRound) !== "submissions_open") {
+      throw new Error("This round is not accepting submissions.");
+    }
+    let video = null;
+    if (input.videoUploadId) {
+      const { videosEnabled } = await import("@/utils/rounds/video-storage");
+      const { validateVideoMetadata } = await import("@/utils/rounds/video-policy");
+      if (!videosEnabled()) throw new Error("Video uploads are unavailable.");
+      if (input.submissionType === "trait") {
+        throw new Error("Trait submissions cannot include videos.");
+      }
+      const owned = await client.query(
+        `SELECT metadata FROM round_video_uploads
+         WHERE id=$1 AND round_id=$2 AND lower(wallet_address)=lower($3)
+           AND status='ready' AND expires_at>now() FOR UPDATE`,
+        [input.videoUploadId, round.id, walletAddress]
+      );
+      if (!owned.rowCount) {
+        throw new Error("Video upload is not ready, expired, or belongs to another wallet.");
+      }
+      video = validateVideoMetadata(owned.rows[0].metadata);
+    }
     const existingResult = await client.query(
       `
         SELECT COUNT(*)::int AS count
@@ -3197,7 +3252,14 @@ export const createRoundSubmission = async (
     );
     const existingCount = Number(existingResult.rows[0]?.count || 0);
 
-    if (existingCount >= round.maxSubmissionsPerWallet) {
+    const reservations = await client.query(
+      `SELECT count(*)::int AS count FROM round_video_uploads
+       WHERE round_id=$1 AND lower(wallet_address)=lower($2)
+         AND status IN ('pending','validating','ready') AND expires_at>now()
+         AND ($3::uuid IS NULL OR id<>$3::uuid)`,
+      [round.id, walletAddress, input.videoUploadId || null]
+    );
+    if (existingCount + Number(reservations.rows[0]?.count || 0) >= freshRound.maxSubmissionsPerWallet) {
       throw new Error(
         "This wallet has reached the submission limit for this round."
       );
@@ -3242,16 +3304,28 @@ export const createRoundSubmission = async (
       ]
     );
 
+    if (video) {
+      await client.query("UPDATE round_submissions SET video=$2::jsonb WHERE id=$1", [
+        result.rows[0].id, JSON.stringify(video)
+      ]);
+      await client.query(
+        "UPDATE round_video_uploads SET status='attached',submission_id=$2 WHERE id=$1",
+        [input.videoUploadId, result.rows[0].id]
+      );
+    }
     await client.query("COMMIT");
+    committed = true;
+    client.release();
+    released = true;
 
     const submission = await getRoundSubmission(round.id, result.rows[0].id);
     if (!submission) throw new Error("Unable to create submission.");
     return submission;
   } catch (error) {
-    await client.query("ROLLBACK");
+    if (!committed) await client.query("ROLLBACK");
     throw error;
   } finally {
-    client.release();
+    if (!released) client.release();
   }
 };
 

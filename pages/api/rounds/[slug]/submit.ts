@@ -4,6 +4,7 @@ import { verifyRoundWalletSignedRequest } from "@/utils/rounds/server-auth";
 
 type SubmitRoundBody = {
   submission?: {
+    videoUploadId?: string;
     title?: string;
     description?: string;
     image?: string;

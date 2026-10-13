@@ -1,3 +1,4 @@
+import { RoundVideoUpload } from "@/components/rounds/RoundVideoUpload";
 import Layout from "@/components/Layout";
 import type { Round } from "data/rounds";
 import { getPublicRoundBySlug } from "data/rounds";
@@ -72,6 +73,9 @@ export default function SubmitRoundPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { address, isConnected } = useAccount();
   const { signMessageAsync, isLoading: isSigning } = useSignMessage();
+  const [videoUploadId, setVideoUploadId] = useState("");
+  const [isUploadingVideo, setIsUploadingVideo] = useState(false);
+  const [videoReset, setVideoReset] = useState(0);
   const [values, setValues] = useState(initialValues);
   const [message, setMessage] = useState("");
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -101,6 +105,7 @@ export default function SubmitRoundPage({
       getRoundSubmissionImagesPayloadBytes(values.images) <=
         ROUND_SUBMISSION_MAX_TOTAL_IMAGE_BYTES &&
       !isUploadingImage &&
+      !isUploadingVideo &&
       address
     );
 
@@ -110,6 +115,42 @@ export default function SubmitRoundPage({
   ) => {
     setMessage("");
     setValues((current) => ({ ...current, [field]: value }));
+  };
+
+  const videoRequest = async (
+    operation: "reserve" | "finalize" | "cancel",
+    id?: string
+  ) => {
+    if (!address) throw new Error("Connect your wallet.");
+    const path = `/api/rounds/${round.slug}/videos`;
+    const payload = { operation, ...(id ? { id } : {}) };
+    const authorization = await createSignedRequestAuthHeader({
+      walletAddress: address,
+      chainId: ROUND_SIGNED_REQUEST_CHAIN_ID,
+      action: getRoundSignedRequestAction(
+        operation === "reserve"
+          ? "video-reserve"
+          : operation === "finalize"
+            ? "video-finalize"
+            : "video-cancel"
+      ),
+      method: "POST",
+      path,
+      payload,
+      signMessageAsync,
+    });
+    const response = await fetch(path, {
+      method: "POST",
+      headers: {
+        Authorization: authorization,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(100000),
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Video request failed.");
+    return result;
   };
 
   const submit = async () => {
@@ -124,6 +165,7 @@ export default function SubmitRoundPage({
       const payload = {
         submission: {
           ...values,
+          ...(videoUploadId ? { videoUploadId } : {}),
           image: values.images[0],
           images: values.images,
         },
@@ -156,6 +198,8 @@ export default function SubmitRoundPage({
 
       setMessage("Submission received. It is now visible on the round page.");
       setValues(initialValues);
+      setVideoUploadId("");
+      setVideoReset((current) => current + 1);
     } catch (submitError) {
       setMessage(
         submitError instanceof Error
@@ -251,6 +295,16 @@ export default function SubmitRoundPage({
             onUploadingChange={setIsUploadingImage}
             onError={setMessage}
           />
+          <RoundVideoUpload
+            key={videoReset}
+            slug={round.slug}
+            wallet={address}
+            disabled={isSubmitting}
+            request={videoRequest}
+            onChange={setVideoUploadId}
+            onBusy={setIsUploadingVideo}
+          />
+
           <label
             htmlFor="round-submission-description"
             className="mt-5 block font-heading text-base text-skin-base"
