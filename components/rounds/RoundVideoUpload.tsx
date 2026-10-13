@@ -24,6 +24,8 @@ export function RoundVideoUpload({
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("");
   const [id, setId] = useState("");
+  const [fileName, setFileName] = useState("");
+  const fileInput = useRef<HTMLInputElement | null>(null);
   const xhr = useRef<XMLHttpRequest | null>(null);
   const generation = useRef(0);
   const previousWallet = useRef(wallet);
@@ -38,6 +40,7 @@ export function RoundVideoUpload({
       generation.current++;
       xhr.current?.abort();
       setId("");
+      setFileName("");
       onChange("");
       setBusy(false);
       onBusy(false);
@@ -62,6 +65,7 @@ export function RoundVideoUpload({
       return;
     }
     const attempt = ++generation.current;
+    setFileName(file.name);
     setBusy(true);
     onBusy(true);
     onChange("");
@@ -125,6 +129,7 @@ export function RoundVideoUpload({
     setBusy(false);
     onBusy(false);
     onChange("");
+    setFileName("");
     setMessage(
       "Video removed. Confirm cancellation to release the reservation."
     );
@@ -139,18 +144,40 @@ export function RoundVideoUpload({
   };
   if (!enabled) return null;
   return (
-    <section className="space-y-3 rounded-xl border border-skin-stroke p-4">
-      <label htmlFor="round-video" className="font-heading text-xl">
+    <fieldset className="min-w-0">
+      <legend className="font-heading text-base text-skin-base">
         Optional video
-      </label>
-      <p>
+      </legend>
+      <p id="round-video-help" className="mt-1 text-sm text-secondary">
         One MP4, H.264 video with optional AAC audio, up to 100 MiB and two
         minutes. Add a separate cover image above. Your wallet authorizes upload
         and validation; this sends no transaction.
       </p>
+      <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+        <div className="min-w-0 flex-1 rounded-xl border border-skin-stroke bg-skin-muted px-4 py-3 text-base text-skin-base">
+          <p className="truncate" title={fileName || undefined}>
+            {fileName || "Choose an MP4 video"}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => fileInput.current?.click()}
+          disabled={disabled || busy || !wallet}
+          aria-describedby="round-video-help"
+          className="yc-dark-submit-blue flex w-fit items-center justify-center rounded-[18px] border border-transparent bg-[#1d9bf0] px-5 py-3 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition-[background-color,box-shadow] hover:bg-[#45adf5] motion-safe:enabled:active:translate-y-1 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-skin-highlighted focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {busy
+            ? "Processing video..."
+            : fileName
+              ? "Replace video"
+              : "Upload video"}
+        </button>
+      </div>
       <input
+        ref={fileInput}
         id="round-video"
         type="file"
+        className="hidden"
         accept="video/mp4,.mp4"
         disabled={disabled || busy || !wallet}
         onChange={(event) => {
@@ -164,20 +191,25 @@ export function RoundVideoUpload({
           max={100}
           value={progress}
           aria-label="Video upload progress"
+          className="mt-3 block h-2 w-full accent-[#1d9bf0]"
         />
       )}
       {id && (
         <button
           type="button"
           onClick={cancel}
-          className="rounded-xl border border-skin-stroke px-4 py-2"
+          className="yc-dark-yellow-button mt-3 rounded-[18px] border border-skin-stroke bg-white px-5 py-3 font-heading text-base text-skin-base shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition-[background-color,box-shadow] hover:bg-[#fff7bf] motion-safe:enabled:active:translate-y-1 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-skin-highlighted"
         >
           {busy ? "Cancel video upload" : "Remove video"}
         </button>
       )}
-      <p role="status" aria-live="polite">
+      <p
+        role="status"
+        aria-live="polite"
+        className="mt-3 text-sm text-secondary"
+      >
         {message}
       </p>
-    </section>
+    </fieldset>
   );
 }
