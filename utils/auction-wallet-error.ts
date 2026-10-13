@@ -1,3 +1,26 @@
+const getWalletErrorDetails = (error: unknown) => {
+  const details: string[] = [];
+  const codes: string[] = [];
+  let current: any = error;
+  for (let depth = 0; current && depth < 5; depth += 1) {
+    const code = String(current.code ?? "");
+    if (/^(?:-?\d{1,8}|[A-Z_]{2,50})$/.test(code)) codes.push(code);
+    details.push(code, String(current.name ?? ""));
+    details.push(String(current.reason ?? ""), String(current.message ?? ""));
+    current = current.cause ?? current.error ?? current.data?.originalError;
+  }
+  return { description: details.join(" ").toLowerCase(), codes };
+};
+
+export const isAuctionWalletRejection = (error: unknown) => {
+  const { description, codes } = getWalletErrorDetails(error);
+  return (
+    codes.includes("4001") ||
+    codes.includes("ACTION_REJECTED") ||
+    /userrejectedrequesterror|user rejected|user denied/.test(description)
+  );
+};
+
 export const getAuctionWalletError = (
   error: unknown,
   phase: "connect" | "prepare" | "send" | "confirm"
@@ -6,20 +29,24 @@ export const getAuctionWalletError = (
   if (phase === "confirm")
     return "Unable to confirm this bid yet. Check the transaction before placing another bid.";
 
-  const details: string[] = [];
-  let current: any = error;
-  for (let depth = 0; current && depth < 5; depth += 1) {
-    details.push(String(current.code ?? ""), String(current.name ?? ""));
-    details.push(String(current.reason ?? ""), String(current.message ?? ""));
-    current = current.cause ?? current.error ?? current.data?.originalError;
+  const { description, codes } = getWalletErrorDetails(error);
+  const diagnostic = codes.length
+    ? ` (Wallet code: ${codes[codes.length - 1]})`
+    : "";
+  if (description.includes("miniapp_submission_unknown")) {
+    return (
+      "Your wallet may have received this bid, but its result is unknown. Check your wallet activity before bidding again." +
+      diagnostic
+    );
   }
-  const description = details.join(" ").toLowerCase();
+  if (description.includes("miniapp_account_changed"))
+    return "Your wallet account changed. Reconnect the wallet you intend to bid with.";
+  if (description.includes("miniapp_provider_unavailable"))
+    return "Your Farcaster wallet is unavailable. Reconnect it and try again.";
+  if (description.includes("miniapp_wrong_chain"))
+    return "Switch your Farcaster wallet to Base and try again.";
 
-  if (
-    /4001|action_rejected|userrejected|user rejected|user denied/.test(
-      description
-    )
-  ) {
+  if (isAuctionWalletRejection(error)) {
     return phase === "connect"
       ? "Wallet connection was cancelled. Try connecting again."
       : "Bid approval was cancelled. Your bid was not sent. Try again when ready.";
@@ -37,6 +64,11 @@ export const getAuctionWalletError = (
   if (phase === "connect")
     return "Unable to connect your Farcaster wallet. Try connecting again.";
   if (phase === "prepare")
-    return "Unable to prepare this bid. Check your Base balance, network and the latest minimum bid, then try again.";
-  return "Unable to send this bid. Check your wallet and try again.";
+    return (
+      "Unable to prepare this bid. The wallet or RPC preparation request failed. Retry preparation or reconnect your wallet." +
+      diagnostic
+    );
+  return (
+    "Unable to send this bid. Check your wallet and try again." + diagnostic
+  );
 };

@@ -28,6 +28,10 @@ import {
 } from "@/utils/bid-comments";
 import { useMiniAppWalletConnect } from "@/hooks/useMiniAppWalletConnect";
 import { getAuctionWalletError } from "@/utils/auction-wallet-error";
+import {
+  MiniAppBidSubmissionError,
+  sendMiniAppAuctionBid,
+} from "@/utils/miniapp-auction-bid";
 
 const auctionInterface = new utils.Interface(auctionAbi as any);
 const BASE_CHAIN_ID = 8453;
@@ -73,7 +77,7 @@ export const PlaceBid = ({
   hidden: boolean;
   onNewBid: () => Promise<void>;
 }) => {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected, connector } = useAccount();
   const { chain } = useNetwork();
   const { data: baseBalance } = useBalance({
     address,
@@ -93,6 +97,11 @@ export const PlaceBid = ({
     miniAppConnectionError,
   } = useMiniAppWalletConnect();
   const [refreshError, setRefreshError] = useState("");
+  const [miniAppTxHash, setMiniAppTxHash] = useState<`0x${string}`>();
+  const [miniAppSendError, setMiniAppSendError] = useState<unknown>();
+  const [isMiniAppSubmitting, setIsMiniAppSubmitting] = useState(false);
+  const [isMiniAppOutcomeUnknown, setIsMiniAppOutcomeUnknown] = useState(false);
+  const useNativeMiniAppBid = isMiniApp && connector?.id === "farcasterMiniApp";
   const submissionRef = useRef(false);
   const isWrongChain = isConnected && chain?.id !== BASE_CHAIN_ID;
   const bidCommentDataSuffix = getBidCommentDataSuffix(bidComment);
@@ -146,7 +155,7 @@ export const PlaceBid = ({
             value: parsedBid,
           }
         : undefined,
-    enabled: canPrepareBid,
+    enabled: canPrepareBid && !useNativeMiniAppBid,
   });
   const {
     sendTransaction: write,
@@ -160,6 +169,7 @@ export const PlaceBid = ({
       submissionRef.current = false;
     },
   });
+  const transactionHash = miniAppTxHash || data?.hash;
   const {
     isLoading: isConfirming,
     isSuccess: isConfirmed,
@@ -167,12 +177,13 @@ export const PlaceBid = ({
     refetch,
   } = useWaitForTransaction({
     chainId: BASE_CHAIN_ID,
-    hash: data?.hash,
+    hash: transactionHash,
     timeout: 120_000,
     onError: () => {
       track("placeBidError");
     },
     onSuccess: async () => {
+      submissionRef.current = false;
       setBid("");
       setBidComment("");
 
@@ -203,8 +214,11 @@ export const PlaceBid = ({
   };
   const bidError = getError();
   const hasBidError = Boolean(bidError);
-  const hasUnconfirmedTransaction = Boolean(data?.hash && !isConfirmed);
-  const isBusy = isConnectingMiniApp || isAwaitingApproval || isConfirming;
+  const hasUnconfirmedTransaction =
+    isMiniAppOutcomeUnknown || Boolean(transactionHash && !isConfirmed);
+  const awaitingApproval = isMiniAppSubmitting || isAwaitingApproval;
+  const preparing = !useNativeMiniAppBid && isPreparing;
+  const isBusy = isConnectingMiniApp || awaitingApproval || isConfirming;
   const isCurrentBidPrepared = Boolean(
     bid === debouncedBid &&
     canPrepareBid &&
@@ -215,19 +229,22 @@ export const PlaceBid = ({
     config.request.data === finalBidCalldata &&
     toSafeBigNumber(config.request.value).eq(parsedBid)
   );
+  const isCurrentBidReady = useNativeMiniAppBid
+    ? Boolean(address && canPrepareBid && bid === debouncedBid)
+    : Boolean(write && isCurrentBidPrepared && !preparing);
   const walletError = isWrongChain
     ? "Switch your wallet to Base to place a bid."
     : getAuctionWalletError(confirmationError, "confirm") ||
-      getAuctionWalletError(sendError, "send") ||
+      getAuctionWalletError(miniAppSendError || sendError, "send") ||
       (!isConnected
         ? getAuctionWalletError(miniAppConnectionError, "connect")
         : "") ||
-      (canPrepareBid && bid === debouncedBid
+      (!useNativeMiniAppBid && canPrepareBid && bid === debouncedBid
         ? getAuctionWalletError(prepareError, "prepare")
         : "");
   const bidStatus = isConnectingMiniApp
     ? "Connecting wallet…"
-    : isAwaitingApproval
+    : awaitingApproval
       ? "Approve your bid in your wallet…"
       : isConfirming
         ? "Waiting for confirmation on Base…"
@@ -253,6 +270,8 @@ export const PlaceBid = ({
             disabled={isBusy || hasUnconfirmedTransaction}
             onChange={(e) => {
               reset();
+              setMiniAppSendError(undefined);
+              setMiniAppTxHash(undefined);
               setRefreshError("");
               setBid(e.target.value);
             }}
@@ -274,24 +293,18 @@ export const PlaceBid = ({
             disabled={
               isBusy ||
               hasUnconfirmedTransaction ||
-              ((!write ||
-                !isCurrentBidPrepared ||
-                isPreparing ||
-                hasBidError) &&
-                isConnected) ||
+              ((!isCurrentBidReady || hasBidError) && isConnected) ||
               !!commentError
             }
             aria-busy={isBusy}
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
               if (isConnected) {
                 if (
                   submissionRef.current ||
                   isBusy ||
                   hasUnconfirmedTransaction ||
-                  !isCurrentBidPrepared ||
-                  isPreparing ||
-                  !write ||
+                  !isCurrentBidReady ||
                   commentError ||
                   hasBidError
                 )
@@ -299,8 +312,42 @@ export const PlaceBid = ({
                 submissionRef.current = true;
                 setRefreshError("");
                 track("placeBidTriggered");
+                if (
+                  useNativeMiniAppBid &&
+                  connector &&
+                  address &&
+                  auction &&
+                  finalBidCalldata &&
+                  parsedBid
+                ) {
+                  setMiniAppSendError(undefined);
+                  setIsMiniAppSubmitting(true);
+                  try {
+                    const hash = await sendMiniAppAuctionBid(
+                      await connector.getProvider(),
+                      {
+                        account: address,
+                        auction,
+                        calldata: finalBidCalldata,
+                        value: BigInt(parsedBid.toString()),
+                      }
+                    );
+                    setMiniAppTxHash(hash);
+                  } catch (error) {
+                    setMiniAppSendError(error);
+                    const outcomeUnknown =
+                      error instanceof MiniAppBidSubmissionError &&
+                      error.submissionUnknown;
+                    setIsMiniAppOutcomeUnknown(outcomeUnknown);
+                    if (!outcomeUnknown) submissionRef.current = false;
+                    track("placeBidError");
+                  } finally {
+                    setIsMiniAppSubmitting(false);
+                  }
+                  return;
+                }
                 // This function requests wallet approval and sends a bid transaction.
-                write();
+                write?.();
               } else {
                 if (isMiniApp) {
                   connectMiniAppWallet();
@@ -319,14 +366,14 @@ export const PlaceBid = ({
               />
             ) : !isConnected ? (
               "Connect to bid"
-            ) : isPreparing || (bid && bid !== debouncedBid) ? (
+            ) : preparing || (bid && bid !== debouncedBid) ? (
               "Preparing bid…"
             ) : (
               "Place bid"
             )}
           </Button>
         </div>
-        {(walletError || bidStatus || data?.hash) && (
+        {(walletError || bidStatus || transactionHash) && (
           <div className="flex w-full flex-col gap-2" aria-live="polite">
             {walletError && (
               <p className="caption text-negative" role="alert">
@@ -338,7 +385,8 @@ export const PlaceBid = ({
                 {bidStatus}
               </p>
             )}
-            {prepareError &&
+            {!useNativeMiniAppBid &&
+              prepareError &&
               canPrepareBid &&
               !isBusy &&
               !hasUnconfirmedTransaction && (
@@ -351,8 +399,8 @@ export const PlaceBid = ({
                   Retry bid preparation
                 </Button>
               )}
-            {data?.hash && (
-              <ExternalLink href={`https://basescan.org/tx/${data.hash}`}>
+            {transactionHash && (
+              <ExternalLink href={`https://basescan.org/tx/${transactionHash}`}>
                 View bid transaction on Base
               </ExternalLink>
             )}
@@ -393,6 +441,8 @@ export const PlaceBid = ({
             disabled={isBusy || hasUnconfirmedTransaction}
             onChange={(e) => {
               reset();
+              setMiniAppSendError(undefined);
+              setMiniAppTxHash(undefined);
               setRefreshError("");
               setBidComment(truncateBidCommentToByteLimit(e.target.value));
             }}

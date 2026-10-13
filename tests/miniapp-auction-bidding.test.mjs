@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
+import { dirname, isAbsolute, resolve } from "node:path";
 import vm from "node:vm";
 import test from "node:test";
 import * as core from "@wagmi/core";
@@ -9,7 +10,7 @@ import { BigNumber, providers } from "ethers";
 const require = createRequire(import.meta.url);
 const ts = require("typescript");
 const read = (path) =>
-  readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+  readFileSync(isAbsolute(path) ? path : new URL(`../${path}`, import.meta.url), "utf8");
 const load = (path, overrides) => {
   const module = { exports: {} };
   const { outputText } = ts.transpileModule(read(path), {
@@ -23,7 +24,7 @@ const load = (path, overrides) => {
   vm.runInNewContext(outputText, {
     module,
     exports: module.exports,
-    window: {},
+    window: { addEventListener() {}, removeEventListener() {} },
     console,
     TextEncoder,
     require: (name) =>
@@ -43,7 +44,7 @@ const base = {
   rpcUrls: { default: { http: ["https://example.invalid"] } },
 };
 
-const setup = async (chainId = 8453) => {
+const setup = async (chainId = 8453, estimateGasError) => {
   const requests = [];
   const provider = {
     request: async (request) => {
@@ -55,6 +56,7 @@ const setup = async (chainId = 8453) => {
         case "eth_chainId":
           return `0x${chainId.toString(16)}`;
         case "eth_estimateGas":
+          if (estimateGasError) throw estimateGasError;
           return "0x186a0";
         case "eth_sendTransaction":
           return hash;
@@ -116,6 +118,37 @@ test("Farcaster signer prepares and sends a bid through installed Wagmi without 
     assert.equal(
       BigInt(sent[0].params[0].value),
       BigInt(request.value.toString())
+    );
+  } finally {
+    await core.disconnect();
+  }
+});
+
+test("a wallet that rejects gas estimation still reproduces the remaining preparation failure", async () => {
+  const { connector, requests } = await setup(8453, {
+    code: 4200,
+    message: "Unsupported eth_estimateGas",
+  });
+  try {
+    const signer = await connector.getSigner({ chainId: 8453 });
+    await assert.rejects(
+      core.prepareSendTransaction({
+        chainId: 8453,
+        signer,
+        request: {
+          to: auction,
+          data: "0x1234",
+          value: BigNumber.from("1100000000000000"),
+        },
+      })
+    );
+    assert.equal(
+      requests.some(({ method }) => method === "eth_estimateGas"),
+      true
+    );
+    assert.equal(
+      requests.some(({ method }) => method === "eth_sendTransaction"),
+      false
     );
   } finally {
     await core.disconnect();
@@ -190,6 +223,9 @@ const textContent = (tree) => {
 };
 const bidComments = load("utils/bid-comments.ts", {});
 const errorHelpers = load("utils/auction-wallet-error.ts", {});
+const nativeBid = load("utils/miniapp-auction-bid.ts", {
+  "./auction-wallet-error": errorHelpers,
+});
 const { auctionAbi } = load("abis/auction.ts", {});
 const ethersCompat = load("utils/ethers-compat.ts", {});
 
@@ -240,6 +276,7 @@ const createBidHarness = () => {
     "@/utils/ethers-compat": ethersCompat,
     "@/utils/bid-comments": bidComments,
     "@/utils/auction-wallet-error": errorHelpers,
+    "@/utils/miniapp-auction-bid": nativeBid,
     "abis/auction": { auctionAbi },
     "constants/addresses": { COLLECTIVE_NOUNS_TREASURY: account },
     wagmi: {
@@ -344,6 +381,24 @@ test("preparation errors are visible and retry only preparation", () => {
     .props.onClick();
   assert.equal(h.state.retries, 1);
   assert.equal(h.state.writes, 0);
+});
+
+test("active Farcaster bidding is available even when the legacy prepared writer is absent", () => {
+  const h = createBidHarness();
+  h.state.account.connector = {
+    id: "farcasterMiniApp",
+    getProvider: async () => ({ request: async () => hash }),
+  };
+  h.state.prepared = false;
+  h.state.prepareError = { code: 4200, message: "Unsupported eth_estimateGas" };
+  h.enter("0.0011");
+  const tree = h.render();
+  assert.equal(
+    h.button(tree).props.disabled,
+    false,
+    "legacy preparation cannot block native Farcaster approval"
+  );
+  assert.doesNotMatch(textContent(tree), /Unable to prepare this bid/);
 });
 
 test("approval and confirmation stay distinct, block duplicates and expose a submitted hash", () => {
@@ -538,4 +593,263 @@ test("Mini App connection hook exposes failure, unlocks retry and blocks same-re
   await render().connectMiniAppWallet();
   assert.equal(calls, 2);
   assert.equal(render().miniAppConnectionError, undefined);
+});
+
+const nativeRequest = {
+  account,
+  auction,
+  calldata: "0x1234abcd",
+  value: 1100000000000000n,
+};
+const nativeProviderFixture = ({
+  walletAccount = account,
+  chainId = "0x2105",
+  sendError,
+  sendResult = hash,
+} = {}) => {
+  const requests = [];
+  return {
+    requests,
+    provider: {
+      request: async (request) => {
+        requests.push(request);
+        if (request.method === "eth_accounts") return [walletAccount];
+        if (request.method === "eth_chainId") return chainId;
+        if (request.method === "eth_sendTransaction") {
+          if (sendError) throw sendError;
+          return typeof sendResult === "function"
+            ? await sendResult(request)
+            : sendResult;
+        }
+        throw { code: 4200, message: "Unsupported preparation RPC" };
+      },
+    },
+  };
+};
+
+test("native approval uses the active connector without wallet-side estimation and preserves the exact bid", async () => {
+  const { connector, requests } = await setup(8453, { code: 4200 });
+  try {
+    assert.equal(
+      await nativeBid.sendMiniAppAuctionBid(
+        await connector.getProvider(),
+        nativeRequest
+      ),
+      hash
+    );
+    assert.equal(
+      requests.some(({ method }) => method === "eth_estimateGas"),
+      false
+    );
+    const sends = requests.filter(
+      ({ method }) => method === "eth_sendTransaction"
+    );
+    assert.equal(sends.length, 1);
+    const payload = sends[0].params[0];
+    assert.equal(payload.from, account);
+    assert.equal(payload.to, auction);
+    assert.equal(payload.data, nativeRequest.calldata);
+    assert.equal(BigInt(payload.value), nativeRequest.value);
+    assert.equal(payload.chainId, "0x2105");
+    for (const key of ["gas", "gasLimit", "gasPrice", "maxFeePerGas", "nonce"])
+      assert.equal(key in payload, false);
+  } finally {
+    await core.disconnect();
+  }
+});
+
+test("native preflight refuses changed account, wrong chain, unavailable provider and invalid payload before a send", async () => {
+  for (const options of [{ walletAccount: auction }, { chainId: "0x1" }]) {
+    const f = nativeProviderFixture(options);
+    await assert.rejects(
+      nativeBid.sendMiniAppAuctionBid(f.provider, nativeRequest),
+      /MINIAPP_ACCOUNT_CHANGED|MINIAPP_WRONG_CHAIN/
+    );
+    assert.equal(
+      f.requests.some(({ method }) => method === "eth_sendTransaction"),
+      false
+    );
+  }
+  await assert.rejects(
+    nativeBid.sendMiniAppAuctionBid(undefined, nativeRequest),
+    /MINIAPP_PROVIDER_UNAVAILABLE/
+  );
+  for (const mutation of [
+    { auction: "bad" },
+    { value: 0n },
+    { value: "1" },
+    { calldata: "bad" },
+  ]) {
+    const f = nativeProviderFixture();
+    await assert.rejects(
+      nativeBid.sendMiniAppAuctionBid(f.provider, {
+        ...nativeRequest,
+        ...mutation,
+      }),
+      /MINIAPP_INVALID_BID/
+    );
+    assert.equal(f.requests.length, 0);
+  }
+});
+
+test("rejection is retryable but a lost or invalid transaction response has an unknown outcome", async () => {
+  const rejected = nativeProviderFixture({ sendError: { code: 4001 } });
+  await assert.rejects(
+    nativeBid.sendMiniAppAuctionBid(rejected.provider, nativeRequest),
+    (error) => error.code === 4001
+  );
+  for (const options of [
+    { sendResult: "0x1234" },
+    { sendResult: null },
+    { sendError: { code: -32603, message: "internal wallet failure" } },
+  ]) {
+    const f = nativeProviderFixture(options);
+    await assert.rejects(
+      nativeBid.sendMiniAppAuctionBid(f.provider, nativeRequest),
+      (error) => error.submissionUnknown === true
+    );
+    assert.equal(
+      f.requests.filter(({ method }) => method === "eth_sendTransaction")
+        .length,
+      1
+    );
+  }
+  assert.equal(
+    errorHelpers.isAuctionWalletRejection({ message: "unknown tx 0x4001abcd" }),
+    false
+  );
+});
+
+test("native component opens one approval, tracks the returned hash across connector changes and blocks stale handlers", async () => {
+  const h = createBidHarness();
+  let approve;
+  const result = new Promise((resolve) => {
+    approve = resolve;
+  });
+  const f = nativeProviderFixture({ sendResult: () => result });
+  h.state.account.connector = {
+    id: "farcasterMiniApp",
+    getProvider: async () => f.provider,
+  };
+  h.state.prepared = false;
+  h.state.prepareError = { code: 4200 };
+  h.enter("0.0011");
+  nodes(h.render())
+    .find(({ type }) => type === "textarea")
+    .props.onChange({ target: { value: "Native bid!" } });
+  const ready = h.render();
+  const first = h.click(ready);
+  await h.click(ready);
+  assert.equal(h.button(h.render()).props.disabled, true);
+  assert.match(textContent(h.render()), /Approve your bid in your wallet/);
+  approve(hash);
+  await first;
+  await h.click(ready);
+  assert.equal(
+    f.requests.filter(({ method }) => method === "eth_sendTransaction").length,
+    1
+  );
+  assert.equal(h.state.writes, 0, "never use Wagmi as a second send route");
+  const payload = f.requests.find(
+    ({ method }) => method === "eth_sendTransaction"
+  ).params[0];
+  assert.equal(
+    payload.data.endsWith(Buffer.from("Native bid!", "utf8").toString("hex")),
+    true
+  );
+  const decoded = new ethersCompat.utils.Interface(
+    auctionAbi
+  ).decodeFunctionData("createBidWithReferral", payload.data);
+  assert.equal(decoded[0].toString(), "7");
+  assert.equal(decoded[1].toLowerCase(), account);
+  h.state.account.connector = { id: "injected" };
+  h.render();
+  assert.equal(h.getReceiptOptions().hash, hash);
+  assert.equal(h.button(h.render()).props.disabled, true);
+});
+
+test("native rejection allows another deliberate approval, while unknown response locks further bids", async () => {
+  const h = createBidHarness();
+  let f = nativeProviderFixture({ sendError: { code: 4001 } });
+  h.state.account.connector = {
+    id: "farcasterMiniApp",
+    getProvider: async () => f.provider,
+  };
+  h.enter("0.0011");
+  await h.click(h.render());
+  assert.match(textContent(h.render()), /approval was cancelled/);
+  assert.equal(h.button(h.render()).props.disabled, false);
+  f = nativeProviderFixture({ sendResult: "0xnotahash" });
+  await h.click(h.render());
+  const unknown = h.render();
+  assert.match(textContent(unknown), /Check your wallet activity/);
+  assert.equal(h.button(unknown).props.disabled, true);
+  await h.click(unknown);
+  assert.equal(
+    f.requests.filter(({ method }) => method === "eth_sendTransaction").length,
+    1
+  );
+  assert.equal(h.state.writes, 0);
+});
+
+test("a different connector inside the miniapp keeps the web preparation guard", () => {
+  const h = createBidHarness();
+  h.state.account.connector = { id: "injected" };
+  h.state.prepared = false;
+  h.state.prepareError = {
+    code: -32603,
+    message: "private internal diagnostic",
+  };
+  h.enter("0.0011");
+  assert.equal(h.button(h.render()).props.disabled, true);
+  assert.match(textContent(h.render()), /Wallet code: -32603/);
+  assert.doesNotMatch(textContent(h.render()), /private internal diagnostic/);
+});
+
+test("native bidding still rejects invalid, below-minimum, stale and wrong-chain inputs without requesting approval", async () => {
+  const h = createBidHarness();
+  const f = nativeProviderFixture();
+  h.state.account.connector = {
+    id: "farcasterMiniApp",
+    getProvider: async () => f.provider,
+  };
+  for (const value of ["-1", "0", "0.0001", "bad"]) {
+    h.enter(value);
+    assert.equal(h.button(h.render()).props.disabled, true);
+    await h.click(h.render());
+  }
+  h.enter("0.002");
+  h.state.debounce = "0.0011";
+  assert.equal(h.button(h.render()).props.disabled, true);
+  await h.click(h.render());
+  h.state.debounce = undefined;
+  h.state.chain.id = 1;
+  assert.equal(h.button(h.render()).props.disabled, true);
+  await h.click(h.render());
+  assert.equal(f.requests.length, 0);
+  assert.equal(h.state.writes, 0);
+});
+
+test("installed Farcaster SDK bridge accepts the native bid even when the host refuses gas estimation", async () => {
+  const requests = [];
+  const sdkBridge = load(resolve(dirname(require.resolve("@farcaster/miniapp-sdk")), "ethereumProvider.js"), {
+    "./miniAppHost.js": {
+      miniAppHost: {
+        ethProviderRequestV2: async (request) => {
+          requests.push(request);
+          const response = { jsonrpc: "2.0", id: request.id };
+          if (request.method === "eth_estimateGas") return { ...response, error: { code: 4200, message: "Unsupported method" } };
+          const result = request.method === "eth_accounts" ? [account]
+            : request.method === "eth_chainId" ? "0x2105"
+            : request.method === "eth_sendTransaction" ? hash : undefined;
+          assert.notEqual(result, undefined);
+          return { ...response, result };
+        },
+      },
+    },
+  });
+  await assert.rejects(sdkBridge.ethereumProvider.request({ method: "eth_estimateGas", params: [nativeRequest] }), (error) => error.code === 4200);
+  requests.length = 0;
+  assert.equal(await nativeBid.sendMiniAppAuctionBid(sdkBridge.ethereumProvider, nativeRequest), hash);
+  assert.deepEqual(requests.map(({ method }) => method), ["eth_accounts", "eth_chainId", "eth_sendTransaction"]);
 });
