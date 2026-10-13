@@ -1,10 +1,12 @@
 import { isInMiniApp, loadMiniAppSdk } from "@/utils/farcasterMiniApp";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useConnect } from "wagmi";
 import { chains } from "../configs/wallet";
 
 const getCurrentUrl = () =>
-  typeof window === "undefined" ? "https://yellowcollective.art" : window.location.href;
+  typeof window === "undefined"
+    ? "https://yellowcollective.art"
+    : window.location.href;
 
 const getRainbowBrowserUrl = (url: string) =>
   `https://rnbwapp.com/dapp?url=${encodeURIComponent(url)}`;
@@ -24,6 +26,9 @@ export const useMiniAppWalletConnect = () => {
   const { connectAsync } = useConnect();
   const [isMiniApp, setIsMiniApp] = useState(false);
   const [isConnectingMiniApp, setIsConnectingMiniApp] = useState(false);
+  const [miniAppConnectionError, setMiniAppConnectionError] =
+    useState<unknown>();
+  const connectingRef = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -41,25 +46,27 @@ export const useMiniAppWalletConnect = () => {
   }, []);
 
   const connectMiniAppWallet = useCallback(async () => {
-    if (isConnectingMiniApp) return;
+    if (connectingRef.current) return;
 
+    connectingRef.current = true;
+    setMiniAppConnectionError(undefined);
     setIsConnectingMiniApp(true);
 
     try {
-      const { FarcasterMiniAppConnector } = await import(
-        "../configs/farcaster-mini-app-connector"
-      );
+      const { FarcasterMiniAppConnector } =
+        await import("../configs/farcaster-mini-app-connector");
 
       await connectAsync({
         connector: new FarcasterMiniAppConnector({ chains }),
         chainId: chains[0]?.id,
       });
     } catch (error) {
-      console.warn("Unable to connect Farcaster Mini App wallet", error);
+      setMiniAppConnectionError(error);
     } finally {
+      connectingRef.current = false;
       setIsConnectingMiniApp(false);
     }
-  }, [connectAsync, isConnectingMiniApp]);
+  }, [connectAsync]);
 
   const openInBrowser = useCallback(async () => {
     await openExternalUrl(getCurrentUrl());
@@ -72,6 +79,7 @@ export const useMiniAppWalletConnect = () => {
   return {
     connectMiniAppWallet,
     isConnectingMiniApp,
+    miniAppConnectionError,
     isMiniApp,
     openInBrowser,
     openInRainbow,
