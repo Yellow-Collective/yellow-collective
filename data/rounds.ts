@@ -3961,3 +3961,5 @@ export const castRoundVotes = async ({
     client.release();
   }
 };
+
+export { getPool as getRoundsPool, ensureTables as ensureRoundsTables };
