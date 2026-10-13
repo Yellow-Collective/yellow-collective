@@ -1,6 +1,6 @@
 import { BigNumber, utils } from "@/utils/ethers-compat";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   useWaitForTransaction,
   useAccount,
@@ -8,6 +8,7 @@ import {
   Address,
   usePrepareSendTransaction,
   useSendTransaction,
+  useNetwork,
 } from "wagmi";
 import { useDebounce } from "@/hooks/useDebounce";
 import Button from "../Button";
@@ -26,6 +27,7 @@ import {
   validateBidCommentText,
 } from "@/utils/bid-comments";
 import { useMiniAppWalletConnect } from "@/hooks/useMiniAppWalletConnect";
+import { getAuctionWalletError } from "@/utils/auction-wallet-error";
 
 const auctionInterface = new utils.Interface(auctionAbi as any);
 const BASE_CHAIN_ID = 8453;
@@ -72,6 +74,7 @@ export const PlaceBid = ({
   onNewBid: () => Promise<void>;
 }) => {
   const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
   const { data: baseBalance } = useBalance({
     address,
     chainId: BASE_CHAIN_ID,
@@ -83,7 +86,15 @@ export const PlaceBid = ({
   const debouncedBid = useDebounce(bid, 500);
 
   const { openConnectModal } = useConnectModal();
-  const { connectMiniAppWallet, isMiniApp } = useMiniAppWalletConnect();
+  const {
+    connectMiniAppWallet,
+    isMiniApp,
+    isConnectingMiniApp,
+    miniAppConnectionError,
+  } = useMiniAppWalletConnect();
+  const [refreshError, setRefreshError] = useState("");
+  const submissionRef = useRef(false);
+  const isWrongChain = isConnected && chain?.id !== BASE_CHAIN_ID;
   const bidCommentDataSuffix = getBidCommentDataSuffix(bidComment);
   const parsedBid = useMemo(() => parseBidAmount(debouncedBid), [debouncedBid]);
   const finalBidCalldata = useMemo(() => {
@@ -111,28 +122,53 @@ export const PlaceBid = ({
     : false;
   const canPrepareBid = Boolean(
     auction &&
-      finalBidCalldata &&
-      parsedBid &&
-      isPreparedBidValid &&
-      debouncedBid &&
-      isConnected &&
-      !commentError
+    finalBidCalldata &&
+    parsedBid &&
+    isPreparedBidValid &&
+    debouncedBid &&
+    isConnected &&
+    !isWrongChain &&
+    !commentError
   );
 
-  const { config, error } = usePrepareSendTransaction({
+  const {
+    config,
+    error: prepareError,
+    isFetching: isPreparing,
+    refetch: prepareBid,
+  } = usePrepareSendTransaction({
     chainId: BASE_CHAIN_ID,
-    request: canPrepareBid && auction && finalBidCalldata && parsedBid
-      ? {
-          to: auction as Address,
-          data: finalBidCalldata,
-          value: parsedBid,
-        }
-      : undefined,
+    request:
+      canPrepareBid && auction && finalBidCalldata && parsedBid
+        ? {
+            to: auction as Address,
+            data: finalBidCalldata,
+            value: parsedBid,
+          }
+        : undefined,
     enabled: canPrepareBid,
   });
-  const { sendTransaction: write, data } = useSendTransaction(config);
-  const { isLoading } = useWaitForTransaction({
+  const {
+    sendTransaction: write,
+    data,
+    error: sendError,
+    isLoading: isAwaitingApproval,
+    reset,
+  } = useSendTransaction({
+    ...config,
+    onSettled: () => {
+      submissionRef.current = false;
+    },
+  });
+  const {
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
+    error: confirmationError,
+    refetch,
+  } = useWaitForTransaction({
+    chainId: BASE_CHAIN_ID,
     hash: data?.hash,
+    timeout: 120_000,
     onError: () => {
       track("placeBidError");
     },
@@ -141,7 +177,13 @@ export const PlaceBid = ({
       setBidComment("");
 
       track("placeBidSuccess");
-      await onNewBid();
+      try {
+        await onNewBid();
+      } catch {
+        setRefreshError(
+          "Your bid was confirmed, but the auction could not refresh. Reload to see the latest bids."
+        );
+      }
     },
   });
 
@@ -153,22 +195,43 @@ export const PlaceBid = ({
 
       if (bidAmount.lte(ZERO_BID)) return "Enter a bid greater than 0";
 
-      if (bidAmount.lt(nextBidAmount)) return `Bid must be at least ${minNextBid}`;
+      if (bidAmount.lt(nextBidAmount))
+        return `Bid must be at least ${minNextBid}`;
     }
-
-    const reason = (error as any)?.reason;
-    if (!reason) return "";
-
-    if (reason.includes("insufficient funds"))
-      return "Error insufficient funds for bid";
-
-    if (parsedBid && parsedBid.lt(nextBidAmount))
-      return "Error invalid bid";
 
     return "";
   };
   const bidError = getError();
   const hasBidError = Boolean(bidError);
+  const hasUnconfirmedTransaction = Boolean(data?.hash && !isConfirmed);
+  const isBusy = isConnectingMiniApp || isAwaitingApproval || isConfirming;
+  const isCurrentBidPrepared = Boolean(
+    bid === debouncedBid &&
+    canPrepareBid &&
+    !prepareError &&
+    config.request &&
+    parsedBid &&
+    config.request.to === auction &&
+    config.request.data === finalBidCalldata &&
+    toSafeBigNumber(config.request.value).eq(parsedBid)
+  );
+  const walletError = isWrongChain
+    ? "Switch your wallet to Base to place a bid."
+    : getAuctionWalletError(confirmationError, "confirm") ||
+      getAuctionWalletError(sendError, "send") ||
+      (!isConnected
+        ? getAuctionWalletError(miniAppConnectionError, "connect")
+        : "") ||
+      (canPrepareBid && bid === debouncedBid
+        ? getAuctionWalletError(prepareError, "prepare")
+        : "");
+  const bidStatus = isConnectingMiniApp
+    ? "Connecting wallet…"
+    : isAwaitingApproval
+      ? "Approve your bid in your wallet…"
+      : isConfirming
+        ? "Waiting for confirmation on Base…"
+        : refreshError || (isConfirmed ? "Bid confirmed on Base." : "");
   const showBridgeToBase =
     isConnected &&
     baseBalance?.value !== undefined &&
@@ -181,16 +244,18 @@ export const PlaceBid = ({
         hidden && "hidden"
       )}
     >
-      <div
-        className={clsx(
-          "flex w-full flex-row flex-wrap items-start gap-3"
-        )}
-      >
+      <div className={clsx("flex w-full flex-row flex-wrap items-start gap-3")}>
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <input
             value={bid}
             type="number"
-            onChange={(e) => setBid(e.target.value)}
+            aria-label="Bid amount in ETH"
+            disabled={isBusy || hasUnconfirmedTransaction}
+            onChange={(e) => {
+              reset();
+              setRefreshError("");
+              setBid(e.target.value);
+            }}
             className={clsx(
               "h-[59px] w-full min-w-0 rounded-[18px] border-2 border-accent bg-primary px-4 py-4 outline-none focus:border-accent sm:px-6",
               bidError && "border-negative"
@@ -207,15 +272,35 @@ export const PlaceBid = ({
           <Button
             className="yc-dark-yellow-button h-[59px] min-w-[112px] px-3 py-0 text-sm hover:-translate-y-0.5 hover:shadow-[0px_6px_0px_0px_rgb(var(--color-action-shadow))] active:translate-y-1 active:shadow-none sm:min-w-[140px]"
             disabled={
-              ((!write || isLoading || hasBidError) && isConnected) ||
+              isBusy ||
+              hasUnconfirmedTransaction ||
+              ((!write ||
+                !isCurrentBidPrepared ||
+                isPreparing ||
+                hasBidError) &&
+                isConnected) ||
               !!commentError
             }
+            aria-busy={isBusy}
             onClick={(e) => {
               e.preventDefault();
               if (isConnected) {
-                if (commentError || hasBidError) return;
+                if (
+                  submissionRef.current ||
+                  isBusy ||
+                  hasUnconfirmedTransaction ||
+                  !isCurrentBidPrepared ||
+                  isPreparing ||
+                  !write ||
+                  commentError ||
+                  hasBidError
+                )
+                  return;
+                submissionRef.current = true;
+                setRefreshError("");
                 track("placeBidTriggered");
-                write?.();
+                // This function requests wallet approval and sends a bid transaction.
+                write();
               } else {
                 if (isMiniApp) {
                   connectMiniAppWallet();
@@ -225,13 +310,64 @@ export const PlaceBid = ({
               }
             }}
           >
-            {isLoading ? (
-              <Image src="/spinner.svg" height={24} width={24} alt="spinner" />
+            {isBusy ? (
+              <Image
+                src="/spinner.svg"
+                height={24}
+                width={24}
+                alt={bidStatus}
+              />
+            ) : !isConnected ? (
+              "Connect to bid"
+            ) : isPreparing || (bid && bid !== debouncedBid) ? (
+              "Preparing bid…"
             ) : (
               "Place bid"
             )}
           </Button>
         </div>
+        {(walletError || bidStatus || data?.hash) && (
+          <div className="flex w-full flex-col gap-2" aria-live="polite">
+            {walletError && (
+              <p className="caption text-negative" role="alert">
+                {walletError}
+              </p>
+            )}
+            {bidStatus && (
+              <p className="caption" role="status">
+                {bidStatus}
+              </p>
+            )}
+            {prepareError &&
+              canPrepareBid &&
+              !isBusy &&
+              !hasUnconfirmedTransaction && (
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    void prepareBid();
+                  }}
+                >
+                  Retry bid preparation
+                </Button>
+              )}
+            {data?.hash && (
+              <ExternalLink href={`https://basescan.org/tx/${data.hash}`}>
+                View bid transaction on Base
+              </ExternalLink>
+            )}
+            {confirmationError && hasUnconfirmedTransaction && (
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  void refetch();
+                }}
+              >
+                Check transaction status
+              </Button>
+            )}
+          </div>
+        )}
         {showBridgeToBase && (
           <ExternalLink href="https://bridge.base.org/deposit">
             <div className="flex h-[59px] flex-row items-center gap-2">
@@ -254,9 +390,12 @@ export const PlaceBid = ({
           </div>
           <textarea
             value={bidComment}
-            onChange={(e) =>
-              setBidComment(truncateBidCommentToByteLimit(e.target.value))
-            }
+            disabled={isBusy || hasUnconfirmedTransaction}
+            onChange={(e) => {
+              reset();
+              setRefreshError("");
+              setBidComment(truncateBidCommentToByteLimit(e.target.value));
+            }}
             className={clsx(
               "min-h-[92px] w-full resize-none rounded-[18px] border-2 border-accent bg-primary px-5 py-4 outline-none focus:border-accent",
               commentError && "border-negative"

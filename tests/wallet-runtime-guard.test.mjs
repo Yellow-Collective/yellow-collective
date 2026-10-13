@@ -148,7 +148,7 @@ test("auction bid preparation uses serializable ethers v5 BigNumber values", () 
   assert.equal(placeBid.includes("return value ? utils.parseEther(value)"), false);
   assert.match(placeBid, /const isPreparedBidValid = parsedBid[\s\S]*parsedBid\.gt\(ZERO_BID\)[\s\S]*parsedBid\.gte\(nextBidAmount\)/);
   assert.match(placeBid, /const canPrepareBid = Boolean\([\s\S]*isConnected[\s\S]*!commentError/);
-  assert.match(placeBid, /request: canPrepareBid && auction && finalBidCalldata && parsedBid/);
+  assert.match(placeBid, /request:\s*canPrepareBid && auction && finalBidCalldata && parsedBid/);
   assert.match(placeBid, /const toSafeBigNumber/);
   assert.match(placeBid, /const isZeroBalanceValue/);
 

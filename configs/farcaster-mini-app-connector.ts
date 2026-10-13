@@ -11,6 +11,7 @@ import {
   normalizeChainId,
 } from "@wagmi/core";
 import type { Address, Chain } from "wagmi";
+import { providers } from "ethers";
 import { getAddress, numberToHex } from "viem";
 import {
   getMiniAppEthereumProvider,
@@ -146,13 +147,19 @@ export class FarcasterMiniAppConnector extends Connector<
     ]);
     if (!provider) throw new ConnectorNotFoundError();
 
-    const { BrowserProvider } = require("ethers6");
-    return new BrowserProvider(provider as any, chainId).getSigner(account);
+    // Wagmi 0.12 uses ethers v5 BigNumbers and the v5 signer/provider API.
+    return new providers.Web3Provider(
+      provider as providers.ExternalProvider,
+      chainId
+    ).getSigner(account);
   }
 
   async isAuthorized() {
     try {
-      if (this.options.shimDisconnect && !getClient().storage?.getItem(this.shimDisconnectKey)) {
+      if (
+        this.options.shimDisconnect &&
+        !getClient().storage?.getItem(this.shimDisconnectKey)
+      ) {
         return false;
       }
 
@@ -178,16 +185,21 @@ export class FarcasterMiniAppConnector extends Connector<
         params: [{ chainId: id }],
       });
 
-      return this.chains.find((chain) => chain.id === chainId) ?? {
-        id: chainId,
-        name: `Chain ${id}`,
-        network: `${id}`,
-        nativeCurrency: { name: "Ether", decimals: 18, symbol: "ETH" },
-        rpcUrls: { default: { http: [""] }, public: { http: [""] } },
-      };
+      return (
+        this.chains.find((chain) => chain.id === chainId) ?? {
+          id: chainId,
+          name: `Chain ${id}`,
+          network: `${id}`,
+          nativeCurrency: { name: "Ether", decimals: 18, symbol: "ETH" },
+          rpcUrls: { default: { http: [""] }, public: { http: [""] } },
+        }
+      );
     } catch (error: any) {
-      const chain = this.chains.find((configuredChain) => configuredChain.id === chainId);
-      if (!chain) throw new ChainNotConfiguredError({ chainId, connectorId: this.id });
+      const chain = this.chains.find(
+        (configuredChain) => configuredChain.id === chainId
+      );
+      if (!chain)
+        throw new ChainNotConfiguredError({ chainId, connectorId: this.id });
 
       if (error?.code === 4902 || error?.data?.originalError?.code === 4902) {
         try {
@@ -206,9 +218,12 @@ export class FarcasterMiniAppConnector extends Connector<
 
           const currentChainId = await this.getChainId();
           if (currentChainId !== chainId) {
-            throw new ProviderRpcError("User rejected switch after adding network.", {
-              code: 4001,
-            });
+            throw new ProviderRpcError(
+              "User rejected switch after adding network.",
+              {
+                code: 4001,
+              }
+            );
           }
 
           return chain;
