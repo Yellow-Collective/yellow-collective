@@ -32,7 +32,7 @@ const nextData = page.text.match(/<script id="__NEXT_DATA__"[^>]*>(.*?)<\/script
 if (nextData) console.log(`Build: ${JSON.parse(nextData[1]).buildId}`);
 const paths = [...page.text.matchAll(/<script[^>]*src="([^"]+)"/g)]
   .map((match) => match[1].replaceAll("&amp;", "&"))
-  .filter((path) => path.startsWith("/_next/static/chunks/pages/rounds/"));
+  .filter((path) => path.startsWith("/_next/static/chunks/"));
 const chunks = await Promise.all(paths.map(read));
 const source = chunks.map((chunk) => chunk.text).join("\n");
 check("video uploader in deployed page", source.includes("Optional video") && source.includes("/videos"),

@@ -167,3 +167,21 @@ assert.equal(hydrated.submissions[0].image, gif);
 assert.equal(hydrated.submissions[0].images[0], gif);
 assert.deepEqual(Buffer.from(hydrated.submissions[0].image.split(",")[1], "base64"), bytes);
 console.log("ok - both GIF frames survive upload, validation, stored JSON and gallery hydration unchanged");
+
+// Next.js may extract the upload helper into a shared chunk in hosted builds.
+const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+const smoke = new AsyncFunction("process", "fetch", "console", "URL", "AbortSignal",
+  readFileSync("scripts/round-media-readonly-smoke.mjs", "utf8"));
+const smokeProcess = { argv: ["node", "smoke", "https://example.com", "test-round"] };
+const responses = {
+  "/api/rounds/test-round/videos": '{"enabled":true}',
+  "/rounds/test-round/submit": '<script id="__NEXT_DATA__">{"buildId":"synthetic"}</script><script src="/_next/static/chunks/shared-upload.js"></script><script src="/_next/static/chunks/pages/rounds/submit.js"></script>',
+  "/_next/static/chunks/shared-upload.js": '"Choose a GIF no larger than 1MB to preserve animation."',
+  "/_next/static/chunks/pages/rounds/submit.js": '"Optional video";"/videos"',
+};
+await smoke(smokeProcess, async (url) => {
+  const body = responses[url.pathname];
+  return { ok: body !== undefined, status: body === undefined ? 404 : 200, text: async () => body || "" };
+}, { log() {} }, URL, AbortSignal);
+assert.equal(smokeProcess.exitCode, 0, "release check must inspect shared uploader chunks");
+console.log("ok - deployed media check finds GIF preservation in shared Next.js chunks");
