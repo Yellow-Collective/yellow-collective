@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: Farcaster signer prepares and sends a bid through installed Wagmi without losing payload fields
+ok 1 - Farcaster signer prepares and sends a bid through installed Wagmi without losing payload fields
+  ---
+  duration_ms: 86.5163
+  ...
+# Subtest: a wallet that rejects gas estimation still reproduces the remaining preparation failure
+ok 2 - a wallet that rejects gas estimation still reproduces the remaining preparation failure
+  ---
+  duration_ms: 58.6163
+  ...
+# Subtest: Wagmi refuses a bid on a different active chain before sending
+ok 3 - Wagmi refuses a bid on a different active chain before sending
+  ---
+  duration_ms: 41.4722
+  ...
+# Subtest: connection-only click and connection errors are visible in the bid form
+ok 4 - connection-only click and connection errors are visible in the bid form
+  ---
+  duration_ms: 91.8417
+  ...
+# Subtest: preparation errors are visible and retry only preparation
+ok 5 - preparation errors are visible and retry only preparation
+  ---
+  duration_ms: 43.9262
+  ...
+# Subtest: active Farcaster bidding is available even when the legacy prepared writer is absent
+ok 6 - active Farcaster bidding is available even when the legacy prepared writer is absent
+  ---
+  duration_ms: 34.8242
+  ...
+# Subtest: approval and confirmation stay distinct, block duplicates and expose a submitted hash
+ok 7 - approval and confirmation stay distinct, block duplicates and expose a submitted hash
+  ---
+  duration_ms: 36.1997
+  ...
+# Subtest: wallet rejection permits a deliberate retry and preserves the entered bid
+ok 8 - wallet rejection permits a deliberate retry and preserves the entered bid
+  ---
+  duration_ms: 33.619
+  ...
+# Subtest: web connect remains the browser modal; invalid, stale and wrong-chain bids never send
+ok 9 - web connect remains the browser modal; invalid, stale and wrong-chain bids never send
+  ---
+  duration_ms: 37.1121
+  ...
+# Subtest: receipt success clears inputs, while refresh failure retains confirmation truth
+ok 10 - receipt success clears inputs, while refresh failure retains confirmation truth
+  ---
+  duration_ms: 26.6181
+  ...
+# Subtest: wallet error messages stay useful without exposing raw diagnostics
+ok 11 - wallet error messages stay useful without exposing raw diagnostics
+  ---
+  duration_ms: 0.5728
+  ...
+# Subtest: the bid form retains token, referral, ETH amount and optional comment in its prepared payload
+ok 12 - the bid form retains token, referral, ETH amount and optional comment in its prepared payload
+  ---
+  duration_ms: 32.0019
+  ...
+# Subtest: Mini App connection hook exposes failure, unlocks retry and blocks same-render duplicate connects
+ok 13 - Mini App connection hook exposes failure, unlocks retry and blocks same-render duplicate connects
+  ---
+  duration_ms: 9.9769
+  ...
+# Subtest: native approval uses the active connector without wallet-side estimation and preserves the exact bid
+ok 14 - native approval uses the active connector without wallet-side estimation and preserves the exact bid
+  ---
+  duration_ms: 16.1788
+  ...
+# Subtest: native preflight refuses changed account, wrong chain, unavailable provider and invalid payload before a send
+ok 15 - native preflight refuses changed account, wrong chain, unavailable provider and invalid payload before a send
+  ---
+  duration_ms: 1.2229
+  ...
+# Subtest: rejection is retryable but a lost or invalid transaction response has an unknown outcome
+ok 16 - rejection is retryable but a lost or invalid transaction response has an unknown outcome
+  ---
+  duration_ms: 1.015
+  ...
+# Subtest: native component opens one approval, tracks the returned hash across connector changes and blocks stale handlers
+ok 17 - native component opens one approval, tracks the returned hash across connector changes and blocks stale handlers
+  ---
+  duration_ms: 34.1983
+  ...
+# Subtest: native rejection allows another deliberate approval, while unknown response locks further bids
+ok 18 - native rejection allows another deliberate approval, while unknown response locks further bids
+  ---
+  duration_ms: 29.9769
+  ...
+# Subtest: a different connector inside the miniapp keeps the web preparation guard
+ok 19 - a different connector inside the miniapp keeps the web preparation guard
+  ---
+  duration_ms: 24.8407
+  ...
+# Subtest: native bidding still rejects invalid, below-minimum, stale and wrong-chain inputs without requesting approval
+ok 20 - native bidding still rejects invalid, below-minimum, stale and wrong-chain inputs without requesting approval
+  ---
+  duration_ms: 30.8616
+  ...
+# Subtest: installed Farcaster SDK bridge accepts the native bid even when the host refuses gas estimation
+ok 21 - installed Farcaster SDK bridge accepts the native bid even when the host refuses gas estimation
+  ---
+  duration_ms: 21.8661
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1696.0596

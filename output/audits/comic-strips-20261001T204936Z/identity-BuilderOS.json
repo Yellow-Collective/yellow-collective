@@ -1,0 +1,23 @@
+{
+  "label": "BuilderOS",
+  "checkedAt": "2026-10-01T20:56:27.379Z",
+  "host": "gondola.proxy.rlwy.net",
+  "database": "/railway",
+  "connectionFingerprint": "8f5c923c3c5b87764056754a7793335319afb14332d893b3db354685a62c0a8a",
+  "schemasWithRounds": [
+    "public"
+  ],
+  "matches": [
+    {
+      "id": "c9569c28-f599-47cb-8dc3-31e890b977da",
+      "slug": "comic-strips",
+      "title": "Comic Strips",
+      "voting_starts_at": "2026-09-24T21:00:00.000Z",
+      "voting_ends_at": "2026-10-01T21:00:00.000Z",
+      "voting_strategy": "base_plus_voting_power",
+      "votes_per_wallet": 100,
+      "voting_snapshot_block": 51742326,
+      "schema": "public"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+diff --git a/data/rounds.ts b/data/rounds.ts
+index 63341dd5..21769fee 100644
+--- a/data/rounds.ts
++++ b/data/rounds.ts
+@@ -40,10 +40,13 @@ import { getDefaultRoundVotesPerWallet } from "@/utils/rounds/voting-strategy";
+ import { getEnsName } from "data/ens";
+ import {
+   getRoundSubmissionImagesValidationError,
++  getRoundSubmissionGifValidationError,
+   normalizeRoundSubmissionImages,
+   ROUND_SUBMISSION_MAX_IMAGES,
+ } from "@/utils/rounds/submission-images";
+ 
++export class RoundSubmissionValidationError extends Error {}
++
+ export type RoundStatus = "draft" | "published" | "archived";
+ export type RoundSubmissionStatus =
+   | "pending"
+@@ -1377,7 +1380,8 @@ const hydrateRoundsWithAwards = async <T extends Round>(rounds: T[]) =>
+ 
+ export const validateRoundSubmissionInput = (
+   round: Round,
+-  input: RoundSubmissionInput
++  input: RoundSubmissionInput,
++  unchangedImages = false
+ ) => {
+   if (
+     input.videoUploadId !== undefined &&
+@@ -1400,7 +1404,9 @@ export const validateRoundSubmissionInput = (
+ 
+   const images = normalizeRoundSubmissionImages(input);
+   const imageValidationError = getRoundSubmissionImagesValidationError(images);
+-  if (imageValidationError) return imageValidationError;
++  if (imageValidationError && !unchangedImages) return imageValidationError;
++  const gifValidationError = getRoundSubmissionGifValidationError(images);
++  if (gifValidationError && !unchangedImages) return gifValidationError;
+   const url = String(input.url || "").trim();
+   const normalizedUrl = normalizeSafeProjectUrl(url, { allowInternal: true });
+   const submissionType = input.submissionType || "project";
+@@ -3615,6 +3621,13 @@ export const updateRoundSubmission = async (
+     : null;
+   if (!current) return null;
+ 
++  if (input.images !== undefined && (
++    !Array.isArray(input.images) || input.images.length === 0 ||
++    input.images.some((image) => typeof image !== "string" || !image.trim())
++  )) {
++    throw new RoundSubmissionValidationError("Images must be a nonempty array of image URLs.");
++  }
++
+   const images =
+     input.images !== undefined
+       ? normalizeRoundSubmissionImages(input)
+@@ -3636,8 +3649,13 @@ export const updateRoundSubmission = async (
+     source: input.source ?? current.source,
+     sourcePayload: input.sourcePayload ?? current.sourcePayload,
+   };
+-  const validationError = validateRoundSubmissionInput(round, merged);
+-  if (validationError) throw new Error(validationError);
++  const validationError = validateRoundSubmissionInput(
++    round,
++    merged,
++    images.length === current.images.length &&
++      images.every((image, index) => image === current.images[index])
++  );
++  if (validationError) throw new RoundSubmissionValidationError(validationError);
+   const normalizedImages = images.map((image) =>
+     normalizeSafeImageUrl(image, {
+       allowInternal: true,

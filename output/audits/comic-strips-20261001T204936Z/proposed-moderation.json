@@ -1,0 +1,3798 @@
+{
+  "mode": "READ_ONLY_PROPOSAL_DO_NOT_EXECUTE",
+  "roundId": "c9569c28-f599-47cb-8dc3-31e890b977da",
+  "cutoff": "2026-10-01T21:00:49.253Z",
+  "primaryRecommendation": "Review the five high-priority allocations before awarding; investigate the additional funding and NFT355 cases. No vote deletion or disqualification is justified yet.",
+  "execute": false,
+  "recommendedRemovals": [],
+  "recommendedDisqualifications": [],
+  "allocations": [
+    {
+      "voteId": "4773d234-9d83-44f8-a057-1c364360fbb0",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "77d29a47-4072-47e4-ae5b-24c617d131bb",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "80ca79d6-d0e3-4e37-8c55-8b1d113dac5e",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "84ceafe3-b59b-4692-aca6-669dafd4927c",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "92bf0e73-0d75-46df-8391-581b22270c03",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "9e3196d0-975b-4a11-8c6b-e9c3b0ab7a33",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "b857e6db-85be-40ea-8190-38a8debf2303",
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "b9ffba1e-87a0-41a0-880a-4b42f4a3033d",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "bed425dc-1fe3-4e42-931a-657ad4d5f21a",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "d0ef6996-4290-4e0b-85ee-1149c5454c52",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "e26bdd9c-f9bf-40b6-86e1-52d943cbb495",
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "e7994f2f-83fb-440f-ad62-55fb3f6fc7ac",
+      "submissionId": "832910c5-c156-4033-81bc-4aa81dfc87db",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "f95ed5fd-7d2e-43be-a110-9d3e4def7667",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "131985c6-7075-4b79-99b4-1072d76c4443",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "HIGH",
+      "findingId": "F01",
+      "reason": "The submitting wallet initiated both transfers before the snapshot. Each recipient gained getVotes 0 to 1 and then allocated 25 to Rise. NFTs remained with recipients through cutoff.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xaa01c6892ba8ac2ba4a45649e9d2f627021a5d7c2538733f0f13db70c90a3f0c",
+        "https://base.blockscout.com/tx/0x8d1e2b5aba7890b95cdd98f129d09fbb626d565663f1669c006a234b8663b00d",
+        "https://base.blockscout.com/tx/0xe07bcb8e8e714ae3093f66ca9f24fc215103bcbbd26f90422c17a8298c5ddd83",
+        "https://base.blockscout.com/tx/0xe8d03281c3f5c5cff59d7870d941dbe43c3a0b6756653e25bfe09ca05906a817",
+        "https://base.blockscout.com/tx/0xfa40363226a588c7d693d97413dcd61dfb55204c3870e04ec9fc7e1f241eda1d",
+        "https://base.blockscout.com/tx/0x8d1e2b5aba7890b95cdd98f129d09fbb626d565663f1669c006a234b8663b00d",
+        "https://base.blockscout.com/tx/0xea18d300bc109421eb3c4b68d7c0f51e748b51c07e3eb5dadf2c46b364f7de39",
+        "https://base.blockscout.com/tx/0xbb6e12f73cc88206bb3d1a1595ee26e80df0eb3efe6da35bebb6057cf2838027"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW TO MODERATE: direct transfers and supportive ballots are proven; common control is not.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "ab8b1cec-b3cd-49ab-a86c-70dd3a76aeea",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "HIGH",
+      "findingId": "F02",
+      "reason": "Five legs during Sep 24-29: out, back, out before snapshot, back Sep 28 after voting, and out AGAIN Sep 29. Recipient allocated 25 to Candleman. The submitter had zero snapshot power and cast no votes.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0x2adc9aabf3b90ff2fe8f8a6a9f4f4da8d18913741364262ea99cca98cefde134",
+        "https://base.blockscout.com/tx/0x8d1e2b5aba7890b95cdd98f129d09fbb626d565663f1669c006a234b8663b00d",
+        "https://base.blockscout.com/tx/0x43809f2f1bc34b4700d2f1efc840a24d3161d209097addd37c2a97a04df8baf8",
+        "https://base.blockscout.com/tx/0x90545b75f9b9037d1837b1d0a32a626a941c94c5512bd51b7fe712308d23f24b",
+        "https://base.blockscout.com/tx/0x50420acd1abd357a8f882e3fbd5b00aab22cae1bb2ef2811a9d75695e4926c2d",
+        "https://base.blockscout.com/tx/0x79c4002f88b163335b08746566a19fa329e697d74cfa5b1926cad14677fbf224",
+        "https://base.blockscout.com/tx/0x4fdd3eedf0146f16dba76365855ef00f5251188486c51563b6361acad72a333a",
+        "https://base.blockscout.com/tx/0xfd96a0493d8ad8f3cc4be6686b0ca7a73618217f47dc4916053ba5793e4197a4"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "MODERATE: repeated circulation and pre-existing bidirectional ETH transfers support a relationship, but do not establish common control or a sham loan.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "bed6a72f-8c03-41ab-ac86-cf598a84c63e",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "fb3fd380-132c-4f7d-bca1-7d6d3fe5c4e8",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "00b1370d-322d-4880-9371-012f7ebbcc8a",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 15,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "0f6cafb6-da50-4c50-b48e-3708cd3f474d",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1200569a-7709-40de-9f04-e1ae7ec91bff",
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1a24483e-eb79-4265-8170-5d8676ccb08d",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 20,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "3ce53796-f844-4c5d-a765-25c1f514a504",
+      "submissionId": "6aebb53a-edf9-47f8-81eb-b0544ad9c9eb",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "451f975a-e18c-4562-8e3a-1aebe8a72f5d",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 16,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "53229229-844e-427b-8ef6-1f209615962f",
+      "submissionId": "40e61925-6d69-4468-94a1-cb4cc1cc5b8d",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "57a3fa46-d5cb-42c8-a87e-67041068392c",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "6116c250-8760-45ce-ba59-664959c51f93",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 15,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "62dddd57-407b-4e61-b486-96b01371a386",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "6c0c8c46-ceb5-4b0c-9145-faa3550d3e30",
+      "submissionId": "9ac86175-1798-4493-b74b-e1eef895a28f",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 6,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "70f25d47-518d-4492-a1e1-58ad511ea4da",
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 6,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "db24c496-e05e-4c29-a291-5d370340f116",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "e2e7be10-dbf6-474d-bb09-b8aa3c4c57c7",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+      "count": 4,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "323e49f2-9be7-4b70-9925-45400c1c116f",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "33d47e88-1c2b-420d-a239-73e00013d296",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 7,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "4822eacd-2c59-492f-8932-3d460739ba98",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 22,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "6463fc84-f748-4439-badc-065ba1d51046",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "77464a73-9bdb-444f-8024-2b03ec336880",
+      "submissionId": "9ac86175-1798-4493-b74b-e1eef895a28f",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 4,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "84cafd63-c90d-4b98-93b9-910021a71415",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "9767c685-858b-43f0-9779-ba3ae259276b",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "b44e54b4-e9ec-4086-8eeb-3fe8753f9efc",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c3adaae2-d86a-4cda-a02d-f0998cca02a0",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c748f1d2-9376-4591-8335-dfc9b62cb683",
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "cc7cfda8-6047-4843-a602-bb3dc5fd728b",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "f526bdfa-7e3c-4435-8dce-d17bb4005fec",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "02343720-bc67-438a-9e5a-e3e4aa9a9d10",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "14c3448c-c8e4-4359-bb89-2935a2185349",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "count": 20,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "6fe15ce7-0078-4ed9-a02f-81d468d688a4",
+      "submissionId": "9ac86175-1798-4493-b74b-e1eef895a28f",
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "d56dcb7e-7816-4d4e-82ff-3aa73c9535ab",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c976d478-d7d1-4e1f-8161-e85dc4375dee",
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "dc72da0e-174b-4ebe-8e30-b0dae81c1f64",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "HIGH",
+      "findingId": "F01",
+      "reason": "The submitting wallet initiated both transfers before the snapshot. Each recipient gained getVotes 0 to 1 and then allocated 25 to Rise. NFTs remained with recipients through cutoff.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xaa01c6892ba8ac2ba4a45649e9d2f627021a5d7c2538733f0f13db70c90a3f0c",
+        "https://base.blockscout.com/tx/0x8d1e2b5aba7890b95cdd98f129d09fbb626d565663f1669c006a234b8663b00d",
+        "https://base.blockscout.com/tx/0xe07bcb8e8e714ae3093f66ca9f24fc215103bcbbd26f90422c17a8298c5ddd83",
+        "https://base.blockscout.com/tx/0xe8d03281c3f5c5cff59d7870d941dbe43c3a0b6756653e25bfe09ca05906a817",
+        "https://base.blockscout.com/tx/0xfa40363226a588c7d693d97413dcd61dfb55204c3870e04ec9fc7e1f241eda1d",
+        "https://base.blockscout.com/tx/0x8d1e2b5aba7890b95cdd98f129d09fbb626d565663f1669c006a234b8663b00d",
+        "https://base.blockscout.com/tx/0xea18d300bc109421eb3c4b68d7c0f51e748b51c07e3eb5dadf2c46b364f7de39",
+        "https://base.blockscout.com/tx/0xbb6e12f73cc88206bb3d1a1595ee26e80df0eb3efe6da35bebb6057cf2838027"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW TO MODERATE: direct transfers and supportive ballots are proven; common control is not.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "f8e2e1cf-4f0c-4705-8761-1970621a4c1e",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "count": 6,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "22774170-45db-4743-86ea-b2f48a247a8c",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0x8621ffa9fd2b61bfa485798a1082d23dc920e8d1",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "27af1389-66c3-49a5-85db-0d2cd2749087",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x8621ffa9fd2b61bfa485798a1082d23dc920e8d1",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "7cee3851-eebd-4fd6-ab35-d625a265504b",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0x8621ffa9fd2b61bfa485798a1082d23dc920e8d1",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ad403a9f-f158-42a1-947b-2bdc0ab558c5",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "fe805c1f-7a67-4b8a-b650-375067ee2fd5",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "785a0a21-74ea-4cb4-870f-61764f135aa8",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "97c90e8e-1af1-4b94-8782-f6692c0766ab",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "996babfa-6253-4ce5-9069-489890d2266e",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "15c1db7a-c613-4f7e-ad37-2c4748f0e445",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ea64c551-a4e6-48c7-a846-cba7faec4b18",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "b59e9260-8809-4129-8ecb-5a321f9913cd",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "2b0c9722-1d36-40ba-9685-24ee6ea1e8c0",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "dbc38f19-21d1-4f5d-826e-ef365daae9de",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "count": 21,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "bf395e04-09af-4f94-86f2-b345ba1164cf",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "count": 4,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "585acf98-9863-4a88-b47d-b48f43d9f828",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "count": 22,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "MEDIUM",
+      "findingId": "F04",
+      "reason": "NFT 254 moved from Candleman submitter to cba in July. cba cast 22 Candleman votes. Repeated older bidirectional funding exists; cba funded 3b 28 seconds before 820 returned on Sep 24. This strengthens the relationship beyond an isolated old gift.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0x846dbd1ced86795876cd092abf792b0c8913e7ed575c6f5de4e1e84cfe5732ce",
+        "https://base.blockscout.com/tx/0xf3c682ab09e445c6ad6be599ec00abd75de3d3a00f4e268ac88e876a0fe24385",
+        "https://base.blockscout.com/tx/0xefee5828c8afc8433b6aadc83cac90b8fc114d079f876f6f68aaf9461c5e3345"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW TO MODERATE: established financial relationship, not an attribution of control.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "3988c4a9-b521-42ea-894a-4b9efcb84aa5",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "2c4757b1-7ff9-4069-9d00-41ec48ca3ed7",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "3bd0d35e-03a4-43da-9517-edd05e913a57",
+      "submissionId": "6aebb53a-edf9-47f8-81eb-b0544ad9c9eb",
+      "wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "8d0bbd6f-bd22-4584-b92d-612700e7859b",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "db65abe4-daf4-4de6-a51d-44d773ec0f5e",
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1389aafd-019e-498d-a84a-0c5a6ed22185",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 7,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "32e90de4-8b4f-48fc-9314-10f24299b694",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "3ea149bf-096d-4eff-91ec-baaf129ca02e",
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 11,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "64b79815-cac4-4665-b8ac-924baa554130",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 6,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ba4a9293-3235-4635-a44b-df6d5889edd3",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "d99fe2d6-11b0-452e-ac3a-dd13e45eef0c",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "f21da2f2-1c06-4c57-b10d-613d518fd501",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 6,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "f974246d-615a-4d9f-997a-56f1e6a4d3de",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 6,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "0460d6f2-24c4-42e9-927e-47c37eb48c37",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1c12aac4-f05c-431e-a9dd-080a9901d78e",
+      "submissionId": "40e61925-6d69-4468-94a1-cb4cc1cc5b8d",
+      "wallet": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "80ae3e6a-b858-4f94-aa9e-433ddfb44b2a",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "8a1f4c59-5c99-489e-99a7-c017feb82b51",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "9bb18c2c-354a-4eab-b247-38fe9146d9d0",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "e29dc11b-2b17-41e0-b1fd-1af4891bc209",
+      "submissionId": "6aebb53a-edf9-47f8-81eb-b0544ad9c9eb",
+      "wallet": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+      "count": 15,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "09654f0e-5f76-41b1-9053-688e8fc75f0e",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "50430354-a1a4-46f2-8af6-971b9deefe8a",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "638c10c7-9220-4ae7-ad1a-5447601dbe2d",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ace32edb-0485-485c-9493-e84807bee38b",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c0e3c424-4806-4acd-888d-03912eafc35f",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c115187a-b243-4079-99a8-2089c71a9ef5",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "d684a853-5739-492a-8136-97a6eb7b44fd",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ee8cfc26-c88f-4c44-beb0-8ce00a5fbbfa",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "f3e591ad-8a84-45db-9a45-4d53a3218d74",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ada3a7fa-081e-406d-9b07-1d60289155fd",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "0ba805bb-a143-41ec-bdb3-a6df54ebf51c",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "88bea373-a1b2-4328-9616-691066c803b7",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "9eb08448-ec29-430c-8315-07d799909688",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "8e2cdd0d-5145-4d25-9e75-ab2ebc8aeca7",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "HIGH",
+      "findingId": "F03",
+      "reason": "Donors delegated NFTs 944/945 to ac1/f7 about 4h45m before snapshot; donor 946 delegated to Tattoo submitter. ac1/f7 had zero NFT balance but getVotes=1 at snapshot. Each cast only 25 Tattoo votes 63.188 seconds apart. The submitter's delegation was revoked 101.26 seconds after the second ballot. ac1 later sent NFT 955 to the submitter; f7 acquired NFT 959 later.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0x5c9e29ea251e6d2104e601894dc95570a95bbd9e6d2c504ac2785bc232d41655",
+        "https://base.blockscout.com/tx/0xa4e484ae7fcf832bb214489ee8f858d3fcde3449ebe360c10f67be406e24ff8a",
+        "https://base.blockscout.com/tx/0x6ac2f9870a7a677592b749d70399be43615ce1cc8221a934c60557af6b6e8eeb",
+        "https://base.blockscout.com/tx/0x41f09e137b88af76a96ad85cc768add369c0bb11fcb11982b887d6b876668244",
+        "https://base.blockscout.com/tx/0x03e2daf356281a77feff5312e09f838254363add50697f1ae48f1b65509fdf6a",
+        "https://base.blockscout.com/tx/0x50e49ffb1fa014afe2ffbaf33bb4ca73b3c33fd04cc0f7e9328d45d2744bd645",
+        "https://base.blockscout.com/tx/0x50e49ffb1fa014afe2ffbaf33bb4ca73b3c33fd04cc0f7e9328d45d2744bd645",
+        "https://base.blockscout.com/tx/0x158154e9be41cd20fc7e855eb4a92089f41663450882c18fa869f2776dc2ea30",
+        "https://base.blockscout.com/tx/0x158154e9be41cd20fc7e855eb4a92089f41663450882c18fa869f2776dc2ea30",
+        "https://base.blockscout.com/tx/0xff2ec9209dc5c925fc8169c25e31db2cf39a68b0ba7d86d0439d71c87a9f6597",
+        "https://base.blockscout.com/tx/0x546fa830c9ea3beac4b5e992651f134502665e3c4d1f2aa8249c2dff7d701fb5",
+        "https://base.blockscout.com/tx/0x379bb34f87eef5d089b67d04943e33cfa99b28190b8b85b499c7950768fab00c",
+        "https://base.blockscout.com/tx/0x6e792833e8aa18195c22523b782038b8577de0e3ab57ea70eca12315839729d3",
+        "https://base.blockscout.com/tx/0x5c2008b50f79479f96a3fe2c293a37475a6fc58e1c05f1a4c61a2c3a6f9191de",
+        "https://base.blockscout.com/tx/0x996f9ce9ebab02e78c08d90b85937bca21096aa108e5eddce66059031954d810"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "MODERATE for coordination; LOW TO MODERATE for shared control. ac1-to-submitter transfer is direct; f7 connection to submitter is circumstantial.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "d67a0e5a-526b-4730-b18a-b005ccbae1c9",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "HIGH",
+      "findingId": "F03",
+      "reason": "Donors delegated NFTs 944/945 to ac1/f7 about 4h45m before snapshot; donor 946 delegated to Tattoo submitter. ac1/f7 had zero NFT balance but getVotes=1 at snapshot. Each cast only 25 Tattoo votes 63.188 seconds apart. The submitter's delegation was revoked 101.26 seconds after the second ballot. ac1 later sent NFT 955 to the submitter; f7 acquired NFT 959 later.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0x5c9e29ea251e6d2104e601894dc95570a95bbd9e6d2c504ac2785bc232d41655",
+        "https://base.blockscout.com/tx/0xa4e484ae7fcf832bb214489ee8f858d3fcde3449ebe360c10f67be406e24ff8a",
+        "https://base.blockscout.com/tx/0x6ac2f9870a7a677592b749d70399be43615ce1cc8221a934c60557af6b6e8eeb",
+        "https://base.blockscout.com/tx/0x41f09e137b88af76a96ad85cc768add369c0bb11fcb11982b887d6b876668244",
+        "https://base.blockscout.com/tx/0x03e2daf356281a77feff5312e09f838254363add50697f1ae48f1b65509fdf6a",
+        "https://base.blockscout.com/tx/0x50e49ffb1fa014afe2ffbaf33bb4ca73b3c33fd04cc0f7e9328d45d2744bd645",
+        "https://base.blockscout.com/tx/0x50e49ffb1fa014afe2ffbaf33bb4ca73b3c33fd04cc0f7e9328d45d2744bd645",
+        "https://base.blockscout.com/tx/0x158154e9be41cd20fc7e855eb4a92089f41663450882c18fa869f2776dc2ea30",
+        "https://base.blockscout.com/tx/0x158154e9be41cd20fc7e855eb4a92089f41663450882c18fa869f2776dc2ea30",
+        "https://base.blockscout.com/tx/0xff2ec9209dc5c925fc8169c25e31db2cf39a68b0ba7d86d0439d71c87a9f6597",
+        "https://base.blockscout.com/tx/0x546fa830c9ea3beac4b5e992651f134502665e3c4d1f2aa8249c2dff7d701fb5",
+        "https://base.blockscout.com/tx/0x379bb34f87eef5d089b67d04943e33cfa99b28190b8b85b499c7950768fab00c",
+        "https://base.blockscout.com/tx/0x6e792833e8aa18195c22523b782038b8577de0e3ab57ea70eca12315839729d3",
+        "https://base.blockscout.com/tx/0x5c2008b50f79479f96a3fe2c293a37475a6fc58e1c05f1a4c61a2c3a6f9191de",
+        "https://base.blockscout.com/tx/0x996f9ce9ebab02e78c08d90b85937bca21096aa108e5eddce66059031954d810"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "MODERATE for coordination; LOW TO MODERATE for shared control. ac1-to-submitter transfer is direct; f7 connection to submitter is circumstantial.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "b8e6f0b2-e047-4493-a764-db275b3595ff",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "81a803c2-324d-4e29-8283-ff3a6e155292",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "4a99026a-372f-4fca-a57a-633928a8278a",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "6d15b347-ceda-4d59-be48-b9834c762754",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+      "count": 20,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "05bebcff-d9f4-4724-a596-64afa19d636e",
+      "submissionId": "9ac86175-1798-4493-b74b-e1eef895a28f",
+      "wallet": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+      "count": 16,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "4194c95c-2525-4242-a7b3-3948f95de9cd",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "447e57b1-ebb7-4a7f-b9ac-7b6da87a6d33",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "48c4a469-7a2f-4423-ba99-0177bfa3d01a",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "e0ec6d48-415f-4f05-9568-86d3dd8db458",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "0b1b7254-53be-4a11-b220-cc69723d8044",
+      "submissionId": "832910c5-c156-4033-81bc-4aa81dfc87db",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1d305356-62a0-45d7-8609-28be1fb37f18",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "2143ef51-6dfb-44ab-83c1-2b1bbf860f90",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "36333913-95e5-416f-8489-a5184bb6147d",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "3b6fb5e5-61cf-4d6b-a6e7-7d4aa9e5d583",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "a1a10277-dd2f-4173-9550-7334d3c97e03",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "bed08786-2ff6-4184-9b8b-00718f1dc605",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "d70f2f76-107e-4be7-9f37-020c050defc5",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "da4e63ba-5d9b-4690-be81-b6d29ce2db42",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "eb1a5e78-cf2d-4e59-8132-4a1ae2f6b1ee",
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "0394c83e-eac1-44f0-8604-c8255ebe49e5",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "5e2c0ad3-e601-454d-8034-d7545eb75db3",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+      "count": 20,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "79982cb2-7d12-4192-8963-b800c8c8512e",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+      "count": 20,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "9134d2a6-a8ba-45af-a7ee-a3c00c8c9d00",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "e84c3038-c6c3-435f-92ae-f0452a1d552b",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+      "count": 7,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ea042162-2655-4d1d-923e-2b88789470a8",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "f36f2c96-16d8-4657-a6b9-f9ea912676a1",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "2e74c1ce-e3e9-4b53-b2df-9b5f25296af1",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "count": 11,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "3238e967-a0f1-44df-add7-b5c78bb292c2",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "79df87a8-7ac0-4128-99c8-fd481e2c15c4",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "a3aa39d9-760a-4ca4-98fa-bb93c27bb634",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "d5cdba07-bab1-43fc-bc9c-bb9039990e18",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "d82bb43c-9a4e-4513-8e44-7a20e19bdd6d",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ed63c897-0b14-410a-96a0-2f07b37f7240",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "2dfa7a36-7065-4024-901b-397aace81181",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "376b5d47-a17d-44bb-83dc-ce8ab9e4b70a",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "6b1b966b-2b43-4ea3-a491-ffa199bbcf53",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "70792b04-8799-4f4b-bde4-c21b1ffb034f",
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "8400835c-2380-4782-ad37-c6ab06b9b844",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "17dff1db-79e6-4ace-9381-1d24d1c04f74",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "208400e2-3ef6-4b78-8f1e-1935f8538052",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "3d5d656a-0cba-4d18-be2f-37f32475604f",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "431fe965-fdc0-40b0-ab39-709e51283a60",
+      "submissionId": "832910c5-c156-4033-81bc-4aa81dfc87db",
+      "wallet": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+      "count": 2,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "e2fd1234-c6f6-43db-8763-d907c7ab58c8",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "00052703-4695-478a-80e4-93776dc8f332",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "10883d92-0314-436f-bf4d-5ca33fd0e80e",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "3040c214-e8e5-45f9-8bd5-8f7f0ef3c717",
+      "submissionId": "832910c5-c156-4033-81bc-4aa81dfc87db",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "49fb9f87-7dfa-4e03-87f9-13373db58daf",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 16,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "5371e525-e6f9-486a-8571-77043c478747",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 16,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "5c270b2c-bf5a-47f1-9dae-7c6d4deddb5f",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 15,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "6204c99f-de7c-41c8-bfd0-4f7dea71d0c1",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "9be1f74c-afa5-451c-a4b1-93b68bf72694",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ad13c3cd-651d-45d5-9312-c047969493df",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "aeff345d-7069-426f-9ef2-a82956c99f15",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ba354287-e97d-4ad3-8787-df1162d0b102",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 16,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ba8de432-c145-47db-8ef3-2ea9d9ec79fd",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ff8a78c6-982a-40bb-bd26-03b60dbe2d31",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "00f5d11a-326a-44d2-871a-2b554e845b96",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "15f8fa5b-1e53-4fe0-ba77-cae243f9907e",
+      "submissionId": "40e61925-6d69-4468-94a1-cb4cc1cc5b8d",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 21,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "170f8d75-2143-4644-aad1-e0f1790a235e",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "3774b4bf-617b-4404-b837-dafe4ef7ee6b",
+      "submissionId": "6aebb53a-edf9-47f8-81eb-b0544ad9c9eb",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "596a0069-af63-4511-89d2-7db959c050c7",
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "942753e1-84c4-4f41-8cbb-e80df4f6769b",
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "db99a2a6-278e-4606-b92b-e3ab99484efb",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "e7c6926f-4db6-4faf-b5c6-c7c3e2046de7",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ea67b01d-290d-4330-bd4b-49a395302092",
+      "submissionId": "832910c5-c156-4033-81bc-4aa81dfc87db",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 6,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "fc20ed8d-ac5c-4f7a-a866-27fcf32432f7",
+      "submissionId": "9ac86175-1798-4493-b74b-e1eef895a28f",
+      "wallet": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "86000b15-7fd4-453b-b7bd-aedef5c026d5",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "88374ee9-32a8-4595-b00e-bbc02d175e54",
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "8e66656a-30e9-4386-ab50-6c26dd0e2ce3",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "9bdcd45b-70b8-410a-aa9d-ad5bd092cdaf",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1898f338-9eed-4c6e-b375-5d0f6ad1310a",
+      "submissionId": "9ac86175-1798-4493-b74b-e1eef895a28f",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "555340e2-fe01-46fd-90f2-9af6a9d365de",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "637084b3-4b5d-40ab-994b-5f7f74c004cd",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "717c4dbd-f338-4df6-a306-98db21959d62",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "a71ac97a-8e18-46fb-a0f7-0add72439902",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 3,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "b6887dde-c857-4459-b0ae-bf123958d9ca",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ed6920c0-ab46-4450-af2f-83d846239bf4",
+      "submissionId": "6aebb53a-edf9-47f8-81eb-b0544ad9c9eb",
+      "wallet": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "041dc75b-7f7b-4fc3-8396-045bff09f490",
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "102e993a-c62d-4482-b600-03aa3f82a74d",
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "135101da-4b2b-4462-8fa8-31b20cb3f01d",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "153629e8-4f49-4529-9005-1029d41381b1",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "23e28218-4fc8-4b7e-8ac9-db0827ec554d",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "2b22c8b2-e686-470e-b6d8-e2f186ccd44f",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "40e177ab-1154-4be5-8895-1191c407774d",
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "4b06f8e7-1fbc-4b2b-8df5-d22a214e9a77",
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "66ca4073-a070-468a-b429-d8a94fcca733",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "6a0b9591-d915-47f8-90a8-bcc65c914984",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "70b4160e-03f9-41b7-8f31-2762d0e62676",
+      "submissionId": "40e61925-6d69-4468-94a1-cb4cc1cc5b8d",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "7bd79d29-0c4a-4806-81ec-a5e47ee998e6",
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "7e11369b-b9d2-4f93-b014-ea491e9e12e0",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ace4564c-9f0c-448d-a0a8-4fee4bd09ee5",
+      "submissionId": "6aebb53a-edf9-47f8-81eb-b0544ad9c9eb",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "b67acede-ea69-4242-9758-ac46f3c00767",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "b95e9bf0-f5f4-4878-8232-948ff161fb1b",
+      "submissionId": "9ac86175-1798-4493-b74b-e1eef895a28f",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c2272dc6-198a-40db-859a-647e3c60b928",
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c3325161-3e85-4df6-a505-178376d782be",
+      "submissionId": "832910c5-c156-4033-81bc-4aa81dfc87db",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "d681d496-dfe9-4e7c-8944-b1b089dafe8d",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "efab368e-81b5-4cb4-9dff-a05635e7490c",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "count": 1,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "124cdb46-48ed-4c19-a559-a6d3261eac90",
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1af68b3f-36d6-48b4-90f1-16e69ba27958",
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "92b77449-084d-4e5c-bd2f-b91c63cfc52f",
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "9be11d59-5cc2-490c-9c3e-6c3edf2f7c33",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "b75a153e-73bd-499d-944f-631b1eb525fb",
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c9e9c1cc-953b-4a8b-a4ca-2bfd6fc77a2b",
+      "submissionId": "832910c5-c156-4033-81bc-4aa81dfc87db",
+      "wallet": "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "a867cfed-99df-43d3-8527-8bf9e2de552f",
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "ed63dab4-92d2-4bab-89ed-d3836ede8757",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "count": 5,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "053a2276-9b5d-404b-98e3-1c424f0eb7ae",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+      "count": 1,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "1d4896b8-ee10-4c27-a31f-82ae8cab4da8",
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "2fdd6a33-d368-4416-b0d6-0f0041ec5a52",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "3452a946-ffb6-44cc-8ec9-8f35bfa32bdf",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "f3fa7f44-3b85-4ba4-a9b3-29364e94c4e3",
+      "submissionId": "40e61925-6d69-4468-94a1-cb4cc1cc5b8d",
+      "wallet": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "27975fc5-fe44-4feb-bf59-d85c972fb052",
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "count": 1,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "40a891dc-ae8f-4b7c-8692-46b02ea0619f",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "7dae4f1b-8aa9-466d-9b43-107e235670f3",
+      "submissionId": "40e61925-6d69-4468-94a1-cb4cc1cc5b8d",
+      "wallet": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "bbb0edc6-5b68-4d14-831d-4d68fb5f8acd",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "d7a5c913-d985-4d47-8363-b3d5cb6e6c7b",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "count": 25,
+      "decision": "REVIEW BEFORE AWARDING",
+      "priority": "LOW",
+      "findingId": "F05",
+      "reason": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+      "evidenceLinks": [
+        "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+        "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+        "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+        "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+      ],
+      "applicableRule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+      "confidence": {
+        "facts": "HIGH",
+        "commonControl": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+        "ruleViolation": "UNPROVEN"
+      }
+    },
+    {
+      "voteId": "3c20a44b-1461-48b9-bfaf-bbe3c95b2c23",
+      "submissionId": "40e61925-6d69-4468-94a1-cb4cc1cc5b8d",
+      "wallet": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "848c8b4b-c614-4455-8dea-8ac4ceeb2e96",
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+      "count": 25,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1ee20efe-88d8-43d4-bb60-ce86d79687f8",
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "count": 10,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "c5199411-e070-4052-b155-ebc1462ee9e4",
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "count": 15,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    },
+    {
+      "voteId": "1f1b5cd2-b9b6-4089-9579-b2bb83181471",
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+      "count": 21,
+      "decision": "RETAIN",
+      "priority": "NONE",
+      "findingId": null,
+      "reason": "No identified technical anomaly or material suspicious relationship in reviewed evidence.",
+      "evidenceLinks": [],
+      "applicableRule": "Historical getVotes eligibility; capacity 100+power; per-entry cap25; same-address self-vote prohibited.",
+      "confidence": {
+        "technicalValidity": "HIGH",
+        "unobservedCommonControl": "UNKNOWN"
+      }
+    }
+  ],
+  "submissions": [
+    {
+      "submissionId": "3628b501-24a8-40d3-a2e3-4cd7de32c95c",
+      "wallet": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "title": "Chicken - Yellowfrens comic",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "5edb6272-c318-49d9-86db-183979c84a25",
+      "wallet": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+      "title": "I said YM!",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "wallet": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+      "title": "Doom scrolling",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "d87966ec-bc5b-4593-80b2-741c42c7d00d",
+      "wallet": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+      "title": "One Yellow collective nouns everyday forever",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "wallet": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "title": "Fire Safety 101: Oops",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "f7ac5e48-22f4-4a6e-9ac5-18d158c618d4",
+      "wallet": "0xd091d0a86ff1ee9d9e24e9d6e6990592d7cb3998",
+      "title": "Noggles Power",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "title": "Yellow Meme",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "title": "Candleman: The Roosters Invasion",
+      "decision": "REVIEW BEFORE AWARDING",
+      "reason": "Benefited from allocations with direct transfer/delegation/funding relationships; control and rule breach unresolved."
+    },
+    {
+      "submissionId": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "wallet": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+      "title": "THE YELLOW PAPER TAG LORE MAGA: EDITION 001",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "8e3bf4d0-d68d-44b0-9534-c6b6cc757aae",
+      "wallet": "0xd091d0a86ff1ee9d9e24e9d6e6990592d7cb3998",
+      "title": "let’s do it",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "wallet": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+      "title": "Yellow Pirate Crew Voyage",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "6aebb53a-edf9-47f8-81eb-b0544ad9c9eb",
+      "wallet": "0x94bd21234bb1fb52b58263ad76996ba3baea48df",
+      "title": "Animal Right",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "wallet": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+      "title": "Oh Yeah-Low Minded",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "wallet": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+      "title": "Yellow Collective Conference",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "40e61925-6d69-4468-94a1-cb4cc1cc5b8d",
+      "wallet": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+      "title": "Are you winning, Son? (Yellow Collective Edition)",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "832910c5-c156-4033-81bc-4aa81dfc87db",
+      "wallet": "0x7dcff286f8e45b9a5c31bb990c0007d4ee5f7ec0",
+      "title": "Onchain guy",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "title": "YELLOW COLLECTIVE: Rise of the Heroes",
+      "decision": "REVIEW BEFORE AWARDING",
+      "reason": "Benefited from allocations with direct transfer/delegation/funding relationships; control and rule breach unresolved."
+    },
+    {
+      "submissionId": "9ac86175-1798-4493-b74b-e1eef895a28f",
+      "wallet": "0x089490a8b64d36d9764aca7a65bd6e715e254619",
+      "title": "This is (not) Fine.",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "wallet": "0x23a355cf3246e44d4c734435d968ac92de85f822",
+      "title": "Nounish Cookies!",
+      "decision": "RETAIN",
+      "reason": "No identified disqualification ground."
+    },
+    {
+      "submissionId": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "title": "Yellow Tattoo",
+      "decision": "REVIEW BEFORE AWARDING",
+      "reason": "Benefited from allocations with direct transfer/delegation/funding relationships; control and rule breach unresolved."
+    }
+  ],
+  "winnerReconciliation": "Ten winners already finalized. Authorized changes require separately rebuilding/reconciling stored winner rows and awards; deleting allocations alone does not refresh winners.",
+  "recasting": "Voting is closed. Normal API cannot recast. Deletion frees arithmetic capacity but does not reopen voting."
+}

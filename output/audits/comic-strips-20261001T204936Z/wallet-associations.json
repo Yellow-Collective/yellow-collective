@@ -1,0 +1,106 @@
+{
+  "cutoff": "2026-10-01T21:00:49.253Z",
+  "interpretation": "Candidate submitter associations are investigative hypotheses, not verified wallet owners or identified people. Confidence in association is separate from confidence in common control.",
+  "wallets": [
+    {
+      "wallet": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+      "candidate": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "entry": "Rise of the Heroes",
+      "activity": "Limited observed activity: nonce 0; no other-round allocations. Creation date unknown.",
+      "basis": "Rise submitter sent NFT 860 before snapshot; recipient cast 25 Rise votes.",
+      "associationConfidence": "HIGH: direct transfer and support",
+      "controlConfidence": "LOW TO MODERATE; ownership unproven",
+      "finding": "F01"
+    },
+    {
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "candidate": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "entry": "Rise of the Heroes",
+      "activity": "Established wallet: Base activity in 2024; one other-round allocation; nonce 3.",
+      "basis": "Rise submitter sent NFT 870 before snapshot; recipient cast 25 Rise votes.",
+      "associationConfidence": "HIGH: direct transfer and support",
+      "controlConfidence": "LOW TO MODERATE; ownership unproven",
+      "finding": "F01"
+    },
+    {
+      "wallet": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "candidate": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "entry": "Candleman / Chicken",
+      "activity": "Established activity: nonce 170; one other-round allocation; older funding links.",
+      "basis": "Repeated NFT 820 circulation with Candleman submitter, mutual funding, and 25 Candleman votes.",
+      "associationConfidence": "HIGH: repeated direct relationships",
+      "controlConfidence": "MODERATE; ownership unproven",
+      "finding": "F02"
+    },
+    {
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "candidate": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "entry": "Candleman / Chicken",
+      "activity": "Established wallet: nonce 6401; 33 other-round allocations.",
+      "basis": "Received NFT 254 from Candleman submitter in July; repeated funding with submitter and gas funding to 3b before NFT 820 return; 22 Candleman votes.",
+      "associationConfidence": "HIGH: transfer and funding relationship",
+      "controlConfidence": "LOW TO MODERATE; ownership unproven",
+      "finding": "F04"
+    },
+    {
+      "wallet": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+      "candidate": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "entry": "Yellow Tattoo",
+      "activity": "Limited observed activity: nonce 10; no other-round allocations. Creation date unknown.",
+      "basis": "Delegated eligibility, only 25 Tattoo votes, near-simultaneous ballot with f7; later sent NFT 955 directly to Tattoo submitter.",
+      "associationConfidence": "HIGH: direct subsequent transfer and support",
+      "controlConfidence": "LOW TO MODERATE; ownership unproven",
+      "finding": "F03"
+    },
+    {
+      "wallet": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+      "candidate": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "entry": "Yellow Tattoo",
+      "activity": "Limited observed activity: nonce 1; no other-round allocations. Creation date unknown.",
+      "basis": "Delegated eligibility; only 25 Tattoo votes, 63 seconds after ac1. No direct NFT transfer to/from submitter identified.",
+      "associationConfidence": "MODERATE: voting/delegation chronology",
+      "controlConfidence": "LOW; circumstantial candidate only",
+      "finding": "F03"
+    },
+    {
+      "wallet": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+      "candidate": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "entry": "Yellow Tattoo delegation cluster",
+      "activity": "External delegator; complete account history not established.",
+      "basis": "Owned NFT 944 and delegated it to ac1 before snapshot. Indirect link to submitter through ac1, not a proven owner attribution.",
+      "associationConfidence": "MODERATE: indirect relationship",
+      "controlConfidence": "LOW; no direct submitter-control evidence",
+      "finding": "F03"
+    },
+    {
+      "wallet": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+      "candidate": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "entry": "Yellow Tattoo delegation cluster",
+      "activity": "External delegator; complete account history not established.",
+      "basis": "Owned NFT 945 and delegated it to f7 before snapshot. Indirect link to submitter through the paired voting chronology.",
+      "associationConfidence": "LOW TO MODERATE: indirect relationship",
+      "controlConfidence": "LOW; no direct submitter-control evidence",
+      "finding": "F03"
+    },
+    {
+      "wallet": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+      "candidate": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "entry": "Yellow Tattoo",
+      "activity": "External delegator; complete account history not established.",
+      "basis": "Owned NFT 946 and delegated directly to Tattoo submitter, then revoked shortly after ac1/f7 votes.",
+      "associationConfidence": "HIGH: direct delegation relationship",
+      "controlConfidence": "LOW; delegation does not establish common control",
+      "finding": "F03"
+    },
+    {
+      "wallet": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+      "candidate": null,
+      "entry": "No submitter attribution established",
+      "activity": "Established onchain activity: nonce 393, despite no other-round allocations.",
+      "basis": "Received NFT 355 from 0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4; paired full-budget ballots. That donor is another voter, not a Comic Strips submitter.",
+      "associationConfidence": "HIGH for donor relationship; no submitter attribution",
+      "controlConfidence": "UNKNOWN; possible relationship to donor is not ownership proof",
+      "finding": "F05"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "status": "FRESH_READ_ONLY_VERIFICATION",
+  "verifiedAt": "2026-10-02T15:23:07.943Z",
+  "database": "railway",
+  "host": "gondola.proxy.rlwy.net",
+  "transactionReadOnly": true,
+  "roundId": "c9569c28-f599-47cb-8dc3-31e890b977da",
+  "votingClosed": true,
+  "targetCount": 6,
+  "targetRowsStillPresent": 0,
+  "removedVotes": 147,
+  "allocationRowsBefore": 219,
+  "allocationRowsAfter": 213,
+  "totalVotesBefore": 2919,
+  "totalVotesAfter": 2772,
+  "allUntargetedVotesUnchanged": true,
+  "submissionsUnchanged": true,
+  "awardsUnchanged": true,
+  "winnerCount": 10,
+  "winnersMatchFreshlyCalculatedRanking": true,
+  "winners": [
+    {
+      "position": 1,
+      "title": "Fire Safety 101: Oops",
+      "submission_id": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "vote_count": 334
+    },
+    {
+      "position": 2,
+      "title": "Candleman: The Roosters Invasion",
+      "submission_id": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "vote_count": 303
+    },
+    {
+      "position": 3,
+      "title": "YELLOW COLLECTIVE: Rise of the Heroes",
+      "submission_id": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "vote_count": 277
+    },
+    {
+      "position": 4,
+      "title": "Yellow Collective Conference",
+      "submission_id": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "vote_count": 233
+    },
+    {
+      "position": 5,
+      "title": "THE YELLOW PAPER TAG LORE MAGA: EDITION 001",
+      "submission_id": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "vote_count": 230
+    },
+    {
+      "position": 6,
+      "title": "Nounish Cookies!",
+      "submission_id": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "vote_count": 164
+    },
+    {
+      "position": 7,
+      "title": "Doom scrolling",
+      "submission_id": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "vote_count": 140
+    },
+    {
+      "position": 8,
+      "title": "Oh Yeah-Low Minded",
+      "submission_id": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "vote_count": 132
+    },
+    {
+      "position": 9,
+      "title": "Yellow Meme",
+      "submission_id": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "vote_count": 130
+    },
+    {
+      "position": 10,
+      "title": "Yellow Pirate Crew Voyage",
+      "submission_id": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "vote_count": 125
+    }
+  ],
+  "fullRanking": [
+    {
+      "submission_id": "96e617be-0ed8-4572-ac1c-55b86631da1d",
+      "title": "Fire Safety 101: Oops",
+      "vote_count": 334,
+      "created_at": "2026-09-23T20:27:52.842Z"
+    },
+    {
+      "submission_id": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "title": "Candleman: The Roosters Invasion",
+      "vote_count": 303,
+      "created_at": "2026-09-24T05:54:31.152Z"
+    },
+    {
+      "submission_id": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "title": "YELLOW COLLECTIVE: Rise of the Heroes",
+      "vote_count": 277,
+      "created_at": "2026-09-24T17:56:50.212Z"
+    },
+    {
+      "submission_id": "ad4595b8-101b-4d2c-a06f-9294d732383e",
+      "title": "Yellow Collective Conference",
+      "vote_count": 233,
+      "created_at": "2026-09-24T16:03:01.288Z"
+    },
+    {
+      "submission_id": "34340ed9-e138-4148-a9e1-e7281d98abe5",
+      "title": "THE YELLOW PAPER TAG LORE MAGA: EDITION 001",
+      "vote_count": 230,
+      "created_at": "2026-09-24T13:33:23.628Z"
+    },
+    {
+      "submission_id": "ce357640-0243-44b9-8cc7-2c183c82dc60",
+      "title": "Nounish Cookies!",
+      "vote_count": 164,
+      "created_at": "2026-09-24T20:40:27.714Z"
+    },
+    {
+      "submission_id": "f4779631-fd4c-4147-ab37-c692f7399906",
+      "title": "Doom scrolling",
+      "vote_count": 140,
+      "created_at": "2026-09-23T15:49:25.857Z"
+    },
+    {
+      "submission_id": "cb3d3150-8ff8-41f1-b3dc-39219ec8261a",
+      "title": "Oh Yeah-Low Minded",
+      "vote_count": 132,
+      "created_at": "2026-09-24T14:13:52.963Z"
+    },
+    {
+      "submission_id": "7953c5ca-1d32-4f79-b317-02c4cbc46092",
+      "title": "Yellow Meme",
+      "vote_count": 130,
+      "created_at": "2026-09-24T05:02:22.265Z"
+    },
+    {
+      "submission_id": "abd5365b-e50d-42de-afeb-ffca7000a087",
+      "title": "Yellow Pirate Crew Voyage",
+      "vote_count": 125,
+      "created_at": "2026-09-24T14:08:15.693Z"
+    }
+  ],
+  "adminAuditRows": 0,
+  "expectedAdminAuditRowsBefore": 0
+}

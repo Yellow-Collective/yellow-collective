@@ -1,0 +1,7 @@
+interface:
+  display_name: "Round Voting Audit"
+  short_description: "Audit end-of-round votes and wallet evidence"
+  default_prompt: "Use $round-voting-audit to audit the completed round by slug."
+
+policy:
+  allow_implicit_invocation: true

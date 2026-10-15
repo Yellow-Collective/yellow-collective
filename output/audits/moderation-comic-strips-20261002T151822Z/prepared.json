@@ -1,0 +1,56 @@
+{
+  "status": "PREPARED_NOT_YET_MUTATED",
+  "backupSha256": "b50e912a0f9d6b00e91668c2d6e67e1b59773fe23b3ce7002b9ba6ec5cb33338",
+  "capturedAt": "2026-10-02T15:20:39.897Z",
+  "dbHost": "gondola.proxy.rlwy.net",
+  "database": "railway",
+  "roundId": "c9569c28-f599-47cb-8dc3-31e890b977da",
+  "roundSlug": "comic-strips",
+  "targetCount": 6,
+  "targetVotes": 147,
+  "voteRows": 219,
+  "totalVotes": 2919,
+  "winners": 10,
+  "awards": 10,
+  "adminAuditRows": 0,
+  "operator": "[private identifier redacted]",
+  "adminWalletAudit": "Cannot insert application audit rows through direct SQL without the genuine authenticated admin wallet identity; complete before/after trail is preserved in these operation artifacts.",
+  "targets": [
+    {
+      "id": "dc72da0e-174b-4ebe-8e30-b0dae81c1f64",
+      "submission_id": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet_address": "0xB89743F3B06d66ED5d7e3bBDf8312f6856DE6C6b",
+      "vote_count": 25
+    },
+    {
+      "id": "131985c6-7075-4b79-99b4-1072d76c4443",
+      "submission_id": "3df8b0f9-a658-429f-b7c6-347ec489504d",
+      "wallet_address": "0x79eD59c8c92ff3f3384C2C43e1088e6b56E8Af6E",
+      "vote_count": 25
+    },
+    {
+      "id": "ab8b1cec-b3cd-49ab-a86c-70dd3a76aeea",
+      "submission_id": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet_address": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a",
+      "vote_count": 25
+    },
+    {
+      "id": "585acf98-9863-4a88-b47d-b48f43d9f828",
+      "submission_id": "75ef6924-64fa-40dc-9945-a7a3fe6c4a0e",
+      "wallet_address": "0xCBA18CB7e7c043B378E21607fa104F1767442348",
+      "vote_count": 22
+    },
+    {
+      "id": "8e2cdd0d-5145-4d25-9e75-ab2ebc8aeca7",
+      "submission_id": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet_address": "0xac1A6F43425EFdD808748a6EB992fa047e90776e",
+      "vote_count": 25
+    },
+    {
+      "id": "d67a0e5a-526b-4730-b18a-b005ccbae1c9",
+      "submission_id": "a2571669-ca51-4e6c-965a-2dc3799d636b",
+      "wallet_address": "0xF7AEF946D3f2E58a3685166ACE1fc3dB76d614de",
+      "vote_count": 25
+    }
+  ]
+}

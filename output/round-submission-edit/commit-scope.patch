@@ -1,0 +1,230 @@
+diff --git a/data/rounds.ts b/data/rounds.ts
+index f1e9d1c7..865bb618 100644
+--- a/data/rounds.ts
++++ b/data/rounds.ts
+@@ -1,3 +1,4 @@
++import { canEditRoundSubmission, parseRoundSubmissionEdit, RoundSubmissionEditError } from "@/utils/rounds/submission-edit";
+ import { randomUUID } from "crypto";
+ import { Pool, type PoolClient } from "pg";
+ import { getAddress, isAddress } from "viem";
+@@ -101,6 +102,7 @@ export type Round = {
+ };
+ 
+ export type RoundSubmission = {
++  userEditedAt?: string | null;
+   video?: import("@/utils/rounds/video-policy").RoundVideo | null;
+   id: string;
+   roundId: string;
+@@ -593,7 +595,8 @@ const ensureTables = async () => {
+             ADD COLUMN IF NOT EXISTS trait_type text,
+             ADD COLUMN IF NOT EXISTS source text NOT NULL DEFAULT 'project',
+             ADD COLUMN IF NOT EXISTS source_payload jsonb NOT NULL DEFAULT '{}'::jsonb,
+-            ADD COLUMN IF NOT EXISTS images jsonb NOT NULL DEFAULT '[]'::jsonb
++            ADD COLUMN IF NOT EXISTS images jsonb NOT NULL DEFAULT '[]'::jsonb,
++            ADD COLUMN IF NOT EXISTS user_edited_at timestamptz
+         `)
+       )
+       .then(() =>
+@@ -799,6 +802,7 @@ const submissionSelectFields = `
+   s.status,
+   s.created_at,
+   s.updated_at,
++  s.user_edited_at,
+   s.approved_at,
+   s.rejected_at,
+   s.hidden_at,
+@@ -957,6 +961,7 @@ const mapSubmission = (row: Record<string, any>): RoundSubmission => {
+     status: row.status,
+     createdAt: formatDate(row.created_at) || "",
+     updatedAt: formatDate(row.updated_at) || "",
++    userEditedAt: formatDate(row.user_edited_at),
+     approvedAt: formatDate(row.approved_at),
+     rejectedAt: formatDate(row.rejected_at),
+     hiddenAt: formatDate(row.hidden_at),
+@@ -3595,6 +3600,102 @@ export const createRoundTraitSubmission = async ({
+   }
+ };
+ 
++export const listOwnedRoundSubmissionSummaries = async (slug: string, walletAddress: string) => {
++  const round = await getRoundBySlug(slug);
++  if (!round || round.status !== "published" || !round.active) return null;
++  const result = await getPool().query(`
++    SELECT s.id, s.title, s.status, s.wallet_address, s.user_edited_at
++    FROM round_submissions s
++    WHERE s.round_id=$1 AND lower(s.wallet_address)=lower($2)
++      AND s.deleted_at IS NULL AND s.status IN ('approved','pending')
++    ORDER BY s.created_at DESC LIMIT 100
++  `, [round.id, walletAddress]);
++  return result.rows.map((row) => ({
++    id: String(row.id), title: String(row.title), status: row.status as RoundSubmissionStatus,
++    walletAddress: String(row.wallet_address), userEditedAt: formatDate(row.user_edited_at),
++  }));
++};
++
++export const getOwnedRoundSubmission = async (slug: string, submissionId: string, walletAddress: string) => {
++  const round = await getRoundBySlug(slug);
++  if (!round || round.status !== "published" || !round.active) return null;
++  const result = await getPool().query(`
++    SELECT s.* FROM round_submissions s
++    WHERE s.round_id=$1 AND s.id=$2 AND lower(s.wallet_address)=lower($3)
++      AND s.deleted_at IS NULL AND s.status IN ('approved','pending')
++    LIMIT 1
++  `, [round.id, submissionId, walletAddress]);
++  return result.rows[0] ? mapSubmission(result.rows[0]) : null;
++};
++
++export const editOwnedRoundSubmission = async (
++  slug: string, submissionId: string, walletAddress: string, input: unknown
++) => {
++  const changes = parseRoundSubmissionEdit(input);
++  await ensureTables();
++  const client = await getPool().connect();
++  try {
++    await client.query("BEGIN");
++    await client.query("SET LOCAL statement_timeout = '10s'");
++    await client.query("SET LOCAL lock_timeout = '5s'");
++    const roundResult = await client.query(
++      "SELECT * FROM rounds WHERE slug=$1 AND deleted_at IS NULL FOR SHARE", [slug]
++    );
++    if (!roundResult.rows[0]) throw new RoundSubmissionEditError("Submission not found.", 404);
++    const round = mapRound(roundResult.rows[0]);
++    const currentResult = await client.query(`
++      SELECT s.* FROM round_submissions s
++      WHERE s.round_id=$1 AND s.id=$2 AND lower(s.wallet_address)=lower($3)
++        AND s.deleted_at IS NULL
++      FOR UPDATE
++    `, [round.id, submissionId, walletAddress]);
++    if (!currentResult.rows[0]) throw new RoundSubmissionEditError("Submission not found.", 404);
++    const current = mapSubmission(currentResult.rows[0]);
++    if (!canEditRoundSubmission(round, current, walletAddress)) {
++      throw new RoundSubmissionEditError("This submission cannot be edited: edits are allowed once, before voting begins.", 409);
++    }
++    const merged = { ...current, ...changes, walletAddress: current.walletAddress };
++    const unchangedImages = !changes.images || (changes.images.length === current.images.length && changes.images.every((image, index) => image === current.images[index]));
++    if (current.submissionType === "trait" && (!unchangedImages || (changes.url !== undefined && changes.url !== current.url))) {
++      throw new RoundSubmissionEditError("Trait edits can change only title and description; the canonical artwork and link stay unchanged.");
++    }
++    const validationError = current.submissionType === "trait" && current.source === "noundry"
++      ? validateDerivedRoundTraitSubmission({
++          traitId: current.traitId || "", title: String(merged.title).trim(), description: String(merged.description).trim(),
++          image: current.image, url: current.url, minTitleLength: round.minTitleLength, maxTitleLength: round.maxTitleLength,
++          minDescriptionLength: round.minDescriptionLength, maxDescriptionLength: round.maxDescriptionLength,
++        })
++      : validateRoundSubmissionInput(round, merged, unchangedImages);
++    if (validationError) throw new RoundSubmissionEditError(validationError);
++    const images = unchangedImages ? current.images : changes.images!.map((image) => normalizeSafeImageUrl(image, { allowInternal: true, allowDataImages: true }));
++    const title = String(merged.title).trim();
++    const description = String(merged.description).trim();
++    const url = normalizeSafeProjectUrl(merged.url, { allowInternal: true });
++    if (title === current.title && description === current.description && url === current.url && unchangedImages) {
++      throw new RoundSubmissionEditError("Make a change before saving your one-time edit.");
++    }
++    const result = await client.query(`
++      UPDATE round_submissions AS s
++      SET title=$4, description=$5, image=$6, images=$7::jsonb, url=$8,
++        user_edited_at=clock_timestamp(), updated_at=clock_timestamp()
++      FROM rounds r
++      WHERE s.round_id=$1 AND s.id=$2 AND lower(s.wallet_address)=lower($3)
++        AND s.deleted_at IS NULL AND s.status IN ('approved','pending')
++        AND s.user_edited_at IS NULL AND r.id=s.round_id AND r.deleted_at IS NULL
++        AND r.status='published' AND r.active=true AND clock_timestamp() < r.voting_starts_at
++      RETURNING s.*
++    `, [round.id, submissionId, walletAddress, title, description, images[0], JSON.stringify(images), url]);
++    if (!result.rows[0]) throw new RoundSubmissionEditError("The edit window has closed or your one-time edit was already used.", 409);
++    await client.query("COMMIT");
++    return mapSubmission(result.rows[0]);
++  } catch (error) {
++    await client.query("ROLLBACK");
++    throw error;
++  } finally {
++    client.release();
++  }
++};
++
+ export const updateRoundSubmission = async (
+   roundId: string,
+   submissionId: string,
+diff --git a/pages/rounds/[slug].tsx b/pages/rounds/[slug].tsx
+index db29bb28..bbb46e46 100644
+--- a/pages/rounds/[slug].tsx
++++ b/pages/rounds/[slug].tsx
+@@ -1,3 +1,4 @@
++import { canEditRoundSubmission } from "@/utils/rounds/submission-edit";
+ import { RoundVideoPlayer } from "@/components/rounds/RoundVideoPlayer";
+ import Layout from "@/components/Layout";
+ import WalletIdentityLink from "@/components/WalletIdentityLink";
+@@ -43,7 +44,7 @@ import Head from "next/head";
+ import Link from "next/link";
+ import { useRouter } from "next/router";
+ import type { ReactNode } from "react";
+-import { useMemo, useState } from "react";
++import { useEffect, useMemo, useState } from "react";
+ import ReactMarkdown from "react-markdown";
+ import remarkGfm from "remark-gfm";
+ import useSWR from "swr";
+@@ -184,6 +185,11 @@ export default function RoundDetailPage({
+     useState<RoundSubmission | null>(null);
+   const [message, setMessage] = useState("");
+   const [isVoting, setIsVoting] = useState(false);
++  const [editNow, setEditNow] = useState(() => Date.now());
++  useEffect(() => {
++    const timer = setInterval(() => setEditNow(Date.now()), 1000);
++    return () => clearInterval(timer);
++  }, []);
+   const mediaKey = initialRound
+     ? `/api/rounds/${initialRound.slug}/media`
+     : null;
+@@ -560,6 +566,7 @@ export default function RoundDetailPage({
+             <h2 className="font-heading text-[34px] leading-none text-[#212529]">
+               Submissions
+             </h2>
++            {address && <Link href={`/rounds/${round.slug}/edit`} className="font-heading text-base underline">My submissions</Link>}
+             <span className="self-start rounded-full bg-[#c93d2f] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#7f2219]">
+               {round.submissions.length}
+             </span>
+@@ -570,6 +577,7 @@ export default function RoundDetailPage({
+                 <SubmissionCard
+                   key={submission.id}
+                   submission={submission}
++                  editHref={canEditRoundSubmission(round, submission, address, new Date(editNow)) ? `/rounds/${round.slug}/edit?submission=${encodeURIComponent(submission.id)}` : undefined}
+                   rank={index + 1}
+                   isWinner={state === "ended" && index < round.winnerCount}
+                   isRoundEnded={isRoundEnded}
+@@ -641,6 +649,7 @@ export default function RoundDetailPage({
+ 
+ const SubmissionCard = ({
+   submission,
++  editHref,
+   rank,
+   isWinner,
+   isRoundEnded,
+@@ -658,6 +667,7 @@ const SubmissionCard = ({
+   showVoteCount,
+ }: {
+   submission: RoundSubmission;
++  editHref?: string;
+   rank: number;
+   isWinner: boolean;
+   isRoundEnded: boolean;
+@@ -793,15 +805,26 @@ const SubmissionCard = ({
+               </div>
+             )}
+           </div>
++          {editHref && <Link href={editHref} className="w-fit rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-2 font-heading text-base text-[#212529]">Edit</Link>}
+           {isVotingOpen && isOwnSubmission && (
+             <p
+               role="status"
+diff --git a/tests/round-additive-voting.test.mjs b/tests/round-additive-voting.test.mjs
+index 9b1bc459..457dfd3e 100644
+--- a/tests/round-additive-voting.test.mjs
++++ b/tests/round-additive-voting.test.mjs
+@@ -85,6 +85,9 @@ const loadRoundsModule = (requireOverrides = {}) =>
+     },
+     "@/utils/rounds/voting-strategy": votingStrategy,
+     "@/utils/rounds/submission-images": submissionImages,
++    "@/utils/rounds/submission-edit": loadTsModule(
++      resolve(process.cwd(), "utils/rounds/submission-edit.ts")
++    ),
+     "data/ens": { getEnsName: async () => ({}) },
+     ...requireOverrides,
+   });

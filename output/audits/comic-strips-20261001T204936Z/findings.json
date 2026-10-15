@@ -1,0 +1,199 @@
+[
+  {
+    "id": "F01",
+    "title": "Rise submitter supplied two eligible voters",
+    "priority": "HIGH",
+    "addresses": [
+      "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+      "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b"
+    ],
+    "tokens": [
+      "860",
+      "870"
+    ],
+    "facts": "The submitting wallet initiated both transfers before the snapshot. Each recipient gained getVotes 0 to 1 and then allocated 25 to Rise. NFTs remained with recipients through cutoff.",
+    "control": "LOW TO MODERATE: direct transfers and supportive ballots are proven; common control is not.",
+    "alternatives": "Independent gifts or sales and legitimate support. b897 had Base activity in 2024 and one other-round allocation. 79ed nonce zero is not evidence of creation date.",
+    "question": "Who controlled each recipient when signing the Comic Strips vote, and were the transfers gifts, purchases, or custody arrangements?",
+    "decision": "REVIEW BEFORE AWARDING",
+    "vote_ids": [
+      "131985c6-7075-4b79-99b4-1072d76c4443",
+      "dc72da0e-174b-4ebe-8e30-b0dae81c1f64"
+    ],
+    "votes_at_issue": 50,
+    "fact_confidence": "HIGH for verified transfers, receipts and snapshot state",
+    "applicable_rule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+    "violation_established": false,
+    "deliberate_manipulation_established": false,
+    "evidence": [
+      "https://base.blockscout.com/tx/0xaa01c6892ba8ac2ba4a45649e9d2f627021a5d7c2538733f0f13db70c90a3f0c",
+      "https://base.blockscout.com/tx/0x8d1e2b5aba7890b95cdd98f129d09fbb626d565663f1669c006a234b8663b00d",
+      "https://base.blockscout.com/tx/0xe07bcb8e8e714ae3093f66ca9f24fc215103bcbbd26f90422c17a8298c5ddd83",
+      "https://base.blockscout.com/tx/0xe8d03281c3f5c5cff59d7870d941dbe43c3a0b6756653e25bfe09ca05906a817",
+      "https://base.blockscout.com/tx/0xfa40363226a588c7d693d97413dcd61dfb55204c3870e04ec9fc7e1f241eda1d",
+      "https://base.blockscout.com/tx/0x8d1e2b5aba7890b95cdd98f129d09fbb626d565663f1669c006a234b8663b00d",
+      "https://base.blockscout.com/tx/0xea18d300bc109421eb3c4b68d7c0f51e748b51c07e3eb5dadf2c46b364f7de39",
+      "https://base.blockscout.com/tx/0xbb6e12f73cc88206bb3d1a1595ee26e80df0eb3efe6da35bebb6057cf2838027"
+    ]
+  },
+  {
+    "id": "F02",
+    "title": "Candleman NFT 820 circulation around snapshot",
+    "priority": "HIGH",
+    "addresses": [
+      "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a"
+    ],
+    "tokens": [
+      "820"
+    ],
+    "facts": "Five legs during Sep 24-29: out, back, out before snapshot, back Sep 28 after voting, and out AGAIN Sep 29. Recipient allocated 25 to Candleman. The submitter had zero snapshot power and cast no votes.",
+    "control": "MODERATE: repeated circulation and pre-existing bidirectional ETH transfers support a relationship, but do not establish common control or a sham loan.",
+    "alternatives": "Independent friends, custody, or a real loan. A loan itself was not prohibited by an identified rule.",
+    "question": "Were 1bae and 3b independently controlled at vote signing, and why was 820 circulated repeatedly? If one controller, was voting on that controller's own entry intended?",
+    "decision": "REVIEW BEFORE AWARDING",
+    "vote_ids": [
+      "ab8b1cec-b3cd-49ab-a86c-70dd3a76aeea"
+    ],
+    "votes_at_issue": 25,
+    "fact_confidence": "HIGH for verified transfers, receipts and snapshot state",
+    "applicable_rule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+    "violation_established": false,
+    "deliberate_manipulation_established": false,
+    "evidence": [
+      "https://base.blockscout.com/tx/0x2adc9aabf3b90ff2fe8f8a6a9f4f4da8d18913741364262ea99cca98cefde134",
+      "https://base.blockscout.com/tx/0x8d1e2b5aba7890b95cdd98f129d09fbb626d565663f1669c006a234b8663b00d",
+      "https://base.blockscout.com/tx/0x43809f2f1bc34b4700d2f1efc840a24d3161d209097addd37c2a97a04df8baf8",
+      "https://base.blockscout.com/tx/0x90545b75f9b9037d1837b1d0a32a626a941c94c5512bd51b7fe712308d23f24b",
+      "https://base.blockscout.com/tx/0x50420acd1abd357a8f882e3fbd5b00aab22cae1bb2ef2811a9d75695e4926c2d",
+      "https://base.blockscout.com/tx/0x79c4002f88b163335b08746566a19fa329e697d74cfa5b1926cad14677fbf224",
+      "https://base.blockscout.com/tx/0x4fdd3eedf0146f16dba76365855ef00f5251188486c51563b6361acad72a333a",
+      "https://base.blockscout.com/tx/0xfd96a0493d8ad8f3cc4be6686b0ca7a73618217f47dc4916053ba5793e4197a4"
+    ]
+  },
+  {
+    "id": "F03",
+    "title": "Yellow Tattoo: delegated-only voters and later NFT transfer",
+    "priority": "HIGH",
+    "addresses": [
+      "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+      "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+      "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+      "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+      "0x9234ccdea92b38071458b6837bddbddd874bfc26"
+    ],
+    "tokens": [
+      "944",
+      "945",
+      "946",
+      "955",
+      "959"
+    ],
+    "facts": "Donors delegated NFTs 944/945 to ac1/f7 about 4h45m before snapshot; donor 946 delegated to Tattoo submitter. ac1/f7 had zero NFT balance but getVotes=1 at snapshot. Each cast only 25 Tattoo votes 63.188 seconds apart. The submitter's delegation was revoked 101.26 seconds after the second ballot. ac1 later sent NFT 955 to the submitter; f7 acquired NFT 959 later.",
+    "control": "MODERATE for coordination; LOW TO MODERATE for shared control. ac1-to-submitter transfer is direct; f7 connection to submitter is circumstantial.",
+    "alternatives": "Independent delegated voters, coordinated legitimate support, or gifts. Donors lost their own power; redelegation does not itself increase global eligible wallet count. Later NFT ownership is irrelevant to snapshot eligibility.",
+    "question": "Who controlled ac1/f7 and the three delegators at snapshot and signing? Was ac1's subsequent NFT 955 transfer a gift/sale or movement between the submitter's own wallets?",
+    "decision": "REVIEW BEFORE AWARDING",
+    "vote_ids": [
+      "8e2cdd0d-5145-4d25-9e75-ab2ebc8aeca7",
+      "d67a0e5a-526b-4730-b18a-b005ccbae1c9"
+    ],
+    "votes_at_issue": 50,
+    "fact_confidence": "HIGH for verified transfers, receipts and snapshot state",
+    "applicable_rule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+    "violation_established": false,
+    "deliberate_manipulation_established": false,
+    "evidence": [
+      "https://base.blockscout.com/tx/0x5c9e29ea251e6d2104e601894dc95570a95bbd9e6d2c504ac2785bc232d41655",
+      "https://base.blockscout.com/tx/0xa4e484ae7fcf832bb214489ee8f858d3fcde3449ebe360c10f67be406e24ff8a",
+      "https://base.blockscout.com/tx/0x6ac2f9870a7a677592b749d70399be43615ce1cc8221a934c60557af6b6e8eeb",
+      "https://base.blockscout.com/tx/0x41f09e137b88af76a96ad85cc768add369c0bb11fcb11982b887d6b876668244",
+      "https://base.blockscout.com/tx/0x03e2daf356281a77feff5312e09f838254363add50697f1ae48f1b65509fdf6a",
+      "https://base.blockscout.com/tx/0x50e49ffb1fa014afe2ffbaf33bb4ca73b3c33fd04cc0f7e9328d45d2744bd645",
+      "https://base.blockscout.com/tx/0x50e49ffb1fa014afe2ffbaf33bb4ca73b3c33fd04cc0f7e9328d45d2744bd645",
+      "https://base.blockscout.com/tx/0x158154e9be41cd20fc7e855eb4a92089f41663450882c18fa869f2776dc2ea30",
+      "https://base.blockscout.com/tx/0x158154e9be41cd20fc7e855eb4a92089f41663450882c18fa869f2776dc2ea30",
+      "https://base.blockscout.com/tx/0xff2ec9209dc5c925fc8169c25e31db2cf39a68b0ba7d86d0439d71c87a9f6597",
+      "https://base.blockscout.com/tx/0x546fa830c9ea3beac4b5e992651f134502665e3c4d1f2aa8249c2dff7d701fb5",
+      "https://base.blockscout.com/tx/0x379bb34f87eef5d089b67d04943e33cfa99b28190b8b85b499c7950768fab00c",
+      "https://base.blockscout.com/tx/0x6e792833e8aa18195c22523b782038b8577de0e3ab57ea70eca12315839729d3",
+      "https://base.blockscout.com/tx/0x5c2008b50f79479f96a3fe2c293a37475a6fc58e1c05f1a4c61a2c3a6f9191de",
+      "https://base.blockscout.com/tx/0x996f9ce9ebab02e78c08d90b85937bca21096aa108e5eddce66059031954d810"
+    ]
+  },
+  {
+    "id": "F04",
+    "title": "Candleman older recipient plus repeated funding",
+    "priority": "MEDIUM",
+    "addresses": [
+      "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a"
+    ],
+    "tokens": [
+      "254"
+    ],
+    "facts": "NFT 254 moved from Candleman submitter to cba in July. cba cast 22 Candleman votes. Repeated older bidirectional funding exists; cba funded 3b 28 seconds before 820 returned on Sep 24. This strengthens the relationship beyond an isolated old gift.",
+    "control": "LOW TO MODERATE: established financial relationship, not an attribution of control.",
+    "alternatives": "Longstanding independent participants and gas gifts. cba has 6401 nonce and 33 other-round allocations; an old transfer alone is insufficient.",
+    "question": "Is cba an independent person or another wallet controlled by the submitter? What explains funding the 820 return?",
+    "decision": "REVIEW BEFORE AWARDING",
+    "vote_ids": [
+      "585acf98-9863-4a88-b47d-b48f43d9f828"
+    ],
+    "votes_at_issue": 22,
+    "fact_confidence": "HIGH for verified transfers, receipts and snapshot state",
+    "applicable_rule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+    "violation_established": false,
+    "deliberate_manipulation_established": false,
+    "evidence": [
+      "https://base.blockscout.com/tx/0x846dbd1ced86795876cd092abf792b0c8913e7ed575c6f5de4e1e84cfe5732ce",
+      "https://base.blockscout.com/tx/0xf3c682ab09e445c6ad6be599ec00abd75de3d3a00f4e268ac88e876a0fe24385",
+      "https://base.blockscout.com/tx/0xefee5828c8afc8433b6aadc83cac90b8fc114d079f876f6f68aaf9461c5e3345"
+    ]
+  },
+  {
+    "id": "F05",
+    "title": "NFT 355 transfer and paired full-budget ballots",
+    "priority": "LOW",
+    "addresses": [
+      "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "0x28e8292c6b21288140c5b4f16b28cede42e8098c"
+    ],
+    "tokens": [
+      "355",
+      "952"
+    ],
+    "facts": "f1f5 transferred NFT 355 to 28e8 Sep 22 while retaining NFT 952. Both had getVotes=1 and spent all 101 votes. Ballot batches on Oct 1 were 55.829 seconds apart. Both supported Conference and Son, with different other allocations.",
+    "control": "LOW: coordination plausible, common control or link to benefiting submitters not established.",
+    "alternatives": "Independent gift recipients discussing their choices. Both are established onchain wallets; one had prior round participation.",
+    "question": "Were the two voters independently controlled? No entry-disqualification basis exists without a further link to its submitter.",
+    "decision": "REVIEW BEFORE AWARDING",
+    "vote_ids": [
+      "053a2276-9b5d-404b-98e3-1c424f0eb7ae",
+      "1d4896b8-ee10-4c27-a31f-82ae8cab4da8",
+      "2fdd6a33-d368-4416-b0d6-0f0041ec5a52",
+      "3452a946-ffb6-44cc-8ec9-8f35bfa32bdf",
+      "f3fa7f44-3b85-4ba4-a9b3-29364e94c4e3",
+      "27975fc5-fe44-4feb-bf59-d85c972fb052",
+      "40a891dc-ae8f-4b7c-8692-46b02ea0619f",
+      "7dae4f1b-8aa9-466d-9b43-107e235670f3",
+      "bbb0edc6-5b68-4d14-831d-4d68fb5f8acd",
+      "d7a5c913-d985-4d47-8363-b3d5cb6e6c7b"
+    ],
+    "votes_at_issue": 202,
+    "fact_confidence": "HIGH for verified transfers, receipts and snapshot state",
+    "applicable_rule": "Self-vote wording may apply if beneficial control is established. No identified transfer/loan/multiwallet disqualification rule.",
+    "violation_established": false,
+    "deliberate_manipulation_established": false,
+    "evidence": [
+      "https://base.blockscout.com/tx/0xc682af2dcf0c591a7a0a18859183a3a3b8df207f566c8608ebf34a65665dfb54",
+      "https://base.blockscout.com/tx/0xce148568a14df182b68a5537c933d776f9a27cec37d308bda3ee311f0083dda9",
+      "https://base.blockscout.com/tx/0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+      "https://base.blockscout.com/tx/0x9f3290e42482a5fa3b14cdc488103e1896b0ca6d045d15ed6974926cf9111d52",
+      "https://base.blockscout.com/tx/0x5ef4cb64fd2c4c65d2643d9e72388ccd04066b9f30a60adfbe68d5314e895192"
+    ]
+  }
+]

@@ -1,0 +1,200 @@
+[
+  {
+    "sql": "SELECT transaction_timestamp() AS cutoff, current_database() AS database, current_setting('transaction_read_only') AS read_only",
+    "params": []
+  },
+  {
+    "sql": "SELECT to_jsonb(r)-'image' AS record FROM rounds r WHERE r.id=$1",
+    "params": [
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  },
+  {
+    "sql": "SELECT to_jsonb(s)-'image'-'images'-'source_payload' AS record FROM round_submissions s WHERE s.round_id=$1 ORDER BY s.created_at,s.id LIMIT 2000",
+    "params": [
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  },
+  {
+    "sql": "SELECT * FROM round_votes WHERE round_id=$1 ORDER BY created_at,id LIMIT 10000",
+    "params": [
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  },
+  {
+    "sql": "SELECT * FROM round_vote_admin_audit WHERE round_id=$1 ORDER BY created_at,id LIMIT 10000",
+    "params": [
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  },
+  {
+    "sql": "SELECT * FROM round_awards WHERE round_id=$1 ORDER BY award_position",
+    "params": [
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  },
+  {
+    "sql": "SELECT * FROM round_winners WHERE round_id=$1 ORDER BY winner_position",
+    "params": [
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  },
+  {
+    "sql": "SELECT wallet_address,username,website_url,farcaster,twitter,created_at,updated_at FROM profile_metadata WHERE lower(wallet_address)=ANY($1::text[]) LIMIT 2000",
+    "params": [
+      [
+        "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+        "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+        "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+        "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+        "0x8621ffa9fd2b61bfa485798a1082d23dc920e8d1",
+        "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+        "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+        "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+        "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+        "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+        "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "0xd091d0a86ff1ee9d9e24e9d6e6990592d7cb3998",
+        "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "0x94bd21234bb1fb52b58263ad76996ba3baea48df",
+        "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "0x7dcff286f8e45b9a5c31bb990c0007d4ee5f7ec0",
+        "0x089490a8b64d36d9764aca7a65bd6e715e254619",
+        "0x23a355cf3246e44d4c734435d968ac92de85f822",
+        "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27"
+      ]
+    ]
+  },
+  {
+    "sql": "SELECT v.*,r.slug,r.title AS round_title,r.voting_snapshot_block,r.voting_strategy,r.votes_per_wallet,s.title AS submission_title,s.wallet_address AS submitting_wallet,s.status AS submission_status,s.deleted_at AS submission_deleted_at FROM round_votes v JOIN rounds r ON r.id=v.round_id JOIN round_submissions s ON s.id=v.submission_id AND s.round_id=v.round_id WHERE lower(v.wallet_address)=ANY($1::text[]) AND v.round_id<>$2 ORDER BY v.created_at,v.id LIMIT 10000",
+    "params": [
+      [
+        "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+        "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+        "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+        "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+        "0x8621ffa9fd2b61bfa485798a1082d23dc920e8d1",
+        "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+        "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+        "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+        "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+        "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+        "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "0xd091d0a86ff1ee9d9e24e9d6e6990592d7cb3998",
+        "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "0x94bd21234bb1fb52b58263ad76996ba3baea48df",
+        "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "0x7dcff286f8e45b9a5c31bb990c0007d4ee5f7ec0",
+        "0x089490a8b64d36d9764aca7a65bd6e715e254619",
+        "0x23a355cf3246e44d4c734435d968ac92de85f822",
+        "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27"
+      ],
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  },
+  {
+    "sql": "SELECT s.id,s.round_id,r.slug,s.title,s.wallet_address,s.status,s.created_at,s.updated_at,s.deleted_at FROM round_submissions s JOIN rounds r ON r.id=s.round_id WHERE lower(s.wallet_address)=ANY($1::text[]) AND s.round_id<>$2 ORDER BY s.created_at LIMIT 5000",
+    "params": [
+      [
+        "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+        "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+        "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "0xbe14b9950dc61642a084eab491fa516d8fe557e6",
+        "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+        "0x8621ffa9fd2b61bfa485798a1082d23dc920e8d1",
+        "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+        "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+        "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+        "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+        "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+        "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "0xd091d0a86ff1ee9d9e24e9d6e6990592d7cb3998",
+        "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "0x94bd21234bb1fb52b58263ad76996ba3baea48df",
+        "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "0x7dcff286f8e45b9a5c31bb990c0007d4ee5f7ec0",
+        "0x089490a8b64d36d9764aca7a65bd6e715e254619",
+        "0x23a355cf3246e44d4c734435d968ac92de85f822",
+        "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27"
+      ],
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  },
+  {
+    "sql": "SELECT (SELECT count(*) FROM round_submissions WHERE round_id=$1) AS submissions,(SELECT count(*) FROM round_votes WHERE round_id=$1) AS votes,(SELECT count(*) FROM round_vote_admin_audit WHERE round_id=$1) AS audits",
+    "params": [
+      "c9569c28-f599-47cb-8dc3-31e890b977da"
+    ]
+  }
+]

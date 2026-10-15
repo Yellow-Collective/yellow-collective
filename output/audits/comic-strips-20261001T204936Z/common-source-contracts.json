@@ -1,0 +1,82 @@
+[
+  {
+    "ok": true,
+    "value": {
+      "address": "0x00ec9615ab4f45cbeb66b5fa36bced3d79f38bb3",
+      "codeAtSnapshot": "0x608060405273ffffffffffffffffffffffffffffffffffffffff600054167fa619486e0000000000000000000000000000000000000000000000000000000060003514156050578060005260206000f35b3660008037600080366000845af43d6000803e60008114156070573d6000fd5b3d6000f3fea264697066735822122003d1488ee65e08fa41e58e888a9865554c535f2c77126a82cb4c0f917f31441364736f6c63430007060033",
+      "metadata": {
+        "block_number_balance_updated_at": 51955889,
+        "coin_balance": "2715000100000000000",
+        "creation_status": "success",
+        "creation_transaction_hash": "0xd9da659a1f42f4b08f12106f09a2ea0acb1a0081f11505792df777238649f954",
+        "creator_address_hash": "0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67",
+        "ens_domain_name": null,
+        "exchange_rate": "2697.18",
+        "has_beacon_chain_withdrawals": false,
+        "has_logs": true,
+        "has_token_transfers": true,
+        "has_tokens": true,
+        "has_validated_blocks": false,
+        "hash": "0x00EC9615Ab4f45cBeb66b5FA36bcEd3D79f38Bb3",
+        "implementations": [
+          {
+            "address_hash": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+            "name": "SafeL2"
+          }
+        ],
+        "is_contract": true,
+        "is_scam": false,
+        "is_verified": false,
+        "metadata": null,
+        "name": null,
+        "private_tags": [],
+        "proxy_type": "master_copy",
+        "public_tags": [],
+        "reputation": "ok",
+        "token": null,
+        "watchlist_address_id": null,
+        "watchlist_names": []
+      }
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "address": "0x0aa23a7e112889c965010558803813710becf263",
+      "codeAtSnapshot": "0x60806040523661001357610011610017565b005b6100115b6100276100226100ee565b610133565b565b6060823b610063576040517f37f2022900000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6000808473ffffffffffffffffffffffffffffffffffffffff168460405161008b91906101a8565b600060405180830381855af49150503d80600081146100c6576040519150601f19603f3d011682016040523d82523d6000602084013e6100cb565b606091505b50915091506100da8282610157565b925050505b92915050565b3b151590565b90565b600061012e7f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc5473ffffffffffffffffffffffffffffffffffffffff1690565b905090565b3660008037600080366000845af43d6000803e808015610152573d6000f35b3d6000fd5b606082156101665750806100df565b8151156101765781518083602001fd5b6040517f62536b1000000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6000825160005b818110156101c957602081860181015185830152016101af565b50600092019182525091905056fea2646970667358221220dc4d3f0096ef746736792d21828a33955017294e8f127fdabcf6bf06082a501464736f6c63430008100033",
+      "metadata": {
+        "block_number_balance_updated_at": 52036084,
+        "coin_balance": "6900000000000000",
+        "creation_status": "success",
+        "creation_transaction_hash": "0x82101d4a47384ac2c5ad6b3a228bbcb8b27a362899f9a6275d8fe87bbba80d6b",
+        "creator_address_hash": "0x3ac0E64Fe2931f8e082C6Bb29283540DE9b5371C",
+        "ens_domain_name": null,
+        "exchange_rate": "2697.18",
+        "has_beacon_chain_withdrawals": false,
+        "has_logs": true,
+        "has_token_transfers": true,
+        "has_tokens": true,
+        "has_validated_blocks": false,
+        "hash": "0x0aa23A7E112889C965010558803813710beCF263",
+        "implementations": [
+          {
+            "address_hash": "0xf958872ceb73bA7d0acA0c7a9905119BCb371dEC",
+            "name": "Auction"
+          }
+        ],
+        "is_contract": true,
+        "is_scam": false,
+        "is_verified": true,
+        "metadata": null,
+        "name": "ERC1967Proxy",
+        "private_tags": [],
+        "proxy_type": "eip1967",
+        "public_tags": [],
+        "reputation": "ok",
+        "token": null,
+        "watchlist_address_id": null,
+        "watchlist_names": []
+      }
+    }
+  }
+]

@@ -1,0 +1,674 @@
+[
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "254",
+        "from": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "to": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "block": 48838159,
+        "time": "2026-07-19T12:54:25.000000Z",
+        "hash": "0xefee5828c8afc8433b6aadc83cac90b8fc114d079f876f6f68aaf9461c5e3345",
+        "logIndex": 261
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+          },
+          {
+            "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xCBA18CB7e7c043B378E21607fa104F1767442348"
+          }
+        ],
+        "after": [
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+          },
+          {
+            "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xCBA18CB7e7c043B378E21607fa104F1767442348"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "355",
+        "from": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "to": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+        "block": 51657507,
+        "time": "2026-09-22T19:12:41.000000Z",
+        "hash": "0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+        "logIndex": 493
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+            "fn": "getVotes",
+            "success": true,
+            "value": "2"
+          },
+          {
+            "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "2"
+          },
+          {
+            "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xf1f5D35c46Fd62fDD9150C39acc4A1b6A8327Ae4"
+          },
+          {
+            "address": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x28e8292c6B21288140c5B4f16B28CEDe42E8098C"
+          }
+        ],
+        "after": [
+          {
+            "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xf1f5D35c46Fd62fDD9150C39acc4A1b6A8327Ae4"
+          },
+          {
+            "address": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x28e8292c6B21288140c5B4f16B28CEDe42E8098C"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "820",
+        "from": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "to": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "block": 51735322,
+        "time": "2026-09-24T14:26:31.000000Z",
+        "hash": "0x90545b75f9b9037d1837b1d0a32a626a941c94c5512bd51b7fe712308d23f24b",
+        "logIndex": 1178
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a"
+          }
+        ],
+        "after": [
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": false,
+    "item": {
+      "tokenId": "820",
+      "from": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "to": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "block": 51739671,
+      "time": "2026-09-24T16:51:29.000000Z",
+      "hash": "0x79c4002f88b163335b08746566a19fa329e697d74cfa5b1926cad14677fbf224",
+      "logIndex": 393
+    },
+    "error": "HTTP_429"
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "820",
+        "from": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "to": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "block": 51889829,
+        "time": "2026-09-28T04:16:45.000000Z",
+        "hash": "0x4fdd3eedf0146f16dba76365855ef00f5251188486c51563b6361acad72a333a",
+        "logIndex": 11
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+          }
+        ],
+        "after": [
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "820",
+        "from": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "to": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "block": 51959064,
+        "time": "2026-09-29T18:44:35.000000Z",
+        "hash": "0xfd96a0493d8ad8f3cc4be6686b0ca7a73618217f47dc4916053ba5793e4197a4",
+        "logIndex": 397
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a"
+          }
+        ],
+        "after": [
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": false,
+    "item": {
+      "tokenId": "955",
+      "from": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+      "to": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "block": 51990859,
+      "time": "2026-09-30T12:24:25.000000Z",
+      "hash": "0xa4e484ae7fcf832bb214489ee8f858d3fcde3449ebe360c10f67be406e24ff8a",
+      "logIndex": 953
+    },
+    "error": "HTTP_429"
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "kind": "DelegateChanged",
+        "delegator": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "from": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "to": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+        "block": 51734169,
+        "time": "2026-09-24T13:48:05.000Z",
+        "hash": "0x5c2008b50f79479f96a3fe2c293a37475a6fc58e1c05f1a4c61a2c3a6f9191de",
+        "logIndex": 449
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x9234CcDeA92b38071458b6837bdDBDdd874bFc26"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xe212d2Ca76E29c0d3A8ebFB665Abf4679535DF27"
+          }
+        ],
+        "after": [
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xe212d2Ca76E29c0d3A8ebFB665Abf4679535DF27"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xe212d2Ca76E29c0d3A8ebFB665Abf4679535DF27"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "kind": "DelegateChanged",
+        "delegator": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "from": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+        "to": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "block": 51888568,
+        "time": "2026-09-28T03:34:43.000Z",
+        "hash": "0x996f9ce9ebab02e78c08d90b85937bca21096aa108e5eddce66059031954d810",
+        "logIndex": 466
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xe212d2Ca76E29c0d3A8ebFB665Abf4679535DF27"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xe212d2Ca76E29c0d3A8ebFB665Abf4679535DF27"
+          }
+        ],
+        "after": [
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "getVotes",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "0"
+          },
+          {
+            "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+            "fn": "delegates",
+            "success": true,
+            "value": "0xe212d2Ca76E29c0d3A8ebFB665Abf4679535DF27"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "getVotes",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "balanceOf",
+            "success": true,
+            "value": "1"
+          },
+          {
+            "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+            "fn": "delegates",
+            "success": true,
+            "value": "0x9234CcDeA92b38071458b6837bdDBDdd874bFc26"
+          }
+        ]
+      }
+    }
+  }
+]

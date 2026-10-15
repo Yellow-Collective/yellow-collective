@@ -1,0 +1,866 @@
+[
+  {
+    "id": "dpl_9Ma6sTsC31Fu8CuRX15V1H6ZAccs",
+    "url": "yellow-collective-3yz2cku56-satori-ffbfc349.vercel.app",
+    "createdAt": 1790887888079,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "ae8340d6072607efe69ef4878663d1ab877d0fbf",
+    "commitMessage": "feat: allow Satori embedding of public pages"
+  },
+  {
+    "id": "dpl_Gn7dnvNr2X9BYU5wvr6MQ9B3BmXp",
+    "url": "yellow-collective-8h0ff1h0f-satori-ffbfc349.vercel.app",
+    "createdAt": 1790264515921,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "6dd21342274d7dfb73bcb2e1ce2fd2a3a9a73033",
+    "commitMessage": "Fix round voting snapshot block reads"
+  },
+  {
+    "id": "dpl_GNUvQFevgHLfCotjdHUut9UQA5oJ",
+    "url": "yellow-collective-85np1eofn-satori-ffbfc349.vercel.app",
+    "createdAt": 1789682915432,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "570c9240e3b5ef5d034e98669efd8ce1d21fbcce",
+    "commitMessage": "fix(rounds): backfill vote caps"
+  },
+  {
+    "id": "dpl_Dj3iViqGwk8wiWmD7Dsy3SPXb1mR",
+    "url": "yellow-collective-p5zxxqbx8-satori-ffbfc349.vercel.app",
+    "createdAt": 1789679886458,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "c85149283ef67b042891024bdb75b7e42eec6f64",
+    "commitMessage": "fix(ci): update audited dependencies"
+  },
+  {
+    "id": "dpl_AxmC8eyMqA8J4cfFWRupEQeLuPmJ",
+    "url": "yellow-collective-69v9kzd3c-satori-ffbfc349.vercel.app",
+    "createdAt": 1789678709956,
+    "readyState": "ERROR",
+    "target": "production",
+    "sha": "0926260256930b7a02d2539fdf0c9b270f688a1f",
+    "commitMessage": "feat(rounds): cap votes per entry"
+  },
+  {
+    "id": "dpl_Bi7bYUnGVrXfm6P1woa6EvV13Q4F",
+    "url": "yellow-collective-ehbtnvpz4-satori-ffbfc349.vercel.app",
+    "createdAt": 1788795479865,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "ca28c794b23c1812e8b1cd563a138a5266e17d2c",
+    "commitMessage": "fix(rounds): retry failed database initialization"
+  },
+  {
+    "id": "dpl_8PfFmJDhfEg2NEUzsy8EQ8q7UYsL",
+    "url": "yellow-collective-iklfvy9wt-satori-ffbfc349.vercel.app",
+    "createdAt": 1788531767799,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "0554faa5da134f990a8118c2c7e6ed9b266769b6",
+    "commitMessage": "fix(rounds): prevent self-voting"
+  },
+  {
+    "id": "dpl_8i9dYxyf76URcnmgxnH3fUBrfNAF",
+    "url": "yellow-collective-6a6v5ybrv-satori-ffbfc349.vercel.app",
+    "createdAt": 1788443780466,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "afc1818132d3be3cbe610a14b18f7cc709c4ccf2",
+    "commitMessage": "fix(members): load holders before enrichment"
+  },
+  {
+    "id": "dpl_73nWB9xpZgrdTvittWBfdkTfYaWS",
+    "url": "yellow-collective-gqt376a0s-satori-ffbfc349.vercel.app",
+    "createdAt": 1788277034466,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "473f252459be73cfd1c757bc484eb9dfbd205cc8",
+    "commitMessage": "fix(build): defer about data loading to ISR"
+  },
+  {
+    "id": "dpl_25DVNAwqyJiqZhFtZ8y7BnyHWQCR",
+    "url": "yellow-collective-ml7m0hy1m-satori-ffbfc349.vercel.app",
+    "createdAt": 1788274755386,
+    "readyState": "ERROR",
+    "target": "production",
+    "sha": "a5b58be360b0e2103b33268fe6ee95e5c1313f99",
+    "commitMessage": "fix(build): bound members page data loading"
+  },
+  {
+    "id": "dpl_3habs54e479bJTJeZu1fKmb9GqgT",
+    "url": "yellow-collective-h6ny9v1ls-satori-ffbfc349.vercel.app",
+    "createdAt": 1788272434169,
+    "readyState": "ERROR",
+    "target": "production",
+    "sha": "0d4f238fc7fc20a8b87f33c14fe051aa8d11f8c0",
+    "commitMessage": "fix(deps): resolve high severity audit findings"
+  },
+  {
+    "id": "dpl_2YT9nLxPJEhxKTmrBvpE4LhJcie7",
+    "url": "yellow-collective-fftmb20mk-satori-ffbfc349.vercel.app",
+    "createdAt": 1788271042611,
+    "readyState": "ERROR",
+    "target": "production",
+    "sha": "4858cba9709ad99814796a6dd8ba0ecf0553b0e3",
+    "commitMessage": "feat(rounds): support multiple submission images"
+  },
+  {
+    "id": "dpl_CMkzU6nT3iNMWKxK6aJfZqBXrnTe",
+    "url": "yellow-collective-p6fw5reyf-satori-ffbfc349.vercel.app",
+    "createdAt": 1787848482640,
+    "readyState": "ERROR",
+    "target": "production",
+    "sha": "23dd1d119fafdf3dcde20aadd67c5089ea73b039",
+    "commitMessage": "fix(rounds): improve image uploads and submission feedback"
+  },
+  {
+    "id": "dpl_2zoEer5AJkDmHXKhRgxbLFy6gEMK",
+    "url": "yellow-collective-lr4k8ux3c-satori-ffbfc349.vercel.app",
+    "createdAt": 1787568822249,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "a8894b2eb742e7f56fb414f03755e4d8fa0b5d4c",
+    "commitMessage": "feat(rounds): make rounds permanently public"
+  },
+  {
+    "id": "dpl_6UZqwFcPmZbjZWX9knFUbCCWqmmQ",
+    "url": "yellow-collective-eel57doy2-satori-ffbfc349.vercel.app",
+    "createdAt": 1787499038892,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "b2ecb3cd711447af0c1446938103fcafe3cea8a4",
+    "commitMessage": "feat(noundry): browse and submit trait assets"
+  },
+  {
+    "id": "dpl_5utojgQ71HswBS2Hz1mhgrKLYTSU",
+    "url": "yellow-collective-1z4zdvj5e-satori-ffbfc349.vercel.app",
+    "createdAt": 1787321906679,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "13071e86e641b82004d81d496924f10ecbc1dc66",
+    "commitMessage": "fix(noundry): promote edited traits to custom"
+  },
+  {
+    "id": "dpl_ERjhBJb3gVG5d6aYLALnJ5kSvteL",
+    "url": "yellow-collective-at5rczdi3-satori-ffbfc349.vercel.app",
+    "createdAt": 1786739676662,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "d3a237ad0f99c1604c0447baa71253d3d67e136d",
+    "commitMessage": "Fix Noundry round submission display"
+  },
+  {
+    "id": "dpl_As6vJD6hAoMPwfhAGc2dEBPwXswF",
+    "url": "yellow-collective-66lr6ghhf-satori-ffbfc349.vercel.app",
+    "createdAt": 1786734999295,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "87d43d951bdd1795ef496b8881b2577807d6fb63",
+    "commitMessage": "Merge upstream main into local main"
+  },
+  {
+    "id": "dpl_394qfUpZL8b449kN1vdSztjMahkc",
+    "url": "yellow-collective-fabm9cmhh-satori-ffbfc349.vercel.app",
+    "createdAt": 1786476730446,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "9ac4600418673254b4eb005962bf4a3ec9e710de",
+    "commitMessage": "fix(rounds): render submission descriptions as markdown"
+  },
+  {
+    "id": "dpl_8Jd2EBBMwLq1a1YMavKBQDTPmgfg",
+    "url": "yellow-collective-2zuhq47mu-satori-ffbfc349.vercel.app",
+    "createdAt": 1786040968657,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "1d0748c9f06be04fa5796bcf9667579c5e4752cc",
+    "commitMessage": "fix(header): keep dashboard link visible when disconnected"
+  },
+  {
+    "id": "dpl_7CQMSSeAVSwAaRP9U4GVVmEZqgSa",
+    "url": "yellow-collective-8wz074jql-satori-ffbfc349.vercel.app",
+    "createdAt": 1786040686235,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "ea32ca9772c11c5a87f069b8cf93ecba17c3f9ec",
+    "commitMessage": "fix(dashboard): show public dashboard without wallet"
+  },
+  {
+    "id": "dpl_HHUFFV59x9KB1291xxmdyALKtzUX",
+    "url": "yellow-collective-p279dz1i8-satori-ffbfc349.vercel.app",
+    "createdAt": 1786029967403,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "387367f0ebd0f50ba4e67e8bba0f0e26b029e924",
+    "commitMessage": "fix(rounds): persist draft edits and order upcoming rounds"
+  },
+  {
+    "id": "dpl_7MmDaQ4bjKGQty5jTxm6z9DUp8tg",
+    "url": "yellow-collective-jhbvcqw9f-satori-ffbfc349.vercel.app",
+    "createdAt": 1786025385924,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "b96e6eb69ce56c854caedcbcb9ee1487af986790",
+    "commitMessage": "fix(dashboard): show visible activity avatars"
+  },
+  {
+    "id": "dpl_5AhQntVoebG5oUT7XUxRbpmEE83G",
+    "url": "yellow-collective-95y1fillf-satori-ffbfc349.vercel.app",
+    "createdAt": 1785980143691,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "20e2dd3abe0cdfef24690eb48a31405c2f71793e",
+    "commitMessage": "fix(metagov): retry reverted Safe votes\n\nApply a buffered outer gas limit to Safe executions, reject reverted viem receipts, verify Governor state after mining, and reconcile stale persisted executions on startup."
+  },
+  {
+    "id": "dpl_GnkF3o5f6vKfAvQqLXRfmj8N6hcz",
+    "url": "yellow-collective-7itlfcjny-satori-ffbfc349.vercel.app",
+    "createdAt": 1785978937062,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "12a442eeb80455d685b939941b9594b5f9602072",
+    "commitMessage": "feat(dashboard): add universal activity feed"
+  },
+  {
+    "id": "dpl_7PKuiAJtxmvzAMikbP8dBLUAdZDh",
+    "url": "yellow-collective-5uqy2s8el-satori-ffbfc349.vercel.app",
+    "createdAt": 1785963029569,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "89284cfea70887c009746ad306a7abd9d9c41ff8",
+    "commitMessage": "fix(theme): restore datetime picker visibility"
+  },
+  {
+    "id": "dpl_EskudfX86oACyMmUoUKgNXjfZJgX",
+    "url": "yellow-collective-39aqam4nf-satori-ffbfc349.vercel.app",
+    "createdAt": 1785928981291,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "c8f90e05177707f6d3657353eddeb9b93bf86d7f",
+    "commitMessage": "feat: add connected wallet action dashboard"
+  },
+  {
+    "id": "dpl_8xt99mTjtWeEXjXB1C66wKUWpukm",
+    "url": "yellow-collective-hwo0ejhwp-satori-ffbfc349.vercel.app",
+    "createdAt": 1785895844384,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "1d1e74e293dde3cc0b59153a9998c9bd8a58873f",
+    "commitMessage": "feat(home): highlight current and upcoming rounds"
+  },
+  {
+    "id": "dpl_BKb9rgCnQmsMTUkb9XpCemV9MryJ",
+    "url": "yellow-collective-wdl5413mi-satori-ffbfc349.vercel.app",
+    "createdAt": 1785804440235,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "fa829d6c4ae36847784ad7a098a6fd6cd63c67a2",
+    "commitMessage": "fix(rounds): use white winners background"
+  },
+  {
+    "id": "dpl_TyshXfYnn85D27JW3jHq8DrUxBQ5",
+    "url": "yellow-collective-f2pjzgk57-satori-ffbfc349.vercel.app",
+    "createdAt": 1785763047250,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "6caea523803f8b27abacfe2633ceb296086b305f",
+    "commitMessage": "feat(rounds): add base plus voting power strategy"
+  },
+  {
+    "id": "dpl_2Wxv15DS5Von3MKkATMFHw7x246m",
+    "url": "yellow-collective-4qlr4wgey-satori-ffbfc349.vercel.app",
+    "createdAt": 1785606960986,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "175ab6e57c7d1e609c5a64bcfcbb225acbee1e30",
+    "commitMessage": "fix(auth): bind wallet login to request origin\n\nEmit ERC-4361-compatible signed request messages, preserve request resource binding, and constrain production forwarded hosts to the configured apex/www pair."
+  },
+  {
+    "id": "dpl_BnoUQx1vRZYzCkm9Q9HYDjmSVpZs",
+    "url": "yellow-collective-bvgpit3d3-satori-ffbfc349.vercel.app",
+    "createdAt": 1785508854940,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "73376dde749f347450001ccc77e6d8361768f463",
+    "commitMessage": "Add Goldsky proposal detail fallback"
+  },
+  {
+    "id": "dpl_eRe5zkLHEYT5R1mmLkXFafR9ynM6",
+    "url": "yellow-collective-l84pjdgak-satori-ffbfc349.vercel.app",
+    "createdAt": 1784766664738,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "14f88f0b03ce8b0825e5157744a423c022c63a6b",
+    "commitMessage": "feat(proposals): add queue and execution actions"
+  },
+  {
+    "id": "dpl_AMWyGr2Ets2ZKP7MFWkwh85xHeA1",
+    "url": "yellow-collective-d5bh8k893-satori-ffbfc349.vercel.app",
+    "createdAt": 1784639403515,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "7918744f5e69bd5f2c6774f72ce0a52ac76b7fb8",
+    "commitMessage": "fix(deps): resolve high severity audit findings"
+  },
+  {
+    "id": "dpl_HfALpAuBQ7pUTeoXCdxw7JwSsRqp",
+    "url": "yellow-collective-3o9c6yyra-satori-ffbfc349.vercel.app",
+    "createdAt": 1784604487455,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "a6daf0679e915f92081a802b8c49523230c2b757",
+    "commitMessage": "feat(notifications): schedule proposal 29 reminder"
+  },
+  {
+    "id": "dpl_7dMrFTPoPk7yY4PmuqrmBiwXq78R",
+    "url": "yellow-collective-3adup48jd-satori-ffbfc349.vercel.app",
+    "createdAt": 1784596125035,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "e9033a628df924aa91a2b33fe86d3690b7df0fa4",
+    "commitMessage": "Fix proposal time minute formatting"
+  },
+  {
+    "id": "dpl_6Zk26ZzgYKsc7wyui7Qz6nEQ4WgR",
+    "url": "yellow-collective-dhqohdqwy-satori-ffbfc349.vercel.app",
+    "createdAt": 1784576823841,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "98ac4639fe14df35e02230cdbbc67c4a48493c89",
+    "commitMessage": "fix(noundry): refine trait detail layout"
+  },
+  {
+    "id": "dpl_JEHxq4C6CEsVeFHTXVy5W8uKKnno",
+    "url": "yellow-collective-4w5irqu0w-satori-ffbfc349.vercel.app",
+    "createdAt": 1784563383481,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "5f0013583f688e988811d1b5a66dc03105875251",
+    "commitMessage": "fix(noundry): polish trait detail page"
+  },
+  {
+    "id": "dpl_Anf127KJUrJJFvGJ2Ku7T4JTgevR",
+    "url": "yellow-collective-onnue83f7-satori-ffbfc349.vercel.app",
+    "createdAt": 1784560156917,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "24f6c4386f72c1f5556a0aa58029f00302b435a9",
+    "commitMessage": "fix(noundry): correct trait detail styling"
+  },
+  {
+    "id": "dpl_FWttH3tRcoa4bJfq6f488RxcuiXb",
+    "url": "yellow-collective-3nqilqmp9-satori-ffbfc349.vercel.app",
+    "createdAt": 1784558758402,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "28387976e90c66b0880f0234c30be80ad77157d5",
+    "commitMessage": "Prevent metagov execution without Snapshot votes"
+  },
+  {
+    "id": "dpl_7rDDPPJTEAPoVVZdSs3d9qB5dodp",
+    "url": "yellow-collective-67b9c2jxs-satori-ffbfc349.vercel.app",
+    "createdAt": 1784558521075,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "10f7f6109441b8868b4f6c06e660be7d506ec7bd",
+    "commitMessage": "feat(noundry): add author trait management"
+  },
+  {
+    "id": "dpl_AH93AnkyabfDeES2qRDaDPQsL8sw",
+    "url": "yellow-collective-f4ojhxd6f-satori-ffbfc349.vercel.app",
+    "createdAt": 1784553358215,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "caf245b22dc1289054b62e3d90c6831f5009d3a7",
+    "commitMessage": "feat(proposals): use proposal numbers in URLs"
+  },
+  {
+    "id": "dpl_9KQsEDr1AwGv9he98JE9LWM5Tcrt",
+    "url": "yellow-collective-remwxgp79-satori-ffbfc349.vercel.app",
+    "createdAt": 1784072047791,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "cd0a212abf8602f30ba7cfa89bcc808ce6efe010",
+    "commitMessage": "feat(rounds): refine vote audit dashboard"
+  },
+  {
+    "id": "dpl_HAcCqTPUxNS5LDWtoxwH742XzKWn",
+    "url": "yellow-collective-3tehloshz-satori-ffbfc349.vercel.app",
+    "createdAt": 1784068628747,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "6dbd903c040bfc10ee2ddfea2b9ac99e4fdcafdb",
+    "commitMessage": "fix(deps): resolve form-data audit vulnerabilities"
+  },
+  {
+    "id": "dpl_gnSpobHFqKvu8pfPCUqGCmDB88J2",
+    "url": "yellow-collective-98zh6c77z-satori-ffbfc349.vercel.app",
+    "createdAt": 1784058192455,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "48df17112d70ace13ec3e0a56b3c0dcff661aeda",
+    "commitMessage": "feat(rounds): add vote audit capabilities"
+  },
+  {
+    "id": "dpl_9faST4wxZkfBsHmdSHNz8K8pgnCC",
+    "url": "yellow-collective-r08g9xhrv-satori-ffbfc349.vercel.app",
+    "createdAt": 1783436999882,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "bd8c4a1fbe3e4fec6957311b0e6479a0ab7b7764",
+    "commitMessage": "Normalize proposal markdown heading styles"
+  },
+  {
+    "id": "dpl_5omHmoUbZ74s5rsTGx5zTDTbV7EJ",
+    "url": "yellow-collective-m7bvu9i6e-satori-ffbfc349.vercel.app",
+    "createdAt": 1783435871196,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "85ce7a6b3e07fb3dd123665501163964f3c6e947",
+    "commitMessage": "Preview proposal body before submit"
+  },
+  {
+    "id": "dpl_BoR2W6ogFGhkv1F8jWEYYAonVHom",
+    "url": "yellow-collective-4i6k411ol-satori-ffbfc349.vercel.app",
+    "createdAt": 1783357625940,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "643a47fec375ae3ab240bcf5de47e9c460079a50",
+    "commitMessage": "Fix miniapp proposal vote submit"
+  },
+  {
+    "id": "dpl_UUFhZij27ZGyQtnf7iTCTFmSu5Wq",
+    "url": "yellow-collective-3d7hzeko5-satori-ffbfc349.vercel.app",
+    "createdAt": 1783350579224,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "29d85f2a255e8841bc85ddd689d85807a3b09d1b",
+    "commitMessage": "Fix miniapp Snapshot vote modal"
+  },
+  {
+    "id": "dpl_HAz6Y7GTuRnF6jYa5X86vFrTW9Ln",
+    "url": "yellow-collective-ybey8zcy9-satori-ffbfc349.vercel.app",
+    "createdAt": 1783090303118,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "6da680eb90330a860936a478e42b873ab94fc879",
+    "commitMessage": "Allow Coinbase Wallet proposal submits"
+  },
+  {
+    "id": "dpl_7VXXiTWtqRqgt6vc6opjP5GxBzQN",
+    "url": "yellow-collective-bi0glvt8o-satori-ffbfc349.vercel.app",
+    "createdAt": 1782755321606,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "a58cb6855d38ea9cdbd508f97bb9d795eb8a3700",
+    "commitMessage": "Fix proposal inactive state and ENS inputs"
+  },
+  {
+    "id": "dpl_C6ZffUt3Zs3HUKboMx6eFrqzi7EE",
+    "url": "yellow-collective-ndatlhx74-satori-ffbfc349.vercel.app",
+    "createdAt": 1782754547898,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "9ad5dacca0571b0b2ecbd03d26e5fbe8dac9b2fb",
+    "commitMessage": "Use muted blue proposal button state"
+  },
+  {
+    "id": "dpl_EhpQthgwUGz4gKhFt87WdC3HrSHJ",
+    "url": "yellow-collective-4sjgns6qi-satori-ffbfc349.vercel.app",
+    "createdAt": 1782753377638,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "1b1618aeb19aade5c04a82eb7d421502ebb86e67",
+    "commitMessage": "Update proposal submit button states"
+  },
+  {
+    "id": "dpl_8QM4DVaxQNoy5VgAD8txbZ12ugmu",
+    "url": "yellow-collective-r7z5urvhr-satori-ffbfc349.vercel.app",
+    "createdAt": 1782752622585,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "50326c585be88754379a96b5fdddcc7fb747da55",
+    "commitMessage": "Fix numeric proposal form values"
+  },
+  {
+    "id": "dpl_DE4wKveZ66vK2ier5RVsxbi4rs5m",
+    "url": "yellow-collective-dkrhs0p40-satori-ffbfc349.vercel.app",
+    "createdAt": 1782752012845,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "ba1162b9e82f41bcab3fbf16f6984d75078ed414",
+    "commitMessage": "Fix proposal action submission gating"
+  },
+  {
+    "id": "dpl_GTuFL2btvvsPN9nL37a8sCiyoH1q",
+    "url": "yellow-collective-dhfoh2vj3-satori-ffbfc349.vercel.app",
+    "createdAt": 1782401478680,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "f42dcb462f170937fdc4e9bc75bc977afc1fdb05",
+    "commitMessage": "Fix Snapshot proposal block source"
+  },
+  {
+    "id": "dpl_AiCg8Jm9Uff1gkd6i2g4NUnXyWM3",
+    "url": "yellow-collective-ebdfodxg9-satori-ffbfc349.vercel.app",
+    "createdAt": 1781285749962,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "8e6b92e3d6b9a38990b137bf955948a2bf433207",
+    "commitMessage": "Update burned auction bid label"
+  },
+  {
+    "id": "dpl_5pjgpdWmJ9moH5cTKP52PfJiA7ii",
+    "url": "yellow-collective-1bi2wnkvt-satori-ffbfc349.vercel.app",
+    "createdAt": 1781285194345,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "447051ab8028c53e69da0ba8c6ea9cf1d23efbbc",
+    "commitMessage": "Show burned label for zero winning bids"
+  },
+  {
+    "id": "dpl_Gw43778GFPT3tzF75gUjozCqBPij",
+    "url": "yellow-collective-qj74kov9n-satori-ffbfc349.vercel.app",
+    "createdAt": 1781282135997,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "3c0dc7cc1deabbaeef3c998745d0d6ececfa7ab7",
+    "commitMessage": "Fix previous auction winning bid lookup"
+  },
+  {
+    "id": "dpl_Fct8676bYZnV2k1sTPZb6Lqud3GR",
+    "url": "yellow-collective-en8kvaig1-satori-ffbfc349.vercel.app",
+    "createdAt": 1781272870802,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "2296d457d8c73bec8625fde11c1464a7b0730e89",
+    "commitMessage": "Add prizes to round submissions export"
+  },
+  {
+    "id": "dpl_4Be3hEH9L5tHi6c4WYv1oSLxq1oK",
+    "url": "yellow-collective-3p8c89o44-satori-ffbfc349.vercel.app",
+    "createdAt": 1781208303097,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "c27cb8dba423e0d67bd5a030b48f2e86f239b7a1",
+    "commitMessage": "Fix member voting power calculation"
+  },
+  {
+    "id": "dpl_AK8ELbmfBYqho4xDzbR6q7eB7aYt",
+    "url": "yellow-collective-88qa2qa2v-satori-ffbfc349.vercel.app",
+    "createdAt": 1781200307806,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "1ade609d9ec7cb1e24ed9ce6b5761ae980d5547d",
+    "commitMessage": "Use contract votes for member sorting"
+  },
+  {
+    "id": "dpl_B8DBM64D4fq7inykQMFuuN6r9kwD",
+    "url": "yellow-collective-7b7tog5ll-satori-ffbfc349.vercel.app",
+    "createdAt": 1781191816500,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "eb633937391605d9b066405f068d8819c470a4ba",
+    "commitMessage": "Update header and members sorting"
+  },
+  {
+    "id": "dpl_Xuxifb8wvaEYqDEpGjQVPkpj7QE3",
+    "url": "yellow-collective-69y2esn81-satori-ffbfc349.vercel.app",
+    "createdAt": 1781174737659,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "203a40f6feb0743e97adbb0f42a7362295b0e954",
+    "commitMessage": "Fix miniapp auction alerts and bid input"
+  },
+  {
+    "id": "dpl_Fi5HKNdBJEFzuWTk8g39RoHbMr14",
+    "url": "yellow-collective-4d2g312kt-satori-ffbfc349.vercel.app",
+    "createdAt": 1781055567191,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "c2394591253d1f701fe70376aa6870f190aa9399",
+    "commitMessage": "Update admin notification lists and exports"
+  },
+  {
+    "id": "dpl_Ew2mEgXSg5NU5UQvE4cvLYDAtFpC",
+    "url": "yellow-collective-ftpjqt8ry-satori-ffbfc349.vercel.app",
+    "createdAt": 1781052251946,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "d5021523b85b4cb49300412c4e398d9d2d25f8ab",
+    "commitMessage": "Add adjustable notification poll cadence"
+  },
+  {
+    "id": "dpl_3CapzDzZsnAFh9buTZahGRapwkeS",
+    "url": "yellow-collective-lpzk11nqr-satori-ffbfc349.vercel.app",
+    "createdAt": 1781050783023,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "28a7f5e6fbdb8cb27bf6fd06b01460d6487be945",
+    "commitMessage": "Merge pull request #21 from Yellow-Collective/feat/vercel-notification-cron\n\nFix notification config"
+  },
+  {
+    "id": "dpl_Mh9216gTwwE8JNkh517XhzqNc8N9",
+    "url": "yellow-collective-ghedizitu-satori-ffbfc349.vercel.app",
+    "createdAt": 1781049973161,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "63f3b8d91d37e604ff7885f9026c6b73288f3a13",
+    "commitMessage": "Merge pull request #20 from xSatori/feat/vercel-notification-cron\n\nPersist Mini App notification prompt response"
+  },
+  {
+    "id": "dpl_2N1yTqvDvPjATwFAiuBv67uLbhK5",
+    "url": "yellow-collective-vwomdverd-satori-ffbfc349.vercel.app",
+    "createdAt": 1781028908382,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "63f3b8d91d37e604ff7885f9026c6b73288f3a13",
+    "commitMessage": "Merge pull request #20 from xSatori/feat/vercel-notification-cron\n\nPersist Mini App notification prompt response"
+  },
+  {
+    "id": "dpl_DVsgT8gizycZR75qin6g1eA39rQz",
+    "url": "yellow-collective-80xvajzc3-satori-ffbfc349.vercel.app",
+    "createdAt": 1781026842809,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "34e7c9df1ef4652da866c0c913cc6edf24e4fdc0",
+    "commitMessage": "Merge pull request #19 from xSatori/feat/vercel-notification-cron\n\nFix notification test admin auth"
+  },
+  {
+    "id": "dpl_FeKecx4i7iD7DtQC7orqcHMEa9Cz",
+    "url": "yellow-collective-nj978iob0-satori-ffbfc349.vercel.app",
+    "createdAt": 1781020417736,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "9c933c918f440a7b3732987f476909d5ba6e2d32",
+    "commitMessage": "Merge pull request #17 from xSatori/feat/treasury-revamp\n\nRevamp treasury portfolio layout"
+  },
+  {
+    "id": "dpl_AgHUbhrbNQyRKACqjEsazGAoeoFx",
+    "url": "yellow-collective-pvgczk3ws-satori-ffbfc349.vercel.app",
+    "createdAt": 1781019730382,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "9aeaa24e0106d04a4ab607c1b4a3c5f791b23482",
+    "commitMessage": "Merge pull request #18 from xSatori/feat/vercel-notification-cron\n\nConfigure Vercel notification cron"
+  },
+  {
+    "id": "dpl_c3TQx1TYVVews5eRYaf2qZTYfxDL",
+    "url": "yellow-collective-gbfr63d64-satori-ffbfc349.vercel.app",
+    "createdAt": 1781016396627,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "09573bb288808d23e0c426a596c60020de7d72b5",
+    "commitMessage": "Merge pull request #16 from xSatori/feat/notifications\n\nAdd Mini App notification delivery"
+  },
+  {
+    "id": "dpl_8QsYdMPA7Bm8vf6BUzM61yyx9ttv",
+    "url": "yellow-collective-an3okmkp3-satori-ffbfc349.vercel.app",
+    "createdAt": 1780519393493,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "03487b8a66eb7a8ed87a7eb3b8adf3aad1974bce",
+    "commitMessage": "Fix miniapp wallet menu placement"
+  },
+  {
+    "id": "dpl_5h9iuJQcazjpE8a1W8zqP75Fe4UR",
+    "url": "yellow-collective-9l556o3mb-satori-ffbfc349.vercel.app",
+    "createdAt": 1780518181959,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "c33e059f29edc5b73a1feaa8f8e2a33e16d10075",
+    "commitMessage": "Fix round detail SSR media payload"
+  },
+  {
+    "id": "dpl_8fDeNZmJsPYwSKQS7zQW4GAvnekS",
+    "url": "yellow-collective-6prdrsj30-satori-ffbfc349.vercel.app",
+    "createdAt": 1780516533930,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "d84c1172e5a3e1d2b6a7d4ae3137c5ec49127d6e",
+    "commitMessage": "Move admin access to dashboard tab"
+  },
+  {
+    "id": "dpl_2USKwTEFz1DvYaJwxeWMfVrTJnAZ",
+    "url": "yellow-collective-4ysq5twr6-satori-ffbfc349.vercel.app",
+    "createdAt": 1780508279842,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "455649cbd079275b9b90363e4fd6b9b190072923",
+    "commitMessage": "Fix rounds voting counter layout"
+  },
+  {
+    "id": "dpl_AciKV4WTe4tqc3oU8sDvSGNZWQJp",
+    "url": "yellow-collective-9c9oonkj1-satori-ffbfc349.vercel.app",
+    "createdAt": 1780503996308,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "9c62c10c3af7ef9834ee87082159e77dcc35a147",
+    "commitMessage": "Harden ENS resolution"
+  },
+  {
+    "id": "dpl_4RVVTYQZNFgebL9BDeJS82nhLdHQ",
+    "url": "yellow-collective-jvn5002at-satori-ffbfc349.vercel.app",
+    "createdAt": 1780495244706,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "775f323b009f714b16afbe6de44263b73ce4eebe",
+    "commitMessage": "Fix nested noble hashes cache repair"
+  },
+  {
+    "id": "dpl_GCcxkwfgLnbgZ1tV22DBh1zbLa8P",
+    "url": "yellow-collective-osybr4gzp-satori-ffbfc349.vercel.app",
+    "createdAt": 1780491568722,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "0bc4f8c3d031d5566213a3a7b51c03b47d96b9f0",
+    "commitMessage": "Fix auction client data serialization"
+  },
+  {
+    "id": "dpl_6LwS63Xz5TtqavzDdrHiiCTgzSJM",
+    "url": "yellow-collective-2n86s61xt-satori-ffbfc349.vercel.app",
+    "createdAt": 1780490412397,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "a93a926215d3a9d07d35cfb4d6c720d9028b8bc7",
+    "commitMessage": "Fix BuilderSDK RPC provider compatibility"
+  },
+  {
+    "id": "dpl_HUq7HSRsbwjNsVuDc89h3WR72Poj",
+    "url": "yellow-collective-2qf5r5kbf-satori-ffbfc349.vercel.app",
+    "createdAt": 1780488081965,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "26ce093e0b78035a4294e5fbfbd0c44ab49671cb",
+    "commitMessage": "Fix bid calldata token id encoding"
+  },
+  {
+    "id": "dpl_H5Kobf8Jb8ATb6g7dcm2iSXzEUaB",
+    "url": "yellow-collective-1pkf0bby0-satori-ffbfc349.vercel.app",
+    "createdAt": 1780487263466,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "93dd5d9f9330cd629f968269bb14325a459b40e8",
+    "commitMessage": "Fix Wagmi provider boot crash"
+  },
+  {
+    "id": "dpl_GpcT6BumW4g1FA8cFu29yoY64V5u",
+    "url": "yellow-collective-39s7femxp-satori-ffbfc349.vercel.app",
+    "createdAt": 1780486042606,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "c721718b95dcd7b327f3e6b5bc585059b4d647e1",
+    "commitMessage": "Fix wallet boot crash and font CSP"
+  },
+  {
+    "id": "dpl_F5z7EEvaz5vweMRwY9xeZ224PEVz",
+    "url": "yellow-collective-6eq9a1icm-satori-ffbfc349.vercel.app",
+    "createdAt": 1780457609992,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "cd39ec87e15c7915c394610f7e8d89d28e6f4716",
+    "commitMessage": "Gate round voting by delegated votes"
+  },
+  {
+    "id": "dpl_GjJbhURomfx4YHLBSxSjqxQEXpoZ",
+    "url": "yellow-collective-232997i43-satori-ffbfc349.vercel.app",
+    "createdAt": 1780410332470,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "e7ea25391b3198fc318f1c92acafa38949d8bcf5",
+    "commitMessage": "Merge pull request #14 from xSatori/feat/metagov-snapshot-vote-block\n\nFix and verify metagov Snapshot voting"
+  },
+  {
+    "id": "dpl_EUnxXc8VVTWYHwZq9Z1GEv41ZftL",
+    "url": "yellow-collective-l6coipp4x-satori-ffbfc349.vercel.app",
+    "createdAt": 1780006690898,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "bd75df8d954b6f035ede311d8d50733ff061af1c",
+    "commitMessage": "Merge pull request #13 from Yellow-Collective/feat/rounds-admin-flow\n\nUpdate rounds admin flow and timeline"
+  },
+  {
+    "id": "dpl_5eDnZnfPFbEQyshELFqeCiF536WT",
+    "url": "yellow-collective-oslltdbho-satori-ffbfc349.vercel.app",
+    "createdAt": 1780005762033,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "a3a671f33d5c1ca26ea64b74c6c37e37512fb8f0",
+    "commitMessage": "Merge pull request #12 from Yellow-Collective/feat/rounds-admin-flow\n\nRemove hardcoded round wallet labels"
+  },
+  {
+    "id": "dpl_3BekFaK7MDCTYABr6pHkpG5PhCG8",
+    "url": "yellow-collective-ljqzwqc62-satori-ffbfc349.vercel.app",
+    "createdAt": 1780001496594,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "69d74c0c02a5e2a8ba8c93b7456375f44db0a012",
+    "commitMessage": "Merge pull request #11 from xSatori/feat/rounds-admin-flow\n\nUpdate rounds admin workflows"
+  },
+  {
+    "id": "dpl_4EntTdzKkNeUnPwRiBEmxCH7jrdV",
+    "url": "yellow-collective-p81ppkfqk-satori-ffbfc349.vercel.app",
+    "createdAt": 1779377734383,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "ce8f6e79008042051c79f35f4691768ee38b2c95",
+    "commitMessage": "Add Snapshot voting timer"
+  },
+  {
+    "id": "dpl_Cdp4GeMMWDyYXjWUQ3zhEDAx7zTC",
+    "url": "yellow-collective-ws6ir9cs5-satori-ffbfc349.vercel.app",
+    "createdAt": 1779330366706,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "bf6e0fabe6e4b7f611f2738f5206c048ba9d17c0",
+    "commitMessage": "Update proposal links, textarea styles, and copy\n\nChange proposal link template to https://nouns.game/proposals/{id} in README files and as the default in services/metagov config; rename vote reason textarea classes in NounsSnapshotVoteCard and VoteModal to `yc-vote-reason-textarea` and add CSS rules in globals.css to set explicit text and placeholder colors for consistent appearance across themes. Also apply small copy edits in Description.tsx (remove intro video, wording tweaks, Base capitalization) and simplify/trim FAQ content (shorten the 'Collective Nounders' section and remove several paragraphs)."
+  },
+  {
+    "id": "dpl_Bm4k5UFt4P9frZS1gAsdvbqV4dun",
+    "url": "yellow-collective-3xndao9jj-satori-ffbfc349.vercel.app",
+    "createdAt": 1779309380929,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "22acf76c01904bd5b7a5a351c1c785feef59ac34",
+    "commitMessage": "Support gallery image uploads in community\n\nAdd multi-image upload support for community project submissions and related UI/styling updates. Server: increased API body size limit, accept galleryImageUploads, validate types/sizes and limit to 6 images, and merge uploads with existing galleryImages. Client: add gallery image file input, client-side validation and FileReader-based previews, removal of uploaded images, include uploads in submission payload, and reset handling. UI/CSS: new classes for submit/reset/admin-edit buttons and success alert in dark theme; update component classNames to use them. Other: adjust admin dashboard button styling when a project is queued and remove an outdated sample project JSON."
+  },
+  {
+    "id": "dpl_J9uVmoKLRsrAdDqAWXQpPk5VsYwS",
+    "url": "yellow-collective-rlyd3hzie-satori-ffbfc349.vercel.app",
+    "createdAt": 1779304619885,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "23423fbd21b998969dcd8269e8f63d936ae532fc",
+    "commitMessage": "More profile fixes"
+  },
+  {
+    "id": "dpl_GM5czRFdrAXraG1fgNhKuxji8EmM",
+    "url": "yellow-collective-rlvprvekb-satori-ffbfc349.vercel.app",
+    "createdAt": 1779304260631,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "6f4dd4a35388634896af881ba460b557a7bfa37c",
+    "commitMessage": "Profile copy fix"
+  },
+  {
+    "id": "dpl_8XgrVqK8NhtVBP14gZJvxBYj55Rd",
+    "url": "yellow-collective-1txmc4t35-satori-ffbfc349.vercel.app",
+    "createdAt": 1779303996580,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "7389756a5afdec964dfc15671c4c2aca2410ea04",
+    "commitMessage": "Profile fixes"
+  },
+  {
+    "id": "dpl_Np3jBtxL2LgA82BaopBpfpqNVUpp",
+    "url": "yellow-collective-g3ru27feb-satori-ffbfc349.vercel.app",
+    "createdAt": 1779301341579,
+    "readyState": "READY",
+    "target": "production",
+    "sha": "46dd61307ef95ecc0bcf4a76428e7023d1186f22",
+    "commitMessage": "Noundry fix and vote styling corrections"
+  }
+]

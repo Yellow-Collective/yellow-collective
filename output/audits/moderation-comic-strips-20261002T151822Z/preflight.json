@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "capturedAt": "2026-10-02T15:20:39.897Z",
+  "targetCount": 6,
+  "targetVotes": 147,
+  "liveVotes": 219,
+  "liveTotalVotes": 2919,
+  "liveWinners": 10,
+  "winningRoundClosed": true,
+  "exactTargetsMatch": true,
+  "allVotesMatchPriorAuditedBaseline": true,
+  "backupFile": "before-backup.json",
+  "backupSha256": "b50e912a0f9d6b00e91668c2d6e67e1b59773fe23b3ce7002b9ba6ec5cb33338",
+  "restoreScript": "restore.sql",
+  "readOnly": true
+}

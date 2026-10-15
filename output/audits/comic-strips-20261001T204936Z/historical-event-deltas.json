@@ -1,0 +1,675 @@
+[
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "397",
+        "from": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+        "to": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+        "block": 22818824,
+        "time": "2024-11-24T05:43:15.000000Z",
+        "hash": "0x8351f6e424fcc2374bd12601cab4d5da9ae7fa1c9fecc35d6ba49bd89e86a744",
+        "logIndex": 674
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+            "fn": "getVotes",
+            "value": "6",
+            "success": true
+          },
+          {
+            "address": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+            "fn": "balanceOf",
+            "value": "6",
+            "success": true
+          },
+          {
+            "address": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+            "fn": "delegates",
+            "value": "0x22D187E0392632386b6Dc542D5C494602E0e67fE",
+            "success": true
+          },
+          {
+            "address": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+            "fn": "delegates",
+            "value": "0xa92317295Bc7cb5eCeba6956d2BaD89A3bC8e1dF",
+            "success": true
+          }
+        ],
+        "after": [
+          {
+            "address": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+            "fn": "getVotes",
+            "value": "5",
+            "success": true
+          },
+          {
+            "address": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+            "fn": "balanceOf",
+            "value": "5",
+            "success": true
+          },
+          {
+            "address": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+            "fn": "delegates",
+            "value": "0x22D187E0392632386b6Dc542D5C494602E0e67fE",
+            "success": true
+          },
+          {
+            "address": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+            "fn": "getVotes",
+            "value": "2",
+            "success": true
+          },
+          {
+            "address": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+            "fn": "balanceOf",
+            "value": "2",
+            "success": true
+          },
+          {
+            "address": "0xa92317295bc7cb5eceba6956d2bad89a3bc8e1df",
+            "fn": "delegates",
+            "value": "0xa92317295Bc7cb5eCeba6956d2BaD89A3bC8e1dF",
+            "success": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "tokenId": "254",
+      "from": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "to": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "block": 48838159,
+      "time": "2026-07-19T12:54:25.000000Z",
+      "hash": "0xefee5828c8afc8433b6aadc83cac90b8fc114d079f876f6f68aaf9461c5e3345",
+      "logIndex": 261
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "870",
+        "from": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "to": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+        "block": 51637032,
+        "time": "2026-09-22T07:50:11.000000Z",
+        "hash": "0xbb6e12f73cc88206bb3d1a1595ee26e80df0eb3efe6da35bebb6057cf2838027",
+        "logIndex": 253
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "getVotes",
+            "value": "3",
+            "success": true
+          },
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "balanceOf",
+            "value": "3",
+            "success": true
+          },
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "delegates",
+            "value": "0x9ab51fd89F163D07127df192b615356D53B406f6",
+            "success": true
+          },
+          {
+            "address": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+            "fn": "getVotes",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+            "fn": "balanceOf",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+            "fn": "delegates",
+            "value": "0xB89743F3B06d66ED5d7e3bBDf8312f6856DE6C6b",
+            "success": true
+          }
+        ],
+        "after": [
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "getVotes",
+            "value": "2",
+            "success": true
+          },
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "balanceOf",
+            "value": "2",
+            "success": true
+          },
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "delegates",
+            "value": "0x9ab51fd89F163D07127df192b615356D53B406f6",
+            "success": true
+          },
+          {
+            "address": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+            "fn": "delegates",
+            "value": "0xB89743F3B06d66ED5d7e3bBDf8312f6856DE6C6b",
+            "success": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "tokenId": "355",
+      "from": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "to": "0x28e8292c6b21288140c5b4f16b28cede42e8098c",
+      "block": 51657507,
+      "time": "2026-09-22T19:12:41.000000Z",
+      "hash": "0x089fb1030fffe31d9290f86f48170099381613e2fc96ab916da5e512135a4c1d",
+      "logIndex": 493
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "tokenId": "820",
+      "from": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "to": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "block": 51735322,
+      "time": "2026-09-24T14:26:31.000000Z",
+      "hash": "0x90545b75f9b9037d1837b1d0a32a626a941c94c5512bd51b7fe712308d23f24b",
+      "logIndex": 1178
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "820",
+        "from": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "to": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "block": 51735575,
+        "time": "2026-09-24T14:34:57.000000Z",
+        "hash": "0x50420acd1abd357a8f882e3fbd5b00aab22cae1bb2ef2811a9d75695e4926c2d",
+        "logIndex": 333
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "delegates",
+            "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a",
+            "success": true
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33",
+            "success": true
+          }
+        ],
+        "after": [
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "getVotes",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "balanceOf",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+            "fn": "delegates",
+            "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a",
+            "success": true
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+            "fn": "delegates",
+            "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33",
+            "success": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "tokenId": "860",
+        "from": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "to": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+        "block": 51736346,
+        "time": "2026-09-24T15:00:39.000000Z",
+        "hash": "0xe8d03281c3f5c5cff59d7870d941dbe43c3a0b6756653e25bfe09ca05906a817",
+        "logIndex": 564
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "getVotes",
+            "value": "3",
+            "success": true
+          },
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "balanceOf",
+            "value": "3",
+            "success": true
+          },
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "delegates",
+            "value": "0x9ab51fd89F163D07127df192b615356D53B406f6",
+            "success": true
+          },
+          {
+            "address": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+            "fn": "getVotes",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+            "fn": "balanceOf",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+            "fn": "delegates",
+            "value": "0x79eD59c8c92ff3f3384C2C43e1088e6b56E8Af6E",
+            "success": true
+          }
+        ],
+        "after": [
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "getVotes",
+            "value": "2",
+            "success": true
+          },
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "balanceOf",
+            "value": "2",
+            "success": true
+          },
+          {
+            "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+            "fn": "delegates",
+            "value": "0x9ab51fd89F163D07127df192b615356D53B406f6",
+            "success": true
+          },
+          {
+            "address": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+            "fn": "delegates",
+            "value": "0x79eD59c8c92ff3f3384C2C43e1088e6b56E8Af6E",
+            "success": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "tokenId": "820",
+      "from": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "to": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "block": 51739671,
+      "time": "2026-09-24T16:51:29.000000Z",
+      "hash": "0x79c4002f88b163335b08746566a19fa329e697d74cfa5b1926cad14677fbf224",
+      "logIndex": 393
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "tokenId": "820",
+      "from": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "to": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "block": 51889829,
+      "time": "2026-09-28T04:16:45.000000Z",
+      "hash": "0x4fdd3eedf0146f16dba76365855ef00f5251188486c51563b6361acad72a333a",
+      "logIndex": 11
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "tokenId": "820",
+      "from": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "to": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "block": 51959064,
+      "time": "2026-09-29T18:44:35.000000Z",
+      "hash": "0xfd96a0493d8ad8f3cc4be6686b0ca7a73618217f47dc4916053ba5793e4197a4",
+      "logIndex": 397
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "tokenId": "955",
+      "from": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+      "to": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "block": 51990859,
+      "time": "2026-09-30T12:24:25.000000Z",
+      "hash": "0xa4e484ae7fcf832bb214489ee8f858d3fcde3449ebe360c10f67be406e24ff8a",
+      "logIndex": 953
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "kind": "DelegateChanged",
+        "delegator": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+        "from": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+        "to": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "block": 51733749,
+        "time": "2026-09-24T13:34:05.000Z",
+        "hash": "0x379bb34f87eef5d089b67d04943e33cfa99b28190b8b85b499c7950768fab00c",
+        "logIndex": 18
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+            "fn": "delegates",
+            "value": "0x2b3B52e0FfAA5f9ab2dAE0827929e7688c86AA63",
+            "success": true
+          },
+          {
+            "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+            "fn": "getVotes",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+            "fn": "balanceOf",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+            "fn": "delegates",
+            "value": "0xac1A6F43425EFdD808748a6EB992fa047e90776e",
+            "success": true
+          }
+        ],
+        "after": [
+          {
+            "address": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+            "fn": "getVotes",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x2b3b52e0ffaa5f9ab2dae0827929e7688c86aa63",
+            "fn": "delegates",
+            "value": "0xac1A6F43425EFdD808748a6EB992fa047e90776e",
+            "success": true
+          },
+          {
+            "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+            "fn": "balanceOf",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+            "fn": "delegates",
+            "value": "0xac1A6F43425EFdD808748a6EB992fa047e90776e",
+            "success": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": true,
+    "value": {
+      "event": {
+        "kind": "DelegateChanged",
+        "delegator": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+        "from": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+        "to": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "block": 51733786,
+        "time": "2026-09-24T13:35:19.000Z",
+        "hash": "0x6e792833e8aa18195c22523b782038b8577de0e3ab57ea70eca12315839729d3",
+        "logIndex": 1053
+      },
+      "states": {
+        "before": [
+          {
+            "address": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+            "fn": "delegates",
+            "value": "0x33bFfd2f818C79B9C6eb38193E32C5B5D17176c6",
+            "success": true
+          },
+          {
+            "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+            "fn": "getVotes",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+            "fn": "balanceOf",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+            "fn": "delegates",
+            "value": "0xF7AEF946D3f2E58a3685166ACE1fc3dB76d614de",
+            "success": true
+          }
+        ],
+        "after": [
+          {
+            "address": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+            "fn": "getVotes",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+            "fn": "balanceOf",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0x33bffd2f818c79b9c6eb38193e32c5b5d17176c6",
+            "fn": "delegates",
+            "value": "0xF7AEF946D3f2E58a3685166ACE1fc3dB76d614de",
+            "success": true
+          },
+          {
+            "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+            "fn": "getVotes",
+            "value": "1",
+            "success": true
+          },
+          {
+            "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+            "fn": "balanceOf",
+            "value": "0",
+            "success": true
+          },
+          {
+            "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+            "fn": "delegates",
+            "value": "0xF7AEF946D3f2E58a3685166ACE1fc3dB76d614de",
+            "success": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "kind": "DelegateChanged",
+      "delegator": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+      "from": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+      "to": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "block": 51734169,
+      "time": "2026-09-24T13:48:05.000Z",
+      "hash": "0x5c2008b50f79479f96a3fe2c293a37475a6fc58e1c05f1a4c61a2c3a6f9191de",
+      "logIndex": 449
+    }
+  },
+  {
+    "ok": false,
+    "error": "HTTP_429",
+    "item": {
+      "kind": "DelegateChanged",
+      "delegator": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+      "from": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "to": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+      "block": 51888568,
+      "time": "2026-09-28T03:34:43.000Z",
+      "hash": "0x996f9ce9ebab02e78c08d90b85937bca21096aa108e5eddce66059031954d810",
+      "logIndex": 466
+    }
+  }
+]

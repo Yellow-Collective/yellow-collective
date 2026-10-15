@@ -1,0 +1,122 @@
+{
+  "projectId": "prj_OOkH3BeFmdgmvamOttBfoF7kNWcu",
+  "projectName": "yellow-collective",
+  "teamId": "team_kQemVinfNxoNYIAYLQdZdqWD",
+  "deploymentId": "dpl_9Ma6sTsC31Fu8CuRX15V1H6ZAccs",
+  "url": "yellow-collective-3yz2cku56-satori-ffbfc349.vercel.app",
+  "createdAt": 1790887888079,
+  "alias": [
+    "www.yellowcollective.art",
+    "yellow-collective.vercel.app",
+    "yellowcollective.art",
+    "yellow-collective-satori-ffbfc349.vercel.app",
+    "yellow-collective-git-main-satori-ffbfc349.vercel.app"
+  ],
+  "sha": "ae8340d6072607efe69ef4878663d1ab877d0fbf",
+  "repo": "Yellow-Collective/yellow-collective",
+  "envMetadata": [
+    {
+      "key": "DATABASE_PUBLIC_URL",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "DATABASE_URL",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "NOUNS_DAO_INDEXER_SCHEMA",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "NEXT_PUBLIC_SITE_URL",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "NEXT_PUBLIC_FIXED_BASE_COIN_ADDRESS",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "NEXT_PUBLIC_FIXED_BASE_COIN_LABEL",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "NEXT_PUBLIC_FIXED_BASE_COIN_PRICE_USD",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "PINATA_JWT",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "NOTIFICATIONS_TARGET_ORIGIN",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "NOTIFICATIONS_SETTINGS_URL",
+      "type": "sensitive",
+      "target": [
+        "preview",
+        "production"
+      ]
+    },
+    {
+      "key": "NEYNAR_API_KEY",
+      "type": "sensitive",
+      "target": [
+        "production",
+        "preview"
+      ]
+    },
+    {
+      "key": "CRON_SECRET",
+      "type": "sensitive",
+      "target": [
+        "production"
+      ]
+    },
+    {
+      "key": "NOTIFICATIONS_CRON_SECRET",
+      "type": "sensitive",
+      "target": [
+        "production"
+      ]
+    }
+  ],
+  "checkedAt": "2026-10-01T21:02:19.480Z"
+}

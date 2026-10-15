@@ -1,0 +1,65 @@
+TAP version 13
+# Subtest: Farcaster signer prepares and sends a bid through installed Wagmi without losing payload fields
+ok 1 - Farcaster signer prepares and sends a bid through installed Wagmi without losing payload fields
+  ---
+  duration_ms: 87.0708
+  ...
+# Subtest: Wagmi refuses a bid on a different active chain before sending
+ok 2 - Wagmi refuses a bid on a different active chain before sending
+  ---
+  duration_ms: 51.6276
+  ...
+# Subtest: connection-only click and connection errors are visible in the bid form
+ok 3 - connection-only click and connection errors are visible in the bid form
+  ---
+  duration_ms: 126.1155
+  ...
+# Subtest: preparation errors are visible and retry only preparation
+ok 4 - preparation errors are visible and retry only preparation
+  ---
+  duration_ms: 49.9305
+  ...
+# Subtest: approval and confirmation stay distinct, block duplicates and expose a submitted hash
+ok 5 - approval and confirmation stay distinct, block duplicates and expose a submitted hash
+  ---
+  duration_ms: 85.6178
+  ...
+# Subtest: wallet rejection permits a deliberate retry and preserves the entered bid
+ok 6 - wallet rejection permits a deliberate retry and preserves the entered bid
+  ---
+  duration_ms: 50.1329
+  ...
+# Subtest: web connect remains the browser modal; invalid, stale and wrong-chain bids never send
+ok 7 - web connect remains the browser modal; invalid, stale and wrong-chain bids never send
+  ---
+  duration_ms: 47.4421
+  ...
+# Subtest: receipt success clears inputs, while refresh failure retains confirmation truth
+ok 8 - receipt success clears inputs, while refresh failure retains confirmation truth
+  ---
+  duration_ms: 42.693
+  ...
+# Subtest: wallet error messages stay useful without exposing raw diagnostics
+ok 9 - wallet error messages stay useful without exposing raw diagnostics
+  ---
+  duration_ms: 1.3145
+  ...
+# Subtest: the bid form retains token, referral, ETH amount and optional comment in its prepared payload
+ok 10 - the bid form retains token, referral, ETH amount and optional comment in its prepared payload
+  ---
+  duration_ms: 38.7121
+  ...
+# Subtest: Mini App connection hook exposes failure, unlocks retry and blocks same-render duplicate connects
+ok 11 - Mini App connection hook exposes failure, unlocks retry and blocks same-render duplicate connects
+  ---
+  duration_ms: 14.6758
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1780.9579
