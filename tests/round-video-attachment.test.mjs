@@ -227,6 +227,7 @@ function fixture({
     "@/utils/rounds/voting-strategy": {},
     "data/ens": {},
     "@/utils/rounds/submission-images": images,
+    "@/utils/rounds/submission-edit": load("utils/rounds/submission-edit.ts"),
     "@/utils/rounds/video-storage": { videosEnabled: () => enabled },
     "@/utils/rounds/video-policy": policy,
   };

@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS round_submissions (
   status text NOT NULL DEFAULT 'pending',
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
+  user_edited_at timestamptz,
   approved_at timestamptz,
   rejected_at timestamptz,
   hidden_at timestamptz,
@@ -228,3 +229,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS round_submissions_round_trait_unique_idx
           ALTER TABLE round_video_uploads ADD COLUMN IF NOT EXISTS staging_cleaned_at timestamptz;
           CREATE INDEX IF NOT EXISTS round_video_uploads_staging_cleanup ON round_video_uploads(created_at,id) WHERE status='attached' AND staging_cleaned_at IS NULL;
           CREATE INDEX IF NOT EXISTS round_video_uploads_owner ON round_video_uploads(round_id, lower(wallet_address), expires_at);
+
+-- Additive owner edit ledger for existing installations; preserve on rollback.
+ALTER TABLE round_submissions ADD COLUMN IF NOT EXISTS user_edited_at timestamptz;

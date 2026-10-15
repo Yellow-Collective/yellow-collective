@@ -93,14 +93,16 @@ export const isRoundTraitAutoDescription = ({
   walletAddress,
   description,
   sourcePayload,
+  userEditedAt,
 }: {
+  userEditedAt?: string | null;
   submissionType: string;
   traitType?: string | null;
   walletAddress: string;
   description: string;
   sourcePayload?: Record<string, unknown> | null;
 }) => {
-  if (submissionType !== "trait" || !traitType) return false;
+  if (submissionType !== "trait" || !traitType || userEditedAt) return false;
   if (sourcePayload?.roundSubmissionAutoDescription === true) return true;
 
   const prefix = `Noundry ${traitType} trait submitted by `;

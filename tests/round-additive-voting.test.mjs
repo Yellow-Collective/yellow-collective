@@ -85,6 +85,9 @@ const loadRoundsModule = (requireOverrides = {}) =>
     },
     "@/utils/rounds/voting-strategy": votingStrategy,
     "@/utils/rounds/submission-images": submissionImages,
+    "@/utils/rounds/submission-edit": loadTsModule(
+      resolve(process.cwd(), "utils/rounds/submission-edit.ts")
+    ),
     "data/ens": { getEnsName: async () => ({}) },
     ...requireOverrides,
   });

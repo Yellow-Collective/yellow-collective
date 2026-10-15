@@ -1,3 +1,4 @@
+import { canEditRoundSubmission } from "@/utils/rounds/submission-edit";
 import { RoundVideoPlayer } from "@/components/rounds/RoundVideoPlayer";
 import Layout from "@/components/Layout";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
@@ -43,7 +44,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import useSWR from "swr";
@@ -184,6 +185,11 @@ export default function RoundDetailPage({
     useState<RoundSubmission | null>(null);
   const [message, setMessage] = useState("");
   const [isVoting, setIsVoting] = useState(false);
+  const [editNow, setEditNow] = useState(() => Date.now());
+  useEffect(() => {
+    const timer = setInterval(() => setEditNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, []);
   const mediaKey = initialRound
     ? `/api/rounds/${initialRound.slug}/media`
     : null;
@@ -560,6 +566,7 @@ export default function RoundDetailPage({
             <h2 className="font-heading text-[34px] leading-none text-[#212529]">
               Submissions
             </h2>
+            {address && <Link href={`/rounds/${round.slug}/edit`} className="font-heading text-base underline">My submissions</Link>}
             <span className="self-start rounded-full bg-[#c93d2f] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#7f2219]">
               {round.submissions.length}
             </span>
@@ -570,6 +577,7 @@ export default function RoundDetailPage({
                 <SubmissionCard
                   key={submission.id}
                   submission={submission}
+                  editHref={canEditRoundSubmission(round, submission, address, new Date(editNow)) ? `/rounds/${round.slug}/edit?submission=${encodeURIComponent(submission.id)}` : undefined}
                   rank={index + 1}
                   isWinner={state === "ended" && index < round.winnerCount}
                   isRoundEnded={isRoundEnded}
@@ -641,6 +649,7 @@ export default function RoundDetailPage({
 
 const SubmissionCard = ({
   submission,
+  editHref,
   rank,
   isWinner,
   isRoundEnded,
@@ -658,6 +667,7 @@ const SubmissionCard = ({
   showVoteCount,
 }: {
   submission: RoundSubmission;
+  editHref?: string;
   rank: number;
   isWinner: boolean;
   isRoundEnded: boolean;
@@ -793,6 +803,7 @@ const SubmissionCard = ({
               </div>
             )}
           </div>
+          {editHref && <Link href={editHref} className="w-fit rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-2 font-heading text-base text-[#212529]">Edit</Link>}
           {isVotingOpen && isOwnSubmission && (
             <p
               role="status"

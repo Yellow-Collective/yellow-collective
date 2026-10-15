@@ -1,3 +1,4 @@
+import { canEditRoundSubmission, parseRoundSubmissionEdit, RoundSubmissionEditError } from "@/utils/rounds/submission-edit";
 import { randomUUID } from "crypto";
 import { Pool, type PoolClient } from "pg";
 import { getAddress, isAddress } from "viem";
@@ -101,6 +102,7 @@ export type Round = {
 };
 
 export type RoundSubmission = {
+  userEditedAt?: string | null;
   video?: import("@/utils/rounds/video-policy").RoundVideo | null;
   id: string;
   roundId: string;
@@ -593,7 +595,8 @@ const ensureTables = async () => {
             ADD COLUMN IF NOT EXISTS trait_type text,
             ADD COLUMN IF NOT EXISTS source text NOT NULL DEFAULT 'project',
             ADD COLUMN IF NOT EXISTS source_payload jsonb NOT NULL DEFAULT '{}'::jsonb,
-            ADD COLUMN IF NOT EXISTS images jsonb NOT NULL DEFAULT '[]'::jsonb
+            ADD COLUMN IF NOT EXISTS images jsonb NOT NULL DEFAULT '[]'::jsonb,
+            ADD COLUMN IF NOT EXISTS user_edited_at timestamptz
         `)
       )
       .then(() =>
@@ -799,6 +802,7 @@ const submissionSelectFields = `
   s.status,
   s.created_at,
   s.updated_at,
+  s.user_edited_at,
   s.approved_at,
   s.rejected_at,
   s.hidden_at,
@@ -957,6 +961,7 @@ const mapSubmission = (row: Record<string, any>): RoundSubmission => {
     status: row.status,
     createdAt: formatDate(row.created_at) || "",
     updatedAt: formatDate(row.updated_at) || "",
+    userEditedAt: formatDate(row.user_edited_at),
     approvedAt: formatDate(row.approved_at),
     rejectedAt: formatDate(row.rejected_at),
     hiddenAt: formatDate(row.hidden_at),
@@ -3587,6 +3592,102 @@ export const createRoundTraitSubmission = async ({
     const submission = await getRoundSubmission(round.id, result.rows[0].id);
     if (!submission) throw new Error("Unable to create submission.");
     return submission;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+};
+
+export const listOwnedRoundSubmissionSummaries = async (slug: string, walletAddress: string) => {
+  const round = await getRoundBySlug(slug);
+  if (!round || round.status !== "published" || !round.active) return null;
+  const result = await getPool().query(`
+    SELECT s.id, s.title, s.status, s.wallet_address, s.user_edited_at
+    FROM round_submissions s
+    WHERE s.round_id=$1 AND lower(s.wallet_address)=lower($2)
+      AND s.deleted_at IS NULL AND s.status IN ('approved','pending')
+    ORDER BY s.created_at DESC LIMIT 100
+  `, [round.id, walletAddress]);
+  return result.rows.map((row) => ({
+    id: String(row.id), title: String(row.title), status: row.status as RoundSubmissionStatus,
+    walletAddress: String(row.wallet_address), userEditedAt: formatDate(row.user_edited_at),
+  }));
+};
+
+export const getOwnedRoundSubmission = async (slug: string, submissionId: string, walletAddress: string) => {
+  const round = await getRoundBySlug(slug);
+  if (!round || round.status !== "published" || !round.active) return null;
+  const result = await getPool().query(`
+    SELECT s.* FROM round_submissions s
+    WHERE s.round_id=$1 AND s.id=$2 AND lower(s.wallet_address)=lower($3)
+      AND s.deleted_at IS NULL AND s.status IN ('approved','pending')
+    LIMIT 1
+  `, [round.id, submissionId, walletAddress]);
+  return result.rows[0] ? mapSubmission(result.rows[0]) : null;
+};
+
+export const editOwnedRoundSubmission = async (
+  slug: string, submissionId: string, walletAddress: string, input: unknown
+) => {
+  const changes = parseRoundSubmissionEdit(input);
+  await ensureTables();
+  const client = await getPool().connect();
+  try {
+    await client.query("BEGIN");
+    await client.query("SET LOCAL statement_timeout = '10s'");
+    await client.query("SET LOCAL lock_timeout = '5s'");
+    const roundResult = await client.query(
+      "SELECT * FROM rounds WHERE slug=$1 AND deleted_at IS NULL FOR SHARE", [slug]
+    );
+    if (!roundResult.rows[0]) throw new RoundSubmissionEditError("Submission not found.", 404);
+    const round = mapRound(roundResult.rows[0]);
+    const currentResult = await client.query(`
+      SELECT s.* FROM round_submissions s
+      WHERE s.round_id=$1 AND s.id=$2 AND lower(s.wallet_address)=lower($3)
+        AND s.deleted_at IS NULL
+      FOR UPDATE
+    `, [round.id, submissionId, walletAddress]);
+    if (!currentResult.rows[0]) throw new RoundSubmissionEditError("Submission not found.", 404);
+    const current = mapSubmission(currentResult.rows[0]);
+    if (!canEditRoundSubmission(round, current, walletAddress)) {
+      throw new RoundSubmissionEditError("This submission cannot be edited: edits are allowed once, before voting begins.", 409);
+    }
+    const merged = { ...current, ...changes, walletAddress: current.walletAddress };
+    const unchangedImages = !changes.images || (changes.images.length === current.images.length && changes.images.every((image, index) => image === current.images[index]));
+    if (current.submissionType === "trait" && (!unchangedImages || (changes.url !== undefined && changes.url !== current.url))) {
+      throw new RoundSubmissionEditError("Trait edits can change only title and description; the canonical artwork and link stay unchanged.");
+    }
+    const validationError = current.submissionType === "trait" && current.source === "noundry"
+      ? validateDerivedRoundTraitSubmission({
+          traitId: current.traitId || "", title: String(merged.title).trim(), description: String(merged.description).trim(),
+          image: current.image, url: current.url, minTitleLength: round.minTitleLength, maxTitleLength: round.maxTitleLength,
+          minDescriptionLength: round.minDescriptionLength, maxDescriptionLength: round.maxDescriptionLength,
+        })
+      : validateRoundSubmissionInput(round, merged, unchangedImages);
+    if (validationError) throw new RoundSubmissionEditError(validationError);
+    const images = unchangedImages ? current.images : changes.images!.map((image) => normalizeSafeImageUrl(image, { allowInternal: true, allowDataImages: true }));
+    const title = String(merged.title).trim();
+    const description = String(merged.description).trim();
+    const url = normalizeSafeProjectUrl(merged.url, { allowInternal: true });
+    if (title === current.title && description === current.description && url === current.url && unchangedImages) {
+      throw new RoundSubmissionEditError("Make a change before saving your one-time edit.");
+    }
+    const result = await client.query(`
+      UPDATE round_submissions AS s
+      SET title=$4, description=$5, image=$6, images=$7::jsonb, url=$8,
+        user_edited_at=clock_timestamp(), updated_at=clock_timestamp()
+      FROM rounds r
+      WHERE s.round_id=$1 AND s.id=$2 AND lower(s.wallet_address)=lower($3)
+        AND s.deleted_at IS NULL AND s.status IN ('approved','pending')
+        AND s.user_edited_at IS NULL AND r.id=s.round_id AND r.deleted_at IS NULL
+        AND r.status='published' AND r.active=true AND clock_timestamp() < r.voting_starts_at
+      RETURNING s.*
+    `, [round.id, submissionId, walletAddress, title, description, images[0], JSON.stringify(images), url]);
+    if (!result.rows[0]) throw new RoundSubmissionEditError("The edit window has closed or your one-time edit was already used.", 409);
+    await client.query("COMMIT");
+    return mapSubmission(result.rows[0]);
   } catch (error) {
     await client.query("ROLLBACK");
     throw error;
