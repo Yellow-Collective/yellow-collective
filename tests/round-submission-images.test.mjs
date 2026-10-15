@@ -22,6 +22,7 @@ const loadTsModule = (filePath) => {
     require,
     module,
     exports: module.exports,
+    atob,
   });
 
   return module.exports;
@@ -42,10 +43,15 @@ const submitApiSource = readFileSync(
   resolve(process.cwd(), "pages/api/rounds/[slug]/submit.ts"),
   "utf8"
 );
-const submitPageSource = readFileSync(
-  resolve(process.cwd(), "pages/rounds/[slug]/submit.tsx"),
-  "utf8"
-);
+const submitPageSource =
+  readFileSync(
+    resolve(process.cwd(), "pages/rounds/[slug]/submit.tsx"),
+    "utf8"
+  ) +
+  readFileSync(
+    resolve(process.cwd(), "components/rounds/SubmissionImagesField.tsx"),
+    "utf8"
+  );
 const coinDetailPageSource = readFileSync(
   resolve(process.cwd(), "pages/coins/[address].tsx"),
   "utf8"
@@ -107,7 +113,7 @@ test("defines a ten-image and aggregate payload limit", () => {
   assert.equal(submissionImages.ROUND_SUBMISSION_MAX_IMAGES, 10);
   assert.equal(
     submissionImages.ROUND_SUBMISSION_MAX_TOTAL_IMAGE_BYTES,
-    7 * 1024 * 1024
+    2.5 * 1024 * 1024
   );
 });
 
@@ -164,6 +170,59 @@ test("every project submission entry point sends ordered images and a legacy cov
     coinDetailPageSource,
     /image: coin\.mediaUrl \|\| coin\.imageUrl,[\s\S]*images: \[coin\.mediaUrl \|\| coin\.imageUrl\]/
   );
+});
+
+test("validates inline GIF content, size, dimensions and data encoding", () => {
+  const valid =
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+  assert.equal(
+    submissionImages.getRoundSubmissionGifValidationError([valid]),
+    undefined
+  );
+  for (const image of [
+    "data:image/gif;base64,PHNjcmlwdD4=",
+    "data:image/gif;base64,abc",
+    valid.slice(0, -4),
+    `data:image/gif;base64,${"a".repeat(1400000)}`,
+  ]) {
+    assert.match(
+      submissionImages.getRoundSubmissionGifValidationError([image]),
+      /GIF/
+    );
+  }
+});
+
+test("accepts complete animation frames and rejects truncated frame blocks", () => {
+  const bytes = Buffer.from(
+    "R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+    "base64"
+  );
+  const descriptorOffset = bytes.indexOf(0x2c);
+  const animated = Buffer.concat([
+    bytes.subarray(0, -1),
+    bytes.subarray(descriptorOffset),
+  ]);
+  assert.equal(
+    submissionImages.getRoundSubmissionGifValidationError([
+      `data:image/gif;base64,${animated.toString("base64")}`,
+    ]),
+    undefined
+  );
+  for (const invalid of [
+    Buffer.concat([
+      bytes.subarray(0, descriptorOffset + 6),
+      Buffer.from([0x3b]),
+    ]),
+    Buffer.from("GIF89a\x01\x00\x01\x00\x00\x00\x00,;", "binary"),
+    Buffer.concat([bytes.subarray(0, -3), Buffer.from([0xff, 0x3b])]),
+  ]) {
+    assert.match(
+      submissionImages.getRoundSubmissionGifValidationError([
+        `data:image/gif;base64,${invalid.toString("base64")}`,
+      ]),
+      /valid GIF/
+    );
+  }
 });
 
 let failures = 0;

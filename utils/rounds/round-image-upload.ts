@@ -1,6 +1,6 @@
 export const ROUND_IMAGE_UPLOAD_MAX_BYTES = 8 * 1024 * 1024;
 // Round submissions store uploaded images inline in a JSON request. Keep the
-// encoded image well below the API route's 8 MB request limit.
+// encoded image below the API routes' 4 MB request limit.
 export const ROUND_IMAGE_UPLOAD_MAX_OUTPUT_BYTES = 500 * 1024;
 export const ROUND_IMAGE_UPLOAD_ACCEPT_TYPES = [
   "image/png",
@@ -16,6 +16,10 @@ type RoundImageUploadFile = Pick<File, "type" | "size">;
 export const validateRoundImageUploadFile = (file: RoundImageUploadFile) => {
   if (!ROUND_IMAGE_UPLOAD_ACCEPT_TYPES.some((type) => type === file.type)) {
     throw new Error("Choose a supported image file.");
+  }
+
+  if (file.type === "image/gif" && file.size > 1024 * 1024) {
+    throw new Error("Choose a GIF no larger than 1MB to preserve animation.");
   }
 
   if (file.size > ROUND_IMAGE_UPLOAD_MAX_BYTES) {
@@ -65,7 +69,25 @@ const encodeRoundImage = (image: HTMLImageElement) => {
 };
 
 export const resizeRoundImageFile = (file: File) =>
-  new Promise<string>((resolve, reject) => {
+  new Promise<string>((resolveResult, rejectResult) => {
+    let settled = false;
+    const timeout = setTimeout(
+      () =>
+        reject(new Error("Image processing timed out. Try a smaller file.")),
+      15000
+    );
+    const resolve = (value: string) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      resolveResult(value);
+    };
+    const reject = (error: unknown) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      rejectResult(error);
+    };
     try {
       validateRoundImageUploadFile(file);
     } catch (error) {
@@ -75,6 +97,10 @@ export const resizeRoundImageFile = (file: File) =>
 
     const reader = new FileReader();
     reader.onload = () => {
+      if (file.type === "image/gif") {
+        resolve(String(reader.result || ""));
+        return;
+      }
       const image = document.createElement("img");
       image.onload = () => {
         try {

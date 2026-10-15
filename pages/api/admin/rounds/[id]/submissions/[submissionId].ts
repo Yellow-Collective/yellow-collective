@@ -1,12 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
   removeRoundSubmission,
+  RoundSubmissionValidationError,
   setRoundSubmissionStatus,
   updateRoundSubmission,
   type RoundSubmissionInput,
   type RoundSubmissionStatus,
 } from "data/rounds";
 import { requireAdminRequest } from "@/utils/admin-api";
+
+export const config = { api: { bodyParser: { sizeLimit: "4mb" } } };
 
 type AdminSubmissionBody = {
   action?: "approve" | "reject" | "hide" | "remove";
@@ -56,7 +59,7 @@ export default async function handler(
       return res.status(400).json({ error: "Invalid submission action." });
     }
 
-    if (body.submission && req.method !== "DELETE" && action !== "remove") {
+    if (body.submission && action && req.method !== "DELETE" && action !== "remove") {
       await updateRoundSubmission(id, submissionId, body.submission);
     }
 
@@ -79,7 +82,10 @@ export default async function handler(
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unable to update submission.";
+    if (error instanceof RoundSubmissionValidationError) {
+      return res.status(400).json({ error: message });
+    }
     console.error("Admin round submission update failed", error);
-    return res.status(500).json({ error: message });
+    return res.status(500).json({ error: "Unable to update submission." });
   }
 }

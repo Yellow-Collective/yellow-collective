@@ -2,6 +2,11 @@ import Layout from "@/components/Layout";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import CoinMediaPreview from "@/components/coins/CoinMediaPreview";
 import ProjectMemberSelector from "@/components/community/ProjectMemberSelector";
+import { SubmissionImagesField } from "@/components/rounds/SubmissionImagesField";
+import {
+  appendRoundSubmissionImages,
+  getRoundSubmissionImagesValidationError,
+} from "@/utils/rounds/submission-images";
 import RoundImageUploadField from "@/components/rounds/RoundImageUploadField";
 import VotingPowerSnapshotFieldset from "@/components/rounds/VotingPowerSnapshotFieldset";
 import {
@@ -3863,12 +3868,15 @@ const RoundSubmissionEditor = ({
   const [description, setDescription] = useState(submission.description);
   const [videoUrl, setVideoUrl] = useState("");
   const [image, setImage] = useState(submission.image);
+  const [images, setImages] = useState(submission.images);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [url, setUrl] = useState(submission.url);
   const [walletAddress, setWalletAddress] = useState(submission.walletAddress);
   const [message, setMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   const submit = async (action?: "approve" | "reject" | "hide" | "remove") => {
+    if (isSaving || isUploadingImage) return;
     if (
       (action === "reject" || action === "hide" || action === "remove") &&
       !window.confirm(`${action} this submission?`)
@@ -3879,6 +3887,13 @@ const RoundSubmissionEditor = ({
     try {
       setIsSaving(true);
       setMessage(null);
+      const nextImages = [image, ...images.slice(1)];
+      const imagesChanged = nextImages.length !== submission.images.length ||
+        nextImages.some((value, index) => value !== submission.images[index]);
+      const submissionChanges = {
+        title, description, url, walletAddress,
+        ...(imagesChanged ? { images: nextImages } : {}),
+      };
       await sendAdminRequest(
         `/api/admin/rounds/${round.id}/submissions/${submission.id}`,
         adminAuth,
@@ -3886,9 +3901,9 @@ const RoundSubmissionEditor = ({
         action
           ? {
               action,
-              submission: { title, description, image, url, walletAddress },
+              submission: submissionChanges,
             }
-          : { submission: { title, description, image, url, walletAddress } }
+          : { submission: submissionChanges }
       );
       await mutateSubmissions();
       if (action === "remove") {
@@ -3926,7 +3941,7 @@ const RoundSubmissionEditor = ({
           <button
             type="button"
             onClick={() => submit()}
-            disabled={isSaving}
+            disabled={isSaving || isUploadingImage}
             className={saveButtonClass}
           >
             Save changes
@@ -3935,7 +3950,7 @@ const RoundSubmissionEditor = ({
             <button
               type="button"
               onClick={onClose}
-              disabled={isSaving}
+              disabled={isSaving || isUploadingImage}
               className={secondaryButtonClass}
             >
               Close
@@ -3945,7 +3960,7 @@ const RoundSubmissionEditor = ({
             <button
               type="button"
               onClick={() => submit("approve")}
-              disabled={isSaving}
+              disabled={isSaving || isUploadingImage}
               className={secondaryButtonClass}
             >
               Approve
@@ -3954,7 +3969,7 @@ const RoundSubmissionEditor = ({
           <button
             type="button"
             onClick={() => submit("reject")}
-            disabled={isSaving}
+            disabled={isSaving || isUploadingImage}
             className={secondaryButtonClass}
           >
             Reject
@@ -3962,7 +3977,7 @@ const RoundSubmissionEditor = ({
           <button
             type="button"
             onClick={() => submit("hide")}
-            disabled={isSaving}
+            disabled={isSaving || isUploadingImage}
             className={secondaryButtonClass}
           >
             Hide
@@ -3970,7 +3985,7 @@ const RoundSubmissionEditor = ({
           <button
             type="button"
             onClick={() => submit("remove")}
-            disabled={isSaving}
+            disabled={isSaving || isUploadingImage}
             className={dangerButtonClass}
           >
             Delete
@@ -4012,14 +4027,14 @@ const RoundSubmissionEditor = ({
                 )}
               </div>
             )}
-            {submission.images.map((submissionImage, index) => (
+            {[image, ...images.slice(1)].map((submissionImage, index) => (
               <div
                 key={`${submission.id}-admin-image-${index}`}
                 className="overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={submissionImage}
+                  src={normalizeSafeImageUrl(submissionImage, { allowDataImages: true, allowInternal: true })}
                   alt={`${submission.title} image ${index + 1}`}
                   className="aspect-square w-full object-cover"
                 />
@@ -4072,7 +4087,28 @@ const RoundSubmissionEditor = ({
           <FormField
             label="Cover image URL"
             value={image}
-            onChange={setImage}
+            onChange={(value) => { if (!isSaving && !isUploadingImage) setImage(value); }}
+          />
+          <SubmissionImagesField
+            images={[image, ...images.slice(1)]}
+            onAdd={(addedImages) => {
+              const nextImages = appendRoundSubmissionImages([image, ...images.slice(1)], addedImages);
+              const validationError = getRoundSubmissionImagesValidationError(nextImages);
+              if (validationError) { setMessage(validationError); return; }
+              setImages(nextImages);
+              setMessage("Images added to this draft. Save changes to publish them.");
+            }}
+            onRemove={(index) => {
+              if (images.length <= 1) { setMessage("At least one image is required."); return; }
+              const nextImages = [image, ...images.slice(1)].filter((_, imageIndex) => imageIndex !== index);
+              setImages(nextImages);
+              setImage(nextImages[0] || "");
+              setMessage(null);
+            }}
+            placeholder="https://example.com/image.gif"
+            isUploading={isUploadingImage || isSaving}
+            onUploadingChange={setIsUploadingImage}
+            onError={setMessage}
           />
           <FormField label="Project URL" value={url} onChange={setUrl} />
           <FormField

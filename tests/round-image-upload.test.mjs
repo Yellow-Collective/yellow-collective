@@ -7,7 +7,7 @@ import vm from "node:vm";
 const require = createRequire(import.meta.url);
 const ts = require("typescript");
 
-const loadTsModule = (filePath) => {
+const loadTsModule = (filePath, globals = {}) => {
   const source = readFileSync(filePath, "utf8");
   const transpiled = ts.transpileModule(source, {
     compilerOptions: {
@@ -22,6 +22,9 @@ const loadTsModule = (filePath) => {
     require,
     module,
     exports: module.exports,
+    setTimeout,
+    clearTimeout,
+    ...globals,
   });
 
   return module.exports;
@@ -111,11 +114,83 @@ test("uses one shared round image upload field across request and admin forms", 
   assert.match(requestPageSource, /<RoundImageUploadField/);
 });
 
+test("preserves GIF bytes without using a canvas", async () => {
+  const gif =
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+  const runtime = loadTsModule(
+    resolve(process.cwd(), "utils/rounds/round-image-upload.ts"),
+    {
+      FileReader: class {
+        readAsDataURL() {
+          this.result = gif;
+          this.onload();
+        }
+      },
+      document: {
+        createElement() {
+          throw new Error("GIF must not use canvas or image decoder");
+        },
+      },
+      setTimeout,
+      clearTimeout,
+    }
+  );
+  assert.equal(
+    await runtime.resizeRoundImageFile({ type: "image/gif", size: 34 }),
+    gif
+  );
+});
+
+test("rejects GIF files exceeding the preserved-animation budget", () => {
+  assert.throws(
+    () =>
+      upload.validateRoundImageUploadFile({
+        type: "image/gif",
+        size: 1024 * 1024 + 1,
+      }),
+    /GIF.*1MB/
+  );
+});
+
+test("rejects stalled and failed file reads with recoverable errors", async () => {
+  let expire;
+  const runtime = loadTsModule(
+    resolve(process.cwd(), "utils/rounds/round-image-upload.ts"),
+    {
+      FileReader: class {
+        readAsDataURL() {}
+      },
+      setTimeout(callback) {
+        expire = callback;
+        return 1;
+      },
+      clearTimeout() {},
+    }
+  );
+  const pending = runtime.resizeRoundImageFile({ type: "image/gif", size: 34 });
+  expire();
+  await assert.rejects(pending, /timed out/);
+  const failed = loadTsModule(
+    resolve(process.cwd(), "utils/rounds/round-image-upload.ts"),
+    {
+      FileReader: class {
+        readAsDataURL() {
+          this.onerror();
+        }
+      },
+    }
+  );
+  await assert.rejects(
+    failed.resizeRoundImageFile({ type: "image/gif", size: 34 }),
+    /Unable to read image/
+  );
+});
+
 let failures = 0;
 
 for (const { name, run } of tests) {
   try {
-    run();
+    await run();
     console.log(`ok - ${name}`);
   } catch (error) {
     failures += 1;

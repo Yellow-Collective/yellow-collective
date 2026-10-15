@@ -19,7 +19,7 @@ type SubmitRoundBody = {
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: "8mb",
+      sizeLimit: "4mb",
     },
   },
 };
