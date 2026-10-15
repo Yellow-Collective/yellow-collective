@@ -615,11 +615,19 @@ test("round voting UI hides owner allocation controls only while voting is open"
   );
   assert.match(
     roundPageSource,
-    /!isOwnSubmission\s*&&\s*canVote[\s\S]*yc-round-vote-controls/
+    /!isOwnSubmission\s*&&\s*canVote\s*&&\s*!hasReachedEntryVoteLimit[\s\S]*yc-round-vote-controls/
+  );
+  assert.match(
+    roundPageSource,
+    /hasReachedEntryVoteLimit[\s\S]*Maximum \{maxVotesPerEntry\} votes used for this entry\./
   );
   assert.match(
     roundPageSource,
     /You cannot vote for your own entry\.[\s\S]*?\n\s*<\/p>/
+  );
+  assert.match(
+    globalsSource,
+    /\[data-theme="dark"\] \.yc-round-submission-card \.yc-round-self-vote-notice\s*\{\s*color: #212529 !important;/
   );
   assert.match(
     roundPageSource,
@@ -730,6 +738,89 @@ test("castRoundVotes rejects an additive allocation above the per-entry cap", as
   assert.equal(
     queries.some(({ text }) => text.includes("INSERT INTO round_votes")),
     false
+  );
+});
+
+test("castRoundVotes applies the per-entry cap across separate vote actions", async () => {
+  const queryLog = [];
+  const persistedVotes = new Map();
+  class FakePool {
+    async query() {
+      return { rows: [] };
+    }
+
+    async connect() {
+      return {
+        query: async (text, values) => {
+          queryLog.push({ text, values });
+          if (text.includes("SELECT id, wallet_address, status")) {
+            return {
+              rows: [
+                {
+                  id: "submission-1",
+                  wallet_address: "0xdef0000000000000000000000000000000000000",
+                  status: "approved",
+                },
+              ],
+            };
+          }
+          if (text.includes("SELECT submission_id, COALESCE(SUM(vote_count)")) {
+            const count = persistedVotes.get(values[2][0]) || 0;
+            return {
+              rows: count ? [{ submission_id: values[2][0], vote_count: count }] : [],
+            };
+          }
+          if (text.includes("SELECT COALESCE(SUM(vote_count), 0)::int AS used_votes")) {
+            return {
+              rows: [{
+                used_votes: [...persistedVotes.values()].reduce((sum, count) => sum + count, 0),
+              }],
+            };
+          }
+          if (text.includes("INSERT INTO round_votes")) {
+            persistedVotes.set(
+              values[2],
+              (persistedVotes.get(values[2]) || 0) + values[4]
+            );
+          }
+          return { rows: [] };
+        },
+        release: () => undefined,
+      };
+    }
+  }
+
+  const rounds = loadRoundsModule({
+    pg: { Pool: FakePool },
+    "@/utils/rounds/state": { getRoundState: () => "voting_open" },
+  });
+  const input = {
+    round: { id: "round-1", maxVotesPerEntry: 25 },
+    walletAddress: "0xabc0000000000000000000000000000000000000",
+    votingPower: 100,
+  };
+
+  await rounds.castRoundVotes({
+    ...input,
+    votes: [{ submissionId: "submission-1", voteCount: 20 }],
+  });
+  await rounds.castRoundVotes({
+    ...input,
+    votes: [{ submissionId: "submission-1", voteCount: 5 }],
+  });
+  assert.equal(persistedVotes.get("submission-1"), 25);
+
+  await assert.rejects(
+    () => rounds.castRoundVotes({
+      ...input,
+      votes: [{ submissionId: "submission-1", voteCount: 1 }],
+    }),
+    /up to 25 votes per entry/
+  );
+  assert.equal(persistedVotes.get("submission-1"), 25);
+  assert.equal(
+    queryLog.filter(({ text }) => text.includes("INSERT INTO round_votes")).length,
+    2
   );
 });
 

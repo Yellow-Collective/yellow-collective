@@ -4012,10 +4012,17 @@ export const castRoundVotes = async ({
         submissionIds,
         client,
       });
+      const requestedVotesBySubmission = new Map<string, number>();
       for (const vote of votes) {
+        requestedVotesBySubmission.set(
+          vote.submissionId,
+          (requestedVotesBySubmission.get(vote.submissionId) || 0) +
+            vote.voteCount
+        );
+      }
+      for (const [submissionId, requestedVotes] of requestedVotesBySubmission) {
         const totalForSubmission =
-          (voteUsageBySubmission.get(vote.submissionId) || 0) +
-          vote.voteCount;
+          (voteUsageBySubmission.get(submissionId) || 0) + requestedVotes;
         if (totalForSubmission > round.maxVotesPerEntry) {
           throw new Error(
             `You can allocate up to ${round.maxVotesPerEntry} votes per entry.`

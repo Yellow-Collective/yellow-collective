@@ -641,6 +641,10 @@
     color: #212529 !important;
   }
 
+  [data-theme="dark"] .yc-round-submission-card .yc-round-self-vote-notice {
+    color: #212529 !important;
+  }
+
   .yc-round-submission-card .yc-round-locked-vote-pill,
   .yc-round-submission-card .yc-round-locked-vote-pill *,
   [data-theme="dark"] .yc-round-submission-card .yc-round-locked-vote-pill,

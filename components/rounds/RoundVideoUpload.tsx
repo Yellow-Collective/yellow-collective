@@ -19,7 +19,10 @@ export function RoundVideoUpload({
   onChange,
   onBusy,
 }: Props) {
-  const [enabled, setEnabled] = useState(false);
+  const [availability, setAvailability] = useState<
+    "loading" | "enabled" | "disabled" | "error"
+  >("loading");
+  const [availabilityAttempt, setAvailabilityAttempt] = useState(0);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("");
@@ -30,11 +33,31 @@ export function RoundVideoUpload({
   const generation = useRef(0);
   const previousWallet = useRef(wallet);
   useEffect(() => {
-    fetch(`/api/rounds/${encodeURIComponent(slug)}/videos`)
-      .then((r) => r.json())
-      .then((result) => setEnabled(result.enabled === true))
-      .catch(() => setEnabled(false));
-  }, [slug]);
+    let active = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    setAvailability("loading");
+    fetch(`/api/rounds/${encodeURIComponent(slug)}/videos`, {
+      cache: "no-store",
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Video availability request failed.");
+        const result = await response.json();
+        if (typeof result.enabled !== "boolean")
+          throw new Error("Invalid video availability response.");
+        if (active) setAvailability(result.enabled ? "enabled" : "disabled");
+      })
+      .catch(() => {
+        if (active) setAvailability("error");
+      })
+      .finally(() => clearTimeout(timeout));
+    return () => {
+      active = false;
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [slug, availabilityAttempt]);
   useEffect(() => {
     if (previousWallet.current !== wallet) {
       generation.current++;
@@ -142,7 +165,31 @@ export function RoundVideoUpload({
       );
     }
   };
-  if (!enabled) return null;
+  if (availability === "disabled") return null;
+  if (availability !== "enabled") {
+    return (
+      <fieldset className="min-w-0">
+        <legend className="font-heading text-base text-skin-base">
+          Optional video
+        </legend>
+        <p role="status" className="mt-1 text-sm text-secondary">
+          {availability === "loading"
+            ? "Checking video upload availability..."
+            : "Unable to check video uploads. You can still submit images."}
+        </p>
+        {availability === "error" && (
+          <button
+            type="button"
+            disabled={disabled}
+            onClick={() => setAvailabilityAttempt((attempt) => attempt + 1)}
+            className="mt-2 font-heading text-sm underline disabled:opacity-50"
+          >
+            Retry video availability
+          </button>
+        )}
+      </fieldset>
+    );
+  }
   return (
     <fieldset className="min-w-0">
       <legend className="font-heading text-base text-skin-base">

@@ -129,6 +129,32 @@ const GET_GOLDSKY_PROPOSAL_BY_ID = `
   }
 `;
 
+const GET_RECENT_GOLDSKY_PROPOSALS = `
+  query GetRecentProposals($first: Int!) {
+    proposals(first: $first, orderBy: createdTimestamp, orderDirection: desc) {
+      id
+      title
+      description
+      proposer {
+        id
+      }
+      createdTimestamp
+      startBlock
+      endBlock
+      proposalThreshold
+      quorumVotes
+      forVotes
+      againstVotes
+      abstainVotes
+      targets
+      values
+      signatures
+      calldatas
+      status
+    }
+  }
+`;
+
 const stripMarkdownTitle = (value: string) =>
   value
     .replace(/^#+\s*/, "")
@@ -146,11 +172,22 @@ const getProposalTitle = (description: string, id: string) => {
 };
 
 export const getNounsDaoProposals = async () => {
-  try {
-    const proposals = await getNounsDaoProposalsFromIndexer();
-    if (proposals.length > 0) return proposals;
-  } catch (error) {
-    console.warn("Unable to load Nouns DAO proposals from indexer", error);
+  const [goldsky, indexer] = await Promise.allSettled([
+    getNounsDaoProposalsFromGoldsky(),
+    getNounsDaoProposalsFromIndexer(),
+  ]);
+  const proposals = mergeNounsDaoProposalLists(
+    goldsky.status === "fulfilled" ? goldsky.value : [],
+    indexer.status === "fulfilled" ? indexer.value : []
+  );
+
+  if (proposals.length > 0) return proposals;
+
+  if (goldsky.status === "rejected") {
+    console.warn("Unable to load Nouns DAO proposals from Goldsky", goldsky.reason);
+  }
+  if (indexer.status === "rejected") {
+    console.warn("Unable to load Nouns DAO proposals from indexer", indexer.reason);
   }
 
   let lastError: unknown;
@@ -167,6 +204,24 @@ export const getNounsDaoProposals = async () => {
   }
 
   throw lastError;
+};
+
+export const mergeNounsDaoProposalLists = (
+  ...sources: NounsDaoProposal[][]
+) => {
+  const byNumber = new Map<number, NounsDaoProposal>();
+
+  for (const source of sources) {
+    for (const proposal of source) {
+      if (!byNumber.has(proposal.proposalNumber)) {
+        byNumber.set(proposal.proposalNumber, proposal);
+      }
+    }
+  }
+
+  return Array.from(byNumber.values())
+    .sort((left, right) => right.proposalNumber - left.proposalNumber)
+    .slice(0, MAX_PROPOSALS);
 };
 
 export const getNounsDaoProposalByNumber = async (proposalNumber: number) => {
@@ -443,6 +498,37 @@ const getNounsDaoProposalByNumberFromGoldsky = async (
   return payload.data?.proposal
     ? mapGoldskyProposalToNounsDaoProposal(payload.data.proposal)
     : undefined;
+};
+
+const getNounsDaoProposalsFromGoldsky = async () => {
+  const endpoint =
+    process.env.NOUNS_GRAPHQL_ENDPOINT || DEFAULT_NOUNS_GRAPHQL_ENDPOINT;
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      query: GET_RECENT_GOLDSKY_PROPOSALS,
+      variables: { first: MAX_PROPOSALS },
+    }),
+    signal: AbortSignal.timeout(GOLDSKY_TIMEOUT_MS),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Goldsky returned HTTP ${response.status}`);
+  }
+
+  const payload = (await response.json()) as {
+    data?: { proposals?: GoldskyProposal[] };
+    errors?: { message?: string }[];
+  };
+
+  if (payload.errors?.length) {
+    throw new Error(
+      payload.errors.map((error) => error.message || "Unknown error").join("; ")
+    );
+  }
+
+  return (payload.data?.proposals || []).map(mapGoldskyProposalToNounsDaoProposal);
 };
 
 const getNounsDaoProposalsFromProvider = async (provider: any) => {

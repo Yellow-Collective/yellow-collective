@@ -146,3 +146,25 @@ test("continues to Goldsky when PostgreSQL detail lookup rejects", async () => {
 
   assert.equal(proposal, goldskyProposal);
 });
+
+test("merges fresh Goldsky list entries when the indexer is behind", () => {
+  const indexerProposal = {
+    proposalNumber: 994,
+    title: "Older indexed proposal",
+  };
+  const goldskyProposal = {
+    proposalNumber: 996,
+    title: "Newest canonical proposal",
+  };
+
+  const merged = proposals.mergeNounsDaoProposalLists(
+    [goldskyProposal],
+    [indexerProposal]
+  );
+
+  assert.deepEqual(
+    Array.from(merged, ({ proposalNumber }) => proposalNumber),
+    [996, 994],
+    "The proposal list must include fresh canonical proposals even when the local indexer has older rows."
+  );
+});

@@ -693,6 +693,8 @@ const SubmissionCard = ({
           allocation + remainingVotes,
           Math.max(maxVotesPerEntry - lockedVotes, 0)
         );
+  const hasReachedEntryVoteLimit =
+    maxVotesPerEntry !== null && lockedVotes >= maxVotesPerEntry;
   const cardClass = isWinner
     ? winnerStyle?.cardClass
     : "border-[#555b60] bg-[#212529] text-white shadow-[0px_4.02px_0px_0px_#4b5563]";
@@ -807,12 +809,22 @@ const SubmissionCard = ({
           {isVotingOpen && isOwnSubmission && (
             <p
               role="status"
-              className="rounded-xl border border-amber-200 bg-amber-100 px-3 py-2 text-sm font-semibold text-[#212529] !text-[#212529]"
+              className="yc-round-self-vote-notice rounded-xl border border-amber-200 bg-amber-100 px-3 py-2 text-sm font-semibold text-[#212529] !text-[#212529]"
             >
               You cannot vote for your own entry.
             </p>
           )}
-          {!isOwnSubmission && canVote && (
+          {isVotingOpen &&
+            !isOwnSubmission &&
+            hasReachedEntryVoteLimit && (
+              <p
+                role="status"
+                className="rounded-xl border border-white/20 bg-black/20 px-3 py-2 text-sm font-semibold text-white"
+              >
+                Maximum {maxVotesPerEntry} votes used for this entry.
+              </p>
+            )}
+          {!isOwnSubmission && canVote && !hasReachedEntryVoteLimit && (
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/20 bg-black/20 p-2">
               <span className="font-heading text-sm text-white">New votes</span>
               <div className="yc-round-vote-controls flex items-center gap-2 rounded-xl border border-skin-stroke bg-[#f1f1f1] p-1">
