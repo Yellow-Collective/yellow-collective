@@ -1,3 +1,4 @@
+import { attachDatabasePool } from "@vercel/functions";
 import { Pool } from "pg";
 
 const DEFAULT_INDEXER_SCHEMA = "ponder_live_camp";
@@ -17,12 +18,13 @@ export const getNounsDaoIndexerPool = () => {
     indexerPool = new Pool({
       connectionString,
       connectionTimeoutMillis: 8000,
-      idleTimeoutMillis: 10000,
+      idleTimeoutMillis: 5000,
       max: 2,
       ssl: connectionString.includes("railway.internal")
         ? undefined
         : { rejectUnauthorized: false },
     });
+    if (process.env.VERCEL) attachDatabasePool(indexerPool);
   }
 
   return indexerPool;

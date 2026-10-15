@@ -1,3 +1,4 @@
+import { attachDatabasePool } from "@vercel/functions";
 import { Pool } from "pg";
 
 let pool: Pool | null = null;
@@ -14,12 +15,13 @@ const getPool = () => {
     pool = new Pool({
       connectionString,
       connectionTimeoutMillis: 8000,
-      idleTimeoutMillis: 10000,
+      idleTimeoutMillis: 5000,
       max: 2,
       ssl: connectionString.includes("railway.internal")
         ? undefined
         : { rejectUnauthorized: false },
     });
+    if (process.env.VERCEL) attachDatabasePool(pool);
   }
 
   return pool;
@@ -40,7 +42,11 @@ const ensureTable = async () => {
           )
         `
       )
-      .then(() => undefined);
+      .then(() => undefined)
+      .catch((error) => {
+        tableReady = null;
+        throw error;
+      });
   }
 
   return tableReady;

@@ -173,11 +173,16 @@ const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 const smoke = new AsyncFunction("process", "fetch", "console", "URL", "AbortSignal",
   readFileSync("scripts/round-media-readonly-smoke.mjs", "utf8"));
 const smokeProcess = { argv: ["node", "smoke", "https://example.com", "test-round"] };
+const nextPage = (pageProps, scripts = "") =>
+  `<script id="__NEXT_DATA__">${JSON.stringify({ buildId: "synthetic", props: { pageProps } })}</script>${scripts}`;
 const responses = {
   "/api/rounds/test-round/videos": '{"enabled":true}',
-  "/rounds/test-round/submit": '<script id="__NEXT_DATA__">{"buildId":"synthetic"}</script><script src="/_next/static/chunks/shared-upload.js"></script><script src="/_next/static/chunks/pages/rounds/submit.js"></script>',
+  "/rounds": nextPage({ rounds: [{ slug: "test-round" }] }),
+  "/rounds/test-round": nextPage({ round: { slug: "test-round" } }),
+  "/api/rounds/test-round/media": '{"submissionImages":{}}',
+  "/rounds/test-round/submit": nextPage({ round: { slug: "test-round" } }, '<script src="/_next/static/chunks/shared-upload.js"></script><script src="/_next/static/chunks/pages/rounds/round/submit.js"></script>'),
   "/_next/static/chunks/shared-upload.js": '"Choose a GIF no larger than 1MB to preserve animation."',
-  "/_next/static/chunks/pages/rounds/submit.js": '"Optional video";"/videos"',
+  "/_next/static/chunks/pages/rounds/round/submit.js": '"Optional video";"/videos"',
 };
 await smoke(smokeProcess, async (url) => {
   const body = responses[url.pathname];
@@ -185,3 +190,17 @@ await smoke(smokeProcess, async (url) => {
 }, { log() {} }, URL, AbortSignal);
 assert.equal(smokeProcess.exitCode, 0, "release check must inspect shared uploader chunks");
 console.log("ok - deployed media check finds GIF preservation in shared Next.js chunks");
+for (const [failedPath, failureBody] of [
+  ["/rounds", nextPage({ rounds: [], error: "Rounds are not available right now." })],
+  ["/rounds/test-round", nextPage({ round: null, error: "Unable to load this round." })],
+  ["/rounds/test-round/submit", nextPage({ round: null, error: "Unable to load this round." })],
+  ["/api/rounds/test-round/media", '{"error":"Unable to load round media."}'],
+]) {
+  const failedProcess = { argv: smokeProcess.argv };
+  await smoke(failedProcess, async (url) => ({
+    ok: true, status: 200,
+    text: async () => url.pathname === failedPath ? failureBody : responses[url.pathname] || "",
+  }), { log() {} }, URL, AbortSignal);
+  assert.equal(failedProcess.exitCode, 1, `HTTP 200 must not hide failure at ${failedPath}`);
+}
+console.log("ok - release check rejects HTTP 200 pages containing round-loading errors");

@@ -26,8 +26,30 @@ let enabled;
 try { enabled = JSON.parse(capability.text).enabled; } catch {}
 check("video API", capability.response.ok && enabled === true,
   `HTTP ${capability.response.status}, enabled=${String(enabled)}`);
+const pageProps = (html) => {
+  const data = html.match(/<script id="__NEXT_DATA__"[^>]*>(.*?)<\/script>/s);
+  try { return data ? JSON.parse(data[1]).props?.pageProps : undefined; }
+  catch { return undefined; }
+};
+const listing = await read("/rounds");
+const listingProps = pageProps(listing.text);
+check("rounds loaded", listing.response.ok && !listingProps?.error &&
+  Array.isArray(listingProps?.rounds) && listingProps.rounds.length > 0,
+  `HTTP ${listing.response.status}, round count=${listingProps?.rounds?.length ?? 0}`);
+const detail = await read(`/rounds/${slug}`);
+const detailProps = pageProps(detail.text);
+check("round detail loaded", detail.response.ok && !detailProps?.error &&
+  detailProps?.round?.slug === slug, `HTTP ${detail.response.status}`);
+const media = await read(`/api/rounds/${slug}/media`);
+let mediaData;
+try { mediaData = JSON.parse(media.text); } catch {}
+check("round media loaded", media.response.ok && !mediaData?.error &&
+  typeof mediaData?.submissionImages === "object" && mediaData.submissionImages !== null,
+  `HTTP ${media.response.status}`);
 const page = await read(`/rounds/${slug}/submit`);
-check("submission page", page.response.ok, `HTTP ${page.response.status}`);
+const submitProps = pageProps(page.text);
+check("submission page", page.response.ok && !submitProps?.error &&
+  submitProps?.round?.slug === slug, `HTTP ${page.response.status}`);
 const nextData = page.text.match(/<script id="__NEXT_DATA__"[^>]*>(.*?)<\/script>/s);
 if (nextData) console.log(`Build: ${JSON.parse(nextData[1]).buildId}`);
 const paths = [...page.text.matchAll(/<script[^>]*src="([^"]+)"/g)]

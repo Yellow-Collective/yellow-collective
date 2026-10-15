@@ -1,3 +1,4 @@
+import { attachDatabasePool } from "@vercel/functions";
 import { Pool } from "pg";
 import { GraphQLClient, gql } from "graphql-request";
 import type { Address } from "viem";
@@ -155,12 +156,13 @@ const getPool = () => {
     pool = new Pool({
       connectionString,
       connectionTimeoutMillis: 8000,
-      idleTimeoutMillis: 10000,
+      idleTimeoutMillis: 5000,
       max: 2,
       ssl: connectionString.includes("railway.internal")
         ? undefined
         : { rejectUnauthorized: false },
     });
+    if (process.env.VERCEL) attachDatabasePool(pool);
   }
 
   return pool;
@@ -189,7 +191,11 @@ const ensureTable = async () => {
             ADD COLUMN IF NOT EXISTS avatar_url text NOT NULL DEFAULT ''
         `)
       )
-      .then(() => undefined);
+      .then(() => undefined)
+      .catch((error) => {
+        tableReady = null;
+        throw error;
+      });
   }
 
   return tableReady;
