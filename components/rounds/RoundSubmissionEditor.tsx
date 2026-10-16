@@ -1,5 +1,8 @@
 import type { Round, RoundSubmission } from "data/rounds";
+import type { PlaygroundArtwork } from "data/nouns-builder/artwork";
+import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
+import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 import { SubmissionImagesField } from "./SubmissionImagesField";
 import { appendRoundSubmissionImages } from "@/utils/rounds/submission-images";
@@ -7,11 +10,12 @@ import { canEditRoundSubmission } from "@/utils/rounds/submission-edit";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
-
-type OwnSummary = Pick<
-  RoundSubmission,
-  "id" | "title" | "status" | "walletAddress" | "userEditedAt"
->;
+import { SubmissionCard } from "./RoundSubmissionCard";
+const fetchArtwork = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Unable to load trait preview artwork.");
+  return response.json();
+};
 const emptyDraft = {
   title: "",
   description: "",
@@ -22,9 +26,11 @@ const emptyDraft = {
 export const RoundSubmissionEditor = ({
   round,
   submissionId,
+  navigation,
 }: {
   round: Round;
   submissionId?: string;
+  navigation?: ReactNode;
 }) => {
   const { address, status, connector } = useAccount();
   const walletReady = Boolean(address && status === "connected" && connector);
@@ -42,7 +48,16 @@ export const RoundSubmissionEditor = ({
     inFlight.current = false;
     previousContext.current = context;
   }
-  const [submissions, setSubmissions] = useState<OwnSummary[] | null>(null);
+  const [submissions, setSubmissions] = useState<RoundSubmission[] | null>(
+    null
+  );
+  const hasTraitSubmissions = submissions?.some(
+    (item) => item.submissionType === "trait" && item.source === "noundry"
+  );
+  const { data: artwork } = useSWR<PlaygroundArtwork>(
+    hasTraitSubmissions ? "/api/playground/artwork" : null,
+    fetchArtwork
+  );
   const [submission, setSubmission] = useState<RoundSubmission | null>(null);
   const [draft, setDraft] = useState(emptyDraft);
   const [busy, setBusy] = useState(false);
@@ -131,6 +146,10 @@ export const RoundSubmissionEditor = ({
   };
   const apply = (saved: RoundSubmission) => {
     setSubmission(saved);
+    setSubmissions(
+      (current) =>
+        current?.map((item) => (item.id === saved.id ? saved : item)) ?? null
+    );
     setDraft({
       title: saved.title,
       description: saved.description,
@@ -248,170 +267,225 @@ export const RoundSubmissionEditor = ({
   const buttonClass =
     "rounded-xl border border-skin-stroke bg-accent px-5 py-3 font-heading text-skin-base disabled:cursor-not-allowed disabled:opacity-50";
   return (
-    <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-5 md:p-7">
-      <h1 className="font-heading text-3xl">Edit your submission</h1>
-      <p className="mt-3 rounded-xl border border-skin-stroke bg-[#fff7bf] p-4 text-skin-base">
-        You can edit each submission only once, before voting begins. Saving
-        your edits uses this one-time opportunity. Existing video and source
-        trait stay unchanged.
-      </p>
-      {!walletReady && (
-        <p className="mt-4" role="status">
-          Connect or reconnect the wallet that submitted your entry using the
-          wallet button. Wait for the connection to finish before loading.
+    <>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        {navigation}
+        <button
+          type="button"
+          className="yc-dark-submit-blue ml-auto inline-flex items-center justify-center rounded-xl bg-[#1d9bf0] px-5 py-3 font-heading text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition enabled:hover:bg-[#45adf5] motion-safe:enabled:hover:-translate-y-0.5 motion-safe:enabled:active:translate-y-1 enabled:active:!shadow-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 disabled:!shadow-none"
+          disabled={!walletReady || busy || uploading}
+          onClick={() => load(submission?.id || submissionId)}
+        >
+          {busy
+            ? "Waiting for wallet or request..."
+            : submission
+              ? "Reload saved submission"
+              : submissionId
+                ? "Load my submission"
+                : "Load my submissions"}
+        </button>
+      </div>
+      <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-5 md:p-7">
+        <h1 className="font-heading text-3xl">Edit your submission</h1>
+        <p className="mt-3 rounded-xl border border-skin-stroke bg-[#fff7bf] p-4 text-skin-base">
+          You can edit each submission only once, before voting begins. Saving
+          your edits uses this one-time opportunity. Existing video and source
+          trait stay unchanged.
         </p>
-      )}
-      <button
-        type="button"
-        className="yc-dark-submit-blue mt-4 inline-flex items-center justify-center rounded-xl bg-[#1d9bf0] px-5 py-3 font-heading text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition enabled:hover:bg-[#45adf5] motion-safe:enabled:hover:-translate-y-0.5 motion-safe:enabled:active:translate-y-1 enabled:active:!shadow-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 disabled:!shadow-none"
-        disabled={!walletReady || busy || uploading}
-        onClick={() => load(submission?.id || submissionId)}
-      >
-        {busy
-          ? "Waiting for wallet or request..."
-          : submission
-            ? "Reload saved submission"
-            : submissionId
-              ? "Load my submission"
-              : "Load my submissions"}
-      </button>
-      {submissions &&
-        address?.toLowerCase() === draftOwner.current &&
-        draftRoute.current === `${round.slug}:${submissionId || ""}` && (
-          <ul className="mt-4 space-y-2">
-            {submissions.map((item) => (
-              <li key={item.id}>
+        {!walletReady && (
+          <p className="mt-4" role="status">
+            Connect or reconnect the wallet that submitted your entry using the
+            wallet button. Wait for the connection to finish before loading.
+          </p>
+        )}
+        {submissions &&
+          !submission &&
+          address?.toLowerCase() === draftOwner.current &&
+          draftRoute.current === `${round.slug}:${submissionId || ""}` && (
+            <ul className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+              {submissions.map((item) => (
+                <li key={item.id}>
+                  <SubmissionCard
+                    submission={item}
+                    artwork={artwork}
+                    rank={0}
+                    isWinner={false}
+                    isRoundEnded={false}
+                    isVotingOpen={false}
+                    isOwnSubmission
+                    canVote={false}
+                    allocation={0}
+                    lockedVotes={0}
+                    remainingVotes={0}
+                    maxVotesPerEntry={null}
+                    onChange={() => {}}
+                    onOpen={() => load(item.id)}
+                    showRank={false}
+                    showVoteCount={false}
+                    ownerAction={
+                      <>
+                        <p className="text-sm text-[#dce5f0]">
+                          {item.status === "pending"
+                            ? "Pending approval"
+                            : "Approved"}
+                          {item.userEditedAt ? " · Edit used" : ""}
+                        </p>
+                        <button
+                          type="button"
+                          className="w-fit rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-2 font-heading text-base text-[#212529] shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] transition hover:bg-[#ffd84d] motion-safe:enabled:hover:-translate-y-0.5 motion-safe:enabled:active:translate-y-1 enabled:active:!shadow-none disabled:cursor-not-allowed disabled:opacity-50"
+                          disabled={!walletReady || busy || uploading}
+                          onClick={() => load(item.id)}
+                          aria-label={`${canEditRoundSubmission(round, item, address, new Date(now)) ? "Edit" : "View"} ${item.title}`}
+                        >
+                          {canEditRoundSubmission(
+                            round,
+                            item,
+                            address,
+                            new Date(now)
+                          )
+                            ? "Edit"
+                            : "View submission"}
+                        </button>
+                      </>
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        {submission &&
+          address?.toLowerCase() === submission.walletAddress.toLowerCase() &&
+          draftRoute.current === `${round.slug}:${submissionId || ""}` && (
+            <div className="mt-5 space-y-4">
+              {submissions && (
                 <button
                   type="button"
-                  className={buttonClass}
+                  className="w-fit rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-2 font-heading text-base text-[#212529] shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] transition hover:bg-[#ffd84d] motion-safe:enabled:hover:-translate-y-0.5 motion-safe:enabled:active:translate-y-1 enabled:active:!shadow-none disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={busy || uploading}
-                  onClick={() => load(item.id)}
+                  onClick={() => {
+                    setSubmission(null);
+                    setDraft(emptyDraft);
+                    setMessage("Choose a submission to edit.");
+                  }}
                 >
-                  {item.title} ({item.status})
-                  {item.userEditedAt ? " (edit used)" : ""}
+                  Back to my submissions
                 </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      {submission &&
-        address?.toLowerCase() === submission.walletAddress.toLowerCase() &&
-        draftRoute.current === `${round.slug}:${submissionId || ""}` && (
-          <div className="mt-5 space-y-4">
-            {!editable && (
-              <p role="status">
-                {submission.userEditedAt
-                  ? "Your one-time edit has already been used."
-                  : "Editing is unavailable. Voting may have begun or this entry is no longer eligible."}
-              </p>
-            )}
-            <fieldset
-              disabled={!editable || busy || uploading}
-              className="space-y-4"
-            >
-              <label className="block font-heading">
-                Title
-                <input
-                  className={controlClass}
-                  value={draft.title}
-                  minLength={round.minTitleLength}
-                  maxLength={round.maxTitleLength}
-                  onChange={(event) =>
-                    setDraft((current) => ({
-                      ...current,
-                      title: event.target.value,
-                    }))
-                  }
-                />
-              </label>
-              <label className="block font-heading">
-                Description
-                <textarea
-                  className={controlClass}
-                  rows={6}
-                  value={draft.description}
-                  minLength={round.minDescriptionLength}
-                  maxLength={round.maxDescriptionLength}
-                  onChange={(event) =>
-                    setDraft((current) => ({
-                      ...current,
-                      description: event.target.value,
-                    }))
-                  }
-                />
-              </label>
-              {submission.submissionType !== "trait" && (
+              )}
+              {!editable && (
+                <p role="status">
+                  {submission.userEditedAt
+                    ? "Your one-time edit has already been used."
+                    : "Editing is unavailable. Voting may have begun or this entry is no longer eligible."}
+                </p>
+              )}
+              <fieldset
+                disabled={!editable || busy || uploading}
+                className="space-y-4"
+              >
                 <label className="block font-heading">
-                  Submission URL (optional)
+                  Title
                   <input
                     className={controlClass}
-                    value={draft.url}
+                    value={draft.title}
+                    minLength={round.minTitleLength}
+                    maxLength={round.maxTitleLength}
                     onChange={(event) =>
                       setDraft((current) => ({
                         ...current,
-                        url: event.target.value,
+                        title: event.target.value,
                       }))
                     }
                   />
                 </label>
-              )}
-            </fieldset>
-            {submission.submissionType === "trait" ? (
-              <p className="text-sm text-secondary">
-                Trait edits can change title and description. The canonical
-                artwork, link and source stay unchanged.
-              </p>
-            ) : (
-              <fieldset disabled={!editable || busy}>
-                <SubmissionImagesField
-                  images={draft.images}
-                  placeholder="https://example.com/image.gif"
-                  isUploading={uploading || busy || !editable}
-                  onUploadingChange={setUploading}
-                  onError={setMessage}
-                  onAdd={(added) =>
-                    setDraft((current) => ({
-                      ...current,
-                      images: appendRoundSubmissionImages(
-                        current.images,
-                        added
-                      ),
-                    }))
-                  }
-                  onRemove={(index) =>
-                    setDraft((current) => ({
-                      ...current,
-                      images: current.images.filter(
-                        (_, imageIndex) => imageIndex !== index
-                      ),
-                    }))
-                  }
-                />
+                <label className="block font-heading">
+                  Description
+                  <textarea
+                    className={controlClass}
+                    rows={6}
+                    value={draft.description}
+                    minLength={round.minDescriptionLength}
+                    maxLength={round.maxDescriptionLength}
+                    onChange={(event) =>
+                      setDraft((current) => ({
+                        ...current,
+                        description: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                {submission.submissionType !== "trait" && (
+                  <label className="block font-heading">
+                    Submission URL (optional)
+                    <input
+                      className={controlClass}
+                      value={draft.url}
+                      onChange={(event) =>
+                        setDraft((current) => ({
+                          ...current,
+                          url: event.target.value,
+                        }))
+                      }
+                    />
+                  </label>
+                )}
               </fieldset>
-            )}
-            <button
-              type="button"
-              className={buttonClass}
-              disabled={
-                !editable ||
-                !changed ||
-                busy ||
-                uploading ||
-                !draft.images.length
-              }
-              onClick={save}
-            >
-              {busy ? "Saving..." : "Save edits"}
-            </button>
-          </div>
-        )}
-      <p
-        className="mt-4 text-sm text-secondary"
-        role="status"
-        aria-live="polite"
-      >
-        {message}
-      </p>
-    </section>
+              {submission.submissionType === "trait" ? (
+                <p className="text-sm text-secondary">
+                  Trait edits can change title and description. The canonical
+                  artwork, link and source stay unchanged.
+                </p>
+              ) : (
+                <fieldset disabled={!editable || busy}>
+                  <SubmissionImagesField
+                    images={draft.images}
+                    placeholder="https://example.com/image.gif"
+                    isUploading={uploading || busy || !editable}
+                    onUploadingChange={setUploading}
+                    onError={setMessage}
+                    onAdd={(added) =>
+                      setDraft((current) => ({
+                        ...current,
+                        images: appendRoundSubmissionImages(
+                          current.images,
+                          added
+                        ),
+                      }))
+                    }
+                    onRemove={(index) =>
+                      setDraft((current) => ({
+                        ...current,
+                        images: current.images.filter(
+                          (_, imageIndex) => imageIndex !== index
+                        ),
+                      }))
+                    }
+                  />
+                </fieldset>
+              )}
+              <button
+                type="button"
+                className={buttonClass}
+                disabled={
+                  !editable ||
+                  !changed ||
+                  busy ||
+                  uploading ||
+                  !draft.images.length
+                }
+                onClick={save}
+              >
+                {busy ? "Saving..." : "Save edits"}
+              </button>
+            </div>
+          )}
+        <p
+          className="mt-4 text-sm text-secondary"
+          role="status"
+          aria-live="polite"
+        >
+          {message}
+        </p>
+      </section>
+    </>
   );
 };

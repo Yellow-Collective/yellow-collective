@@ -166,7 +166,7 @@ function fixture(options = {}) {
               ? [roundRow]
               : [],
         };
-      if (sql.includes("SELECT s.* FROM round_submissions"))
+      if (sql.includes("SELECT s.* FROM round_submissions") && args.length === 3)
         return {
           rows:
             readOwned(args) &&
@@ -174,7 +174,7 @@ function fixture(options = {}) {
               ? [state.row]
               : [],
         };
-      if (sql.includes("SELECT s.id, s.title"))
+      if (sql.includes("SELECT s.*") && args.length === 2)
         return {
           rows:
             args[0] === roundRow.id &&
@@ -442,14 +442,16 @@ const summaries = await reads.rounds.listOwnedRoundSubmissionSummaries(
   "wallet"
 );
 assert.equal(summaries.length, 1);
-assert.equal(summaries[0].images, undefined);
+assert.deepEqual(Array.from(summaries[0].images), [cover]);
+assert.equal(summaries[0].description, "Description");
+assert.equal(summaries[0].image, cover);
 assert.equal(
   (await reads.rounds.listOwnedRoundSubmissionSummaries("test", "other"))
     .length,
   0
 );
 console.log(
-  "ok - private owner reads filter wallet and summary lists omit media"
+  "ok - private owner reads filter wallet and list full submission media"
 );
 let authWallet = "wallet",
   actualAction,

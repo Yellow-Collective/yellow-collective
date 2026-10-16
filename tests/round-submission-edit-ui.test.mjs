@@ -20,7 +20,7 @@ const policy = load("utils/rounds/submission-edit.ts");
 const nodes = tree => Array.isArray(tree) ? tree.flatMap(nodes) : !tree || typeof tree !== "object" ? [] : [tree, ...nodes(tree.props?.children)];
 const text = tree => Array.isArray(tree) ? tree.map(text).join(" ") : tree == null || typeof tree === "boolean" ? "" : typeof tree === "object" ? text(tree.props?.children) : String(tree);
 const wallet = "0x1111111111111111111111111111111111111111";
-const harness = () => {
+const harness = (listMode = false) => {
   const slots = [], dependencies = [], pending = [];
   let cursor = 0;
   const state = { address: wallet, status: "connected", connector: {}, confirm: true, failSave: false, trace: [], signHook: null,
@@ -34,6 +34,8 @@ const harness = () => {
   };
   const { RoundSubmissionEditor } = load("components/rounds/RoundSubmissionEditor.tsx", {
     react,
+    swr: { default: () => ({}) },
+    "./RoundSubmissionCard": { SubmissionCard: "submission-card" },
     wagmi: { useAccount: () => ({ address: state.address, status: state.status, connector: state.connector }), useSignMessage: () => ({ signMessageAsync: async () => "synthetic" }) },
     "./SubmissionImagesField": { SubmissionImagesField: "image-picker" },
     "@/utils/rounds/submission-images": { appendRoundSubmissionImages: (current, added) => [...current, ...added] },
@@ -46,12 +48,13 @@ const harness = () => {
     fetch: async (_path, options) => {
       state.trace.push(`fetch:${options.method}`);
       if (state.fetchHook) return state.fetchHook(options);
+      if (_path.endsWith("/my-submissions")) return { ok: true, json: async () => ({ submissions: [{ ...state.row }] }) };
       if (options.method === "PATCH" && state.failSave) return { ok: false, json: async () => ({ error: "Invalid edit." }) };
       if (options.method === "PATCH") state.row = { ...state.row, ...JSON.parse(options.body).submission, userEditedAt: "2026-10-15T12:00:00Z" };
       return { ok: true, json: async () => ({ submission: { ...state.row } }) };
     },
   });
-  const render = () => { cursor = 0; const tree = RoundSubmissionEditor({ round, submissionId: state.submissionId || "entry" }); pending.splice(0).forEach(fn => fn()); return tree; };
+  const render = () => { cursor = 0; const tree = RoundSubmissionEditor({ round, submissionId: state.submissionId || (listMode ? undefined : "entry"), navigation: "Back to round" }); pending.splice(0).forEach(fn => fn()); return tree; };
   const button = label => { const match = nodes(render()).find(n => n.type === "button" && text(n) === label); assert.ok(match, `Button ${label} exists`); return match; };
   const changeTitle = value => nodes(render()).find(n => n.type === "input" && n.props.value === state.row.title).props.onChange({ target: { value } });
   const start = async () => { render(); await button("Load my submission").props.onClick(); render(); };
@@ -71,6 +74,76 @@ test("one-time save warns before signing; cancel preserves draft and successful 
   assert.equal(h.state.row.title, "Changed entry");
   assert.equal(h.button("Save edits").props.disabled, true);
   assert.match(text(h.render()), /one-time edit has now been used/);
+});
+
+test("signed owner list renders full shared cards and selecting Edit loads the protected editor", async () => {
+  const h = harness(true);
+  h.render();
+  assert.deepEqual(h.state.trace, []);
+  const header = nodes(h.render()).find(n => n.type === "div" && text(n).includes("Back to round"));
+  assert.ok(nodes(header).some(n => n.type === "button" && text(n) === "Load my submissions"));
+  await h.button("Load my submissions").props.onClick();
+  const card = nodes(h.render()).find(n => n.type === "submission-card");
+  assert.ok(card);
+  assert.equal(card.props.submission.description, "Description");
+  assert.equal(card.props.submission.images[0], "https://example.invalid/cover.png");
+  assert.equal(card.props.canVote, false);
+  assert.equal(card.props.showVoteCount, false);
+  const edit = nodes(card.props.ownerAction).find(n => n.type === "button");
+  assert.equal(edit.props["aria-label"], "Edit Original entry");
+  await edit.props.onClick();
+  assert.deepEqual(h.state.trace, ["sign:GET", "fetch:GET", "sign:GET", "fetch:GET"]);
+  assert.ok(nodes(h.render()).some(n => n.props?.value === "Original entry"));
+  assert.equal(nodes(h.render()).some(n => n.type === "submission-card"), false);
+});
+
+test("owner card list is cleared when the connected wallet changes", async () => {
+  const h = harness(true); h.render();
+  await h.button("Load my submissions").props.onClick();
+  assert.ok(nodes(h.render()).some(n => n.type === "submission-card"));
+  h.state.address = "0x2222222222222222222222222222222222222222";
+  assert.equal(nodes(h.render()).some(n => n.type === "submission-card"), false);
+});
+
+test("return to owned cards needs no new signature and reflects the used edit after save", async () => {
+  const h = harness(true); h.render();
+  await h.button("Load my submissions").props.onClick();
+  let card = nodes(h.render()).find(n => n.type === "submission-card");
+  await nodes(card.props.ownerAction).find(n => n.type === "button").props.onClick();
+  h.changeTitle("Updated title");
+  await h.button("Save edits").props.onClick();
+  h.state.trace = [];
+  await h.button("Back to my submissions").props.onClick();
+  card = nodes(h.render()).find(n => n.type === "submission-card");
+  assert.equal(card.props.submission.title, "Updated title");
+  assert.ok(card.props.submission.userEditedAt);
+  assert.match(text(card.props.ownerAction), /Edit used/);
+  assert.match(text(card.props.ownerAction), /View submission/);
+  assert.deepEqual(h.state.trace, []);
+});
+
+test("shared full card renders project media, description, wallet and owner action without votes", () => {
+  const { renderToStaticMarkup } = require("react-dom/server");
+  const React = require("react");
+  const { SubmissionCard } = load("components/rounds/RoundSubmissionCard.tsx", {
+    "next/link": { default: "a" },
+    "react-markdown": { default: ({ children }) => React.createElement("p", null, children) },
+    "remark-gfm": { default: () => {} },
+    swr: { default: () => ({}) },
+    "@/components/WalletIdentityLink": { default: ({ address }) => React.createElement("a", null, address) },
+    "@/hooks/useIsMounted": { useIsMounted: () => true },
+    "@/components/noundry/NoundryPreview": { NounPreviewTile: "noun-preview", getSubmissionPreviewTraits: () => ({}) },
+    "@/utils/noundry/round-trait-submission": { isRoundTraitAutoDescription: () => false },
+  });
+  const submission = { id: "one", title: "Full card", description: "Real description", image: "https://example.invalid/cover.png", images: ["https://example.invalid/cover.png", "https://example.invalid/second.png"], walletAddress: wallet, submissionType: "project", video: { url: "https://example.invalid/video.mp4" } };
+  const html = renderToStaticMarkup(React.createElement(SubmissionCard, {
+    submission, rank: 0, isWinner: false, isRoundEnded: false, isVotingOpen: false, isOwnSubmission: true,
+    canVote: false, allocation: 0, lockedVotes: 0, remainingVotes: 0, maxVotesPerEntry: null,
+    onChange() {}, onOpen() {}, showRank: false, showVoteCount: false,
+    ownerAction: React.createElement("button", null, "Edit"),
+  }));
+  for (const content of ["yc-round-submission-card", 'src="https://example.invalid/cover.png"', "Full card", "Real description", wallet, "Video", "2 images", ">Edit</button>"]) assert.ok(html.includes(content), content);
+  assert.doesNotMatch(html, /New votes|votes<|locked<|yc-round-rank-pill/);
 });
 
 test("failed save preserves draft and does not consume the allowance", async () => {

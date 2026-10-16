@@ -3627,16 +3627,13 @@ export const listOwnedRoundSubmissionSummaries = async (slug: string, walletAddr
   const round = await getRoundBySlug(slug);
   if (!round || round.status !== "published" || !round.active) return null;
   const result = await getPool().query(`
-    SELECT s.id, s.title, s.status, s.wallet_address, s.user_edited_at
+    SELECT s.*
     FROM round_submissions s
     WHERE s.round_id=$1 AND lower(s.wallet_address)=lower($2)
       AND s.deleted_at IS NULL AND s.status IN ('approved','pending')
     ORDER BY s.created_at DESC LIMIT 100
   `, [round.id, walletAddress]);
-  return result.rows.map((row) => ({
-    id: String(row.id), title: String(row.title), status: row.status as RoundSubmissionStatus,
-    walletAddress: String(row.wallet_address), userEditedAt: formatDate(row.user_edited_at),
-  }));
+  return result.rows.map(mapSubmission);
 };
 
 export const getOwnedRoundSubmission = async (slug: string, submissionId: string, walletAddress: string) => {

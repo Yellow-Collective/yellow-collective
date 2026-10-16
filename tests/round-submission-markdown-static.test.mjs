@@ -5,7 +5,7 @@ import test from "node:test";
 const source = readFileSync(
   new URL("../pages/rounds/[slug].tsx", import.meta.url),
   "utf8"
-);
+) + readFileSync(new URL("../components/rounds/RoundSubmissionCard.tsx", import.meta.url), "utf8");
 
 test("round submission descriptions render GitHub-flavored Markdown", () => {
   assert.match(source, /import ReactMarkdown from "react-markdown";/);

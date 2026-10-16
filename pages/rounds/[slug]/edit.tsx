@@ -29,19 +29,24 @@ export default function EditSubmissionPage({ round }: { round: Round }) {
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <div className="mx-auto w-full max-w-[980px] space-y-5 pb-12">
-        <Link
-          href={`/rounds/${round.slug}`}
-          className="group flex w-fit items-center gap-2 font-heading"
-        >
-          <span className="yc-dark-yellow-button flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-skin-stroke bg-white shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition group-hover:bg-[#fff7bf] motion-safe:group-hover:-translate-y-0.5 motion-safe:group-active:translate-y-1 group-active:!shadow-none">
-            <ArrowLeftIcon aria-hidden="true" className="h-4 text-skin-base" />
-          </span>
-          <span className="underline">Back to {round.title}</span>
-        </Link>
         <RoundSubmissionEditor
           key={id || "list"}
           round={round}
           submissionId={id}
+          navigation={
+            <Link
+              href={`/rounds/${round.slug}`}
+              className="group flex w-fit items-center gap-2 font-heading"
+            >
+              <span className="yc-dark-yellow-button flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-skin-stroke bg-white shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-neutral))] transition group-hover:bg-[#fff7bf] motion-safe:group-hover:-translate-y-0.5 motion-safe:group-active:translate-y-1 group-active:!shadow-none">
+                <ArrowLeftIcon
+                  aria-hidden="true"
+                  className="h-4 text-skin-base"
+                />
+              </span>
+              <span className="underline">Back to {round.title}</span>
+            </Link>
+          }
         />
       </div>
     </Layout>

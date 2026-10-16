@@ -30,7 +30,7 @@ const loadTsModule = (filePath) => {
 const source = readFileSync(
   resolve(process.cwd(), "pages/rounds/[slug].tsx"),
   "utf8"
-);
+) + readFileSync(new URL("../components/rounds/RoundSubmissionCard.tsx", import.meta.url), "utf8");
 const mediaPayload = loadTsModule(
   resolve(process.cwd(), "utils/rounds/roundMediaPayload.ts")
 );

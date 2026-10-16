@@ -102,7 +102,7 @@ const votingPowerApiSource = readFileSync(
 const roundPageSource = readFileSync(
   resolve(process.cwd(), "pages/rounds/[slug].tsx"),
   "utf8"
-);
+) + readFileSync(new URL("../components/rounds/RoundSubmissionCard.tsx", import.meta.url), "utf8");
 const globalsSource = readFileSync(
   resolve(process.cwd(), "styles/globals.css"),
   "utf8"
