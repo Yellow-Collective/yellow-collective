@@ -16,6 +16,7 @@ const load = (path, overrides = {}) => {
   vm.runInNewContext(outputText, {
     module,
     exports: module.exports,
+    Error,
     require: (key) => (key in overrides ? overrides[key] : require(key)),
     process: { env: { DATABASE_URL: "postgres://synthetic" } },
   });
@@ -59,6 +60,7 @@ function fixture({
   failConsume = false,
   videoRound = "round",
   failRead = false,
+  failCommit = false,
 } = {}) {
   const state = {
     upload: {
@@ -103,6 +105,7 @@ function fixture({
             return { rows: [] };
           }
           if (sql === "COMMIT") {
+            if (failCommit) throw new Error("Commit response lost");
             state.submissions = transaction.submissions;
             state.upload = transaction.upload;
             state.commits++;
@@ -303,3 +306,24 @@ assert.equal(failedRead.state.submissions.length, 1);
 console.log(
   "ok - post-commit reread runs after release and reread failure never rolls back committed data"
 );
+
+for (const [options, expected] of [[{ failConsume: true }, "not_saved"], [{ failRead: true }, "unknown"], [{ failCommit: true }, "unknown"]]) {
+  const f = fixture(options);
+  await assert.rejects(f.rounds.createRoundSubmission(round, input), error => {
+    assert.equal(error.outcome, expected); return true;
+  });
+  const response = { status(code) { this.code = code; return this; }, json(body) { this.body = body; return this; } };
+  // Use a fresh transaction fixture for the API because a readback failure has already committed.
+  const fresh = fixture(options);
+  const freshApi = load("pages/api/rounds/[slug]/submit.ts", {
+    "data/rounds": { ...fresh.rounds, getRoundBySlug: async () => round },
+    "@/utils/rounds/server-auth": { verifyRoundWalletSignedRequest: async () => "wallet" },
+  }).default;
+  await freshApi({ method: "POST", query: { slug: "round" }, body: { submission: input } }, response);
+  assert.equal(response.body.outcome, expected);
+  assert.equal(response.code, 400);
+}
+const invalid = fixture();
+await assert.rejects(invalid.rounds.createRoundSubmission(round, { ...input, title: "" }), error => error.outcome === "not_saved");
+assert.equal(invalid.state.insertAttempts, 0);
+console.log("ok - submit outcome distinguishes validation/rollback from attempted commit and committed readback failure");

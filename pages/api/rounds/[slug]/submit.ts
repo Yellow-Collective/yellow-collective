@@ -1,5 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createRoundSubmission, getRoundBySlug } from "data/rounds";
+import {
+  createRoundSubmission,
+  getRoundBySlug,
+  RoundSubmissionWriteError,
+} from "data/rounds";
 import { verifyRoundWalletSignedRequest } from "@/utils/rounds/server-auth";
 
 type SubmitRoundBody = {
@@ -51,7 +55,10 @@ export default async function handler(
     if (!walletAddress) return;
     const round = await getRoundBySlug(slug);
 
-    if (!round) return res.status(404).json({ error: "Round not found." });
+    if (!round)
+      return res
+        .status(404)
+        .json({ error: "Round not found.", outcome: "not_saved" });
 
     const submission = await createRoundSubmission(round, {
       ...body.submission,
@@ -63,6 +70,14 @@ export default async function handler(
     const message =
       error instanceof Error ? error.message : "Unable to submit to round.";
     console.error("Round submission failed", error);
-    return res.status(400).json({ error: message });
+    const outcome =
+      error instanceof RoundSubmissionWriteError ? error.outcome : "unknown";
+    return res.status(400).json({
+      error:
+        outcome === "unknown"
+          ? "Unable to confirm whether the submission was saved."
+          : message,
+      outcome,
+    });
   }
 }

@@ -3197,9 +3197,29 @@ export const removeRound = async (id: string) => {
     : null;
 };
 
-export const createRoundSubmission = async (
+export class RoundSubmissionWriteError extends Error {
+  constructor(message: string, public readonly outcome: "not_saved" | "unknown") {
+    super(message);
+    this.name = "RoundSubmissionWriteError";
+  }
+}
+
+export const createRoundSubmission = async (round: Round, input: RoundSubmissionInput) => {
+  let commitAttempted = false;
+  try {
+    return await createRoundSubmissionRecord(round, input, () => { commitAttempted = true; });
+  } catch (error) {
+    throw new RoundSubmissionWriteError(
+      error instanceof Error ? error.message : "Unable to submit to round.",
+      commitAttempted ? "unknown" : "not_saved"
+    );
+  }
+};
+
+const createRoundSubmissionRecord = async (
   round: Round,
-  input: RoundSubmissionInput
+  input: RoundSubmissionInput,
+  onCommitAttempt: () => void
 ) => {
   await ensureTables();
 
@@ -3326,6 +3346,7 @@ export const createRoundSubmission = async (
         [input.videoUploadId, result.rows[0].id]
       );
     }
+    onCommitAttempt();
     await client.query("COMMIT");
     committed = true;
     client.release();

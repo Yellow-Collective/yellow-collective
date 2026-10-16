@@ -26,10 +26,22 @@ export const RoundSubmissionEditor = ({
   round: Round;
   submissionId?: string;
 }) => {
-  const { address } = useAccount();
+  const { address, status, connector } = useAccount();
+  const walletReady = Boolean(address && status === "connected" && connector);
   const { signMessageAsync } = useSignMessage();
   const walletRef = useRef(address);
   walletRef.current = address;
+  const draftOwner = useRef(address?.toLowerCase());
+  const draftRoute = useRef(`${round.slug}:${submissionId || ""}`);
+  const operation = useRef(0);
+  const inFlight = useRef(false);
+  const context = `${round.slug}:${submissionId || ""}:${address || ""}:${status}`;
+  const previousContext = useRef(context);
+  if (previousContext.current !== context) {
+    operation.current++;
+    inFlight.current = false;
+    previousContext.current = context;
+  }
   const [submissions, setSubmissions] = useState<OwnSummary[] | null>(null);
   const [submission, setSubmission] = useState<RoundSubmission | null>(null);
   const [draft, setDraft] = useState(emptyDraft);
@@ -42,20 +54,39 @@ export const RoundSubmissionEditor = ({
     return () => clearInterval(timer);
   }, []);
   useEffect(() => {
-    setSubmissions(null);
-    setSubmission(null);
-    setDraft(emptyDraft);
-    setMessage("");
-  }, [address, submissionId]);
+    const route = `${round.slug}:${submissionId || ""}`;
+    const owner = address?.toLowerCase();
+    if (
+      draftRoute.current !== route ||
+      (owner && draftOwner.current !== owner)
+    ) {
+      setSubmissions(null);
+      setSubmission(null);
+      setDraft(emptyDraft);
+      setMessage("");
+    }
+    if (owner) draftOwner.current = owner;
+    draftRoute.current = route;
+    setBusy(false);
+  }, [address, status, submissionId, round.slug]);
+  useEffect(
+    () => () => {
+      operation.current++;
+    },
+    []
+  );
 
   const request = async (
     path: string,
     method: "GET" | "PATCH",
     payload: Record<string, unknown> = {}
   ) => {
-    if (!address)
-      throw new Error("Connect the wallet that submitted this entry.");
+    if (!address || !walletReady)
+      throw new Error(
+        "Reconnect the wallet that submitted this entry using the wallet button, then try again."
+      );
     const requestedWallet = address;
+    const requestedOperation = operation.current;
     setMessage(
       method === "PATCH"
         ? "Confirm the signature in your wallet to save your one-time edit."
@@ -71,8 +102,12 @@ export const RoundSubmissionEditor = ({
       path,
       payload,
       signMessageAsync,
+      bounded: true,
     });
-    if (walletRef.current !== requestedWallet)
+    if (
+      walletRef.current !== requestedWallet ||
+      operation.current !== requestedOperation
+    )
       throw new Error("Wallet changed. Load your submission again.");
     const response = await fetch(path, {
       method,
@@ -85,7 +120,10 @@ export const RoundSubmissionEditor = ({
       signal: AbortSignal.timeout(30000),
     });
     const data = await response.json();
-    if (walletRef.current !== requestedWallet)
+    if (
+      walletRef.current !== requestedWallet ||
+      operation.current !== requestedOperation
+    )
       throw new Error("Wallet changed. Load your submission again.");
     if (!response.ok)
       throw new Error(data.error || "Unable to load or save this submission.");
@@ -101,6 +139,9 @@ export const RoundSubmissionEditor = ({
     });
   };
   const load = async (id?: string) => {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    const attempt = ++operation.current;
     setBusy(true);
     try {
       if (id) {
@@ -108,6 +149,7 @@ export const RoundSubmissionEditor = ({
           `/api/rounds/${round.slug}/submissions/${encodeURIComponent(id)}/edit`,
           "GET"
         );
+        if (attempt !== operation.current) return;
         apply(data.submission);
         setMessage(
           data.submission.userEditedAt
@@ -119,6 +161,7 @@ export const RoundSubmissionEditor = ({
           `/api/rounds/${round.slug}/my-submissions`,
           "GET"
         );
+        if (attempt !== operation.current) return;
         setSubmissions(data.submissions);
         setMessage(
           data.submissions.length
@@ -127,16 +170,21 @@ export const RoundSubmissionEditor = ({
         );
       }
     } catch (error) {
+      if (attempt !== operation.current) return;
       setMessage(
         error instanceof Error
           ? error.message
           : "Unable to load your submission."
       );
     } finally {
-      setBusy(false);
+      if (attempt === operation.current) {
+        inFlight.current = false;
+        setBusy(false);
+      }
     }
   };
   const editable = Boolean(
+    walletReady &&
     submission &&
     canEditRoundSubmission(round, submission, address, new Date(now))
   );
@@ -148,13 +196,23 @@ export const RoundSubmissionEditor = ({
       JSON.stringify(draft.images) !== JSON.stringify(submission.images))
   );
   const save = async () => {
-    if (!submission || !editable || !changed || busy || uploading) return;
+    if (
+      !submission ||
+      !editable ||
+      !changed ||
+      busy ||
+      uploading ||
+      inFlight.current
+    )
+      return;
     if (
       !window.confirm(
         "You can edit this submission only once. Saving will use your one-time edit, and you will not be able to edit it again. Save these edits?"
       )
     )
       return;
+    inFlight.current = true;
+    const attempt = ++operation.current;
     setBusy(true);
     try {
       const changes = {
@@ -170,14 +228,19 @@ export const RoundSubmissionEditor = ({
         "PATCH",
         { submission: changes }
       );
+      if (attempt !== operation.current) return;
       apply(data.submission);
       setMessage("Edits saved. Your one-time edit has now been used.");
     } catch (error) {
+      if (attempt !== operation.current) return;
       setMessage(
         `${error instanceof Error ? error.message : "Unable to save edits."} Reload the saved submission to check its status before trying again.`
       );
     } finally {
-      setBusy(false);
+      if (attempt === operation.current) {
+        inFlight.current = false;
+        setBusy(false);
+      }
     }
   };
   const controlClass =
@@ -192,15 +255,16 @@ export const RoundSubmissionEditor = ({
         your edits uses this one-time opportunity. Existing video and source
         trait stay unchanged.
       </p>
-      {!address && (
+      {!walletReady && (
         <p className="mt-4" role="status">
-          Connect the wallet that submitted your entry using the wallet button.
+          Connect or reconnect the wallet that submitted your entry using the
+          wallet button. Wait for the connection to finish before loading.
         </p>
       )}
       <button
         type="button"
         className={`${buttonClass} mt-4`}
-        disabled={!address || busy || uploading}
+        disabled={!walletReady || busy || uploading}
         onClick={() => load(submission?.id || submissionId)}
       >
         {busy
@@ -211,125 +275,136 @@ export const RoundSubmissionEditor = ({
               ? "Load my submission"
               : "Load my submissions"}
       </button>
-      {submissions && (
-        <ul className="mt-4 space-y-2">
-          {submissions.map((item) => (
-            <li key={item.id}>
-              <button
-                type="button"
-                className={buttonClass}
-                disabled={busy || uploading}
-                onClick={() => load(item.id)}
-              >
-                {item.title} ({item.status})
-                {item.userEditedAt ? " (edit used)" : ""}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      {submission && (
-        <div className="mt-5 space-y-4">
-          {!editable && (
-            <p role="status">
-              {submission.userEditedAt
-                ? "Your one-time edit has already been used."
-                : "Editing is unavailable. Voting may have begun or this entry is no longer eligible."}
-            </p>
-          )}
-          <fieldset
-            disabled={!editable || busy || uploading}
-            className="space-y-4"
-          >
-            <label className="block font-heading">
-              Title
-              <input
-                className={controlClass}
-                value={draft.title}
-                minLength={round.minTitleLength}
-                maxLength={round.maxTitleLength}
-                onChange={(event) =>
-                  setDraft((current) => ({
-                    ...current,
-                    title: event.target.value,
-                  }))
-                }
-              />
-            </label>
-            <label className="block font-heading">
-              Description
-              <textarea
-                className={controlClass}
-                rows={6}
-                value={draft.description}
-                minLength={round.minDescriptionLength}
-                maxLength={round.maxDescriptionLength}
-                onChange={(event) =>
-                  setDraft((current) => ({
-                    ...current,
-                    description: event.target.value,
-                  }))
-                }
-              />
-            </label>
-            {submission.submissionType !== "trait" && (
+      {submissions &&
+        address?.toLowerCase() === draftOwner.current &&
+        draftRoute.current === `${round.slug}:${submissionId || ""}` && (
+          <ul className="mt-4 space-y-2">
+            {submissions.map((item) => (
+              <li key={item.id}>
+                <button
+                  type="button"
+                  className={buttonClass}
+                  disabled={busy || uploading}
+                  onClick={() => load(item.id)}
+                >
+                  {item.title} ({item.status})
+                  {item.userEditedAt ? " (edit used)" : ""}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      {submission &&
+        address?.toLowerCase() === submission.walletAddress.toLowerCase() &&
+        draftRoute.current === `${round.slug}:${submissionId || ""}` && (
+          <div className="mt-5 space-y-4">
+            {!editable && (
+              <p role="status">
+                {submission.userEditedAt
+                  ? "Your one-time edit has already been used."
+                  : "Editing is unavailable. Voting may have begun or this entry is no longer eligible."}
+              </p>
+            )}
+            <fieldset
+              disabled={!editable || busy || uploading}
+              className="space-y-4"
+            >
               <label className="block font-heading">
-                Submission URL (optional)
+                Title
                 <input
                   className={controlClass}
-                  value={draft.url}
+                  value={draft.title}
+                  minLength={round.minTitleLength}
+                  maxLength={round.maxTitleLength}
                   onChange={(event) =>
                     setDraft((current) => ({
                       ...current,
-                      url: event.target.value,
+                      title: event.target.value,
                     }))
                   }
                 />
               </label>
-            )}
-          </fieldset>
-          {submission.submissionType === "trait" ? (
-            <p className="text-sm text-secondary">
-              Trait edits can change title and description. The canonical
-              artwork, link and source stay unchanged.
-            </p>
-          ) : (
-            <fieldset disabled={!editable || busy}>
-              <SubmissionImagesField
-                images={draft.images}
-                placeholder="https://example.com/image.gif"
-                isUploading={uploading || busy || !editable}
-                onUploadingChange={setUploading}
-                onError={setMessage}
-                onAdd={(added) =>
-                  setDraft((current) => ({
-                    ...current,
-                    images: appendRoundSubmissionImages(current.images, added),
-                  }))
-                }
-                onRemove={(index) =>
-                  setDraft((current) => ({
-                    ...current,
-                    images: current.images.filter(
-                      (_, imageIndex) => imageIndex !== index
-                    ),
-                  }))
-                }
-              />
+              <label className="block font-heading">
+                Description
+                <textarea
+                  className={controlClass}
+                  rows={6}
+                  value={draft.description}
+                  minLength={round.minDescriptionLength}
+                  maxLength={round.maxDescriptionLength}
+                  onChange={(event) =>
+                    setDraft((current) => ({
+                      ...current,
+                      description: event.target.value,
+                    }))
+                  }
+                />
+              </label>
+              {submission.submissionType !== "trait" && (
+                <label className="block font-heading">
+                  Submission URL (optional)
+                  <input
+                    className={controlClass}
+                    value={draft.url}
+                    onChange={(event) =>
+                      setDraft((current) => ({
+                        ...current,
+                        url: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+              )}
             </fieldset>
-          )}
-          <button
-            type="button"
-            className={buttonClass}
-            disabled={
-              !editable || !changed || busy || uploading || !draft.images.length
-            }
-            onClick={save}
-          >
-            {busy ? "Saving..." : "Save edits"}
-          </button>
-        </div>
-      )}
+            {submission.submissionType === "trait" ? (
+              <p className="text-sm text-secondary">
+                Trait edits can change title and description. The canonical
+                artwork, link and source stay unchanged.
+              </p>
+            ) : (
+              <fieldset disabled={!editable || busy}>
+                <SubmissionImagesField
+                  images={draft.images}
+                  placeholder="https://example.com/image.gif"
+                  isUploading={uploading || busy || !editable}
+                  onUploadingChange={setUploading}
+                  onError={setMessage}
+                  onAdd={(added) =>
+                    setDraft((current) => ({
+                      ...current,
+                      images: appendRoundSubmissionImages(
+                        current.images,
+                        added
+                      ),
+                    }))
+                  }
+                  onRemove={(index) =>
+                    setDraft((current) => ({
+                      ...current,
+                      images: current.images.filter(
+                        (_, imageIndex) => imageIndex !== index
+                      ),
+                    }))
+                  }
+                />
+              </fieldset>
+            )}
+            <button
+              type="button"
+              className={buttonClass}
+              disabled={
+                !editable ||
+                !changed ||
+                busy ||
+                uploading ||
+                !draft.images.length
+              }
+              onClick={save}
+            >
+              {busy ? "Saving..." : "Save edits"}
+            </button>
+          </div>
+        )}
       <p
         className="mt-4 text-sm text-secondary"
         role="status"

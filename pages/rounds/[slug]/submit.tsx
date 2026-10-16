@@ -22,7 +22,7 @@ import type {
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 
 const CustomConnectButton = dynamic(
@@ -36,6 +36,7 @@ type SubmitRoundProps = {
 };
 
 const ROUND_SIGNED_REQUEST_CHAIN_ID = Number(TOKEN_NETWORK);
+class SubmissionRejectedError extends Error {}
 
 export const getServerSideProps = async ({
   params,
@@ -66,8 +67,9 @@ export default function SubmitRoundPage({
   round,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { address, isConnected } = useAccount();
-  const { signMessageAsync, isLoading: isSigning } = useSignMessage();
+  const { address, status, connector } = useAccount();
+  const walletReady = Boolean(address && status === "connected" && connector);
+  const { signMessageAsync } = useSignMessage();
   const [videoUploadId, setVideoUploadId] = useState("");
   const [isUploadingVideo, setIsUploadingVideo] = useState(false);
   const [videoReset, setVideoReset] = useState(0);
@@ -75,6 +77,8 @@ export default function SubmitRoundPage({
   const [message, setMessage] = useState("");
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionUnknown, setSubmissionUnknown] = useState(false);
+  const submitInFlight = useRef(false);
   const [submissionStage, setSubmissionStage] = useState<
     "signing" | "submitting" | null
   >(null);
@@ -101,7 +105,8 @@ export default function SubmitRoundPage({
         ROUND_SUBMISSION_MAX_TOTAL_IMAGE_BYTES &&
       !isUploadingImage &&
       !isUploadingVideo &&
-      address
+      walletReady &&
+      !submissionUnknown
     );
 
   const updateValue = (
@@ -116,7 +121,10 @@ export default function SubmitRoundPage({
     operation: "reserve" | "finalize" | "cancel",
     id?: string
   ) => {
-    if (!address) throw new Error("Connect your wallet.");
+    if (!address || !walletReady)
+      throw new Error(
+        "Reconnect your wallet using the wallet button and wait for the connection to finish, then try again."
+      );
     const path = `/api/rounds/${round.slug}/videos`;
     const payload = { operation, ...(id ? { id } : {}) };
     const authorization = await createSignedRequestAuthHeader({
@@ -133,6 +141,7 @@ export default function SubmitRoundPage({
       path,
       payload,
       signMessageAsync,
+      bounded: true,
     });
     const response = await fetch(path, {
       method: "POST",
@@ -149,7 +158,10 @@ export default function SubmitRoundPage({
   };
 
   const submit = async () => {
-    if (!canSubmit || !address) return;
+    if (!canSubmit || !address || submitInFlight.current) return;
+    submitInFlight.current = true;
+    let dispatched = false;
+    let uncertain = false;
 
     setIsSubmitting(true);
     setSubmissionStage("signing");
@@ -173,22 +185,57 @@ export default function SubmitRoundPage({
         path,
         payload,
         signMessageAsync,
+        bounded: true,
       });
       setSubmissionStage("submitting");
       setMessage("Submitting your entry...");
-      const response = await fetch(path, {
-        method: "POST",
-        headers: {
-          Authorization: authorization,
-          "Content-Type": "application/json",
-        },
-        cache: "no-store",
-        body: JSON.stringify(payload),
-      });
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Submission failed.");
+      const controller = new AbortController();
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      dispatched = true;
+      try {
+        await Promise.race([
+          (async () => {
+            const response = await fetch(path, {
+              method: "POST",
+              headers: {
+                Authorization: authorization,
+                "Content-Type": "application/json",
+              },
+              cache: "no-store",
+              body: JSON.stringify(payload),
+              signal: controller.signal,
+            });
+            const result = await response.json();
+            // This route only emits these statuses from signature verification,
+            // before createRoundSubmission is entered.
+            if (
+              !response.ok &&
+              (result?.outcome === "not_saved" ||
+                [401, 403, 409].includes(response.status))
+            ) {
+              throw new SubmissionRejectedError(
+                result.error ||
+                  "Submission was not saved. Review your entry and try again."
+              );
+            }
+            // Even a 400 can follow a committed insert whose readback failed.
+            if (
+              !response.ok ||
+              typeof result?.submission?.id !== "string" ||
+              !result.submission.id
+            ) {
+              throw new Error("Submission response could not be confirmed.");
+            }
+          })(),
+          new Promise<never>((_, reject) => {
+            timer = setTimeout(() => {
+              reject(new Error("Submission confirmation timed out."));
+              controller.abort();
+            }, 30000);
+          }),
+        ]);
+      } finally {
+        clearTimeout(timer);
       }
 
       setMessage("Submission received. It is now visible on the round page.");
@@ -196,12 +243,19 @@ export default function SubmitRoundPage({
       setVideoUploadId("");
       setVideoReset((current) => current + 1);
     } catch (submitError) {
-      setMessage(
-        submitError instanceof Error
-          ? submitError.message
-          : "Submission failed."
-      );
+      if (dispatched && !(submitError instanceof SubmissionRejectedError)) {
+        uncertain = true;
+        setSubmissionUnknown(true);
+        setMessage("");
+      } else {
+        setMessage(
+          submitError instanceof Error
+            ? submitError.message
+            : "Submission failed."
+        );
+      }
     } finally {
+      submitInFlight.current = uncertain;
       setIsSubmitting(false);
       setSubmissionStage(null);
     }
@@ -241,10 +295,12 @@ export default function SubmitRoundPage({
         )}
 
         <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-6 shadow-sm md:p-8">
-          {!isConnected && (
+          {!walletReady && (
             <div className="mb-5 rounded-xl border border-skin-stroke bg-[#fff7bf] p-4">
               <p className="mb-3 text-base text-secondary">
-                Connect the wallet that should be attached to this submission.
+                Connect or reconnect the wallet that should be attached to this
+                submission. Wait for the connection to finish before uploading
+                or submitting.
               </p>
               <CustomConnectButton className="h-11 rounded-xl border border-skin-stroke bg-skin-backdrop px-6 text-skin-base" />
             </div>
@@ -294,7 +350,7 @@ export default function SubmitRoundPage({
             key={videoReset}
             slug={round.slug}
             wallet={address}
-            disabled={isSubmitting}
+            disabled={isSubmitting || submissionUnknown || !walletReady}
             request={videoRequest}
             onChange={setVideoUploadId}
             onBusy={setIsUploadingVideo}
@@ -319,10 +375,10 @@ export default function SubmitRoundPage({
             <button
               type="button"
               onClick={submit}
-              disabled={!canSubmit || isSubmitting || isSigning}
+              disabled={!canSubmit || isSubmitting}
               className="yc-dark-submit-blue flex items-center justify-center rounded-[18px] bg-accent px-5 py-3 font-heading text-lg text-skin-base shadow-[0px_4.02px_0px_0px_#b89400] transition hover:-translate-y-0.5 hover:bg-[#ffd84d] active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {submissionStage === "signing" || isSigning
+              {submissionStage === "signing"
                 ? "Confirm in wallet..."
                 : submissionStage === "submitting"
                   ? "Submitting..."
@@ -343,6 +399,29 @@ export default function SubmitRoundPage({
             <p className="mt-4 rounded-xl border border-skin-stroke bg-skin-muted p-3 text-sm text-secondary">
               {message}
             </p>
+          )}
+          {submissionUnknown && (
+            <div
+              role="status"
+              className="mt-4 rounded-xl border border-skin-stroke bg-skin-muted p-3 text-sm text-secondary"
+            >
+              <p>
+                We could not confirm whether your submission was saved. It may
+                already exist. Another submission is blocked in this form to
+                avoid a duplicate; your inputs have been kept. Check My
+                submissions. If the entry is missing, contact the round
+                organizers to confirm its status before submitting again. Do not
+                reload this form to retry.
+              </p>
+              <Link
+                href={`/rounds/${round.slug}/edit`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-block font-heading underline"
+              >
+                Check My submissions (opens a new tab)
+              </Link>
+            </div>
           )}
         </section>
       </div>

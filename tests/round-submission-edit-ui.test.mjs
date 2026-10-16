@@ -10,7 +10,7 @@ const load = (path, overrides = {}, globals = {}) => {
   const { outputText } = ts.transpileModule(readFileSync(path, "utf8"), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, jsx: ts.JsxEmit.ReactJSX },
   });
-  vm.runInNewContext(outputText, { module, exports: module.exports, console, AbortSignal,
+  vm.runInNewContext(outputText, { module, exports: module.exports, console, AbortSignal, Error,
     setInterval: () => 1, clearInterval() {}, ...globals,
     require: name => name in overrides ? overrides[name] : require(name),
   });
@@ -23,7 +23,7 @@ const wallet = "0x1111111111111111111111111111111111111111";
 const harness = () => {
   const slots = [], dependencies = [], pending = [];
   let cursor = 0;
-  const state = { address: wallet, confirm: true, failSave: false, trace: [], signHook: null,
+  const state = { address: wallet, status: "connected", connector: {}, confirm: true, failSave: false, trace: [], signHook: null,
     row: { id: "entry", walletAddress: wallet, title: "Original entry", description: "Description", images: ["https://example.invalid/cover.png"], url: "", status: "approved", userEditedAt: null, submissionType: "project" },
   };
   const round = { slug: "round", status: "published", active: true, votingStartsAt: "2030-01-01T00:00:00Z", minTitleLength: 1, maxTitleLength: 100, minDescriptionLength: 1, maxDescriptionLength: 2000 };
@@ -34,23 +34,24 @@ const harness = () => {
   };
   const { RoundSubmissionEditor } = load("components/rounds/RoundSubmissionEditor.tsx", {
     react,
-    wagmi: { useAccount: () => ({ address: state.address }), useSignMessage: () => ({ signMessageAsync: async () => "synthetic" }) },
+    wagmi: { useAccount: () => ({ address: state.address, status: state.status, connector: state.connector }), useSignMessage: () => ({ signMessageAsync: async () => "synthetic" }) },
     "./SubmissionImagesField": { SubmissionImagesField: "image-picker" },
     "@/utils/rounds/submission-images": { appendRoundSubmissionImages: (current, added) => [...current, ...added] },
     "@/utils/rounds/submission-edit": policy,
     "@/utils/rounds/auth": { getRoundSignedRequestAction: action => `round:${action}` },
     "constants/addresses": { TOKEN_NETWORK: 8453 },
-    "@/utils/signature-auth-client": { createSignedRequestAuthHeader: async ({ method }) => { state.trace.push(`sign:${method}`); if (state.signHook) state.signHook(); return "synthetic"; } },
+    "@/utils/signature-auth-client": { createSignedRequestAuthHeader: async ({ method }) => { state.trace.push(`sign:${method}`); if (state.signHook) state.signHook(); if (state.failRead && method === "GET") throw new Error("Wallet confirmation timed out. Dismiss the pending request, then try again."); return "synthetic"; } },
   }, {
     window: { confirm(message) { assert.match(message, /only once/); state.trace.push("confirm"); return state.confirm; } },
     fetch: async (_path, options) => {
       state.trace.push(`fetch:${options.method}`);
+      if (state.fetchHook) return state.fetchHook(options);
       if (options.method === "PATCH" && state.failSave) return { ok: false, json: async () => ({ error: "Invalid edit." }) };
       if (options.method === "PATCH") state.row = { ...state.row, ...JSON.parse(options.body).submission, userEditedAt: "2026-10-15T12:00:00Z" };
       return { ok: true, json: async () => ({ submission: { ...state.row } }) };
     },
   });
-  const render = () => { cursor = 0; const tree = RoundSubmissionEditor({ round, submissionId: "entry" }); pending.splice(0).forEach(fn => fn()); return tree; };
+  const render = () => { cursor = 0; const tree = RoundSubmissionEditor({ round, submissionId: state.submissionId || "entry" }); pending.splice(0).forEach(fn => fn()); return tree; };
   const button = label => { const match = nodes(render()).find(n => n.type === "button" && text(n) === label); assert.ok(match, `Button ${label} exists`); return match; };
   const changeTitle = value => nodes(render()).find(n => n.type === "input" && n.props.value === state.row.title).props.onChange({ target: { value } });
   const start = async () => { render(); await button("Load my submission").props.onClick(); render(); };
@@ -86,7 +87,50 @@ test("wallet changes during signing stop the edit before a PATCH request", async
   await h.button("Save edits").props.onClick();
   assert.deepEqual(h.state.trace, ["confirm", "sign:PATCH"]);
   assert.equal(h.state.row.userEditedAt, null);
-  assert.match(text(h.render()), /Wallet changed/);
+  assert.equal(nodes(h.render()).some(n => n.props?.value === "Changed entry"), false);
+});
+
+test("disconnect and reconnect same wallet preserves unsaved draft without reloading", async () => {
+  const h = harness(); await h.start(); h.changeTitle("Unsaved draft");
+  h.state.address = undefined; h.state.status = "disconnected"; h.state.connector = undefined;
+  h.render(); h.render();
+  h.state.address = wallet; h.state.status = "connected"; h.state.connector = {};
+  h.render();
+  assert.ok(nodes(h.render()).some(n => n.props?.value === "Unsaved draft"));
+  assert.equal(h.button("Save edits").props.disabled, false);
+});
+
+test("different wallet or submission cannot receive retained draft", async () => {
+  for (const change of [h => { h.state.address = "0x2222222222222222222222222222222222222222"; }, h => { h.state.submissionId = "different"; }]) {
+    const h = harness(); await h.start(); h.changeTitle("Private draft"); change(h);
+    assert.equal(nodes(h.render()).some(n => n.props?.value === "Private draft"), false);
+    assert.equal(nodes(h.render()).some(n => n.props?.value === "Private draft"), false);
+  }
+});
+
+test("late load after disconnect and same-wallet reconnect cannot overwrite draft", async () => {
+  const h = harness(); await h.start(); h.changeTitle("Keep draft");
+  let finish; h.state.fetchHook = () => new Promise(resolve => { finish = resolve; });
+  const pending = h.button("Reload saved submission").props.onClick();
+  for (let i = 0; i < 10; i++) await Promise.resolve();
+  h.state.address = undefined; h.state.status = "disconnected"; h.render();
+  h.state.address = wallet; h.state.status = "connected"; h.render();
+  finish({ ok: true, json: async () => ({ submission: { ...h.state.row, title: "Stale result" } }) });
+  await pending;
+  assert.ok(nodes(h.render()).some(n => n.props?.value === "Keep draft"));
+  assert.equal(h.button("Save edits").props.disabled, false);
+});
+
+test("same-render double save cannot dispatch duplicate edits", async () => {
+  const h = harness(); await h.start(); h.changeTitle("One save"); h.state.trace = [];
+  let finish; h.state.fetchHook = () => new Promise(resolve => { finish = resolve; });
+  const click = h.button("Save edits").props.onClick;
+  const pending = click(); await click();
+  for (let i = 0; i < 10; i++) await Promise.resolve();
+  assert.deepEqual(h.state.trace, ["confirm", "sign:PATCH", "fetch:PATCH"]);
+  finish({ ok: true, json: async () => ({ submission: { ...h.state.row, title: "One save", userEditedAt: "2026-10-16T12:00:00Z" } }) });
+  await pending;
+  assert.equal(h.button("Save edits").props.disabled, true);
 });
 
 test("voting deadline disables saving and trait controls preserve canonical media", async () => {
@@ -94,4 +138,21 @@ test("voting deadline disables saving and trait controls preserve canonical medi
   assert.equal(nodes(h.render()).some(n => n.type === "image-picker"), false);
   h.round.votingStartsAt = "2000-01-01T00:00:00Z";
   assert.equal(h.button("Save edits").props.disabled, true);
+});
+
+test("cached address without a connected connector cannot start loading", async () => {
+  const h = harness(); h.state.status = "reconnecting"; h.state.connector = undefined;
+  assert.equal(h.button("Load my submission").props.disabled, true);
+  await h.button("Load my submission").props.onClick();
+  assert.deepEqual(h.state.trace, []);
+  assert.match(text(h.render()), /reconnect.*wallet/i);
+});
+
+test("load signing timeout leaves a recoverable editor and retry loads the entry", async () => {
+  const h = harness(); h.state.failRead = true; await h.start();
+  assert.equal(h.button("Load my submission").props.disabled, false);
+  assert.match(text(h.render()), /Wallet confirmation timed out/);
+  assert.deepEqual(h.state.trace, ["sign:GET"]);
+  h.state.failRead = false; await h.start();
+  assert.ok(nodes(h.render()).some(n => n.props?.value === "Original entry"));
 });
