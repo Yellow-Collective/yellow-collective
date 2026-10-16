@@ -263,7 +263,7 @@ export const RoundSubmissionEditor = ({
       )}
       <button
         type="button"
-        className={`${buttonClass} mt-4`}
+        className="yc-dark-submit-blue mt-4 inline-flex items-center justify-center rounded-xl bg-[#1d9bf0] px-5 py-3 font-heading text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition enabled:hover:bg-[#45adf5] motion-safe:enabled:hover:-translate-y-0.5 motion-safe:enabled:active:translate-y-1 enabled:active:!shadow-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 disabled:!shadow-none"
         disabled={!walletReady || busy || uploading}
         onClick={() => load(submission?.id || submissionId)}
       >

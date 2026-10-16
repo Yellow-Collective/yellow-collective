@@ -562,14 +562,23 @@ export default function RoundDetailPage({
         )}
 
         <section className="yc-dark-yellow-form-surface rounded-2xl border border-skin-stroke bg-white p-5 text-[#212529] shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] md:p-6">
-          <div className="flex items-end justify-between gap-3">
-            <h2 className="font-heading text-[34px] leading-none text-[#212529]">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <h2 className="mr-auto font-heading text-[34px] leading-none text-[#212529]">
               Submissions
             </h2>
-            {address && <Link href={`/rounds/${round.slug}/edit`} className="font-heading text-base underline">My submissions</Link>}
-            <span className="self-start rounded-full bg-[#c93d2f] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#7f2219]">
-              {round.submissions.length}
-            </span>
+            <div className="ml-auto flex items-center gap-3">
+              {address && (
+                <Link
+                  href={`/rounds/${round.slug}/edit`}
+                  className="yc-dark-submit-blue inline-flex shrink-0 items-center justify-center rounded-xl bg-[#1d9bf0] px-4 py-2 font-heading text-base text-white shadow-[0px_4.02px_0px_0px_#0f5f99] transition hover:bg-[#45adf5] motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-1 active:!shadow-none"
+                >
+                  My submissions
+                </Link>
+              )}
+              <span className="shrink-0 rounded-full bg-[#c93d2f] px-3 py-1 font-heading text-sm text-white shadow-[0px_3px_0px_0px_#7f2219]">
+                {round.submissions.length}
+              </span>
+            </div>
           </div>
           {round.submissions.length > 0 ? (
             <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -805,7 +814,7 @@ const SubmissionCard = ({
               </div>
             )}
           </div>
-          {editHref && <Link href={editHref} className="w-fit rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-2 font-heading text-base text-[#212529]">Edit</Link>}
+          {editHref && <Link href={editHref} className="w-fit rounded-xl border border-skin-stroke bg-[#fff7bf] px-4 py-2 font-heading text-base text-[#212529] shadow-[0px_4.02px_0px_0px_rgb(var(--color-shadow-accent))] transition hover:bg-[#ffd84d] motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-1 active:!shadow-none">Edit</Link>}
           {isVotingOpen && isOwnSubmission && (
             <p
               role="status"
