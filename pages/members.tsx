@@ -5,9 +5,21 @@ import type { GetStaticPropsResult, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import useSWR from "swr";
 
 type MembersPageProps = {
   members: DaoMember[];
+  updatedAt: string | null;
+};
+
+const fetchMembers = async (url: string): Promise<MembersPageProps> => {
+  const response = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+  if (!response.ok) throw new Error("Unable to refresh members.");
+  const result = await response.json();
+  if (!Array.isArray(result.members) || result.members.length === 0) {
+    throw new Error("The member list could not be refreshed.");
+  }
+  return result;
 };
 
 const MEMBERS_STATIC_GENERATION_TIMEOUT_MS = 20_000;
@@ -75,18 +87,18 @@ const sortMembers = (members: DaoMember[], sort: SortMode) =>
     }
 
     if (sort === "votingPower") {
-      return second.votingPower - first.votingPower || nameSort();
+      return (second.votingPower ?? -1) - (first.votingPower ?? -1) || nameSort();
     }
 
     if (sort === "noundry") {
       return (
-        second.noundrySubmissionCount - first.noundrySubmissionCount ||
+        (second.noundrySubmissionCount ?? -1) - (first.noundrySubmissionCount ?? -1) ||
         nameSort()
       );
     }
 
     if (sort === "proposalVotes") {
-      return second.proposalVoteCount - first.proposalVoteCount || nameSort();
+      return (second.proposalVoteCount ?? -1) - (first.proposalVoteCount ?? -1) || nameSort();
     }
 
     return nameSort();
@@ -99,6 +111,7 @@ export const getStaticProps = async (): Promise<
     return {
       props: {
         members: [],
+        updatedAt: null,
       },
       revalidate: 1,
     };
@@ -111,24 +124,41 @@ export const getStaticProps = async (): Promise<
           getDaoMembers(),
           MEMBERS_STATIC_GENERATION_TIMEOUT_MS
         ),
+        updatedAt: new Date().toISOString(),
       },
       revalidate: 300,
     };
   } catch (error) {
     console.warn("Unable to load DAO members", error);
 
-    return {
-      props: {
-        members: [],
-      },
-      revalidate: 60,
-    };
+    // A failed ISR refresh must keep Next's last successfully generated page.
+    throw error;
   }
 };
 
 export default function MembersPage({
-  members,
+  members: initialMembers,
+  updatedAt,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { data, error, isValidating, mutate } = useSWR<MembersPageProps>(
+    "/api/members",
+    fetchMembers,
+    {
+      fallbackData: { members: initialMembers, updatedAt },
+      refreshInterval: 60_000,
+      revalidateOnMount: true,
+      revalidateOnFocus: true,
+      dedupingInterval: 30_000,
+      errorRetryInterval: 30_000,
+      keepPreviousData: true,
+    }
+  );
+  const members = data?.members ?? initialMembers;
+  const hasUnavailableStats = members.some((member) =>
+    [member.votingPower, member.noundrySubmissionCount, member.proposalVoteCount].some(
+      (value) => value == null
+    )
+  );
   const [sort, setSort] = useState<SortMode>("name");
   const sortedMembers = useMemo(
     () => sortMembers(members, sort),
@@ -174,11 +204,31 @@ export default function MembersPage({
                 type="button"
                 className="yc-members-count-button h-12 w-fit whitespace-nowrap rounded-[18px] bg-accent px-5 font-heading text-xl text-skin-base shadow-[0px_4.02px_0px_0px_#454a4e] transition active:translate-y-1 active:shadow-none"
               >
-                {members.length} {members.length === 1 ? "member" : "members"}
+                {members.length > 0
+                  ? `${members.length} ${members.length === 1 ? "member" : "members"}`
+                  : error ? "Unavailable" : "Loading…"}
               </button>
             </div>
           </div>
         </section>
+
+        <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-secondary">
+          <p role="status" aria-live="polite">
+            {error
+              ? members.length > 0
+                ? "Refresh failed. Showing the last loaded members; we’ll retry automatically."
+                : "Unable to load members. We’ll retry automatically."
+              : isValidating
+                ? "Refreshing member stats…"
+                : data?.updatedAt
+                  ? `Members checked: ${new Date(data.updatedAt).toUTCString()}.`
+                  : "Loading members…"}
+            {hasUnavailableStats && " Some stats are unavailable and shown as —."}
+          </p>
+          <button type="button" disabled={isValidating} onClick={() => void mutate()} className="rounded-lg border border-skin-stroke px-3 py-2 font-heading disabled:opacity-50">
+            {isValidating ? "Refreshing…" : "Refresh"}
+          </button>
+        </div>
 
         {sortedMembers.length > 0 ? (
           <section className="grid grid-cols-3 gap-3 sm:gap-4 lg:grid-cols-6">
@@ -188,7 +238,7 @@ export default function MembersPage({
           </section>
         ) : (
           <section className="yc-dark-yellow-surface rounded-2xl border border-skin-stroke bg-white p-8 text-center text-base text-secondary shadow-sm md:text-lg">
-            Member data is not available right now.
+            {error ? "Member data could not be loaded. Try Refresh." : "Loading current members…"}
           </section>
         )}
       </div>
@@ -243,10 +293,10 @@ const MemberCard = ({ member }: { member: DaoMember }) => {
   );
 };
 
-const MemberStat = ({ label, value }: { label: string; value: number }) => (
+const MemberStat = ({ label, value }: { label: string; value: number | null }) => (
   <span className="border-r border-skin-stroke bg-[#fff7bf] px-1 py-2 last:border-r-0 sm:px-2 sm:py-3">
     <span className="block font-heading text-xs leading-none text-skin-base sm:text-lg">
-      {value}
+      <span title={value == null ? "Currently unavailable" : undefined}>{value ?? "—"}</span>
     </span>
     <span className="mt-1 block text-[9px] leading-none text-secondary sm:text-[11px]">
       {label}

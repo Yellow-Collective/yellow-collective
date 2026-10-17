@@ -2,8 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const readSource = (path) =>
-  readFileSync(resolve(process.cwd(), path), "utf8");
+const readSource = (path) => readFileSync(resolve(process.cwd(), path), "utf8");
 
 const membersData = readSource("data/members.ts");
 
@@ -21,8 +20,8 @@ assert.match(
 
 assert.match(
   membersData,
-  /withTimeoutFallback\([\s\S]*getEnsNamesForAddresses\(addresses\)[\s\S]*\{\} as Record<string, string>/,
-  "ENS enrichment must time out to an empty map without erasing holders."
+  /getEnsNamesForAddresses\(addresses, true\)/,
+  "Member ENS enrichment must use bounded partial results without erasing holders."
 );
 
 assert.match(

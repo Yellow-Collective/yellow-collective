@@ -1,6 +1,5 @@
 import { shortenWalletAddress } from "@/utils/profile/identity";
-import DefaultProvider from "@/utils/DefaultProvider";
-import { Contract } from "@/utils/ethers-compat";
+import { getMemberVotingPower } from "data/member-voting-power";
 import { getEnsNamesForAddresses } from "data/ens";
 import {
   getCollectiveNounTokensByIds,
@@ -23,12 +22,12 @@ export type DaoMemberSummary = {
   firstTokenName: string;
   firstTokenImage: string;
   tokenCount: number;
-  votingPower: number;
+  votingPower: number | null;
 };
 
 export type DaoMember = DaoMemberSummary & {
-  noundrySubmissionCount: number;
-  proposalVoteCount: number;
+  noundrySubmissionCount: number | null;
+  proposalVoteCount: number | null;
 };
 
 type ProposalVoteRow = {
@@ -59,14 +58,10 @@ const BURNER_ADDRESSES = new Set([
   "0x000000000000000000000000000000000000dead",
 ]);
 
-const votingPowerAbi = [
-  "function getVotes(address account) view returns (uint256)",
-];
-
-const MEMBER_SOURCE_TIMEOUT_MS = 5_000;
+const MEMBER_SOURCE_TIMEOUT_MS = 2_500;
 const MEMBER_ENRICHMENT_TIMEOUT_MS = 6_000;
 
-const withTimeoutFallback = async <T,>(
+const withTimeoutFallback = async <T>(
   label: string,
   promise: Promise<T>,
   fallback: T,
@@ -85,17 +80,20 @@ const withTimeoutFallback = async <T,>(
       }),
     ]);
   } catch (error) {
-    console.warn(`Unable to load ${label}`, error);
+    console.warn(`Unable to load ${label}`);
     return fallback;
   } finally {
     if (timeout) clearTimeout(timeout);
   }
 };
 
-const getMemberSeeds = async (): Promise<MemberSeed[]> => {
+const loadMemberSeeds = async (): Promise<MemberSeed[]> => {
   const membersListUrl = `https://nouns.build/api/membersList/${TOKEN_CONTRACT}?chainId=${TOKEN_NETWORK}`;
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), MEMBER_SOURCE_TIMEOUT_MS);
+  const timeout = setTimeout(
+    () => controller.abort(),
+    MEMBER_SOURCE_TIMEOUT_MS
+  );
 
   try {
     const response = await fetch(membersListUrl, { signal: controller.signal });
@@ -136,60 +134,13 @@ const getMemberSeeds = async (): Promise<MemberSeed[]> => {
   }
 };
 
-const getVotingPowerByAddress = async (addresses: string[]) => {
-  const contract = new Contract(TOKEN_CONTRACT, votingPowerAbi, DefaultProvider);
-  const entries: (readonly [string, number] | null)[] = [];
-
-  for (const addressBatch of chunk(addresses, 25)) {
-    entries.push(
-      ...(await Promise.all(
-        addressBatch.map(async (address) => {
-          try {
-            const normalizedAddress = getAddress(address);
-            const votes = await contract.getVotes(normalizedAddress);
-
-            return [
-              normalizedAddress.toLowerCase(),
-              Number(votes.toString()),
-            ] as const;
-          } catch (error) {
-            console.warn(`Unable to load voting power for ${address}`, error);
-            return null;
-          }
-        })
-      ))
-    );
+const getMemberSeeds = async (): Promise<MemberSeed[]> => {
+  try {
+    return await loadMemberSeeds();
+  } catch {
+    // A transient holder-source failure gets one bounded retry.
+    return loadMemberSeeds();
   }
-
-  return new Map(
-    entries.filter(
-      (entry): entry is readonly [string, number] => Boolean(entry)
-    )
-  );
-};
-
-const getMemberVotingPowerByAddress = async (
-  addresses: string[],
-  fallbackVotingPower: Map<string, number>
-) => {
-  const contractVotingPower = await getVotingPowerByAddress(addresses);
-
-  return new Map(
-    addresses.map((address) => {
-      try {
-        const normalizedAddress = getAddress(address);
-        const key = normalizedAddress.toLowerCase();
-
-        return [
-          key,
-          contractVotingPower.get(key) ?? fallbackVotingPower.get(key) ?? 0,
-        ] as const;
-      } catch (error) {
-        console.warn(`Unable to normalize member voting power for ${address}`, error);
-        return [address.toLowerCase(), 0] as const;
-      }
-    })
-  );
 };
 
 const getMetadataByAddress = async (addresses: string[]) => {
@@ -220,7 +171,12 @@ const sortMemberSummaries = <T extends DaoMemberSummary>(members: T[]) =>
       return firstHasEthName ? -1 : 1;
     }
 
-    if (firstHasEthName && secondHasEthName && first.ensName && second.ensName) {
+    if (
+      firstHasEthName &&
+      secondHasEthName &&
+      first.ensName &&
+      second.ensName
+    ) {
       return first.ensName.localeCompare(second.ensName);
     }
 
@@ -256,7 +212,7 @@ const daoProposalIdsQuery = gql`
   }
 `;
 
-const chunk = <T,>(items: T[], size: number) =>
+const chunk = <T>(items: T[], size: number) =>
   Array.from({ length: Math.ceil(items.length / size) }, (_, index) =>
     items.slice(index * size, index * size + size)
   );
@@ -275,7 +231,9 @@ const getDaoProposalIds = async (client: GraphQLClient) => {
 
 const getProposalVoteCountsByVoter = async (addresses: string[]) => {
   const counts = new Map<string, Set<string>>();
-  const client = new GraphQLClient(SUBGRAPH_ENDPOINT);
+  const client = new GraphQLClient(SUBGRAPH_ENDPOINT, {
+    signal: AbortSignal.timeout(MEMBER_ENRICHMENT_TIMEOUT_MS),
+  });
 
   try {
     const proposalIds = await getDaoProposalIds(client);
@@ -310,7 +268,8 @@ const getProposalVoteCountsByVoter = async (addresses: string[]) => {
       }
     }
   } catch (error) {
-    console.warn("Unable to load member proposal vote counts", error);
+    console.warn("Unable to load member proposal vote counts");
+    throw new Error("Proposal vote counts unavailable.");
   }
 
   return new Map(
@@ -321,19 +280,21 @@ const getProposalVoteCountsByVoter = async (addresses: string[]) => {
   );
 };
 
-export const getDaoMembers = async (): Promise<DaoMember[]> => {
+const loadDaoMembers = async (): Promise<DaoMember[]> => {
   const memberSummaries = await getDaoMemberSummaries();
-  const addresses = memberSummaries.map((member) => member.address.toLowerCase());
+  const addresses = memberSummaries.map((member) =>
+    member.address.toLowerCase()
+  );
   const [noundrySubmissionCounts, proposalVoteCounts] = await Promise.all([
     withTimeoutFallback(
       "member Noundry counts",
       countApprovedNoundrySubmissionsByArtists(addresses),
-      new Map<string, number>()
+      null as Map<string, number> | null
     ),
     withTimeoutFallback(
       "member proposal vote counts",
       getProposalVoteCountsByVoter(addresses),
-      new Map<string, number>()
+      null as Map<string, number> | null
     ),
   ]);
 
@@ -342,45 +303,58 @@ export const getDaoMembers = async (): Promise<DaoMember[]> => {
 
     return {
       ...member,
-      noundrySubmissionCount: noundrySubmissionCounts.get(address) || 0,
-      proposalVoteCount: proposalVoteCounts.get(address) || 0,
+      noundrySubmissionCount: noundrySubmissionCounts
+        ? (noundrySubmissionCounts.get(address) ?? 0)
+        : null,
+      proposalVoteCount: proposalVoteCounts
+        ? (proposalVoteCounts.get(address) ?? 0)
+        : null,
     };
   });
+};
+
+// Share concurrent page/API refreshes within a warm server instance.
+let memberRefresh: Promise<DaoMember[]> | undefined;
+let recentMembers: { members: DaoMember[]; expiresAt: number } | undefined;
+export const getDaoMembers = (): Promise<DaoMember[]> => {
+  if (recentMembers && recentMembers.expiresAt > Date.now()) {
+    return Promise.resolve(recentMembers.members);
+  }
+  if (!memberRefresh) {
+    memberRefresh = loadDaoMembers()
+      .then((members) => {
+        recentMembers = { members, expiresAt: Date.now() + 15_000 };
+        return members;
+      })
+      .finally(() => {
+        memberRefresh = undefined;
+      });
+  }
+  return memberRefresh;
 };
 
 export const getDaoMemberSummaries = async (): Promise<DaoMemberSummary[]> => {
   const memberSeeds = await getMemberSeeds();
   const addresses = memberSeeds.map((member) => member.address.toLowerCase());
   // Token ownership is not voting power: holders can delegate their votes away.
-  // If the contract reads time out, retain the members but leave power at zero.
-  const fallbackVotingPower = new Map<string, number>();
+  // Failed reads remain unknown; ownership is never substituted for votes.
   const firstTokenIds = memberSeeds
     .map((member) => member.tokenIds[0])
     .filter((tokenId): tokenId is number => tokenId !== undefined);
   const [ensNames, metadataByAddress, votingPowerByAddress, firstTokens] =
     await Promise.all([
-      withTimeoutFallback(
-        "member ENS names",
-        getEnsNamesForAddresses(addresses),
-        {} as Record<string, string>
-      ),
+      getEnsNamesForAddresses(addresses, true),
       withTimeoutFallback(
         "member profile metadata",
         getMetadataByAddress(addresses),
         new Map<string, ProfileMetadata>()
       ),
-      withTimeoutFallback(
-        "member voting power",
-        getMemberVotingPowerByAddress(addresses, fallbackVotingPower),
-        fallbackVotingPower
-      ),
-      withTimeoutFallback(
-        "member token artwork",
-        getCollectiveNounTokensByIds(firstTokenIds),
-        [] as ProbeToken[]
-      ),
-  ]);
-  const firstTokensById = new Map(firstTokens.map((token) => [token.id, token]));
+      getMemberVotingPower(addresses),
+      getCollectiveNounTokensByIds(firstTokenIds),
+    ]);
+  const firstTokensById = new Map(
+    firstTokens.map((token) => [token.id, token])
+  );
 
   return sortMemberSummaries(
     memberSeeds.map((member) => {
@@ -400,11 +374,10 @@ export const getDaoMemberSummaries = async (): Promise<DaoMemberSummary[]> => {
         username: username || null,
         avatarUrl: metadata?.avatarUrl?.trim() || null,
         firstTokenId,
-        firstTokenName:
-          firstToken?.name || `Collective Noun #${firstTokenId}`,
+        firstTokenName: firstToken?.name || `Collective Noun #${firstTokenId}`,
         firstTokenImage: firstToken?.image || "",
         tokenCount: member.tokenCount,
-        votingPower: votingPowerByAddress.get(address) ?? 0,
+        votingPower: votingPowerByAddress.get(address) ?? null,
       };
     })
   );

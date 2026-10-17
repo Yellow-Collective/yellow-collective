@@ -8,6 +8,7 @@ const readSource = (path) =>
 const membersPage = readSource("pages/members.tsx");
 const membersData = readSource("data/members.ts");
 const addresses = readSource("constants/addresses.ts");
+const votingData = readSource("data/member-voting-power.ts");
 
 assert.match(
   membersPage,
@@ -23,7 +24,7 @@ assert.match(
 
 assert.match(
   membersPage,
-  /if \(sort === "votingPower"\) \{[\s\S]*return second\.votingPower - first\.votingPower \|\| nameSort\(\);[\s\S]*\}/,
+  /if \(sort === "votingPower"\) \{[\s\S]*return \(second\.votingPower \?\? -1\) - \(first\.votingPower \?\? -1\) \|\| nameSort\(\);[\s\S]*\}/,
   "Members page must sort voting power descending with the stable name fallback."
 );
 
@@ -35,18 +36,18 @@ assert.match(
 
 assert.match(
   membersData,
-  /votingPower:\s*number;/,
+  /votingPower:\s*number \| null;/,
   "DAO member summaries must include votingPower."
 );
 
 assert.match(
-  membersData,
-  /new Contract\(TOKEN_CONTRACT,\s*votingPowerAbi,\s*DefaultProvider\)/,
+  votingData,
+  /address: getAddress\(TOKEN_CONTRACT\),\s*abi,\s*functionName: "getVotes"/,
   "Member voting power must use getVotes on the Collective Nouns token contract."
 );
 
 assert.match(
-  membersData,
+  votingData,
   /function getVotes\(address account\) view returns \(uint256\)/,
   "Member voting power must call getVotes."
 );
@@ -65,8 +66,8 @@ assert.doesNotMatch(
 
 assert.match(
   membersData,
-  /votingPower:\s*votingPowerByAddress\.get\(address\) \?\? 0/,
-  "Member voting power must default to zero instead of owned-token count when delegated votes are unavailable."
+  /votingPower:\s*votingPowerByAddress\.get\(address\) \?\? null/,
+  "Member voting power must remain unknown instead of using owned-token count when delegated votes are unavailable."
 );
 
 assert.doesNotMatch(
@@ -95,8 +96,8 @@ assert.match(
 
 assert.match(
   membersPage,
-  /members: \[\],[\s\S]*revalidate: 60/,
-  "A timed-out members build must render the existing empty fallback and retry soon."
+  /throw error;/,
+  "A failed ISR refresh must throw to preserve the previous page."
 );
 
 console.log("ok - members page supports voting power sort");

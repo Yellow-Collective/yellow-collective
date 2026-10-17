@@ -2,7 +2,8 @@ import { TOKEN_CONTRACT } from "constants/addresses";
 import { IPFS_GATEWAY, SUBGRAPH_ENDPOINT } from "constants/urls";
 import DefaultProvider from "@/utils/DefaultProvider";
 import getNormalizedURI from "@/utils/getNormalizedURI";
-import { BigNumber, ethers } from "@/utils/ethers-compat";
+import { BigNumber, ethers } from "ethers";
+import { collectWithDeadline } from "@/utils/collect-with-deadline";
 import { GraphQLClient, gql } from "graphql-request";
 
 type TokenAttribute = {
@@ -104,7 +105,10 @@ const parseTokenUri = (tokenUri: string): TokenMetadata => {
 };
 
 const normalizeTraitName = (value: string) =>
-  value.replace(/^\d+[-_ ]*/, "").replace(/[-_]+/g, " ").trim();
+  value
+    .replace(/^\d+[-_ ]*/, "")
+    .replace(/[-_]+/g, " ")
+    .trim();
 
 const filenameToDisplayName = (value: string) =>
   value
@@ -166,25 +170,75 @@ const getTokenFromId = async (
     );
 
     return {
-    id,
-    name: metadata.name || `Collective Noun ${id}`,
-    image: normalizeImageUri(metadata.image),
-    owner,
-    ownerEns: undefined,
-    attributes,
-  };
+      id,
+      name: metadata.name || `Collective Noun ${id}`,
+      image: normalizeImageUri(metadata.image),
+      owner,
+      ownerEns: undefined,
+      attributes,
+    };
   } catch (error) {
-    console.warn(`Unable to load Collective Noun ${id}`, error);
+    console.warn(`Unable to load Collective Noun ${id}`);
     return null;
   }
 };
 
-export const getCollectiveNounTokensByIds = async (tokenIds: number[]) =>
-  (
-    await Promise.all(
-      Array.from(new Set(tokenIds)).map((id) => getTokenFromId(id, false))
-    )
-  ).filter((token): token is ProbeToken => Boolean(token));
+const memberArtworkCache = new Map<
+  number,
+  { token: ProbeToken; expiresAt: number }
+>();
+const memberArtworkAttempts = new Map<number, number>();
+export const getCollectiveNounTokensByIds = async (tokenIds: number[]) => {
+  const requested = new Set(tokenIds);
+  const tokens = new Map<number, ProbeToken>();
+  for (const id of requested) {
+    const cached = memberArtworkCache.get(id);
+    if (cached && cached.expiresAt > Date.now()) tokens.set(id, cached.token);
+  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 2_000);
+  try {
+    // The index supplies artwork in one request instead of one RPC per holder.
+    for (const token of await getSubgraphTokenList(controller.signal)) {
+      if (requested.has(token.id) && token.image) {
+        tokens.set(token.id, token);
+        memberArtworkCache.set(token.id, {
+          token,
+          expiresAt: Date.now() + 300_000,
+        });
+      }
+    }
+  } catch {
+    console.warn(
+      "Member artwork index unavailable; trying bounded contract reads."
+    );
+  } finally {
+    clearTimeout(timeout);
+  }
+  const missing = [...requested]
+    .filter((id) => !tokens.has(id))
+    .sort(
+      (a, b) =>
+        (memberArtworkAttempts.get(a) || 0) -
+        (memberArtworkAttempts.get(b) || 0)
+    );
+  const loaded = await collectWithDeadline(
+    missing,
+    async (id) => {
+      memberArtworkAttempts.set(id, Date.now());
+      const token = await getTokenFromId(id, false);
+      if (token)
+        memberArtworkCache.set(id, { token, expiresAt: Date.now() + 300_000 });
+      return token;
+    },
+    {
+      concurrency: 8,
+      timeoutMs: 4_000,
+    }
+  );
+  for (const token of loaded) if (token) tokens.set(token.id, token);
+  return [...tokens.values()];
+};
 
 const getTokenIds = async () => {
   const totalSupply = Number(
@@ -216,8 +270,10 @@ const mapSubgraphToken = (token: SubgraphToken): ProbeToken => {
   };
 };
 
-const getSubgraphTokenList = async (): Promise<ProbeToken[]> => {
-  const client = new GraphQLClient(SUBGRAPH_ENDPOINT);
+const getSubgraphTokenList = async (
+  signal?: AbortSignal
+): Promise<ProbeToken[]> => {
+  const client = new GraphQLClient(SUBGRAPH_ENDPOINT, { signal });
   const tokens: ProbeToken[] = [];
   let skip = 0;
 

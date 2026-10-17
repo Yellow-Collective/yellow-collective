@@ -1,3 +1,4 @@
+import { collectWithDeadline } from "@/utils/collect-with-deadline";
 import { ENS_MAINNET_RPC_URLS } from "configs/wallet";
 import { normalizeEnsNameInput } from "@/utils/ens";
 import { providers, utils as ethersUtils } from "ethers";
@@ -14,10 +15,13 @@ const ensResolverInterface = new ethersUtils.Interface([
 ]);
 const ensMainnetProvider = new providers.FallbackProvider(
   ENS_MAINNET_RPC_URLS.map((rpcUrl, index) => ({
-    provider: new providers.StaticJsonRpcProvider(rpcUrl, {
-      chainId: 1,
-      name: "mainnet",
-    }),
+    provider: new providers.StaticJsonRpcProvider(
+      { url: rpcUrl, timeout: 2_500 },
+      {
+        chainId: 1,
+        name: "mainnet",
+      }
+    ),
     priority: index + 1,
     stallTimeout: 1000,
   })),
@@ -56,8 +60,10 @@ const getRawReverseEnsName = async (address: Address) => {
     to: ENS_REGISTRY_ADDRESS,
     data: ensRegistryInterface.encodeFunctionData("resolver", [node]),
   });
-  const [resolverAddress] =
-    ensRegistryInterface.decodeFunctionResult("resolver", resolverResponse);
+  const [resolverAddress] = ensRegistryInterface.decodeFunctionResult(
+    "resolver",
+    resolverResponse
+  );
 
   if (!resolverAddress || resolverAddress === ZERO_ADDRESS) return undefined;
 
@@ -74,9 +80,7 @@ const getRawReverseEnsName = async (address: Address) => {
     typeof ensName === "string" ? normalizeEnsNameInput(ensName) : undefined;
   if (!normalizedEnsName) return undefined;
 
-  const resolvedAddress = await resolveEnsAddress(normalizedEnsName).catch(
-    () => undefined
-  );
+  const resolvedAddress = await resolveEnsAddress(normalizedEnsName);
 
   return resolvedAddress?.toLowerCase() === address.toLowerCase()
     ? normalizedEnsName
@@ -105,7 +109,10 @@ export async function getEnsName({
   }
 }
 
-export async function getEnsNamesForAddresses(addresses: string[]) {
+export async function getEnsNamesForAddresses(
+  addresses: string[],
+  memberDirectory = false
+) {
   const normalizedAddresses = Array.from(
     new Set(
       addresses
@@ -114,21 +121,54 @@ export async function getEnsNamesForAddresses(addresses: string[]) {
     )
   );
   const names: Record<string, string> = {};
-  const results = await Promise.allSettled(
-    normalizedAddresses.map(async (address) => {
-      const { ensName } = await getEnsName({ address });
-      return [address.toLowerCase(), ensName || ""] as const;
+  if (!memberDirectory) {
+    await Promise.all(
+      normalizedAddresses.map(async (address) => {
+        const { ensName } = await getEnsName({ address });
+        if (ensName) names[address.toLowerCase()] = ensName;
+      })
+    );
+    return names;
+  }
+  const pending = normalizedAddresses
+    .filter((address) => {
+      const cached = memberEnsCache.get(address);
+      if (!cached || cached.expiresAt <= Date.now()) return true;
+      if (cached.name) names[address.toLowerCase()] = cached.name;
+      return false;
     })
+    .sort(
+      (a, b) =>
+        (memberEnsAttempts.get(a) || 0) - (memberEnsAttempts.get(b) || 0)
+    );
+  const results = await collectWithDeadline(
+    pending,
+    async (address) => {
+      memberEnsAttempts.set(address, Date.now());
+      // Cache verified absence too, but never cache an RPC error as no ENS name.
+      const ensName = await ensMainnetProvider
+        .lookupAddress(address)
+        .catch(() => getRawReverseEnsName(address));
+      memberEnsCache.set(address, {
+        name: ensName || "",
+        expiresAt: Date.now() + 300_000,
+      });
+      return [address.toLowerCase(), ensName || ""] as const;
+    },
+    { concurrency: 12, timeoutMs: 6_000 }
   );
 
   results.forEach((result) => {
-    if (result.status === "fulfilled" && result.value[1]) {
-      names[result.value[0]] = result.value[1];
+    if (result[1]) {
+      names[result[0]] = result[1];
     }
   });
 
   return names;
 }
+
+const memberEnsCache = new Map<string, { name: string; expiresAt: number }>();
+const memberEnsAttempts = new Map<string, number>();
 
 export interface GetEnsAddressReturnType {
   address?: Address;
@@ -162,7 +202,7 @@ export async function getEnsAvatar({
   try {
     const { ensName } = await getEnsName({ address });
     const ensAvatar = ensName
-      ? (await ensMainnetProvider.getAvatar(ensName)) ?? undefined
+      ? ((await ensMainnetProvider.getAvatar(ensName)) ?? undefined)
       : undefined;
 
     return { ensAvatar };

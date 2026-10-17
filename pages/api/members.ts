@@ -1,4 +1,4 @@
-import { getDaoMemberSummaries } from "data/members";
+import { getDaoMembers } from "data/members";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -11,8 +11,9 @@ export default async function handler(
   }
 
   try {
-    const members = await getDaoMemberSummaries();
-    return res.status(200).json({ members });
+    const members = await getDaoMembers();
+    res.setHeader("Cache-Control", "no-store");
+    return res.status(200).json({ members, updatedAt: new Date().toISOString() });
   } catch (error) {
     console.error("Members API load failed", error);
     return res.status(500).json({ error: "Unable to load members." });
