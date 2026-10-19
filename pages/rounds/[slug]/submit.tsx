@@ -46,8 +46,9 @@ export const getServerSideProps = async ({
   const slug = typeof params?.slug === "string" ? params.slug : "";
 
   try {
-    const round = await getPublicRoundBySlug(slug);
-    if (!round) return { notFound: true };
+    const loaded = await getPublicRoundBySlug(slug, { includeInlineMedia: false });
+    if (!loaded) return { notFound: true };
+    const { submissions, voteActivity, ...round } = loaded;
 
     return { props: { round } };
   } catch (error) {

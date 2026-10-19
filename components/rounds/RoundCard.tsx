@@ -1,4 +1,4 @@
-import type { Round } from "data/rounds";
+import type { PublicRoundSummary } from "@/utils/rounds/roundMediaPayload";
 import {
   getRoundState,
   getRoundStateLabel,
@@ -81,7 +81,7 @@ export const RoundStatusPill = ({
   );
 };
 
-export const RoundCard = ({ round }: { round: Round }) => {
+export const RoundCard = ({ round }: { round: PublicRoundSummary }) => {
   const state = getRoundState(round);
   const isOpen = state === "submissions_open";
   const isVoting = state === "voting_open";

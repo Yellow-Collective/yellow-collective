@@ -21,6 +21,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader("Cache-Control", "no-store, max-age=0");
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method not allowed." });
@@ -59,7 +60,7 @@ export default async function handler(
       roundForVoting,
       walletAddress
     );
-    const submissions = await castRoundVotes({
+    const receipt = await castRoundVotes({
       round: roundForVoting,
       walletAddress,
       votingPower,
@@ -67,7 +68,10 @@ export default async function handler(
     });
 
     return res.status(200).json({
-      submissions,
+      committed: true,
+      acceptedVotes: receipt.acceptedVotes,
+      usedVotes: receipt.usedVotes,
+      remainingVotes: receipt.remainingVotes,
       votingPower,
       votingSnapshotBlock: roundForVoting.votingSnapshotBlock,
     });

@@ -9,6 +9,7 @@ import {
 } from "@/components/rounds/RoundSubmissionCard";
 import { canEditRoundSubmission } from "@/utils/rounds/submission-edit";
 import { RoundVideoPlayer } from "@/components/rounds/RoundVideoPlayer";
+import { RoundImageGallery } from "@/components/rounds/RoundImageGallery";
 import Layout from "@/components/Layout";
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import { RoundStatusPill } from "@/components/rounds/RoundCard";
@@ -35,10 +36,12 @@ import {
 } from "@/utils/rounds/state";
 import {
   hydrateRoundInlineMedia,
+  clearRoundArtwork,
   stripRoundInlineMediaForSsr,
   type RoundMediaPayload,
 } from "@/utils/rounds/roundMediaPayload";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
+import { refreshCommittedVote } from "@/utils/rounds/refresh-committed-vote";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
@@ -52,7 +55,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import { useAccount, useSignMessage } from "wagmi";
 import { getRoundVotingStrategyLabel } from "@/utils/rounds/voting-strategy";
@@ -134,7 +137,7 @@ export const getServerSideProps = async ({
   const slug = typeof params?.slug === "string" ? params.slug : "";
 
   try {
-    const round = await getPublicRoundBySlug(slug);
+    const round = await getPublicRoundBySlug(slug, { includeInlineMedia: false });
     if (!round) return { notFound: true };
 
     return {
@@ -171,13 +174,42 @@ export default function RoundDetailPage({
     return () => clearInterval(timer);
   }, []);
   const mediaKey = initialRound
-    ? `/api/rounds/${initialRound.slug}/media`
+    ? `/api/rounds/${initialRound.slug}/media?v=2`
     : null;
-  const { data: roundMedia } = useSWR<RoundMediaPayload>(mediaKey, fetcher);
+  const { data: roundMedia, error: roundMediaError } = useSWR<RoundMediaPayload>(mediaKey, fetcher, {
+    refreshInterval: 15_000,
+    dedupingInterval: 10_000,
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshWhenHidden: false,
+    keepPreviousData: false,
+  });
+  const previousMediaRevision = useRef<string>();
+  const [isRefreshingArtworkMetadata, setIsRefreshingArtworkMetadata] = useState(false);
+  useEffect(() => {
+    const revision = roundMedia?.revision;
+    if (!revision) return;
+    const previous = previousMediaRevision.current;
+    previousMediaRevision.current = revision;
+    if (!previous || previous === revision) return;
+    // Re-fetch lightweight SSR metadata only when media changes, so captions,
+    // trait pixels and newly approved entries follow the same revision.
+    setIsRefreshingArtworkMetadata(true);
+    router.replace(router.asPath, undefined, { scroll: false })
+      .catch(() => setMessage("Artwork changed, but details could not refresh. Reload the round to try again."))
+      .finally(() => setIsRefreshingArtworkMetadata(false));
+  }, [roundMedia?.revision, router]);
   const round = useMemo(
-    () => hydrateRoundInlineMedia(initialRound, roundMedia),
-    [initialRound, roundMedia]
+    () => {
+      // A failed refresh must not leave artwork from a previous visibility state open.
+      if (roundMediaError && initialRound) return clearRoundArtwork(initialRound);
+      return hydrateRoundInlineMedia(initialRound, roundMedia);
+    },
+    [initialRound, roundMedia, roundMediaError]
   );
+  const visibleSelectedSubmission = !roundMediaError && !isRefreshingArtworkMetadata && selectedSubmission
+    ? round?.submissions.find((submission) => submission.id === selectedSubmission.id)
+    : null;
   const state = round ? getRoundState(round) : "draft";
   const hasTraitSubmissions = Boolean(
     round?.submissions.some(
@@ -297,8 +329,22 @@ export default function RoundDetailPage({
 
       setMessage("Votes submitted.");
       setAllocations({});
-      await mutateVotingPower();
-      await router.replace(router.asPath, undefined, { scroll: false });
+      // An acknowledged commit must stay successful even if either refresh fails.
+      // Seed the authoritative remaining balance before attempting network reads.
+      setMessage(await refreshCommittedVote([
+        async () => {
+          if (typeof result.remainingVotes === "number") {
+            await mutateVotingPower((current) => current ? {
+              ...current,
+              votingPower: result.votingPower,
+              usedVotes: result.usedVotes,
+              remainingVotes: result.remainingVotes,
+            } : current, { revalidate: false });
+          }
+          await mutateVotingPower();
+        },
+        () => router.replace(router.asPath, undefined, { scroll: false }),
+      ]));
     } catch (voteError) {
       setMessage(
         voteError instanceof Error ? voteError.message : "Unable to cast votes."
@@ -315,6 +361,9 @@ export default function RoundDetailPage({
       </Head>
 
       <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-7 pb-12">
+        <div role="status" aria-live="polite">
+          {roundMediaError ? "Artwork could not refresh. Images are temporarily hidden; reconnect or refresh to try again." : ""}
+        </div>
         <Link
           href="/rounds"
           className="flex w-fit items-center gap-2 font-heading text-lg text-skin-base transition hover:opacity-80"
@@ -630,10 +679,10 @@ export default function RoundDetailPage({
         )}
       </div>
 
-      {selectedSubmission && (
+      {visibleSelectedSubmission && (
         <SubmissionModal
           round={round}
-          submission={selectedSubmission}
+          submission={visibleSelectedSubmission}
           onClose={() => setSelectedSubmission(null)}
           artwork={artwork}
         />
@@ -767,14 +816,8 @@ const SubmissionModal = ({
                 title={submission.title}
               />
             )}
-            <div
-              className={`mx-auto mt-6 grid w-full gap-3 ${
-                submission.images.length > 1
-                  ? "max-w-4xl sm:grid-cols-2"
-                  : "max-w-[420px]"
-              }`}
-            >
-              {noundrySubmission ? (
+            {noundrySubmission ? (
+              <div className="mx-auto mt-6 w-full max-w-[420px]">
                 <div className="overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]">
                   <NounPreviewTile
                     artwork={artwork}
@@ -783,26 +826,10 @@ const SubmissionModal = ({
                     showEditedTrait
                   />
                 </div>
-              ) : (
-                submission.images.map((image, index) => (
-                  <div
-                    key={`${submission.id}-image-${index}`}
-                    className="overflow-hidden rounded-2xl border border-skin-stroke bg-[#fff7bf]"
-                  >
-                    <DeferredInlineImage
-                      src={image}
-                      alt={`${submission.title} image ${index + 1}`}
-                      className="max-h-[520px] w-full object-contain"
-                      fallback={
-                        <div className="flex aspect-square w-full items-center justify-center bg-[#fff7bf] p-6 text-center font-heading text-2xl text-skin-base">
-                          {submission.title}
-                        </div>
-                      }
-                    />
-                  </div>
-                ))
-              )}
-            </div>
+              </div>
+            ) : (
+              <RoundImageGallery key={submission.id} images={submission.images} title={submission.title} />
+            )}
             {noundrySubmission && (
               <div className="mt-5 grid gap-4 lg:grid-cols-2">
                 <NoundryModalPreviewSet

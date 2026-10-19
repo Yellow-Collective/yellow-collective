@@ -800,10 +800,15 @@ test("castRoundVotes applies the per-entry cap across separate vote actions", as
     votingPower: 100,
   };
 
-  await rounds.castRoundVotes({
+  const receipt = await rounds.castRoundVotes({
     ...input,
     votes: [{ submissionId: "submission-1", voteCount: 20 }],
   });
+  assert.equal(receipt.usedVotes, 20);
+  assert.equal(receipt.remainingVotes, 80);
+  assert.equal(receipt.acceptedVotes, 20);
+  assert.ok(Buffer.byteLength(JSON.stringify(receipt)) < 2048);
+  assert.equal(queryLog.at(-1).text, "COMMIT", "no media query after committing votes");
   await rounds.castRoundVotes({
     ...input,
     votes: [{ submissionId: "submission-1", voteCount: 5 }],
@@ -869,6 +874,60 @@ test("castRoundVotes allows a wallet to vote for another submitter", async () =>
     queries.some(({ text }) => text.includes("INSERT INTO round_votes")),
     true
   );
+});
+
+test("concurrent additive votes serialize and cannot overspend the wallet balance", async () => {
+  let used = 0;
+  let queue = Promise.resolve();
+  class ConcurrentPool {
+    async query() { return { rows: [] }; }
+    async connect() {
+      let unlock;
+      let pending = 0;
+      return {
+        query: async (sql, values) => {
+          if (sql.includes("pg_advisory_xact_lock")) {
+            const previous = queue;
+            queue = new Promise((resolve) => { unlock = resolve; });
+            await previous;
+          }
+          if (sql.includes("SELECT id, wallet_address, status")) return { rows: [{ id: "entry", wallet_address: "other", status: "approved" }] };
+          if (sql.includes("AS used_votes")) return { rows: [{ used_votes: used + pending }] };
+          if (sql.includes("INSERT INTO round_votes")) pending += values[4];
+          if (sql === "COMMIT") { used += pending; pending = 0; unlock?.(); }
+          if (sql === "ROLLBACK") { pending = 0; unlock?.(); }
+          return { rows: [] };
+        },
+        release() { unlock?.(); },
+      };
+    }
+  }
+  const rounds = loadRoundsModule({ pg: { Pool: ConcurrentPool }, "@/utils/rounds/state": { getRoundState: () => "voting_open" } });
+  const cast = () => rounds.castRoundVotes({ round: { id: "round", maxVotesPerEntry: null }, walletAddress: "wallet", votingPower: 10, votes: [{ submissionId: "entry", voteCount: 7 }] });
+  const results = await Promise.allSettled([cast(), cast()]);
+  assert.equal(results.filter((result) => result.status === "fulfilled").length, 1);
+  assert.equal(results.filter((result) => result.status === "rejected").length, 1);
+  assert.equal(used, 7);
+});
+
+test("public image queries bind integer gallery indices and omit stored originals", async () => {
+  let selected;
+  class ImagePool {
+    async query(sql, values) {
+      if (sql.includes("s.image_assets->")) {
+        selected = { sql, values };
+        return { rows: [{ image: "__stored__", asset: { key: "scoped" } }] };
+      }
+      return { rows: [] };
+    }
+  }
+  const rounds = loadRoundsModule({ pg: { Pool: ImagePool } });
+  const image = await rounds.getPublicRoundImage("fixture", "entry", 3, { includeLegacyBytes: false });
+  assert.equal(image.image, "__stored__");
+  assert.equal(selected.values[2], 3);
+  assert.equal(selected.values[3], false);
+  assert.match(selected.sql, /image_assets->\(\$3::int\)/);
+  assert.match(selected.sql, /images->>\(\$3::int\)/);
 });
 
 test("round tally queries continue summing all additive vote rows", () => {

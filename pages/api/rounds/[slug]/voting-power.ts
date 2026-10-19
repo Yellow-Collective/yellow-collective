@@ -36,7 +36,7 @@ export default async function handler(
   }
 
   try {
-    const round = await getPublicRoundBySlug(slug);
+    const round = await getPublicRoundBySlug(slug, { includeInlineMedia: false });
     if (!round) return res.status(404).json({ error: "Round not found." });
 
     const walletAddress = getAddress(wallet);

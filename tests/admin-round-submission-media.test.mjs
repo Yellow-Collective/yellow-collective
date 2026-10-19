@@ -35,6 +35,8 @@ const gif =
   "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 const images = load("utils/rounds/submission-images.ts");
 const urlSafety = load("utils/url-safety.ts");
+const processing = load("utils/rounds/image-processing.ts");
+const prepareImages = load("utils/rounds/prepare-image-assets.ts", { "./image-processing": processing });
 const state = {
   updates: 0,
   row: {
@@ -100,6 +102,7 @@ const rounds = load("data/rounds.ts", {
   viem: { getAddress: (value) => value, isAddress: () => true },
   "@/utils/rounds/submission-images": images,
   "@/utils/url-safety": urlSafety,
+  "@/utils/rounds/prepare-image-assets": prepareImages,
   "@/utils/rounds/voting-snapshot": { isRoundVotingSnapshotMode: () => false },
 });
 let session = null,

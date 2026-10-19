@@ -163,10 +163,10 @@ const stored = JSON.parse(JSON.stringify({
 const ssr = media.stripRoundInlineMediaForSsr(stored);
 assert.equal(ssr.submissions[0].image, "");
 const hydrated = media.hydrateRoundInlineMedia(ssr, JSON.parse(JSON.stringify(media.createRoundMediaPayload(stored))));
-assert.equal(hydrated.submissions[0].image, gif);
-assert.equal(hydrated.submissions[0].images[0], gif);
-assert.deepEqual(Buffer.from(hydrated.submissions[0].image.split(",")[1], "base64"), bytes);
-console.log("ok - both GIF frames survive upload, validation, stored JSON and gallery hydration unchanged");
+assert.match(hydrated.submissions[0].image, /\/asset\?.*variant=preview/);
+assert.match(media.getRoundOriginalImage(hydrated.submissions[0].images[0]), /variant=original/);
+assert.deepEqual(Buffer.from(stored.submissions[0].image.split(",")[1], "base64"), bytes);
+console.log("ok - GIF bytes survive upload, validation and storage; hydration defers originals to the asset route");
 
 // Next.js may extract the upload helper into a shared chunk in hosted builds.
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;

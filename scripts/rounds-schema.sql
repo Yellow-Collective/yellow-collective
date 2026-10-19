@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS round_submissions (
   description text NOT NULL,
   image text NOT NULL,
   images jsonb NOT NULL DEFAULT '[]'::jsonb,
+  image_assets jsonb NOT NULL DEFAULT '[]'::jsonb,
   url text NOT NULL,
   submission_type text NOT NULL DEFAULT 'project',
   trait_id text,

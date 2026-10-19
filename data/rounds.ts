@@ -598,6 +598,7 @@ const ensureTables = async () => {
             ADD COLUMN IF NOT EXISTS source text NOT NULL DEFAULT 'project',
             ADD COLUMN IF NOT EXISTS source_payload jsonb NOT NULL DEFAULT '{}'::jsonb,
             ADD COLUMN IF NOT EXISTS images jsonb NOT NULL DEFAULT '[]'::jsonb,
+            ADD COLUMN IF NOT EXISTS image_assets jsonb NOT NULL DEFAULT '[]'::jsonb,
             ADD COLUMN IF NOT EXISTS user_edited_at timestamptz
         `)
       )
@@ -812,6 +813,22 @@ const submissionSelectFields = `
   COALESCE(vote_totals.vote_count, 0)::int AS vote_count,
   w.winner_position
 `;
+
+const publicRoundSelectFields = roundSelectFields.replace("r.image,", "CASE WHEN r.image LIKE 'data:image/%' THEN '__inline__' ELSE r.image END AS image,");
+const traitPublicFields = ["id", "title", "artist", "traitType", "pixels", "selectedTraits", "previewTraits", "status", "createdAt", "updatedAt", "approvedAt", "removedAt", "roundSubmissionAutoDescription", "roundSubmissionIdentityLabel"];
+const publicSubmissionSelectFields = submissionSelectFields
+  .replace("s.image,", "CASE WHEN jsonb_typeof(s.image_assets->0)='object' OR s.image LIKE 'data:image/%' THEN '' ELSE s.image END AS image,")
+  .replace("s.images,", `CASE WHEN jsonb_array_length(s.image_assets)>0 AND NOT EXISTS (SELECT 1 FROM jsonb_array_elements(s.image_assets) asset WHERE jsonb_typeof(asset)<>'object')
+    THEN (SELECT jsonb_agg(''::text) FROM jsonb_array_elements(s.image_assets)) WHEN jsonb_array_length(s.images)>0 THEN
+    (SELECT jsonb_agg(CASE WHEN item.value LIKE 'data:image/%' THEN '' ELSE item.value END ORDER BY item.ordinality)
+    FROM jsonb_array_elements_text(s.images) WITH ORDINALITY AS item(value, ordinality)) ELSE '[]'::jsonb END AS images,`)
+  .replace("s.source_payload,", `jsonb_build_object(${traitPublicFields.map((key) => `'${key}',s.source_payload->'${key}'`).join(",")}) AS source_payload,`);
+
+const mapPublicRound = (row: Record<string, any>): Round => {
+  const round = mapRound(row);
+  return { ...round, image: row.image === "__inline__"
+    ? `/api/rounds/${encodeURIComponent(round.slug)}/asset?cover=1&variant=preview&v=${encodeURIComponent(round.updatedAt)}` : round.image };
+};
 
 const requestSelectFields = `
   id,
@@ -1620,7 +1637,7 @@ export const listPublicRounds = async () => {
 
   const result = await getPool().query(
     `
-      SELECT ${roundSelectFields}
+      SELECT ${publicRoundSelectFields}
       FROM rounds r
       ${roundStatsJoin}
       WHERE r.deleted_at IS NULL
@@ -1633,7 +1650,7 @@ export const listPublicRounds = async () => {
   );
 
   const [rounds, dummyRounds] = await Promise.all([
-    hydrateRoundsWithAwards(result.rows.map(mapRound)),
+    hydrateRoundsWithAwards(result.rows.map(mapPublicRound)),
     getDummyPublicRounds(),
   ]);
 
@@ -2110,12 +2127,19 @@ export const getRoundBySlug = async (slug: string) => {
   };
 };
 
-export const getPublicRoundBySlug = async (slug: string) => {
+export const getPublicRoundBySlug = async (slug: string, { includeInlineMedia = true }: { includeInlineMedia?: boolean } = {}) => {
   if (slug.startsWith("demo-")) {
     return getDummyPublicRoundBySlug(slug);
   }
 
-  const round = await getRoundBySlug(slug);
+  let round;
+  if (includeInlineMedia) round = await getRoundBySlug(slug);
+  else {
+    await ensureTables();
+    const result = await getPool().query(`SELECT ${publicRoundSelectFields} FROM rounds r ${roundStatsJoin}
+      WHERE r.slug=$1 AND r.deleted_at IS NULL LIMIT 1`, [slug]);
+    round = result.rows[0] ? { ...mapPublicRound(result.rows[0]), awards: await listRoundAwards(result.rows[0].id) } : null;
+  }
   if (!round || round.status !== "published" || !round.active) return null;
 
   if (getRoundState(round) === "ended") {
@@ -2125,11 +2149,70 @@ export const getPublicRoundBySlug = async (slug: string) => {
   const [submissions, voteActivity] = await Promise.all([
     listRoundSubmissions(round.id, {
       publicOnly: true,
+      includeInlineMedia,
     }),
     listRoundVoteActivity(round.id),
   ]);
 
   return { ...round, submissions, voteActivity };
+};
+
+// A media read never selects original JSON, source_payload, vote history or
+// per-wallet state. Legacy bytes are represented by a small sentinel in SQL.
+export const getPublicRoundMediaBySlug = async (slug: string) => {
+  if (slug.startsWith("demo-")) return getDummyPublicRoundBySlug(slug);
+  await ensureTables();
+  const result = await getPool().query(`SELECT id, slug, updated_at,
+    CASE WHEN image LIKE 'data:image/%' THEN '__inline__' ELSE image END AS image,
+    starts_at, submissions_open_at, voting_starts_at, voting_ends_at, ends_at, winner_count, status, active
+    FROM rounds WHERE slug=$1 AND status='published' AND active=true AND deleted_at IS NULL LIMIT 1`, [slug]);
+  if (!result.rows[0]) return null;
+  const row = result.rows[0];
+  // Preserve winner-finalization semantics before applying winner visibility.
+  const round = mapRound(row);
+  if (getRoundState(round) === "ended") await finalizeRoundWinners(round);
+  const submissions = await getPool().query(`SELECT s.id, s.updated_at,
+    CASE WHEN jsonb_array_length(s.image_assets)>0 AND NOT EXISTS (SELECT 1 FROM jsonb_array_elements(s.image_assets) asset WHERE jsonb_typeof(asset)<>'object')
+      THEN (SELECT jsonb_agg('__inline__'::text) FROM jsonb_array_elements(s.image_assets))
+      WHEN jsonb_array_length(s.images)>0 THEN
+      (SELECT jsonb_agg(CASE WHEN image.value LIKE 'data:image/%' THEN '__inline__' ELSE image.value END ORDER BY image.ordinality)
+       FROM jsonb_array_elements_text(s.images) WITH ORDINALITY AS image(value, ordinality))
+      ELSE jsonb_build_array(CASE WHEN s.image LIKE 'data:image/%' THEN '__inline__' ELSE s.image END) END AS images
+    FROM round_submissions s
+    LEFT JOIN round_winners w ON w.submission_id=s.id AND w.round_id=s.round_id
+    WHERE s.round_id=$1 AND s.deleted_at IS NULL AND (s.status='approved' OR w.winner_position IS NOT NULL)
+    ORDER BY s.id`, [row.id]);
+  return { ...round, image: row.image, updatedAt: formatDate(row.updated_at) || "",
+    submissions: submissions.rows.map((s) => ({ id:s.id, updatedAt:formatDate(s.updated_at) || "", images:s.images, image:s.images?.[0] || "" })), voteActivity:[] };
+};
+
+// Eligibility is repeated for every asset request. A caller cannot supply an
+// arbitrary provider key or URL. The SQL extracts only one original.
+export const getPublicRoundImage = async (slug: string, submissionId: string | null, index: number, { includeLegacyBytes = true }: { includeLegacyBytes?: boolean } = {}) => {
+  if (slug.startsWith("demo-")) {
+    const round = await getDummyPublicRoundBySlug(slug);
+    if (!round || round.status !== "published" || !round.active || round.deletedAt) return null;
+    if (!submissionId) return { round_id: round.id, image: round.image, updated_at: round.updatedAt };
+    const submission = round.submissions.find((item) => item.id === submissionId);
+    if (!submission || submission.deletedAt || (submission.status !== "approved" && !submission.winnerPosition)) return null;
+    return { round_id: round.id, submission_id: submission.id, image: (submission.images || [submission.image])[index], updated_at: submission.updatedAt, source: submission.source, submission_type: submission.submissionType };
+  }
+  await ensureTables();
+  if (!submissionId) {
+    const result = await getPool().query(`SELECT id AS round_id, image, updated_at FROM rounds
+      WHERE slug=$1 AND status='published' AND active=true AND deleted_at IS NULL`, [slug]);
+    return result.rows[0] || null;
+  }
+  const result = await getPool().query(`SELECT s.round_id, s.id AS submission_id, s.updated_at, s.source, s.submission_type,
+    CASE WHEN NOT $4 AND jsonb_typeof(s.image_assets->($3::int))='object' THEN '__stored__'
+      WHEN jsonb_array_length(s.images)>0 THEN s.images->>($3::int) ELSE CASE WHEN $3::int=0 THEN s.image END END AS image,
+    s.image_assets->($3::int) AS asset
+    FROM round_submissions s JOIN rounds r ON r.id=s.round_id
+    LEFT JOIN round_winners w ON w.submission_id=s.id AND w.round_id=s.round_id
+    WHERE r.slug=$1 AND s.id=$2 AND r.status='published' AND r.active=true
+      AND r.deleted_at IS NULL AND s.deleted_at IS NULL
+      AND (s.status='approved' OR w.winner_position IS NOT NULL) LIMIT 1`, [slug, submissionId, index, includeLegacyBytes]);
+  return result.rows[0] || null;
 };
 
 export const getRoundById = async (id: string) => {
@@ -2157,13 +2240,13 @@ export const getRoundById = async (id: string) => {
 
 export const listRoundSubmissions = async (
   roundId: string,
-  { publicOnly = false }: { publicOnly?: boolean } = {}
+  { publicOnly = false, includeInlineMedia = true }: { publicOnly?: boolean; includeInlineMedia?: boolean } = {}
 ) => {
   await ensureTables();
 
   const result = await getPool().query(
     `
-      SELECT ${submissionSelectFields}
+      SELECT ${includeInlineMedia ? submissionSelectFields : publicSubmissionSelectFields}
       FROM round_submissions s
       ${voteTotalsJoin}
       ${winnersJoin}
@@ -3337,6 +3420,12 @@ const createRoundSubmissionRecord = async (
       ]
     );
 
+    if (images.some((image) => image.startsWith("data:"))) {
+      const { prepareRoundImageAssets } = await import("@/utils/rounds/prepare-image-assets");
+      const assets = await prepareRoundImageAssets(round.id, result.rows[0].id, images);
+      if (assets.length) await client.query("UPDATE round_submissions SET image_assets=$2::jsonb WHERE id=$1", [result.rows[0].id, JSON.stringify(assets)]);
+    }
+
     if (video) {
       await client.query("UPDATE round_submissions SET video=$2::jsonb WHERE id=$1", [
         result.rows[0].id, JSON.stringify(video)
@@ -3697,6 +3786,7 @@ export const editOwnedRoundSubmission = async (
     const result = await client.query(`
       UPDATE round_submissions AS s
       SET title=$4, description=$5, image=$6, images=$7::jsonb, url=$8,
+        image_assets=CASE WHEN images=$7::jsonb THEN image_assets ELSE '[]'::jsonb END,
         user_edited_at=clock_timestamp(), updated_at=clock_timestamp()
       FROM rounds r
       WHERE s.round_id=$1 AND s.id=$2 AND lower(s.wallet_address)=lower($3)
@@ -3706,6 +3796,11 @@ export const editOwnedRoundSubmission = async (
       RETURNING s.*
     `, [round.id, submissionId, walletAddress, title, description, images[0], JSON.stringify(images), url]);
     if (!result.rows[0]) throw new RoundSubmissionEditError("The edit window has closed or your one-time edit was already used.", 409);
+    if (!unchangedImages && images.some((image) => image.startsWith("data:"))) {
+      const { prepareRoundImageAssets } = await import("@/utils/rounds/prepare-image-assets");
+      const assets = await prepareRoundImageAssets(round.id, submissionId, images);
+      if (assets.length) await client.query("UPDATE round_submissions SET image_assets=$2::jsonb WHERE id=$1", [submissionId, JSON.stringify(assets)]);
+    }
     await client.query("COMMIT");
     return mapSubmission(result.rows[0]);
   } catch (error) {
@@ -3783,6 +3878,12 @@ export const updateRoundSubmission = async (
       allowDataImages: true,
     })
   );
+  let preparedAssets: unknown[] = [];
+  const imagesChanged = images.length !== current.images.length || images.some((image, index) => image !== current.images[index]);
+  if (imagesChanged && normalizedImages.some((image) => image.startsWith("data:"))) {
+    const { prepareRoundImageAssets } = await import("@/utils/rounds/prepare-image-assets");
+    preparedAssets = await prepareRoundImageAssets(roundId, submissionId, normalizedImages);
+  }
 
   const result = await getPool().query(
     `
@@ -3792,6 +3893,7 @@ export const updateRoundSubmission = async (
         description = $5,
         image = $6,
         images = $7::jsonb,
+        image_assets = CASE WHEN images = $7::jsonb THEN image_assets ELSE $14::jsonb END,
         url = $8,
         submission_type = $9,
         trait_id = $10,
@@ -3816,6 +3918,7 @@ export const updateRoundSubmission = async (
       merged.traitType || null,
       merged.source || "project",
       JSON.stringify(merged.sourcePayload || {}),
+      JSON.stringify(preparedAssets),
     ]
   );
 
@@ -4098,8 +4201,15 @@ export const castRoundVotes = async ({
       throw new Error("Vote allocation exceeds available voting power.");
     }
 
+    // Compute the receipt inside the locked transaction; no fallible media read
+    // may turn a committed vote into a retryable error.
+    const receipt = {
+      acceptedVotes: votes.reduce((sum, vote) => sum + vote.voteCount, 0),
+      usedVotes: totalUsedVotes,
+      remainingVotes: Math.max(votingPower - totalUsedVotes, 0),
+    };
     await client.query("COMMIT");
-    return listRoundSubmissions(round.id, { publicOnly: true });
+    return receipt;
   } catch (error) {
     await client.query("ROLLBACK");
     throw error;

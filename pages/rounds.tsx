@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import { RoundCard } from "@/components/rounds/RoundCard";
-import type { Round } from "data/rounds";
+import { serializePublicRoundSummary, type PublicRoundSummary } from "@/utils/rounds/roundMediaPayload";
 import { listPublicRounds } from "data/rounds";
 import { getRoundState } from "@/utils/rounds/state";
 import type {
@@ -11,7 +11,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 type RoundsPageProps = {
-  rounds: Round[];
+  rounds: PublicRoundSummary[];
   error?: string;
 };
 
@@ -19,7 +19,7 @@ export const getServerSideProps = async (): Promise<
   GetServerSidePropsResult<RoundsPageProps>
 > => {
   try {
-    return { props: { rounds: await listPublicRounds() } };
+    return { props: { rounds: (await listPublicRounds()).map(serializePublicRoundSummary) } };
   } catch (error) {
     console.error("Unable to load rounds page", error);
     return {
@@ -96,7 +96,7 @@ const RoundSection = ({
   rounds,
 }: {
   title: string;
-  rounds: Round[];
+  rounds: PublicRoundSummary[];
 }) => (
   <section className="flex flex-col gap-4">
     <div className="flex items-center gap-3">
@@ -141,6 +141,6 @@ const getRoundCountClassName = (title: string) => {
   return "border border-[#7f2219] bg-[#c93d2f] text-white shadow-[0px_3px_0px_0px_#7f2219]";
 };
 
-const compareRoundsBySubmissionsOpenAt = (left: Round, right: Round) =>
+const compareRoundsBySubmissionsOpenAt = (left: PublicRoundSummary, right: PublicRoundSummary) =>
   new Date(left.submissionsOpenAt).getTime() -
   new Date(right.submissionsOpenAt).getTime();

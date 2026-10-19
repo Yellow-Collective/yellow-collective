@@ -12,7 +12,7 @@ assert.match(
 
 assert.match(
   source,
-  /const compareRoundsBySubmissionsOpenAt = \(left: Round, right: Round\) =>\s*new Date\(left\.submissionsOpenAt\)\.getTime\(\) -\s*new Date\(right\.submissionsOpenAt\)\.getTime\(\)/,
+  /const compareRoundsBySubmissionsOpenAt = \(left: PublicRoundSummary, right: PublicRoundSummary\) =>\s*new Date\(left\.submissionsOpenAt\)\.getTime\(\) -\s*new Date\(right\.submissionsOpenAt\)\.getTime\(\)/,
   "Upcoming rounds must be ordered by submissionsOpenAt ascending."
 );
 

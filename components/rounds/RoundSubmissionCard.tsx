@@ -1,6 +1,6 @@
 import type { RoundSubmission } from "data/rounds";
 import type { PlaygroundArtwork } from "data/nouns-builder/artwork";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -34,13 +34,18 @@ export const DeferredInlineImage = ({
   fallback: ReactNode;
 }) => {
   const isMounted = useIsMounted();
+  const [failedSource, setFailedSource] = useState("");
+
+  if (src && failedSource === src) {
+    return <div className="relative" role="status">{fallback}<span className="absolute inset-x-3 bottom-3 rounded bg-black/75 p-2 text-center text-sm text-white">Image unavailable. Refresh to retry.</span></div>;
+  }
 
   if (!src || (src.startsWith("data:image/") && !isMounted)) {
     return <>{fallback}</>;
   }
 
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={src} alt={alt} className={className} />;
+  return <img src={src} alt={alt} className={className} loading="lazy" decoding="async" onError={() => setFailedSource(src)} />;
 };
 
 export const SubmissionCard = ({

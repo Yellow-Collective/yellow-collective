@@ -69,6 +69,18 @@ const publicFrameAncestors = [
     : []),
 ].join(" ");
 let videoOrigins = [];
+let imageOrigins = [];
+if (process.env.ROUND_IMAGES_ENABLED === "true") {
+  try {
+    const endpoint = new URL(process.env.ROUND_IMAGE_S3_ENDPOINT);
+    const bucket = process.env.ROUND_IMAGE_S3_BUCKET;
+    if (endpoint.protocol === "https:" && !endpoint.username && !endpoint.password && !endpoint.search && !endpoint.hash && /^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$/.test(bucket || "")) {
+      imageOrigins = [endpoint.origin, ...(process.env.ROUND_IMAGE_S3_FORCE_PATH_STYLE === "true" ? [] : [`${endpoint.protocol}//${bucket}.${endpoint.host}`])];
+    }
+  } catch {
+    // Disabled/incomplete image storage preserves existing inline uploads.
+  }
+}
 if (process.env.ROUND_VIDEOS_ENABLED === "true") {
   try {
     const endpoint = new URL(process.env.ROUND_VIDEO_S3_ENDPOINT);
@@ -135,6 +147,7 @@ const contentSecurityPolicy = [
   ].join(" "),
   [
     "img-src",
+    ...imageOrigins,
     "'self'",
     "data:",
     "blob:",
