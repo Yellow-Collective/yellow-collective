@@ -1,0 +1,57 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "cacheControl": "s-maxage=60, stale-while-revalidate=31535940"
+  },
+  {
+    "path": "/api/theme",
+    "status": 200,
+    "cacheControl": "no-store, max-age=0"
+  },
+  {
+    "path": "/api/theme",
+    "status": 405,
+    "cacheControl": "no-store, max-age=0"
+  },
+  {
+    "path": "/api/admin/access",
+    "status": 401,
+    "cacheControl": "private, no-store, max-age=0"
+  },
+  {
+    "path": "/api/admin/rounds",
+    "status": 401,
+    "cacheControl": "private, no-store, max-age=0"
+  },
+  {
+    "path": "/api/admin/notifications/audience",
+    "status": 401,
+    "cacheControl": "private, no-store, max-age=0"
+  },
+  {
+    "path": "/api/notifications/settings",
+    "status": 401,
+    "cacheControl": "private, no-store, max-age=0"
+  },
+  {
+    "path": "/api/miniapp/users",
+    "status": 401,
+    "cacheControl": "private, no-store, max-age=0"
+  },
+  {
+    "path": "/api/pinata/upload-url",
+    "status": 401,
+    "cacheControl": "private, no-store, max-age=0"
+  },
+  {
+    "path": "/api/profile/not-a-wallet",
+    "status": 400,
+    "cacheControl": "no-store, max-age=0"
+  },
+  {
+    "path": "/api/rounds",
+    "status": 500,
+    "cacheControl": "no-store, max-age=0"
+  }
+]

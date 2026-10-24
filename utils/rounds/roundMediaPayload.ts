@@ -29,9 +29,25 @@ export const stripNestedInlineMedia = (value: any): any => {
 };
 
 const selectFields = (value: any, fields: string[]) => Object.fromEntries(fields.filter((key) => value[key] !== undefined).map((key) => [key, value[key]]));
-const roundFields = "id slug title description content image startsAt submissionsOpenAt votingStartsAt votingEndsAt endsAt active featured isTraitContest traitSubmissionsEnabled status votingStrategy votesPerWallet maxVotesPerEntry votingSnapshotMode votingSnapshotAt votingSnapshotBlock winnerCount maxSubmissionsPerWallet minTitleLength maxTitleLength minDescriptionLength maxDescriptionLength createdAt updatedAt deletedAt submissionCount approvedSubmissionCount totalVotes awards voteActivity".split(" ");
-const submissionFields = "id roundId walletAddress title description image images url submissionType traitId traitType source sourcePayload status createdAt updatedAt userEditedAt approvedAt rejectedAt hiddenAt deletedAt voteCount winnerPosition video".split(" ");
-const traitFields = "id title artist traitType pixels selectedTraits previewTraits status createdAt updatedAt approvedAt removedAt roundSubmissionAutoDescription roundSubmissionIdentityLabel".split(" ");
+const roundFields = "id slug title description content image startsAt submissionsOpenAt votingStartsAt votingEndsAt endsAt active featured isTraitContest traitSubmissionsEnabled status votingStrategy votesPerWallet maxVotesPerEntry votingSnapshotMode votingSnapshotAt votingSnapshotBlock winnerCount maxSubmissionsPerWallet minTitleLength maxTitleLength minDescriptionLength maxDescriptionLength createdAt updatedAt approvedSubmissionCount totalVotes".split(" ");
+const submissionFields = "id roundId walletAddress title description image images url submissionType traitId traitType source status createdAt updatedAt userEditedAt voteCount winnerPosition".split(" ");
+const traitFields = "id title artist traitType pixels selectedTraits previewTraits status createdAt updatedAt roundSubmissionAutoDescription roundSubmissionIdentityLabel".split(" ");
+
+// Keep domain/storage records intact. Only these presentation copies leave the server.
+export const serializePublicRoundSubmission = (submission: RoundSubmission): RoundSubmission => ({
+  ...stripNestedInlineMedia(selectFields(submission, submissionFields)),
+  sourcePayload: submission.sourcePayload ? stripNestedInlineMedia(selectFields(submission.sourcePayload, traitFields)) : null,
+  image: stripInlineDataImage(submission.image),
+  images: (submission.images || [submission.image]).map(stripInlineDataImage),
+  // Playback resolves the object key on the server after checking public eligibility.
+  video: submission.video ? { duration: submission.video.duration, width: submission.video.width, height: submission.video.height } : null,
+} as RoundSubmission);
+
+export const serializePublicRound = (round: Round): Round => ({
+  ...stripNestedInlineMedia(selectFields(round, roundFields)),
+  image: stripInlineDataImage(round.image),
+  awards: (round.awards || []).map((award) => selectFields(award, "id position title description value".split(" "))),
+} as Round);
 
 export type PublicRoundSummary = Pick<Round, "id" | "slug" | "title" | "description" | "image" | "status" | "active" | "startsAt" | "submissionsOpenAt" | "votingStartsAt" | "votingEndsAt" | "approvedSubmissionCount" | "totalVotes">;
 export const serializePublicRoundSummary = (round: Round): PublicRoundSummary => ({
@@ -56,14 +72,9 @@ export const clearRoundArtwork = (round: RoundWithSubmissions): RoundWithSubmiss
 export const stripRoundInlineMediaForSsr = (
   round: RoundWithSubmissions
 ): RoundWithSubmissions => ({
-  ...stripNestedInlineMedia(selectFields(round, roundFields)),
-  image: stripInlineDataImage(round.image),
-  submissions: round.submissions.map((submission) => ({
-    ...stripNestedInlineMedia(selectFields(submission, submissionFields)),
-    sourcePayload: submission.sourcePayload ? stripNestedInlineMedia(selectFields(submission.sourcePayload, traitFields)) : null,
-    image: stripInlineDataImage(submission.image),
-    images: (submission.images || [submission.image]).map(stripInlineDataImage),
-  })),
+  ...serializePublicRound(round),
+  voteActivity: (round.voteActivity || []).map((vote) => selectFields(vote, "id walletAddress submissionId submissionTitle voteCount createdAt updatedAt".split(" "))),
+  submissions: round.submissions.map(serializePublicRoundSubmission),
 } as RoundWithSubmissions);
 
 export const createRoundMediaPayload = (

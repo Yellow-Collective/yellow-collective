@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { getEnsAddress } from "data/ens";
 import { NextApiRequest, NextApiResponse } from "next";
 import { applyRateLimit } from "@/utils/rate-limit";
@@ -32,4 +33,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).json(address);
 };
 
-export default handler;
+export default publicApiRead(handler);

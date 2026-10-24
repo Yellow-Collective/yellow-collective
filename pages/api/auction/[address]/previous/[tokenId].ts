@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getPreviousAuction } from "data/nouns-builder/auction";
 
@@ -17,4 +18,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.json(previousAuction ?? null);
 };
 
-export default handler;
+export default publicApiRead(handler);

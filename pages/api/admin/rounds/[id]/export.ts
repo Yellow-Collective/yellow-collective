@@ -27,7 +27,7 @@ const getId = (req: NextApiRequest) => {
 };
 
 const getSafeExportError = (error: unknown) => {
-  const message = error instanceof Error ? error.message : "Artwork export failed.";
+  const message = "Artwork export failed.";
   return message.replace(/[\r\n]+/g, " ").slice(0, 160);
 };
 

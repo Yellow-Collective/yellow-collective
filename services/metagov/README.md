@@ -1,5 +1,17 @@
 # Yellow Metagov Bot
 
+The HTTP server exposes only `{ "ok": true }` at `GET /health` anonymously.
+`GET /state`, `/state-file`, and `/state/:proposal` require
+`Authorization: Bearer <METAGOV_STATE_SECRET>` and fail closed when the secret
+is unset. Configure the same server-only `METAGOV_STATE_SECRET` on the bot and
+website; the website's server-side state reader forwards it and publishes only
+the proposal fields needed by the public status card. Keep `METAGOV_STATE_URL`
+server-only. Do not put credentials in its URL or any `NEXT_PUBLIC_*` variable.
+Deploy/configure these two consumers together to avoid interrupting public
+status cards. Authenticated remote state URLs must use HTTPS without embedded
+credentials; redirects are rejected. This code change does not configure or
+deploy either service.
+
 Standalone Railway service that mirrors Nouns DAO proposals into the
 `yellowcollective.eth` Snapshot space, watches the Snapshot results, and casts
 the final vote on-chain.

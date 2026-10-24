@@ -50,13 +50,7 @@ export default async function handler(
     return res.json({ cancelled: true });
   } catch (error) {
     // Never expose provider/SQL errors or signed URLs.
-    const message =
-      error instanceof Error &&
-      /^(This round|Video upload quota|Upload |Video must|Video validation|Video uploads)/.test(
-        error.message
-      )
-        ? error.message
-        : "Unable to process video. Try again later.";
+    const message = "Unable to process video. Try again later.";
     return res.status(400).json({ error: message });
   }
 }

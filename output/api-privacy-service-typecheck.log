@@ -1,0 +1,14 @@
+services/metagov/src/config.ts(1,20): error TS2307: Cannot find module 'dotenv' or its corresponding type declarations.
+services/metagov/src/config.ts(2,10): error TS2305: Module '"ethers"' has no exported member 'getAddress'.
+services/metagov/src/services/safe-voting.ts(1,18): error TS2307: Cannot find module '@safe-global/protocol-kit' or its corresponding type declarations.
+services/metagov/src/services/safe-voting.ts(2,24): error TS2307: Cannot find module '@safe-global/api-kit' or its corresponding type declarations.
+services/metagov/src/services/safe-voting.ts(3,37): error TS2307: Cannot find module '@safe-global/safe-core-sdk-types' or its corresponding type declarations.
+services/metagov/src/services/safe-voting.ts(199,33): error TS2339: Property 'Interface' does not exist on type 'typeof import("C:/Users/Deej/Documents/GitHub/yellowcollective/node_modules/ethers/lib/ethers")'.
+services/metagov/src/services/safe-voting.ts(223,38): error TS2339: Property 'Interface' does not exist on type 'typeof import("C:/Users/Deej/Documents/GitHub/yellowcollective/node_modules/ethers/lib/ethers")'.
+services/metagov/src/services/safe-voting.ts(256,13): error TS2339: Property 'data' does not exist on type '{}'.
+services/metagov/src/services/safe-voting.ts(279,52): error TS2694: Namespace '"C:/Users/Deej/Documents/GitHub/yellowcollective/node_modules/ethers/lib/ethers"' has no exported member 'TransactionReceipt'.
+services/metagov/src/services/snapshot.ts(174,28): error TS2551: Property 'signTypedData' does not exist on type 'Wallet'. Did you mean '_signTypedData'?
+services/metagov/src/services/snapshot.ts(274,28): error TS2551: Property 'signTypedData' does not exist on type 'Wallet'. Did you mean '_signTypedData'?
+services/metagov/src/utils/wallet.ts(5,14): error TS2339: Property 'JsonRpcProvider' does not exist on type 'typeof import("C:/Users/Deej/Documents/GitHub/yellowcollective/node_modules/ethers/lib/ethers")'.
+services/metagov/src/validation.ts(3,18): error TS2307: Cannot find module '@safe-global/protocol-kit' or its corresponding type declarations.
+services/metagov/src/validation.ts(57,20): error TS2724: '"C:/Users/Deej/Documents/GitHub/yellowcollective/node_modules/ethers/lib/ethers"' has no exported member named 'Provider'. Did you mean 'providers'?

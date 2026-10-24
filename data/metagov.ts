@@ -68,7 +68,15 @@ const getLocalStatePath = () => {
 };
 
 const readRemoteState = async (url: string): Promise<MetagovState | null> => {
-  const response = await fetch(url, { cache: "no-store" });
+  const secret = process.env.METAGOV_STATE_SECRET;
+  const target = new URL(url);
+  if (secret && (target.protocol !== "https:" || target.username || target.password)) {
+    throw new Error("Authenticated metagov state must use an HTTPS URL without credentials.");
+  }
+  const response = await fetch(url, {
+    cache: "no-store", redirect: "error",
+    headers: secret ? { Authorization: `Bearer ${secret}` } : {},
+  });
   if (response.status === 404) return null;
   if (!response.ok) {
     throw new Error(`Metagov state request failed: ${response.status}`);
@@ -114,7 +122,15 @@ export const getMetagovProposalStatus = async (
 
   return {
     stateUpdatedAt: state.updatedAt || null,
-    proposal,
-    execution,
+    proposal: proposal ? {
+      ...pickPublicFields(proposal, "nounsProposalId nounsTitle snapshotId snapshotTitle snapshotUrl status createdAt updatedAt scores scoresTotal winningChoice executionMode voterAddress executionTxHash safeTxHash"),
+      ...(proposal.failureReason ? { failureReason: "Metagovernance processing failed. Please contact the team." } : {}),
+    } as MetagovTrackedProposal : null,
+    execution: execution ? pickPublicFields(execution, "nounsProposalId snapshotId choice executionMode voterAddress safeTxHash executionTxHash blockNumber gasUsed executedAt") as MetagovExecutionRecord : null,
   };
 };
+
+const pickPublicFields = (record: object, fields: string) => Object.fromEntries(
+  fields.split(" ").filter((key) => Object.prototype.hasOwnProperty.call(record, key))
+    .map((key) => [key, (record as Record<string, unknown>)[key]])
+);

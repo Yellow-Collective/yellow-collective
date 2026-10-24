@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getContractInfo } from "data/nouns-builder/token";
 
@@ -13,4 +14,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.send(contractInfo);
 };
 
-export default handler;
+export default publicApiRead(handler);

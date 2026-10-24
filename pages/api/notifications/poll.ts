@@ -6,6 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader("Cache-Control", "private, no-store, max-age=0");
   if (req.method !== "GET" && req.method !== "POST") {
     res.setHeader("Allow", "GET, POST");
     return res.status(405).json({ error: "Method not allowed." });
@@ -24,7 +25,7 @@ export default async function handler(
     console.error("Notification poll failed", error);
     return res.status(500).json({
       error:
-        error instanceof Error ? error.message : "Unable to poll notifications.",
+        "Unable to poll notifications.",
     });
   }
 }

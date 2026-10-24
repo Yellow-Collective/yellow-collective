@@ -134,14 +134,10 @@ export default async function handler(
     const payload = await snapshotResponse.json().catch(() => null);
 
     if (!snapshotResponse.ok) {
-      return res.status(snapshotResponse.status).json(
-        payload || {
-          error: "Snapshot rejected the vote.",
-        }
-      );
+      return res.status(400).json({ error_description: "Snapshot rejected the signed vote." });
     }
 
-    return res.status(200).json(payload);
+    return res.status(200).json({ id: payload?.id, ipfs: payload?.ipfs });
   } catch (error) {
     console.error("Unable to submit Snapshot vote", error);
     return res.status(500).json({ error: "Unable to submit Snapshot vote." });

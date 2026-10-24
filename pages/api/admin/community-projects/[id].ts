@@ -56,7 +56,7 @@ export default async function handler(
     return res.status(200).json({ project });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to update project.";
+      "Unable to update project.";
     console.error("Admin community project update failed", error);
     return res.status(500).json({ error: message });
   }

@@ -1,5 +1,6 @@
 import { upsertMiniAppUser } from "data/notifications";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { requireMiniAppFid } from "@/utils/miniapp-auth";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,7 +12,11 @@ export default async function handler(
   }
 
   try {
-    const fid = Number(req.body?.fid);
+    const fid = await requireMiniAppFid(req, res);
+    if (!fid) return;
+    if (req.body?.fid !== fid) {
+      return res.status(403).json({ error: "Mini App identity mismatch." });
+    }
     if (!Number.isInteger(fid) || fid <= 0) {
       return res.status(400).json({ error: "A valid Farcaster FID is required." });
     }
@@ -38,9 +43,7 @@ export default async function handler(
     console.error("Mini App user upsert failed", error);
     return res.status(500).json({
       error:
-        error instanceof Error
-          ? error.message
-          : "Unable to update Mini App user.",
+        "Unable to update Mini App user.",
     });
   }
 }

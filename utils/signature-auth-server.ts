@@ -213,7 +213,7 @@ const getHeaderValue = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
 
 export const setNoStoreHeaders = (res: NextApiResponse) => {
-  res.setHeader("Cache-Control", "no-store, max-age=0");
+  res.setHeader("Cache-Control", "private, no-store, max-age=0");
 };
 
 export const getRequestPath = (req: NextApiRequest) => {

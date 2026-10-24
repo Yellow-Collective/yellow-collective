@@ -77,7 +77,7 @@ export default async function handler(
     });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to cast votes.";
+      "Unable to cast votes.";
     console.error("Round vote failed", error);
     return res.status(400).json({ error: message });
   }

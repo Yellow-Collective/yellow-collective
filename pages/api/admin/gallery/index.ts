@@ -22,7 +22,7 @@ export default async function handler(
     console.error("Admin gallery request failed", error);
     return res.status(500).json({
       error:
-        error instanceof Error ? error.message : "Unable to load gallery.",
+        "Unable to load gallery.",
     });
   }
 }

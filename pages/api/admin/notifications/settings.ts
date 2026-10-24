@@ -39,9 +39,7 @@ export default async function handler(
     console.error("Admin notifications settings request failed", error);
     return res.status(500).json({
       error:
-        error instanceof Error
-          ? error.message
-          : "Unable to update notification settings.",
+        "Unable to update notification settings.",
     });
   }
 }

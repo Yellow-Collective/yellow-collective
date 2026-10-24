@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getProposals } from "@/services/nouns-builder/governor";
 
@@ -14,4 +15,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.send(proposals);
 };
 
-export default handler;
+export default publicApiRead(handler);

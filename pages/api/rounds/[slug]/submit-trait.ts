@@ -49,9 +49,7 @@ export default async function handler(
     return res.status(201).json({ submission });
   } catch (error) {
     const message =
-      error instanceof Error
-        ? error.message
-        : "Unable to submit trait to round.";
+      "Unable to submit trait to round.";
     console.error("Round trait submission failed", error);
     return res.status(400).json({ error: message });
   }

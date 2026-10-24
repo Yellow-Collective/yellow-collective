@@ -24,6 +24,8 @@ export const requireAdminRequest = async (
 ) => {
   setNoStoreHeaders(res);
 
+  try {
+
   if (hasAdminAuthInQuery(req)) {
     res
       .status(400)
@@ -66,4 +68,8 @@ export const requireAdminRequest = async (
   }
 
   return adminAddress;
+  } catch {
+    res.status(503).json({ error: "Unable to verify administrator access." });
+    return undefined;
+  }
 };

@@ -63,7 +63,7 @@ export default async function handler(
     );
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to update request.";
+      "Unable to update request.";
     console.error("Admin round request update failed", error);
     return res.status(500).json({ error: message });
   }

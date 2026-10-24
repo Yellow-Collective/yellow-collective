@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { listPublicRounds } from "data/rounds";
+import { serializePublicRound } from "@/utils/rounds/roundMediaPayload";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +13,7 @@ export default async function handler(
 
   try {
     const rounds = await listPublicRounds();
-    return res.status(200).json({ rounds });
+    return res.status(200).json({ rounds: rounds.map(serializePublicRound) });
   } catch (error) {
     console.error("Rounds load failed", error);
     return res.status(500).json({ error: "Unable to load rounds." });

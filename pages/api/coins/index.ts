@@ -56,7 +56,7 @@ export default async function handler(
   } catch (error) {
     console.error("Coin record API failed", error);
     return res.status(400).json({
-      error: error instanceof Error ? error.message : "Unable to save coin.",
+      error: "Unable to save coin.",
     });
   }
 }

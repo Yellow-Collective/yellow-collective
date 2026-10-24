@@ -1,6 +1,7 @@
 import http from "http";
 import { config } from "../config";
 import { StateStore } from "../services/state-store";
+import { timingSafeEqual } from "crypto";
 
 const sendJson = (
   res: http.ServerResponse,
@@ -16,16 +17,26 @@ const sendJson = (
 
 export const startHttpServer = (store: StateStore) => {
   const server = http.createServer((req, res) => {
-    const url = new URL(req.url || "/", `http://${req.headers.host}`);
+    const url = new URL(req.url || "/", "http://localhost");
+
+    if (req.method !== "GET") {
+      res.setHeader("Allow", "GET");
+      return sendJson(res, 405, { error: "Method not allowed" });
+    }
 
     if (url.pathname === "/health") {
       return sendJson(res, 200, {
         ok: true,
-        dryRun: config.dryRun,
-        safeAddress: config.safeAddress,
-        snapshotSpaceId: config.snapshotSpaceId,
-        stateFile: store.path,
       });
+    }
+
+    // Raw state includes notification responses and internal failure details.
+    // The public website consumes it server-side and publishes a scoped view.
+    const secret = process.env.METAGOV_STATE_SECRET;
+    const supplied = Buffer.from(req.headers.authorization || "");
+    const expected = Buffer.from(`Bearer ${secret || ""}`);
+    if (!secret || supplied.length !== expected.length || !timingSafeEqual(new Uint8Array(supplied), new Uint8Array(expected))) {
+      return sendJson(res, 401, { error: "Authentication required" });
     }
 
     if (url.pathname === "/state" || url.pathname === "/state-file") {

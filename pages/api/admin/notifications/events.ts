@@ -21,9 +21,7 @@ export default async function handler(
     console.error("Admin notification events request failed", error);
     return res.status(500).json({
       error:
-        error instanceof Error
-          ? error.message
-          : "Unable to load notification events.",
+        "Unable to load notification events.",
     });
   }
 }

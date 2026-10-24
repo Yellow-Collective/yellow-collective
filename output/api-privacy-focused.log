@@ -1,0 +1,10 @@
+ok - public round and SSR presentation retains artwork, votes, awards and video while dropping private metadata
+ok - internal exceptions stay out of public responses and legacy reads reject alternate methods
+ok - all 28 admin handlers reject anonymous access before loading data
+ok - Mini App updates require verified audience and matching FID; spoofed identity cannot write
+ok - anonymous IPFS uploads cannot obtain capabilities or call the provider
+ok - service health is minimal; raw state requires the configured service secret
+ok - public metagov status preserves display fields without raw failures or future private fields
+ok - both public round-list entrypoints apply the presentation allowlist
+ok - public text DNS is pinned; internal hosts, unsafe redirects and oversized responses are denied
+ok - every API endpoint file has an explicit inventory entry

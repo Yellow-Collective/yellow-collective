@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getAddresses } from "data/nouns-builder/manager";
 
@@ -16,4 +17,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.send(daoAddresses);
 };
 
-export default handler;
+export default publicApiRead(handler);

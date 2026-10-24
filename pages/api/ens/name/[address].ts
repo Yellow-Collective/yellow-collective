@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getEnsName } from "data/ens";
 import { getAddress, isAddress } from "viem";
@@ -22,4 +23,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.send(ensName);
 };
 
-export default handler;
+export default publicApiRead(handler);

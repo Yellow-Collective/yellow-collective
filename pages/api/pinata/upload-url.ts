@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { pinataOptions, type UploadType } from "@/utils/ipfs-upload-config";
 import { applyRateLimit } from "@/utils/rate-limit";
+import { verifySignedRequest, setNoStoreHeaders } from "@/utils/signature-auth-server";
 
 type UploadUrlResponse =
   | { url: string }
@@ -16,6 +17,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<UploadUrlResponse>
 ) {
+  setNoStoreHeaders(res);
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     res.status(405).json({ error: "Method not allowed." });
@@ -38,11 +40,13 @@ export default async function handler(
     return;
   }
 
+  if (!(await verifySignedRequest(req, res, { action: "ipfs:upload" }))) return;
+
   const jwt = process.env.PINATA_JWT || process.env.PINATA_API_JWT;
   if (!jwt) {
     res.status(503).json({
       error:
-        "IPFS uploads are not configured. Set PINATA_JWT on the server.",
+        "IPFS uploads are unavailable.",
     });
     return;
   }
@@ -78,12 +82,9 @@ export default async function handler(
     if (!pinataResponse.ok || !body.data) {
       console.error("Pinata signed upload URL failed", {
         status: pinataResponse.status,
-        body,
       });
       res.status(502).json({
         error:
-          body.error ||
-          body.message ||
           "Unable to create a signed IPFS upload URL.",
       });
       return;

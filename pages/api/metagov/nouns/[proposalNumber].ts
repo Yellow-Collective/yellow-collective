@@ -24,9 +24,7 @@ export default async function handler(
     console.error("Unable to load metagov proposal status", error);
     return res.status(500).json({
       error:
-        error instanceof Error
-          ? error.message
-          : "Unable to load metagov proposal status.",
+        "Unable to load metagov proposal status.",
     });
   }
 }

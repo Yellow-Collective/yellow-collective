@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { pinataOptions, type UploadType } from "@/utils/ipfs-upload-config";
 import { applyRateLimit } from "@/utils/rate-limit";
+import { verifySignedRequest, setNoStoreHeaders } from "@/utils/signature-auth-server";
 
 type UploadResponse =
   | { data?: { cid?: string }; IpfsHash?: string }
@@ -66,6 +67,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<UploadResponse>
 ) {
+  setNoStoreHeaders(res);
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     res.status(405).json({ error: "Method not allowed." });
@@ -102,9 +104,13 @@ export default async function handler(
   }
 
   const jwt = process.env.PINATA_JWT || process.env.PINATA_API_JWT;
+  if (!(await verifySignedRequest(req, res, {
+    action: "ipfs:upload",
+    payload: { type, fileName: getStringValue(req.query.fileName).slice(0, 180) },
+  }))) return;
   if (!jwt) {
     res.status(503).json({
-      error: "IPFS uploads are not configured. Set PINATA_JWT on the server.",
+      error: "IPFS uploads are unavailable.",
     });
     return;
   }
@@ -133,18 +139,15 @@ export default async function handler(
     if (!uploadResponse.ok || !(body.data?.cid || body.IpfsHash)) {
       console.error("Pinata upload failed", {
         status: uploadResponse.status,
-        body,
       });
       res.status(502).json({
         error:
-          body.error ||
-          body.message ||
           "IPFS upload failed. Check your connection and try again.",
       });
       return;
     }
 
-    res.status(200).json(body);
+    res.status(200).json({ data: { cid: body.data?.cid || body.IpfsHash } });
   } catch (error) {
     console.error("Pinata upload error", error);
     res.status(500).json({ error: "Unable to upload to IPFS." });

@@ -163,7 +163,7 @@ export default async function handler(
     return res.status(201).json({ project: savedProject });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to submit project.";
+      "Unable to submit project.";
 
     if (
       error &&

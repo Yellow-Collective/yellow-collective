@@ -19,7 +19,7 @@ export default async function handler(
     });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to update settings.";
+      "Unable to update settings.";
     console.error("Admin rounds settings request failed", error);
     return res.status(500).json({ error: message });
   }

@@ -70,9 +70,18 @@ const saveMiniAppUser = async ({
   const fid = context?.user?.fid;
   if (!fid) return;
 
+  const sdk = await loadMiniAppSdk();
+  if (!sdk?.quickAuth) return;
+  let token: string;
+  try {
+    ({ token } = await sdk.quickAuth.getToken());
+  } catch {
+    console.warn("Mini App user sync requires authentication.");
+    return;
+  }
   await fetch("/api/miniapp/users", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     cache: "no-store",
     body: JSON.stringify({
       fid,

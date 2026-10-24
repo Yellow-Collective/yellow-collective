@@ -27,6 +27,7 @@ export type MiniAppContext = {
 };
 
 export type MiniAppSdk = {
+  quickAuth?: { getToken: () => Promise<{ token: string }> };
   isInMiniApp: () => Promise<boolean>;
   context?: MiniAppContext | Promise<MiniAppContext>;
   wallet?: {

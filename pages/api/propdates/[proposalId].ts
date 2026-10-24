@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { SUBGRAPH_ENDPOINT } from "constants/urls";
 import { GraphQLClient, gql } from "graphql-request";
 import { isHex } from "viem";
+import { fetchPublicText } from "@/utils/public-text-fetch";
 
 type ProposalUpdateRow = {
   id: string;
@@ -53,8 +54,7 @@ const parsePropdateMessage = async (
       messageType === MESSAGE_TYPE.URL_TEXT ||
       messageType === MESSAGE_TYPE.URL_JSON
     ) {
-      const response = await fetch(message);
-      const text = await response.text();
+      const text = await fetchPublicText(message);
       return messageType === MESSAGE_TYPE.URL_JSON
         ? JSON.parse(text)
         : { content: text };
@@ -62,7 +62,7 @@ const parsePropdateMessage = async (
 
     return { content: message };
   } catch (error) {
-    console.warn("Unable to parse propdate message", error);
+    console.warn("Unable to parse propdate message");
     return { content: message };
   }
 };

@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getBalanceOf } from "data/nouns-builder/token";
 
@@ -16,4 +17,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.send(Number(balance.toString()));
 };
 
-export default handler;
+export default publicApiRead(handler);

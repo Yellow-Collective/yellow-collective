@@ -3,6 +3,8 @@ import {
   pinataOptions,
   type UploadType,
 } from "@/utils/ipfs-upload-config";
+import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
+import { TOKEN_NETWORK } from "constants/addresses";
 
 type UploadResult = {
   cid: string;
@@ -10,6 +12,8 @@ type UploadResult = {
 };
 
 type UploadFileOptions = {
+  walletAddress: string;
+  signMessageAsync: (args: { message: string }) => Promise<string>;
   type?: UploadType;
   onProgress?: (progress: number) => void;
 };
@@ -39,7 +43,7 @@ export const validateUploadFile = (file: File, type: UploadType = "media") => {
 
 export const uploadFile = async (
   file: File,
-  { type = "media", onProgress }: UploadFileOptions = {}
+  { type = "media", onProgress, walletAddress, signMessageAsync }: UploadFileOptions
 ): Promise<UploadResult> => {
   validateUploadFile(file, type);
 
@@ -56,6 +60,10 @@ export const uploadFile = async (
   });
   const response = await fetch(`/api/pinata/upload?${params.toString()}`, {
     method: "POST",
+    headers: { Authorization: await createSignedRequestAuthHeader({
+      walletAddress, chainId: Number(TOKEN_NETWORK), action: "ipfs:upload",
+      method: "POST", path: "/api/pinata/upload", payload: { type, fileName: file.name.slice(0, 180) }, signMessageAsync,
+    }) },
     body: formData,
   });
   const body = (await response

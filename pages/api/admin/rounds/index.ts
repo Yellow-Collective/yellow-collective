@@ -23,7 +23,7 @@ export default async function handler(
     return res.status(200).json({ rounds });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to load rounds.";
+      "Unable to load rounds.";
     console.error("Admin rounds request failed", error);
     return res.status(500).json({ error: message });
   }

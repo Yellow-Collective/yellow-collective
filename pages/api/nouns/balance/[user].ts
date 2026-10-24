@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getMainnetBalanceOf } from "data/nouns-builder/token";
 import { getNounsDaoBalanceFromIndexer } from "data/nouns-dao/balances";
@@ -39,4 +40,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).json(balance.toString());
 };
 
-export default handler;
+export default publicApiRead(handler);

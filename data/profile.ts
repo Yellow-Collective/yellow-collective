@@ -1,3 +1,4 @@
+import { serializePublicRoundSubmission } from "@/utils/rounds/roundMediaPayload";
 import { attachDatabasePool } from "@vercel/functions";
 import { Pool } from "pg";
 import { GraphQLClient, gql } from "graphql-request";
@@ -771,7 +772,11 @@ export const getPublicProfileData = async (
     auctionBids: auctionActivity.auctionBids,
     auctionWins: auctionActivity.auctionWins,
     communityProjects,
-    roundSubmissions,
+    roundSubmissions: roundSubmissions.map((submission) => ({
+      ...serializePublicRoundSubmission(submission),
+      image: submission.image, images: submission.images,
+      roundSlug: submission.roundSlug, roundTitle: submission.roundTitle,
+    })),
     roundVotes,
     activity: buildActivity({
       noundrySubmissions,

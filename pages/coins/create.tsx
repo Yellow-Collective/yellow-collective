@@ -268,6 +268,7 @@ export default function CreateCoinPage() {
     if (!file) return;
 
     try {
+      if (!address) throw new Error("Connect your wallet to upload media.");
       setSubmitStatus({ state: "idle" });
       setUploadStatus({
         state: "uploading",
@@ -276,6 +277,8 @@ export default function CreateCoinPage() {
       });
 
       const result = await uploadFile(file, {
+        walletAddress: address,
+        signMessageAsync,
         type: "media",
         onProgress: (progress) =>
           setUploadStatus({

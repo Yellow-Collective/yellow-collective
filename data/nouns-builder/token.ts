@@ -52,7 +52,9 @@ export const getContractInfo = async ({ address }: { address: string }) => {
   const contractJSON = parseBase64String(contractURI);
 
   return {
-    ...contractJSON,
+    name: contractJSON.name,
+    description: contractJSON.description,
+    external_url: contractJSON.external_url,
     image: getNormalizedURI(contractJSON.image, {
       preferredIPFSGateway: IPFS_GATEWAY,
     }),

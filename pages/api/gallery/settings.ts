@@ -18,9 +18,7 @@ export default async function handler(
     console.error("Gallery settings request failed", error);
     return res.status(500).json({
       error:
-        error instanceof Error
-          ? error.message
-          : "Unable to load gallery settings.",
+        "Unable to load gallery settings.",
     });
   }
 }

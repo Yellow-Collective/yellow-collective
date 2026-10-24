@@ -36,9 +36,7 @@ export default async function handler(
     console.error("Admin notification audience request failed", error);
     return res.status(500).json({
       error:
-        error instanceof Error
-          ? error.message
-          : "Unable to load notification audience.",
+        "Unable to load notification audience.",
     });
   }
 }

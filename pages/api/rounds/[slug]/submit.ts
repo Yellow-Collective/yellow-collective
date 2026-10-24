@@ -68,7 +68,7 @@ export default async function handler(
     return res.status(201).json({ submission });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to submit to round.";
+      "Unable to submit to round.";
     console.error("Round submission failed", error);
     const outcome =
       error instanceof RoundSubmissionWriteError ? error.outcome : "unknown";

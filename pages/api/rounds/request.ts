@@ -51,7 +51,7 @@ export default async function handler(
     return res.status(201).json({ request });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to request round.";
+      "Unable to request round.";
     console.error("Round request failed", error);
     return res.status(400).json({ error: message });
   }

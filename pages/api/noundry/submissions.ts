@@ -6,6 +6,8 @@ import {
   type CreateNoundrySubmissionInput,
 } from "data/noundry/submissions";
 import { applyRateLimit } from "@/utils/rate-limit";
+import { verifySignedRequest } from "@/utils/signature-auth-server";
+import { TOKEN_NETWORK } from "constants/addresses";
 
 export default async function handler(
   req: NextApiRequest,
@@ -34,6 +36,11 @@ export default async function handler(
       if (validationError) {
         return res.status(400).json({ error: validationError });
       }
+
+      if (!(await verifySignedRequest(req, res, {
+        action: "noundry:submission:create", expectedChainId: Number(TOKEN_NETWORK),
+        expectedWalletAddress: input.artist, payload: input,
+      }))) return;
 
       const submission = await createNoundrySubmission(
         input as CreateNoundrySubmissionInput

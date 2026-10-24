@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { isAddress } from "viem";
+import { applyRateLimit } from "@/utils/rate-limit";
 import {
   buildSignedRequestMessage,
   normalizeSignedRequestMethod,
@@ -31,6 +32,7 @@ export default async function handler(
   }
 
   try {
+    if (!applyRateLimit(req, res, { keyPrefix: "auth-nonce", limit: 30, windowMs: 60_000 })) return;
     const body = req.body as NonceRequestBody;
     const method = normalizeSignedRequestMethod(body.method);
 
@@ -40,9 +42,9 @@ export default async function handler(
       typeof body.chainId !== "number" ||
       !Number.isInteger(body.chainId) ||
       typeof body.action !== "string" ||
-      !body.action.trim() ||
+      !body.action.trim() || body.action.length > 160 ||
       !method ||
-      typeof body.path !== "string" ||
+      typeof body.path !== "string" || body.path.length > 1024 || !body.path.startsWith("/api/") ||
       typeof body.payloadHash !== "string" ||
       !/^0x[0-9a-fA-F]{64}$/.test(body.payloadHash)
     ) {

@@ -88,12 +88,13 @@ export default async function handler(
     return res.status(200).json({ vote });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to update round vote.";
+      "Unable to update round vote.";
     const isConflict = error instanceof AdminRoundVoteConflictError;
+    const detail = error instanceof Error ? error.message : "";
     const isValidationError =
-      message.includes("must be") ||
-      message.includes("positive integer") ||
-      message.startsWith("Selected submission");
+      detail.includes("must be") ||
+      detail.includes("positive integer") ||
+      detail.startsWith("Selected submission");
     console.error("Admin round vote mutation failed", error);
     return res
       .status(isConflict ? 409 : isValidationError ? 400 : 500)

@@ -12,6 +12,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader("Cache-Control", "private, no-store, max-age=0");
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     return res.status(405).json({ error: "Method not allowed." });
@@ -46,9 +47,7 @@ export default async function handler(
     console.error("Proposal 29 ending reminder failed", error);
     return res.status(500).json({
       error:
-        error instanceof Error
-          ? error.message
-          : "Unable to send proposal 29 ending reminder.",
+        "Unable to send proposal 29 ending reminder.",
     });
   }
 }

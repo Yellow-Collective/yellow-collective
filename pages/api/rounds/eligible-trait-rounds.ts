@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { listEligibleTraitRounds } from "data/rounds";
+import { serializePublicRound } from "@/utils/rounds/roundMediaPayload";
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,12 +26,10 @@ export default async function handler(
       traitId,
     });
 
-    return res.status(200).json({ rounds });
+    return res.status(200).json({ rounds: rounds.map(serializePublicRound) });
   } catch (error) {
     const message =
-      error instanceof Error
-        ? error.message
-        : "Unable to load eligible trait rounds.";
+      "Unable to load eligible trait rounds.";
     console.error("Eligible trait rounds failed", error);
     return res.status(400).json({ error: message });
   }

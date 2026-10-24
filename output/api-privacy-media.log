@@ -1,0 +1,5 @@
+ok - missing route, malformed JSON and bad capability responses expose retry and recover
+ok - intentional disable, request timeout and stale responses preserve safe behavior
+ok - GIF bytes survive upload, validation and storage; hydration defers originals to the asset route
+ok - deployed media check finds GIF preservation in shared Next.js chunks
+ok - release check rejects HTTP 200 pages containing round-loading errors

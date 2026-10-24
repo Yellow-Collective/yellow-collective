@@ -50,7 +50,7 @@ export default async function handler(
     return res.status(200).json({ submission });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to update submission.";
+      "Unable to update submission.";
     console.error("Admin Noundry submission update failed", error);
     return res.status(500).json({ error: message });
   }

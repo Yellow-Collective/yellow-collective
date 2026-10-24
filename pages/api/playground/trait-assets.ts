@@ -13,7 +13,7 @@ const MAX_ASSET_BYTES = 2 * 1024 * 1024;
 const MAX_TOTAL_BYTES = 16 * 1024 * 1024;
 
 const getSafeError = (error: unknown) =>
-  (error instanceof Error ? error.message : "Unable to download trait assets.")
+  ("Unable to download trait assets.")
     .replace(/[\r\n]+/g, " ")
     .slice(0, 160);
 

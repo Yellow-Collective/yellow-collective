@@ -7,7 +7,9 @@ import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useSignMessage } from "wagmi";
+import { TOKEN_NETWORK } from "constants/addresses";
+import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 
 type SubmitDraft = {
   title: string;
@@ -49,6 +51,7 @@ const getTraitImage = (
 export default function NoundrySubmitPage() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
+  const { signMessageAsync } = useSignMessage();
   const [draft, setDraft] = useState<SubmitDraft | null>(null);
   const [submissionTitle, setSubmissionTitle] = useState("");
   const [artwork, setArtwork] = useState<PlaygroundArtwork | null>(null);
@@ -130,17 +133,18 @@ export default function NoundrySubmitPage() {
 
     try {
       const submittedTraits = { ...draft.selectedTraits, ...selectedTraits };
+      const payload = {
+        title: submissionTitle || draft.title, artist: address, traitType: draft.traitType,
+        pixels: draft.pixels, selectedTraits: submittedTraits, previewTraits: submittedTraits,
+      };
+      const authorization = await createSignedRequestAuthHeader({
+        walletAddress: address, chainId: Number(TOKEN_NETWORK), action: "noundry:submission:create",
+        method: "POST", path: "/api/noundry/submissions", payload, signMessageAsync,
+      });
       const response = await fetch("/api/noundry/submissions", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: submissionTitle || draft.title,
-          artist: address,
-          traitType: draft.traitType,
-          pixels: draft.pixels,
-          selectedTraits: submittedTraits,
-          previewTraits: submittedTraits,
-        }),
+        headers: { "Content-Type": "application/json", Authorization: authorization },
+        body: JSON.stringify(payload),
       });
       const data = await response.json();
 

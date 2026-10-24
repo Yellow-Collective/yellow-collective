@@ -88,7 +88,7 @@ export default async function handler(
     return res.status(200).json({ submission: updatedSubmission });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unable to update submission.";
+      "Unable to update submission.";
     console.error("Noundry author submission update failed", error);
     return res.status(400).json({ error: message });
   }

@@ -1,3 +1,4 @@
+import { publicApiRead } from "@/utils/public-api-read";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getProposalThreshold } from "data/nouns-builder/governor";
 
@@ -10,4 +11,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).send(Number(data.toString()));
 };
 
-export default handler;
+export default publicApiRead(handler);
