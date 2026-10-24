@@ -1,0 +1,55 @@
+{
+  "provider": "Etherscan MCP",
+  "tool": "get_internal_transactions",
+  "retrievedAt": "2026-10-24T00:09:42.897Z",
+  "args": {
+    "chainid": "8453",
+    "address": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+    "startblock": 0,
+    "endblock": 53000299,
+    "page": 1,
+    "offset": 1000,
+    "sort": "asc"
+  },
+  "result": {
+    "ok": true,
+    "status": "1",
+    "message": "OK",
+    "result": [
+      {
+        "blockNumber": "28167126",
+        "transactionIndex": "191",
+        "timeStamp": "1743123599",
+        "hash": "0x3ae7ab01612130fcef7fca1bcfc0bfbec535510e86cbdfecf28c47fdc6ccd61d",
+        "from": "0x02bb1bd6f495a2509816e5e1e38d6816422fcea0",
+        "to": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+        "value": "133111072247914",
+        "contractAddress": "",
+        "input": "",
+        "type": "call",
+        "gas": "52300",
+        "gasUsed": "0",
+        "traceId": "0_1_1",
+        "isError": "0",
+        "errCode": ""
+      },
+      {
+        "blockNumber": "31025602",
+        "transactionIndex": "9",
+        "timeStamp": "1748840551",
+        "hash": "0x5a1320c97b677dce0d07f7e34b0e0a759d354ed4e33912f3a4050d73565db6db",
+        "from": "0x09aea4b2242abc8bb4bb78d537a67a245a7bec64",
+        "to": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+        "value": "1899555208182028",
+        "contractAddress": "",
+        "input": "",
+        "type": "call",
+        "gas": "3048",
+        "gasUsed": "0",
+        "traceId": "0_1_1",
+        "isError": "0",
+        "errCode": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "roundVoters": 59,
+  "clusterVotes": 360,
+  "clusterRows": 31,
+  "times": [
+    {
+      "wallet": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "time": "2026-10-23T19:50:44.033627+00:00",
+      "allocated": 52,
+      "budget": 52,
+      "rounds": [
+        "propoganda"
+      ]
+    },
+    {
+      "wallet": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "time": "2026-10-23T19:53:42.596167+00:00",
+      "allocated": 53,
+      "budget": 53,
+      "rounds": [
+        "propoganda"
+      ]
+    },
+    {
+      "wallet": "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+      "time": "2026-10-23T19:55:20.725556+00:00",
+      "allocated": 51,
+      "budget": 51,
+      "rounds": [
+        "propoganda"
+      ]
+    },
+    {
+      "wallet": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+      "time": "2026-10-23T20:16:42.380518+00:00",
+      "allocated": 51,
+      "budget": 51,
+      "rounds": [
+        "propoganda"
+      ]
+    },
+    {
+      "wallet": "0x07566caf069465977e9b0d3a96629c73a6c69740",
+      "time": "2026-10-23T20:19:40.63423+00:00",
+      "allocated": 51,
+      "budget": 51,
+      "rounds": [
+        "propoganda"
+      ]
+    },
+    {
+      "wallet": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+      "time": "2026-10-23T20:22:51.776987+00:00",
+      "allocated": 51,
+      "budget": 51,
+      "rounds": [
+        "propoganda"
+      ]
+    },
+    {
+      "wallet": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+      "time": "2026-10-23T20:24:45.473238+00:00",
+      "allocated": 51,
+      "budget": 51,
+      "rounds": [
+        "propoganda"
+      ]
+    }
+  ],
+  "windowSeconds": 2041.44,
+  "outsideFullBudget": 35,
+  "outsideWith15": 46,
+  "outsideVoters": 52,
+  "hHistoryVotes": 139,
+  "hVotesToWinner": 115,
+  "redyMints": 19,
+  "redyCollections": 18,
+  "redyByCreator": [
+    {
+      "wallet": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+      "alias": "hellia.eth",
+      "mints": 7,
+      "collections": 7
+    },
+    {
+      "wallet": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "alias": "amirk.eth",
+      "mints": 6,
+      "collections": 5
+    },
+    {
+      "wallet": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "alias": "mahnaz.eth",
+      "mints": 5,
+      "collections": 5
+    },
+    {
+      "wallet": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+      "alias": "desdot.eth",
+      "mints": 1,
+      "collections": 1
+    }
+  ],
+  "ethereumAB": 43,
+  "ethereumIA": 10,
+  "newNormalRecords": 30065,
+  "sharedIntermediaries": 175,
+  "contractIntermediaries": 169
+}

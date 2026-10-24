@@ -1,0 +1,147 @@
+{
+  "generatedAt": "2026-10-24T00:21:46.817Z",
+  "checks": [
+    {
+      "name": "seven unique wallets",
+      "ok": true
+    },
+    {
+      "name": "194 direct plus 1 internal ETH movement, 14 pairs",
+      "ok": true
+    },
+    {
+      "name": "13 NFT movements, 10 auctions",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 292 0x32c2c2b672347e7f1c7af830f6070ccea8eced170a7190db272bd1faf4872ec0",
+      "ok": true
+    },
+    {
+      "name": "auction payment 292",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 308 0x8a87e19e7d15e0ba6294ea12418da1b42ffcd85b7ff8b6e9bc1c28bd32dec547",
+      "ok": true
+    },
+    {
+      "name": "auction payment 308",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 309 0xa9364756336c85e79f39374659bb95d275e0d4f314b28e3528750b1f10502a29",
+      "ok": true
+    },
+    {
+      "name": "auction payment 309",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 312 0x55de008884b8e751d7debbcc60934a34cec130e9508ea9484cfe9df5ba26fd07",
+      "ok": true
+    },
+    {
+      "name": "auction payment 312",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 312 0x814b71fb073a8e1839cf13d5d4e43b2928182eb78454c8d9f0c89d45d27a0d1d",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 313 0x3411f123be75b4bedd9fee925b523ede62a670d13b09441b12bd0bf7c2099e0b",
+      "ok": true
+    },
+    {
+      "name": "auction payment 313",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 328 0x9a78f3079896c6b0ec7d1cdb508fd8074b4878df553976caa5e7304517c9c127",
+      "ok": true
+    },
+    {
+      "name": "auction payment 328",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 399 0x83c64db334d0ae9e2e402d2e9cdb9954497292fcbbb13d91a5ddb2744b3a83a4",
+      "ok": true
+    },
+    {
+      "name": "auction payment 399",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 403 0xb3964508e01e6d6a0087e3ac2dccdc4d7f3cc4a37ca1f3b4e6b3d8f136373897",
+      "ok": true
+    },
+    {
+      "name": "auction payment 403",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 407 0x5278e70256cfd70607e436b1415d1a4912078f9c273c3b47aeef27583f9f5ef7",
+      "ok": true
+    },
+    {
+      "name": "auction payment 407",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 399 0x0371d680ae85842fdf84c4a4c41882a77b925d48806344cb079484b9ff5cd383",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 313 0x9608e431d7d98bf96acf5aaa7f1ef2f39997b0ff75d35241a545cb6ed3241ff1",
+      "ok": true
+    },
+    {
+      "name": "NFT receipt 549 0x7787a700f426bac059c9b8b0b0b942deff658c12ec36add762b8fd0e785659a8",
+      "ok": true
+    },
+    {
+      "name": "auction payment 549",
+      "ok": true
+    },
+    {
+      "name": "360 total votes",
+      "ok": true
+    },
+    {
+      "name": "105 first-place votes",
+      "ok": true
+    },
+    {
+      "name": "31 allocation rows",
+      "ok": true
+    },
+    {
+      "name": "no same-address self-votes",
+      "ok": true
+    },
+    {
+      "name": "no retained first-place path within four steps",
+      "ok": true
+    },
+    {
+      "name": "312 payment precedes delivery 2658 seconds",
+      "ok": true
+    },
+    {
+      "name": "Ethereum origin senders equal Base recipients",
+      "ok": true
+    },
+    {
+      "name": "origin deposit matches fill A",
+      "ok": true
+    },
+    {
+      "name": "origin deposit matches fill B",
+      "ok": true
+    }
+  ],
+  "passed": 35,
+  "failed": 0
+}

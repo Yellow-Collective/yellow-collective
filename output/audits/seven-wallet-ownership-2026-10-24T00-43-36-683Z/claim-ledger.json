@@ -1,0 +1,100 @@
+{
+  "sources": [
+    {
+      "id": "db",
+      "family": "production-postgres",
+      "path": "C:\\Users\\Deej\\Documents\\GitHub\\yellowcollective\\output\\audits\\round-propoganda-2026-10-23T21-12-26-163Z/database-snapshot.json",
+      "retrieved_at": "2026-10-23T21:12:26.163Z",
+      "access": "ok"
+    },
+    {
+      "id": "chain",
+      "family": "public-blockchain",
+      "path": "extended-analysis.json; collector-connections.json; prior rpc-events.json",
+      "retrieved_at": "2026-10-24T00:58:30.420Z",
+      "access": "ok"
+    },
+    {
+      "id": "ens",
+      "family": "public-blockchain",
+      "path": "ens-reverse.json; ens-*.json",
+      "retrieved_at": "2026-10-24T00:45:23Z",
+      "access": "ok"
+    },
+    {
+      "id": "relay-label",
+      "family": "etherscan-explorer",
+      "url": "https://blockscan.com/Address/0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+      "retrieved_at": "2026-10-24T00:58:30.421Z",
+      "access": "search index only; direct open failed"
+    }
+  ],
+  "claims": [
+    {
+      "id": "aliases",
+      "status": "observed",
+      "source_ids": [
+        "ens"
+      ],
+      "proposition": "A/B/H resolve to amirk.eth/mahnaz.eth/hellia.eth",
+      "observation": "Forward-confirmed reverse RPC plus official explorer forward resolution; current name state."
+    },
+    {
+      "id": "both-seven",
+      "status": "observed",
+      "source_ids": [
+        "db"
+      ],
+      "proposition": "Seven voted for Support and Culture; only Support got 15 from all seven",
+      "observation": "Exact submission and wallet joins; matrix sums."
+    },
+    {
+      "id": "collecting",
+      "status": "observed",
+      "source_ids": [
+        "chain"
+      ],
+      "proposition": "Redykay minted 19 NFTs across 18 subject-deployed collections; Mahnaz/Hellia minted Redykay work; Mahnaz minted Pramadan work",
+      "observation": "Creation metadata and 24 successful receipts; zero-address ERC721 mint recipients."
+    },
+    {
+      "id": "repeat-support",
+      "status": "observed",
+      "source_ids": [
+        "db"
+      ],
+      "proposition": "Hellia cast 115 of 139 saved votes for cb6 submissions",
+      "observation": "Five historical allocation rows across two rounds."
+    },
+    {
+      "id": "coordination",
+      "status": "inferred",
+      "source_ids": [
+        "db",
+        "chain"
+      ],
+      "proposition": "Coordinated voting is plausible",
+      "rationale": "Financially connected wallets entered first recorded round together and share priorities; social collecting/friendship is an alternative; full budgets alone common."
+    },
+    {
+      "id": "i-owner",
+      "status": "inferred",
+      "source_ids": [
+        "chain"
+      ],
+      "proposition": "cd295 is AmirK-associated",
+      "rationale": "Repeated reciprocal native transfers on Ethereum and Base; does not establish same owner."
+    },
+    {
+      "id": "submitter-control",
+      "status": "unknown",
+      "source_ids": [
+        "db",
+        "chain",
+        "ens"
+      ],
+      "proposition": "Which submitter, if any, controls the seven",
+      "limitation": "No decisive control evidence. Scope excludes arbitrary intermediaries/chains and full internal traces; public aliases are pseudonyms."
+    }
+  ]
+}

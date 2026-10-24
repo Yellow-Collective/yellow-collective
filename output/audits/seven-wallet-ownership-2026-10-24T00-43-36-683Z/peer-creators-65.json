@@ -1,0 +1,59 @@
+{
+  "args": {
+    "chainid": "8453",
+    "contractaddresses": [
+      "0xa9e936a726d312e2b33b6d4ea33b3c2491c9cbde",
+      "0xfda6f78384fbffbc677d9a4342abcef247b49794",
+      "0x5edcc782bad9fa2a56e6f0b26e30c7ca3eacaac6",
+      "0xca959df0b5aa4d780c15c290bbc9c033770e1bf0",
+      "0xdcecd4bb3f9d99f8c348437fabf7f936ab7cec22"
+    ]
+  },
+  "result": {
+    "ok": true,
+    "status": "1",
+    "message": "OK",
+    "result": [
+      {
+        "contractAddress": "0x5edcc782bad9fa2a56e6f0b26e30c7ca3eacaac6",
+        "contractCreator": "0xb159f3453da87efc0582ef3e6dae8f03482ec85f",
+        "txHash": "0xb578019211f48e228195bb2a92cb51b12de5aed4a6c4f04a6b55d70552e92565",
+        "blockNumber": "22056639",
+        "timestamp": "1730902625",
+        "contractFactory": "0x20e26ed291b85a44a6eb9b0d336512b53fd93092"
+      },
+      {
+        "contractAddress": "0xa9e936a726d312e2b33b6d4ea33b3c2491c9cbde",
+        "contractCreator": "0x5d802e2fe48392c104ce0401c7eca8a4456f1f16",
+        "txHash": "0x77fc576e648a51ba1871fc04abc9fcf64fc536ac41adedf775f1c7f37a3f065d",
+        "blockNumber": "22060659",
+        "timestamp": "1730910665",
+        "contractFactory": "0xaeb73b6c8ed3776ea6b9284082588c55e35e1b27"
+      },
+      {
+        "contractAddress": "0xca959df0b5aa4d780c15c290bbc9c033770e1bf0",
+        "contractCreator": "0xeb49c8d80b8474f15e7f8b2c72cc1aebf093965c",
+        "txHash": "0x639e9f0c37b389693169ac0833dfce3d5945a419658dfa80fd7499630644ee16",
+        "blockNumber": "22667533",
+        "timestamp": "1732124413",
+        "contractFactory": "0xaeb73b6c8ed3776ea6b9284082588c55e35e1b27"
+      },
+      {
+        "contractAddress": "0xdcecd4bb3f9d99f8c348437fabf7f936ab7cec22",
+        "contractCreator": "0x4b1ae14abf502aa17b9d29cdf85cecb97756983b",
+        "txHash": "0x1236062eb1410601e1fd1a0d46f1f48cd9729bfc40d39bc0bbe7b9110f7ff498",
+        "blockNumber": "21240863",
+        "timestamp": "1729271073",
+        "contractFactory": "0x560aa3207ae4b516a5489e04f2fa2e2808cea896"
+      },
+      {
+        "contractAddress": "0xfda6f78384fbffbc677d9a4342abcef247b49794",
+        "contractCreator": "0xb2c6ed1b76620a4a5abb430e901edb3ab221a145",
+        "txHash": "0xe3551c846ba815129508fdb7adabdbe9a67c6c072f627f663cb9daf2e598fb94",
+        "blockNumber": "20289336",
+        "timestamp": "1727368019",
+        "contractFactory": "0x560aa3207ae4b516a5489e04f2fa2e2808cea896"
+      }
+    ]
+  }
+}

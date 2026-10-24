@@ -1,0 +1,50 @@
+{
+  "args": {
+    "chainid": "8453",
+    "contractaddresses": [
+      "0x7073762d2285e19888a1b4ce3c9928176bb90de1",
+      "0x6cb442acf35158d5eda88fe602221b67b400be3e",
+      "0xcf77a3ba9a5ca399b7c97c74d54e5b1beb874e43",
+      "0xa5f2e070497d446066768478492a8a56c0265121"
+    ]
+  },
+  "result": {
+    "ok": true,
+    "status": "1",
+    "message": "OK",
+    "result": [
+      {
+        "contractAddress": "0x6cb442acf35158d5eda88fe602221b67b400be3e",
+        "contractCreator": "0x51ca29d9828867c363572c37c424e3d6b380c61e",
+        "txHash": "0x8cce9700dc1252bebd66545063c83ec64f88f0cb15c1e36ad65ae032ba131aa4",
+        "blockNumber": "13843986",
+        "timestamp": "1714477319",
+        "contractFactory": ""
+      },
+      {
+        "contractAddress": "0xcf77a3ba9a5ca399b7c97c74d54e5b1beb874e43",
+        "contractCreator": "0xe83f922c34a1962e9ae9f52b59e18239764f2818",
+        "txHash": "0x65eaa9ad6a9811c7a7e2b896cb0d074a1cd948dd8252734dfa830a68b3c5cd03",
+        "blockNumber": "3200613",
+        "timestamp": "1693190573",
+        "contractFactory": ""
+      },
+      {
+        "contractAddress": "0x7073762d2285e19888a1b4ce3c9928176bb90de1",
+        "contractCreator": "0x380d89b06a1a596a2c4f788daaabc2dcc6493888",
+        "txHash": "0x39f2eebe4c3d55605ebff23e8fa2ca1343a7b9e0d5a54c22937c6b7ceddcf6ed",
+        "blockNumber": "16119583",
+        "timestamp": "1719028513",
+        "contractFactory": "0xd79a71657a45f713817cb5366053a7629af8fe74"
+      },
+      {
+        "contractAddress": "0xa5f2e070497d446066768478492a8a56c0265121",
+        "contractCreator": "0x3bb33c9f11287efdd355e029c97f978541fe0eb1",
+        "txHash": "0x5d97d8d3478f1506484969752a2eb4c79b1d2f12b5ce4313c32966d05d8b3d15",
+        "blockNumber": "23548928",
+        "timestamp": "1733887203",
+        "contractFactory": "0x5da05215aca9edbe27cbdce86888986e4b4c996f"
+      }
+    ]
+  }
+}

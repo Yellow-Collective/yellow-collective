@@ -1,0 +1,1525 @@
+[
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+    "token": "292",
+    "block": 19123509,
+    "tx": "0x32c2c2b672347e7f1c7af830f6070ccea8eced170a7190db272bd1faf4872ec0",
+    "logIndex": 421,
+    "receivedAt": "2024-08-30T16:46:05.000Z",
+    "receiptFrom": "0x5d802e2fe48392c104ce0401c7eca8a4456f1f16",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": null,
+    "purchase": {
+      "winner": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "amountWei": "37700000000000000",
+      "amountEth": "0.0377",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "292",
+            "bidder": "0xBFdfE0B764bFF626ECb1f746242e0ef4F230f8e1",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1725036101"
+          },
+          "tx": "0x5a096b4cff15ecba2e615a5c230d485e27e333ffe4db8647de93485a1143a15c",
+          "block": 19080217,
+          "logIndex": 276
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "292",
+            "bidder": "0xCA72c93172BA6EfF168E59e7F17C3C7A8FeA9B62",
+            "amount": "30000000000000000",
+            "extended": false,
+            "endTime": "1725036101"
+          },
+          "tx": "0xa3224bb5f7350fd81369cac4012dc9bb1827c6b79cb2d3c2ee24d21b19853f3a",
+          "block": 19080217,
+          "logIndex": 338
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "292",
+            "bidder": "0xBFdfE0B764bFF626ECb1f746242e0ef4F230f8e1",
+            "amount": "34000000000000000",
+            "extended": false,
+            "endTime": "1725036101"
+          },
+          "tx": "0x110bdb0b74d5242658fac546824fc4d381bb3fca58651eba7dffea692b909356",
+          "block": 19080233,
+          "logIndex": 364
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "292",
+            "bidder": "0x0B81BfFce9970aca9868120eEE1bcc8De19119F7",
+            "amount": "37700000000000000",
+            "extended": false,
+            "endTime": "1725036101"
+          },
+          "tx": "0xba18e9e426234e80b2dfcf7de56505db08e4388669b92f95c498e27b58ea766a",
+          "block": 19086954,
+          "logIndex": 232
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "292",
+          "bidder": "0x0B81BfFce9970aca9868120eEE1bcc8De19119F7",
+          "amount": "37700000000000000",
+          "extended": false,
+          "endTime": "1725036101"
+        },
+        "tx": "0xba18e9e426234e80b2dfcf7de56505db08e4388669b92f95c498e27b58ea766a",
+        "block": 19086954,
+        "logIndex": 232,
+        "transaction": {
+          "blockNumber": "19086954",
+          "blockHash": "0x9c977a3e92f22a1832c373e34186cf7896f900b4580723670140435ff81bd08a",
+          "timeStamp": "1724963255",
+          "hash": "0xba18e9e426234e80b2dfcf7de56505db08e4388669b92f95c498e27b58ea766a",
+          "nonce": "474",
+          "transactionIndex": "72",
+          "from": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "37700000000000000",
+          "gas": "63993",
+          "gasPrice": "7963766",
+          "L1Gas": "1600",
+          "L1GasPrice": "2474229309",
+          "L1FeeScalar": "0.000000000000",
+          "L1FeesPaid": "8982442188",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000001240000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "contractAddress": "",
+          "cumulativeGasUsed": "11199238",
+          "txreceipt_status": "1",
+          "gasUsed": "57894",
+          "confirmations": "33918638",
+          "isError": "0"
+        },
+        "time": "2024-08-29T20:27:35.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+    "token": "308",
+    "block": 19731200,
+    "tx": "0x8a87e19e7d15e0ba6294ea12418da1b42ffcd85b7ff8b6e9bc1c28bd32dec547",
+    "logIndex": 490,
+    "receivedAt": "2024-09-13T18:22:27.000Z",
+    "receiptFrom": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": {
+      "blockNumber": "19731200",
+      "blockHash": "0x8d0ba1e9ae0a800971bb9a665892babf8d943970bc45f5fcb0016084d14a8508",
+      "timeStamp": "1726251747",
+      "hash": "0x8a87e19e7d15e0ba6294ea12418da1b42ffcd85b7ff8b6e9bc1c28bd32dec547",
+      "nonce": "301",
+      "transactionIndex": "87",
+      "from": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0",
+      "gas": "353425",
+      "gasPrice": "6992146",
+      "L1Gas": "1600",
+      "L1GasPrice": "3373471722",
+      "L1FeeScalar": "0.000000000000",
+      "L1FeesPaid": "12247051845",
+      "input": "0xf25efffc",
+      "methodId": "0xf25efffc",
+      "functionName": "settleCurrentAndCreateNewAuction()",
+      "contractAddress": "",
+      "cumulativeGasUsed": "16306206",
+      "txreceipt_status": "1",
+      "gasUsed": "327603",
+      "confirmations": "33274391",
+      "isError": "0"
+    },
+    "purchase": {
+      "winner": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "amountWei": "24200000000000000",
+      "amountEth": "0.0242",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "308",
+            "bidder": "0xca89E2472fE57bdC74F2361CeEa5962fb205119c",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1726251581"
+          },
+          "tx": "0x51a0f9987d3fed9b5dc22e74f8fe899e3c59d7544f3ce4ce9359e1b4ca8f11a7",
+          "block": 19687989,
+          "logIndex": 427
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "308",
+            "bidder": "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+            "amount": "11000000000000000",
+            "extended": false,
+            "endTime": "1726251581"
+          },
+          "tx": "0xea3442e2e3667356d951faeaca961bc9598dc4b177964d6496f0f79a5400fdde",
+          "block": 19690699,
+          "logIndex": 130
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "308",
+            "bidder": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+            "amount": "12400000000000000",
+            "extended": false,
+            "endTime": "1726251581"
+          },
+          "tx": "0x706848c2b5d9a9f15299c09e3854c53c5e83dbfec26219080731e67bf890e88f",
+          "block": 19692641,
+          "logIndex": 195
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "308",
+            "bidder": "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+            "amount": "20000000000000000",
+            "extended": false,
+            "endTime": "1726251581"
+          },
+          "tx": "0x83980168f92f0085e37b7e948866ad589103bab5be121b6921d273779a494f21",
+          "block": 19697901,
+          "logIndex": 320
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "308",
+            "bidder": "0xa2746b2A56F9886925C03AF1d1E10B8b3DfBBE29",
+            "amount": "22000000000000000",
+            "extended": false,
+            "endTime": "1726251581"
+          },
+          "tx": "0xf77f5461348940ff6bbe243a7830a550b0207f5715af212f8bf680c77bbe6d7d",
+          "block": 19709973,
+          "logIndex": 440
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "308",
+            "bidder": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+            "amount": "24200000000000000",
+            "extended": true,
+            "endTime": "1726251713"
+          },
+          "tx": "0x2970af1d7a5c29cde4c09186db1bacc70a1399776e325ae6e25770c097a49e25",
+          "block": 19731033,
+          "logIndex": 186
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "308",
+          "bidder": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+          "amount": "24200000000000000",
+          "extended": true,
+          "endTime": "1726251713"
+        },
+        "tx": "0x2970af1d7a5c29cde4c09186db1bacc70a1399776e325ae6e25770c097a49e25",
+        "block": 19731033,
+        "logIndex": 186,
+        "transaction": {
+          "blockNumber": "19731033",
+          "blockHash": "0x48b1ebfa1fd07ca74dd3be8f5696d7c0dff11d8242908b50010c642fa3dc74ea",
+          "timeStamp": "1726251413",
+          "hash": "0x2970af1d7a5c29cde4c09186db1bacc70a1399776e325ae6e25770c097a49e25",
+          "nonce": "300",
+          "transactionIndex": "59",
+          "from": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "24200000000000000",
+          "gas": "84593",
+          "gasPrice": "7764814",
+          "L1Gas": "1600",
+          "L1GasPrice": "3588961255",
+          "L1FeeScalar": "0.000000000000",
+          "L1FeesPaid": "13029365045",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000001340000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "contractAddress": "",
+          "cumulativeGasUsed": "7507314",
+          "txreceipt_status": "1",
+          "gasUsed": "78172",
+          "confirmations": "33274558",
+          "isError": "0"
+        },
+        "time": "2024-09-13T18:16:53.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+    "token": "309",
+    "block": 19774426,
+    "tx": "0xa9364756336c85e79f39374659bb95d275e0d4f314b28e3528750b1f10502a29",
+    "logIndex": 167,
+    "receivedAt": "2024-09-14T18:23:19.000Z",
+    "receiptFrom": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": {
+      "blockNumber": "19774426",
+      "blockHash": "0x678c55f58125da3165c4637aafb13dded78adc66cbf94a202ddbee666cece067",
+      "timeStamp": "1726338199",
+      "hash": "0xa9364756336c85e79f39374659bb95d275e0d4f314b28e3528750b1f10502a29",
+      "nonce": "797",
+      "transactionIndex": "44",
+      "from": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0",
+      "gas": "514507",
+      "gasPrice": "5237598",
+      "L1Gas": "1600",
+      "L1GasPrice": "2783740046",
+      "L1FeeScalar": "0.000000000000",
+      "L1FeesPaid": "10106089968",
+      "input": "0xf25efffc",
+      "methodId": "0xf25efffc",
+      "functionName": "settleCurrentAndCreateNewAuction()",
+      "contractAddress": "",
+      "cumulativeGasUsed": "7207248",
+      "txreceipt_status": "1",
+      "gasUsed": "486168",
+      "confirmations": "33231166",
+      "isError": "0"
+    },
+    "purchase": {
+      "winner": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "amountWei": "26620000000000000",
+      "amountEth": "0.02662",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "309",
+            "bidder": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1726338147"
+          },
+          "tx": "0xe54362133f232521da89879dbe0a017097fe3b37f6e85075f2979b5fb96c520b",
+          "block": 19731220,
+          "logIndex": 127
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "309",
+            "bidder": "0x5bFeb4Ca066c9458842AC89b6e5cd983bd1a1034",
+            "amount": "11000000000000000",
+            "extended": false,
+            "endTime": "1726338147"
+          },
+          "tx": "0x1dca8ab49b690f0f443529f8631b8c2c249f8ae6d485a7e93d2c48de6a5cc64b",
+          "block": 19731530,
+          "logIndex": 321
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "309",
+            "bidder": "0x0aa63cd98088d3A72704235d5Bb81f6c91933653",
+            "amount": "20000000000000000",
+            "extended": false,
+            "endTime": "1726338147"
+          },
+          "tx": "0x14aec588dca578d387ee5a4dfe9603437a14ec592425c8ca1d81b60f21f80103",
+          "block": 19731960,
+          "logIndex": 255
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "309",
+            "bidder": "0x9ffAab6c24d4fb58d61b26B08c8795E9E323F28B",
+            "amount": "22000000000000000",
+            "extended": false,
+            "endTime": "1726338147"
+          },
+          "tx": "0x75ceeceb8206013cbbd0ba0a8c72dc6993a592ad6148be3788e980e53ee4bae9",
+          "block": 19766598,
+          "logIndex": 428
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "309",
+            "bidder": "0xbB757f8777dd30776d610DC68E10a6D76AaDFEA3",
+            "amount": "24200000000000000",
+            "extended": false,
+            "endTime": "1726338147"
+          },
+          "tx": "0xecadd75d29f450cbef4d531515ac7389f6014e40257cb79595f0068a98c7a103",
+          "block": 19774050,
+          "logIndex": 311
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "309",
+            "bidder": "0x0B81BfFce9970aca9868120eEE1bcc8De19119F7",
+            "amount": "26620000000000000",
+            "extended": false,
+            "endTime": "1726338147"
+          },
+          "tx": "0x81e473eea2bd6f986a31f904bb98d344f33e237e20ca86db2e9e264a50e9d672",
+          "block": 19774214,
+          "logIndex": 180
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "309",
+          "bidder": "0x0B81BfFce9970aca9868120eEE1bcc8De19119F7",
+          "amount": "26620000000000000",
+          "extended": false,
+          "endTime": "1726338147"
+        },
+        "tx": "0x81e473eea2bd6f986a31f904bb98d344f33e237e20ca86db2e9e264a50e9d672",
+        "block": 19774214,
+        "logIndex": 180,
+        "transaction": {
+          "blockNumber": "19774214",
+          "blockHash": "0xad952374b9ed8740d4b2679a4cbdbd18c56946b079c494f58e47cd95cc152ac1",
+          "timeStamp": "1726337775",
+          "hash": "0x81e473eea2bd6f986a31f904bb98d344f33e237e20ca86db2e9e264a50e9d672",
+          "nonce": "796",
+          "transactionIndex": "68",
+          "from": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "26620000000000000",
+          "gas": "63993",
+          "gasPrice": "5195002",
+          "L1Gas": "1600",
+          "L1GasPrice": "3590132510",
+          "L1FeeScalar": "0.000000000000",
+          "L1FeesPaid": "13033617169",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000001350000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "contractAddress": "",
+          "cumulativeGasUsed": "23945299",
+          "txreceipt_status": "1",
+          "gasUsed": "57894",
+          "confirmations": "33231378",
+          "isError": "0"
+        },
+        "time": "2024-09-14T18:16:15.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+    "token": "312",
+    "block": 19817869,
+    "tx": "0x55de008884b8e751d7debbcc60934a34cec130e9508ea9484cfe9df5ba26fd07",
+    "logIndex": 207,
+    "receivedAt": "2024-09-15T18:31:25.000Z",
+    "receiptFrom": "0x22d187e0392632386b6dc542d5c494602e0e67fe",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": null,
+    "purchase": {
+      "winner": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+      "amountWei": "33000000000000000",
+      "amountEth": "0.033",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "312",
+            "bidder": "0xeb8A03b68e4F5Ee0F02Ff612915bFaFba4902C00",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1726424599"
+          },
+          "tx": "0x784404aafe8b2026f77cea56c62fd8e9f33f8e6fa6b36158b5c5eb97de8fa854",
+          "block": 19774466,
+          "logIndex": 102
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "312",
+            "bidder": "0x9C87A1065994f156f0B7b87AAa8B3c5F7BD67E02",
+            "amount": "12300000000000000",
+            "extended": false,
+            "endTime": "1726424599"
+          },
+          "tx": "0x1272ff5941f360fa7d4d84f8494b65f1a526d12dda9724dcb62e1691f86eae42",
+          "block": 19774466,
+          "logIndex": 628
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "312",
+            "bidder": "0x0aa63cd98088d3A72704235d5Bb81f6c91933653",
+            "amount": "13600000000000000",
+            "extended": false,
+            "endTime": "1726424599"
+          },
+          "tx": "0x71e3c44e74da4eb629524bfae1b9573c6ae119415e7c326861109807f0e8f949",
+          "block": 19776018,
+          "logIndex": 100
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "312",
+            "bidder": "0x5D802e2Fe48392c104Ce0401C7ECa8a4456f1F16",
+            "amount": "30000000000000000",
+            "extended": false,
+            "endTime": "1726424599"
+          },
+          "tx": "0x27b46a0edd88eaa057a467dd088df6d876bdbf19fcdfb6a40d28055e0298b0ba",
+          "block": 19778010,
+          "logIndex": 310
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "312",
+            "bidder": "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+            "amount": "33000000000000000",
+            "extended": false,
+            "endTime": "1726424599"
+          },
+          "tx": "0xa62feed1ad6927925880cb8588879a4546f29f663404e6bc41098d33e3e2822a",
+          "block": 19778434,
+          "logIndex": 71
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "312",
+          "bidder": "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+          "amount": "33000000000000000",
+          "extended": false,
+          "endTime": "1726424599"
+        },
+        "tx": "0xa62feed1ad6927925880cb8588879a4546f29f663404e6bc41098d33e3e2822a",
+        "block": 19778434,
+        "logIndex": 71,
+        "transaction": {
+          "blockNumber": "19778434",
+          "blockHash": "0x1011536efa702baa4909d69068cc9c3eb62b1f423f27f080f823f50dff74aca0",
+          "timeStamp": "1726346215",
+          "hash": "0xa62feed1ad6927925880cb8588879a4546f29f663404e6bc41098d33e3e2822a",
+          "nonce": "527",
+          "transactionIndex": "31",
+          "from": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "33000000000000000",
+          "gas": "63993",
+          "gasPrice": "4498804",
+          "L1Gas": "1600",
+          "L1GasPrice": "1992923799",
+          "L1FeeScalar": "0.000000000000",
+          "L1FeesPaid": "7235110665",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000001380000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "contractAddress": "",
+          "cumulativeGasUsed": "5366777",
+          "txreceipt_status": "1",
+          "gasUsed": "57894",
+          "confirmations": "33227161",
+          "isError": "0"
+        },
+        "time": "2024-09-14T20:36:55.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+    "to": "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+    "token": "312",
+    "block": 19820346,
+    "tx": "0x814b71fb073a8e1839cf13d5d4e43b2928182eb78454c8d9f0c89d45d27a0d1d",
+    "logIndex": 138,
+    "receivedAt": "2024-09-15T19:53:59.000Z",
+    "receiptFrom": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+    "receiptTo": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+    "transaction": {
+      "blockNumber": "19820346",
+      "blockHash": "0x16d08c12408f7902eb534b7f4ecb23c4dd5ee6dc4c01a78f534b1c2421b9321d",
+      "timeStamp": "1726430039",
+      "hash": "0x814b71fb073a8e1839cf13d5d4e43b2928182eb78454c8d9f0c89d45d27a0d1d",
+      "nonce": "546",
+      "transactionIndex": "54",
+      "from": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+      "to": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+      "value": "0",
+      "gas": "209117",
+      "gasPrice": "3940676",
+      "L1Gas": "1700",
+      "L1GasPrice": "1920902235",
+      "L1FeeScalar": "0.000000000000",
+      "L1FeesPaid": "7413778120",
+      "input": "0x42842e0e000000000000000000000000be7bfad8952ae92abb8779aa4d6826839e82fa3d000000000000000000000000eb8a03b68e4f5ee0f02ff612915bfafba4902c000000000000000000000000000000000000000000000000000000000000000138",
+      "methodId": "0x42842e0e",
+      "functionName": "safeTransferFrom(address from,address to,uint256 tokenId)",
+      "contractAddress": "",
+      "cumulativeGasUsed": "7293231",
+      "txreceipt_status": "1",
+      "gasUsed": "149730",
+      "confirmations": "33185249",
+      "isError": "0"
+    },
+    "purchase": null
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+    "token": "313",
+    "block": 19861164,
+    "tx": "0x3411f123be75b4bedd9fee925b523ede62a670d13b09441b12bd0bf7c2099e0b",
+    "logIndex": 135,
+    "receivedAt": "2024-09-16T18:34:35.000Z",
+    "receiptFrom": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": {
+      "blockNumber": "19861164",
+      "blockHash": "0x5ba3f696a0185619289cddc551d2d0925ff553998410c2a7971e71709ab01e7d",
+      "timeStamp": "1726511675",
+      "hash": "0x3411f123be75b4bedd9fee925b523ede62a670d13b09441b12bd0bf7c2099e0b",
+      "nonce": "558",
+      "transactionIndex": "99",
+      "from": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0",
+      "gas": "321019",
+      "gasPrice": "5502409",
+      "L1Gas": "1600",
+      "L1GasPrice": "4017290494",
+      "L1FeeScalar": "0.000000000000",
+      "L1FeesPaid": "14584371514",
+      "input": "0xf25efffc",
+      "methodId": "0xf25efffc",
+      "functionName": "settleCurrentAndCreateNewAuction()",
+      "contractAddress": "",
+      "cumulativeGasUsed": "9870212",
+      "txreceipt_status": "1",
+      "gasUsed": "295704",
+      "confirmations": "33144431",
+      "isError": "0"
+    },
+    "purchase": {
+      "winner": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+      "amountWei": "22000000000000000",
+      "amountEth": "0.022",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "313",
+            "bidder": "0x2136f3Cb915F22956eE315f3000643493337c96e",
+            "amount": "100000000000000",
+            "extended": false,
+            "endTime": "1726511485"
+          },
+          "tx": "0x668ad09dea143810f22d6cb5d3654879ad2aee843c774da0d4c6379885da305d",
+          "block": 19818318,
+          "logIndex": 485
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "313",
+            "bidder": "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+            "amount": "1000000000000000",
+            "extended": false,
+            "endTime": "1726511485"
+          },
+          "tx": "0x02f13e0d2936a615bec5cda50127fc6921044db7b5b04d4942e325ac6a648876",
+          "block": 19819549,
+          "logIndex": 302
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "313",
+            "bidder": "0x9C87A1065994f156f0B7b87AAa8B3c5F7BD67E02",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1726511485"
+          },
+          "tx": "0x349a928bdce0c4c66e2d03fb30a0d25591fbc345d3f910dfaf2520a1103aeb12",
+          "block": 19819886,
+          "logIndex": 355
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "313",
+            "bidder": "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+            "amount": "14000000000000000",
+            "extended": false,
+            "endTime": "1726511485"
+          },
+          "tx": "0x06a0365c33dbf22de4a82190a05215fe2d13ee944809bccdd599692b94fe5131",
+          "block": 19854920,
+          "logIndex": 176
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "313",
+            "bidder": "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+            "amount": "20000000000000000",
+            "extended": false,
+            "endTime": "1726511485"
+          },
+          "tx": "0xfb7b436e2f13533bfa8b27cf2f6ccba4bc941f8bc4638c6df7e21e35852ea2b9",
+          "block": 19858893,
+          "logIndex": 99
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "313",
+            "bidder": "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+            "amount": "22000000000000000",
+            "extended": true,
+            "endTime": "1726511593"
+          },
+          "tx": "0xcfb139cf7d90869601b543d0ed91250c2ddaf62d5c12b695d059fbd10535a7a6",
+          "block": 19860973,
+          "logIndex": 127
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "313",
+          "bidder": "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+          "amount": "22000000000000000",
+          "extended": true,
+          "endTime": "1726511593"
+        },
+        "tx": "0xcfb139cf7d90869601b543d0ed91250c2ddaf62d5c12b695d059fbd10535a7a6",
+        "block": 19860973,
+        "logIndex": 127,
+        "transaction": {
+          "blockNumber": "19860973",
+          "blockHash": "0xcfa44fbe6a43876ef8964f4cab8cf849eeba01d306c8ab7f75fce8233299aed9",
+          "timeStamp": "1726511293",
+          "hash": "0xcfb139cf7d90869601b543d0ed91250c2ddaf62d5c12b695d059fbd10535a7a6",
+          "nonce": "557",
+          "transactionIndex": "86",
+          "from": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "22000000000000000",
+          "gas": "84593",
+          "gasPrice": "6184602",
+          "L1Gas": "1600",
+          "L1GasPrice": "4509328945",
+          "L1FeeScalar": "0.000000000000",
+          "L1FeesPaid": "16370667907",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000001390000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "contractAddress": "",
+          "cumulativeGasUsed": "7214650",
+          "txreceipt_status": "1",
+          "gasUsed": "78172",
+          "confirmations": "33144622",
+          "isError": "0"
+        },
+        "time": "2024-09-16T18:28:13.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+    "token": "328",
+    "block": 20426887,
+    "tx": "0x9a78f3079896c6b0ec7d1cdb508fd8074b4878df553976caa5e7304517c9c127",
+    "logIndex": 94,
+    "receivedAt": "2024-09-29T20:52:01.000Z",
+    "receiptFrom": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": {
+      "blockNumber": "20426887",
+      "blockHash": "0x5c8a9516cc6aa7ac5fe19245bafc45a0450a1b02a63cf204529c9fde6e4de5a1",
+      "timeStamp": "1727643121",
+      "hash": "0x9a78f3079896c6b0ec7d1cdb508fd8074b4878df553976caa5e7304517c9c127",
+      "nonce": "357",
+      "transactionIndex": "36",
+      "from": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0",
+      "gas": "321019",
+      "gasPrice": "4800733",
+      "L1Gas": "1600",
+      "L1GasPrice": "6589610357",
+      "L1FeeScalar": "0.000000000000",
+      "L1FeesPaid": "23922921545",
+      "input": "0xf25efffc",
+      "methodId": "0xf25efffc",
+      "functionName": "settleCurrentAndCreateNewAuction()",
+      "contractAddress": "",
+      "cumulativeGasUsed": "4587839",
+      "txreceipt_status": "1",
+      "gasUsed": "295704",
+      "confirmations": "32578704",
+      "isError": "0"
+    },
+    "purchase": {
+      "winner": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "amountWei": "36300000000000000",
+      "amountEth": "0.0363",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "328",
+            "bidder": "0x287e98cEFeeF5C834fB03811963ABD6fCA5e525f",
+            "amount": "400000000000000",
+            "extended": false,
+            "endTime": "1727643085"
+          },
+          "tx": "0x7e592f3f4b59f019bb1f5c87b822898eefee423a5d8e9d5e3565af6ffc69b58b",
+          "block": 20383693,
+          "logIndex": 225
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "328",
+            "bidder": "0x5bFeb4Ca066c9458842AC89b6e5cd983bd1a1034",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1727643085"
+          },
+          "tx": "0x8549d7a33b3f1723a12ce322b0a0cc7b7a9d134fdbebffc70ddf9123925842c0",
+          "block": 20384006,
+          "logIndex": 355
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "328",
+            "bidder": "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+            "amount": "11000000000000000",
+            "extended": false,
+            "endTime": "1727643085"
+          },
+          "tx": "0xfb6eae08b07b75d8640394d52b52367fd9a545e22b04e6e3973ec158277e11f3",
+          "block": 20384629,
+          "logIndex": 340
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "328",
+            "bidder": "0x5bFeb4Ca066c9458842AC89b6e5cd983bd1a1034",
+            "amount": "13000000000000000",
+            "extended": false,
+            "endTime": "1727643085"
+          },
+          "tx": "0x09b1e8a10442f75977ee61471c7ce4cdb02128baeda078a717b946fc3a062846",
+          "block": 20384842,
+          "logIndex": 299
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "328",
+            "bidder": "0x1Ae71ceD9Eb2104d8f4EC4F2467Ad4F04d12A8c0",
+            "amount": "20000000000000000",
+            "extended": false,
+            "endTime": "1727643085"
+          },
+          "tx": "0x584004b83f03e7b771800975770806d2ad588e8fe41cbc5e981f14fc4b4ae302",
+          "block": 20385140,
+          "logIndex": 147
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "328",
+            "bidder": "0xFC538FFD2923ddDaED09c8aD1a51686275C56183",
+            "amount": "30000000000000000",
+            "extended": false,
+            "endTime": "1727643085"
+          },
+          "tx": "0x8fe0e68de7c16cb1ba3ad4e442ac478543b88812579e804b32405e122a3e0eb2",
+          "block": 20386737,
+          "logIndex": 355
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "328",
+            "bidder": "0x4a3e6E66f8C32bC05A50879f872B1177A1573CDF",
+            "amount": "33000000000000000",
+            "extended": false,
+            "endTime": "1727643085"
+          },
+          "tx": "0x833d142bc1ece910d9f18668b36c9e3ab66cec568a44c5b72c588bdda1de35d9",
+          "block": 20394424,
+          "logIndex": 82
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "328",
+            "bidder": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+            "amount": "36300000000000000",
+            "extended": false,
+            "endTime": "1727643085"
+          },
+          "tx": "0x5aeea03745c03a334cff0c533f8a0006d38c51437724b084611caea81bdc0f32",
+          "block": 20426717,
+          "logIndex": 134
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "328",
+          "bidder": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+          "amount": "36300000000000000",
+          "extended": false,
+          "endTime": "1727643085"
+        },
+        "tx": "0x5aeea03745c03a334cff0c533f8a0006d38c51437724b084611caea81bdc0f32",
+        "block": 20426717,
+        "logIndex": 134,
+        "transaction": {
+          "blockNumber": "20426717",
+          "blockHash": "0x43f7e5e2ec8560fbe2d3da4191ac72104476e86a058eeda0114d038eb6616aa4",
+          "timeStamp": "1727642781",
+          "hash": "0x5aeea03745c03a334cff0c533f8a0006d38c51437724b084611caea81bdc0f32",
+          "nonce": "356",
+          "transactionIndex": "49",
+          "from": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "36300000000000000",
+          "gas": "63993",
+          "gasPrice": "5100756",
+          "L1Gas": "1600",
+          "L1GasPrice": "6236334373",
+          "L1FeeScalar": "0.000000000000",
+          "L1FeesPaid": "22640388413",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000001480000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "contractAddress": "",
+          "cumulativeGasUsed": "7529383",
+          "txreceipt_status": "1",
+          "gasUsed": "57894",
+          "confirmations": "32578874",
+          "isError": "0"
+        },
+        "time": "2024-09-29T20:46:21.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+    "token": "399",
+    "block": 22904929,
+    "tx": "0x83c64db334d0ae9e2e402d2e9cdb9954497292fcbbb13d91a5ddb2744b3a83a4",
+    "logIndex": 198,
+    "receivedAt": "2024-11-26T05:33:25.000Z",
+    "receiptFrom": "0xdb859662323621a50f27dd125e810a9b80966398",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": null,
+    "purchase": {
+      "winner": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "amountWei": "10000000000000000",
+      "amountEth": "0.01",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "399",
+            "bidder": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1732599179"
+          },
+          "tx": "0x99542340c78e95333bf4c68485e90167e331338c1524773bfa520e494f750e42",
+          "block": 22862110,
+          "logIndex": 288
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "399",
+          "bidder": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+          "amount": "10000000000000000",
+          "extended": false,
+          "endTime": "1732599179"
+        },
+        "tx": "0x99542340c78e95333bf4c68485e90167e331338c1524773bfa520e494f750e42",
+        "block": 22862110,
+        "logIndex": 288,
+        "transaction": {
+          "blockNumber": "22862110",
+          "blockHash": "0xea49371381b856703aa341853809232e075e6acfcc08af797d767e6d29fdbeed",
+          "timeStamp": "1732513567",
+          "hash": "0x99542340c78e95333bf4c68485e90167e331338c1524773bfa520e494f750e42",
+          "nonce": "581",
+          "transactionIndex": "76",
+          "from": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "10000000000000000",
+          "gas": "93952",
+          "gasPrice": "2814795",
+          "L1Gas": "1600",
+          "L1GasPrice": "6413992984",
+          "L1FeeScalar": "0.000000000000",
+          "L1FeesPaid": "1818315199999",
+          "input": "0xc0d5bb8b000000000000000000000000000000000000000000000000000000000000018f0000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "contractAddress": "",
+          "cumulativeGasUsed": "11246045",
+          "txreceipt_status": "1",
+          "gasUsed": "87384",
+          "confirmations": "30143481",
+          "isError": "0"
+        },
+        "time": "2024-11-25T05:46:07.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+    "token": "403",
+    "block": 22991509,
+    "tx": "0xb3964508e01e6d6a0087e3ac2dccdc4d7f3cc4a37ca1f3b4e6b3d8f136373897",
+    "logIndex": 434,
+    "receivedAt": "2024-11-28T05:39:25.000Z",
+    "receiptFrom": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": {
+      "blockNumber": "22991509",
+      "blockHash": "0x16ec886b6c45f2e12eb40597bc10857ebe5c3767c8851325db7487dc52ed5703",
+      "timeStamp": "1732772365",
+      "hash": "0xb3964508e01e6d6a0087e3ac2dccdc4d7f3cc4a37ca1f3b4e6b3d8f136373897",
+      "nonce": "218",
+      "transactionIndex": "130",
+      "from": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0",
+      "gas": "353425",
+      "gasPrice": "25482907",
+      "L1Gas": "1600",
+      "L1GasPrice": "10137934811",
+      "L1FeeScalar": "0.000000000000",
+      "L1FeesPaid": "36949926024",
+      "input": "0xf25efffc",
+      "methodId": "0xf25efffc",
+      "functionName": "settleCurrentAndCreateNewAuction()",
+      "contractAddress": "",
+      "cumulativeGasUsed": "27848448",
+      "txreceipt_status": "1",
+      "gasUsed": "327603",
+      "confirmations": "30014085",
+      "isError": "0"
+    },
+    "purchase": {
+      "winner": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+      "amountWei": "12100000000000000",
+      "amountEth": "0.0121",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "403",
+            "bidder": "0x08165c34b6689A7b35EC1A57d1265f83e758240c",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1732772301"
+          },
+          "tx": "0x72a89f8a3c44f822dd1ee425e26f5e5812bd83044061d5a2efd4b4964b84577e",
+          "block": 22948310,
+          "logIndex": 200
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "403",
+            "bidder": "0x9C99BF82fC38713C471D4415f66c8336D361501a",
+            "amount": "11000000000000000",
+            "extended": false,
+            "endTime": "1732772301"
+          },
+          "tx": "0xfd24cde5609fa7bb92f5755382a93af3255634316ffd90f36b4c62725a7a87da",
+          "block": 22954093,
+          "logIndex": 289
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "403",
+            "bidder": "0x08165c34b6689A7b35EC1A57d1265f83e758240c",
+            "amount": "12100000000000000",
+            "extended": false,
+            "endTime": "1732772301"
+          },
+          "tx": "0xa3a5ccea523e8c515151af59bd6998cb3accdd6efb2320e9af3502995d5a7ca2",
+          "block": 22991307,
+          "logIndex": 158
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "403",
+          "bidder": "0x08165c34b6689A7b35EC1A57d1265f83e758240c",
+          "amount": "12100000000000000",
+          "extended": false,
+          "endTime": "1732772301"
+        },
+        "tx": "0xa3a5ccea523e8c515151af59bd6998cb3accdd6efb2320e9af3502995d5a7ca2",
+        "block": 22991307,
+        "logIndex": 158,
+        "transaction": {
+          "blockNumber": "22991307",
+          "blockHash": "0xb235aa27374fd71fbb4978414f5dfcfcb1c9610ceabe0a9e4aad15a2b21278d2",
+          "timeStamp": "1732771961",
+          "hash": "0xa3a5ccea523e8c515151af59bd6998cb3accdd6efb2320e9af3502995d5a7ca2",
+          "nonce": "216",
+          "transactionIndex": "62",
+          "from": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "12100000000000000",
+          "gas": "63993",
+          "gasPrice": "26692219",
+          "L1Gas": "1600",
+          "L1GasPrice": "8072364134",
+          "L1FeeScalar": "0.000000000000",
+          "L1FeesPaid": "29360310578",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000001930000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "contractAddress": "",
+          "cumulativeGasUsed": "9756954",
+          "txreceipt_status": "1",
+          "gasUsed": "57894",
+          "confirmations": "30014287",
+          "isError": "0"
+        },
+        "time": "2024-11-28T05:32:41.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+    "token": "407",
+    "block": 23165594,
+    "tx": "0x5278e70256cfd70607e436b1415d1a4912078f9c273c3b47aeef27583f9f5ef7",
+    "logIndex": 444,
+    "receivedAt": "2024-12-02T06:22:15.000Z",
+    "receiptFrom": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": {
+      "blockNumber": "23165594",
+      "timeStamp": "1733120535",
+      "hash": "0x5278e70256cfd70607e436b1415d1a4912078f9c273c3b47aeef27583f9f5ef7",
+      "nonce": "82",
+      "blockHash": "0xa4576700d96cf0bc48287111cdce32754f94943fc3cea6a92f42af07d9a150fd",
+      "transactionIndex": "156",
+      "from": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0",
+      "gas": "353425",
+      "gasPrice": "41599177",
+      "isError": "0",
+      "txreceipt_status": "1",
+      "input": "0xf25efffc",
+      "contractAddress": "",
+      "cumulativeGasUsed": "28684451",
+      "gasUsed": "327603",
+      "confirmations": "29840001",
+      "methodId": "0xf25efffc",
+      "functionName": "settleCurrentAndCreateNewAuction()",
+      "L1Gas": "1600",
+      "L1GasPrice": "11469981083",
+      "L1FeesPaid": "594413069676",
+      "L1FeeScalar": "0.000000000000"
+    },
+    "purchase": {
+      "winner": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+      "amountWei": "16180000000000000",
+      "amountEth": "0.01618",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "407",
+            "bidder": "0x31475a5652eFbB267b3AFDD9591Ef05406db792B",
+            "amount": "10000000000000000",
+            "extended": false,
+            "endTime": "1733120319"
+          },
+          "tx": "0x957a0ee0622bbf428e88a3bfaf2005c829a05d43c1393977416e4864e830e8ee",
+          "block": 23124890,
+          "logIndex": 301
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "407",
+            "bidder": "0x2EB2478559a8C62A32323b14B4f9318223729b66",
+            "amount": "11000000000000000",
+            "extended": false,
+            "endTime": "1733120319"
+          },
+          "tx": "0xec4b40e5fe04d9922cf5650c8840744c9e00bcde03faea83305d0ad6795140ff",
+          "block": 23125989,
+          "logIndex": 345
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "407",
+            "bidder": "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+            "amount": "13370000000000000",
+            "extended": false,
+            "endTime": "1733120319"
+          },
+          "tx": "0x997f1da7337afd55fd968dd2ca9e35f89833d96b664bbd4edd769eb43defb715",
+          "block": 23135322,
+          "logIndex": 185
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "407",
+            "bidder": "0x62A8bf566b03cD204AC6Cade21fFCd74eBd73658",
+            "amount": "14707000000000000",
+            "extended": false,
+            "endTime": "1733120319"
+          },
+          "tx": "0x8ece45f03cd9e22749e92221f8a648dca706a6f1579230148d54af7c88d23914",
+          "block": 23140936,
+          "logIndex": 257
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "407",
+            "bidder": "0x31475a5652eFbB267b3AFDD9591Ef05406db792B",
+            "amount": "16180000000000000",
+            "extended": true,
+            "endTime": "1733120411"
+          },
+          "tx": "0x872e2a277a9c6134049b2036c21e8b582fe2334afede712b150da4389f33b612",
+          "block": 23165382,
+          "logIndex": 319
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "407",
+          "bidder": "0x31475a5652eFbB267b3AFDD9591Ef05406db792B",
+          "amount": "16180000000000000",
+          "extended": true,
+          "endTime": "1733120411"
+        },
+        "tx": "0x872e2a277a9c6134049b2036c21e8b582fe2334afede712b150da4389f33b612",
+        "block": 23165382,
+        "logIndex": 319,
+        "transaction": {
+          "blockNumber": "23165382",
+          "timeStamp": "1733120111",
+          "hash": "0x872e2a277a9c6134049b2036c21e8b582fe2334afede712b150da4389f33b612",
+          "nonce": "81",
+          "blockHash": "0x776f28ad5d9fa5f965fc5e4b5f698e0c6f1e6b423201e458af91dd938ebf4a17",
+          "transactionIndex": "120",
+          "from": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "16180000000000000",
+          "gas": "63993",
+          "gasPrice": "40478190",
+          "isError": "0",
+          "txreceipt_status": "1",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000001970000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "contractAddress": "",
+          "cumulativeGasUsed": "20721887",
+          "gasUsed": "58272",
+          "confirmations": "29840213",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "L1Gas": "1600",
+          "L1GasPrice": "11724602852",
+          "L1FeesPaid": "462508137782",
+          "L1FeeScalar": "0.000000000000"
+        },
+        "time": "2024-12-02T06:15:11.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  },
+  {
+    "from": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+    "to": "0x07566caf069465977e9b0d3a96629c73a6c69740",
+    "token": "399",
+    "block": 24528406,
+    "tx": "0x0371d680ae85842fdf84c4a4c41882a77b925d48806344cb079484b9ff5cd383",
+    "logIndex": 313,
+    "receivedAt": "2025-01-02T19:29:19.000Z",
+    "receiptFrom": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+    "receiptTo": "0x0000000000c2d145a2526bd8c716263bfebe1a72",
+    "transaction": {
+      "blockNumber": "24528406",
+      "blockHash": "0x070019d1a0ed2b263141d08c5e8e722cd7cf76c4ed07ea0b488eab12dc86a8c6",
+      "timeStamp": "1735846159",
+      "hash": "0x0371d680ae85842fdf84c4a4c41882a77b925d48806344cb079484b9ff5cd383",
+      "nonce": "662",
+      "transactionIndex": "109",
+      "from": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "to": "0x0000000000c2d145a2526bd8c716263bfebe1a72",
+      "value": "0",
+      "gas": "212537",
+      "gasPrice": "51766249",
+      "L1Gas": "2704",
+      "L1GasPrice": "10631534203",
+      "L1FeeScalar": "0.000000000000",
+      "L1FeesPaid": "164939423951",
+      "input": "0x32389b7100000000000000000000000000000000000000000000000000000000000000400000007b02230091a7ed01230072f7006a004d60a8d4e71d599b8104250f000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000000000000000000000007566caf069465977e9b0d3a96629c73a6c69740000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000002000000000000000000000000220e41499cf4d93a3629a5509410cbf9e6e0b109000000000000000000000000000000000000000000000000000000000000018f0000000000000000000000000000000000000000000000000000000000000001",
+      "methodId": "0x32389b71",
+      "functionName": "bulkTransfer(tuple[] items,bytes32 conduitKey)",
+      "contractAddress": "",
+      "cumulativeGasUsed": "22331663",
+      "txreceipt_status": "1",
+      "gasUsed": "163776",
+      "confirmations": "28477185",
+      "isError": "0"
+    },
+    "purchase": null
+  },
+  {
+    "from": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+    "to": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+    "token": "313",
+    "block": 25595038,
+    "tx": "0x9608e431d7d98bf96acf5aaa7f1ef2f39997b0ff75d35241a545cb6ed3241ff1",
+    "logIndex": 466,
+    "receivedAt": "2025-01-27T12:03:43.000Z",
+    "receiptFrom": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+    "receiptTo": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+    "transaction": {
+      "blockNumber": "25595038",
+      "timeStamp": "1737979423",
+      "hash": "0x9608e431d7d98bf96acf5aaa7f1ef2f39997b0ff75d35241a545cb6ed3241ff1",
+      "nonce": "1591",
+      "blockHash": "0x5321cce2eda14520ed7e7d12db716e27437096c07bd5764cad9f750e985d4e6b",
+      "transactionIndex": "197",
+      "from": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+      "to": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+      "value": "0",
+      "gas": "149415",
+      "gasPrice": "16411940",
+      "isError": "0",
+      "txreceipt_status": "1",
+      "input": "0x23b872dd000000000000000000000000be7bfad8952ae92abb8779aa4d6826839e82fa3d000000000000000000000000b15acc09c28226c7b47918f14951a65a0671ef3d0000000000000000000000000000000000000000000000000000000000000139",
+      "contractAddress": "",
+      "cumulativeGasUsed": "38374333",
+      "gasUsed": "147080",
+      "confirmations": "27410558",
+      "methodId": "0x23b872dd",
+      "functionName": "transferFrom(address sender,address recipient,uint256 amount)",
+      "L1Gas": "1687",
+      "L1GasPrice": "4243868407",
+      "L1FeesPaid": "32621213630",
+      "L1FeeScalar": "0.000000000000"
+    },
+    "purchase": null
+  },
+  {
+    "from": "0x0aa23a7e112889c965010558803813710becf263",
+    "to": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+    "token": "549",
+    "block": 28140199,
+    "tx": "0x7787a700f426bac059c9b8b0b0b942deff658c12ec36add762b8fd0e785659a8",
+    "logIndex": 464,
+    "receivedAt": "2025-03-27T10:02:25.000Z",
+    "receiptFrom": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+    "receiptTo": "0x0aa23a7e112889c965010558803813710becf263",
+    "transaction": {
+      "blockNumber": "28140199",
+      "timeStamp": "1743069745",
+      "hash": "0x7787a700f426bac059c9b8b0b0b942deff658c12ec36add762b8fd0e785659a8",
+      "nonce": "1427",
+      "blockHash": "0xcb67115e84fcd184bc3275b4c61cebbb579c6215ab16ee336c6cdaa720271a4f",
+      "transactionIndex": "141",
+      "from": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0",
+      "gas": "565958",
+      "gasPrice": "2141515",
+      "isError": "0",
+      "txreceipt_status": "1",
+      "input": "0xf25efffc",
+      "contractAddress": "",
+      "cumulativeGasUsed": "46302493",
+      "gasUsed": "486168",
+      "confirmations": "24865394",
+      "methodId": "0xf25efffc",
+      "functionName": "settleCurrentAndCreateNewAuction()",
+      "L1Gas": "1600",
+      "L1GasPrice": "466419062",
+      "L1FeesPaid": "1695462526",
+      "L1FeeScalar": "0.000000000000"
+    },
+    "purchase": {
+      "winner": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "amountWei": "5170000000000000",
+      "amountEth": "0.00517",
+      "bidLogProvider": "official Etherscan MCP, Base 8453",
+      "bids": [
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "549",
+            "bidder": "0x3fC2ca5D9629F2826c8FCA8667e1C74dAE3F76D4",
+            "amount": "1000000000000",
+            "extended": false,
+            "endTime": "1743069685"
+          },
+          "tx": "0x692c1c9ae648f01c47f7098c43dedde16d43b5538196997f3d6b901282ee7089",
+          "block": 28097425,
+          "logIndex": 87
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "549",
+            "bidder": "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+            "amount": "4206900000000000",
+            "extended": false,
+            "endTime": "1743069685"
+          },
+          "tx": "0xd0105d11e8a1e559c7a47dafd4eaed34086c037696d7773ae3e1089f07d626ef",
+          "block": 28100088,
+          "logIndex": 243
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "549",
+            "bidder": "0x5bFeb4Ca066c9458842AC89b6e5cd983bd1a1034",
+            "amount": "4700000000000000",
+            "extended": false,
+            "endTime": "1743069685"
+          },
+          "tx": "0xe7c51ab2f57b04c451f2c62f2ca0d9d39beeabc0234d8195430a94d095734f81",
+          "block": 28136287,
+          "logIndex": 484
+        },
+        {
+          "eventName": "AuctionBid",
+          "args": {
+            "tokenId": "549",
+            "bidder": "0x0B81BfFce9970aca9868120eEE1bcc8De19119F7",
+            "amount": "5170000000000000",
+            "extended": false,
+            "endTime": "1743069685"
+          },
+          "tx": "0xac889bc8460a780d3a176eccfc4ef143785782924657499f308aded858a9e809",
+          "block": 28139931,
+          "logIndex": 442
+        }
+      ],
+      "winningBid": {
+        "eventName": "AuctionBid",
+        "args": {
+          "tokenId": "549",
+          "bidder": "0x0B81BfFce9970aca9868120eEE1bcc8De19119F7",
+          "amount": "5170000000000000",
+          "extended": false,
+          "endTime": "1743069685"
+        },
+        "tx": "0xac889bc8460a780d3a176eccfc4ef143785782924657499f308aded858a9e809",
+        "block": 28139931,
+        "logIndex": 442,
+        "transaction": {
+          "blockNumber": "28139931",
+          "timeStamp": "1743069209",
+          "hash": "0xac889bc8460a780d3a176eccfc4ef143785782924657499f308aded858a9e809",
+          "nonce": "1426",
+          "blockHash": "0x85acfa4bc1aa0f42c7669daa30354aedc8c6bc177fd3101826890affd59c732a",
+          "transactionIndex": "169",
+          "from": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+          "to": "0x0aa23a7e112889c965010558803813710becf263",
+          "value": "5170000000000000",
+          "gas": "70392",
+          "gasPrice": "2177462",
+          "isError": "0",
+          "txreceipt_status": "1",
+          "input": "0xc0d5bb8b00000000000000000000000000000000000000000000000000000000000002250000000000000000000000001c937764e433878c6eb1820bc5a1a42c6f25da81",
+          "contractAddress": "",
+          "cumulativeGasUsed": "35855791",
+          "gasUsed": "57894",
+          "confirmations": "24865662",
+          "methodId": "0xc0d5bb8b",
+          "functionName": "createBidWithReferral(uint256 _tokenId,address _referral)",
+          "L1Gas": "1600",
+          "L1GasPrice": "428405981",
+          "L1FeesPaid": "1557218173",
+          "L1FeeScalar": "0.000000000000"
+        },
+        "time": "2025-03-27T09:53:29.000Z",
+        "provider": "official Etherscan MCP, Base 8453"
+      }
+    }
+  }
+]

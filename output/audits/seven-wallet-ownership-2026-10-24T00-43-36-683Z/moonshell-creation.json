@@ -1,0 +1,23 @@
+{
+  "args": {
+    "chainid": "8453",
+    "contractaddresses": [
+      "0x952207f8dace791891947752a67af16c0caa15d6"
+    ]
+  },
+  "result": {
+    "ok": true,
+    "status": "1",
+    "message": "OK",
+    "result": [
+      {
+        "contractAddress": "0x952207f8dace791891947752a67af16c0caa15d6",
+        "contractCreator": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+        "txHash": "0x01307af8303ade9d12d65cde320dfa2a5019f12007065fd0117faf8e5ec8c436",
+        "blockNumber": "19951759",
+        "timestamp": "1726692865",
+        "contractFactory": "0x560aa3207ae4b516a5489e04f2fa2e2808cea896"
+      }
+    ]
+  }
+}
