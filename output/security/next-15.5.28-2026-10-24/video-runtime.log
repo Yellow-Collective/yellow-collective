@@ -1,0 +1,10 @@
+yarn run v1.22.22
+$ node tests/round-video-worker-runtime.test.mjs
+PASS: real MP4 H.264/AAC accepted by ffprobe validation
+PASS: real MP4 with unsupported MPEG-4 codec rejected
+PASS: real MP4 over 120 seconds rejected
+PASS: misleading MP4 file header rejected
+PASS: real worker publishes exactly inspected bytes and staging mutation cannot replace them
+PASS: real worker rejects unsupported codec without publishing it
+PASS: conditional promotion replay fails without changing approved bytes
+Done in 12.57s.
