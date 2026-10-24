@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=397077",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.758Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 221098,
+        "timestamp": 1710812558,
+        "username": "trvkc",
+        "owner": "0xaefdc252bd0828c8f8fb599a9fbeee8b86e3746c",
+        "from": 0,
+        "to": 397077,
+        "user_signature": "0xe29a135ae402199ab32796287397aff4fd44b4a4f85688f066393ef16d8c93d05d6df9037403841dedf45f7c051eed9d047cf02c464cd84516b87c2fa7982d981b",
+        "server_signature": "0xbfc1d6fb645d1ac81024f363f19e3b459175dc2db372118891f881c434f6bee079d5d5809c01e78daf2f0c9ac42aa0b92ed4c4410dc045de369f1cfe261fff8d1b"
+      }
+    ]
+  }
+}

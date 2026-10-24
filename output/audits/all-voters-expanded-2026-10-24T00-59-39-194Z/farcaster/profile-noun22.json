@@ -1,0 +1,69 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=noun22",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.835Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 3575,
+        "displayName": "22",
+        "profile": {
+          "bio": {
+            "text": "",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 32,
+        "followingCount": 10,
+        "username": "noun22",
+        "pfp": {
+          "url": "https://i.imgur.com/VnMOUlo.jpg",
+          "verified": false
+        },
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 3575,
+        "custodyAddress": "0x3e8ecd08127a5acaf14850f3083827c955cbe2b4",
+        "ethWallets": [
+          "0x75Ee6eb3d8DAcf41eE2e5307090B197D3E1Cca6E",
+          "0x6B9102312cfB20a765010E323D9C7f952c0Bc906"
+        ],
+        "solanaWallets": [
+          "DJPHqdJ5e5pw4GF2b82Qu76KNKt6kiEEuCwikyyA7k2P"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x6B9102312cfB20a765010E323D9C7f952c0Bc906",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "DJPHqdJ5e5pw4GF2b82Qu76KNKt6kiEEuCwikyyA7k2P",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

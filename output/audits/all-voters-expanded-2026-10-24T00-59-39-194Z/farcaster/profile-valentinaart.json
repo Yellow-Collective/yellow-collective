@@ -1,0 +1,43 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=valentinaart",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.250Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 397136,
+        "displayName": "!397136",
+        "profile": {
+          "bio": {
+            "text": "",
+            "mentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 1,
+        "followingCount": 74,
+        "username": "valentinaart",
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 397136,
+        "custodyAddress": "0xce16adfef1f197c5cd39d6a30c2b4cde533a2a54",
+        "ethWallets": [],
+        "solanaWallets": [],
+        "walletLabels": []
+      }
+    }
+  }
+}

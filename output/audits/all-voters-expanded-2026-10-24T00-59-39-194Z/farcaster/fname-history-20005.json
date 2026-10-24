@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=20005",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.458Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 19907,
+        "timestamp": 1694552235,
+        "username": "anaroth",
+        "owner": "0x08c656c6ab8aae920688e39b9b4da822de8f130a",
+        "from": 0,
+        "to": 20005,
+        "user_signature": "0xa5656302cf5d1f89608e471bce01a00321fb3333970d79edccb0d89924e7de965c933b9960398d49f8aad346519009d624ebfcea4e0f3a28237c381e3e2dba7e1b",
+        "server_signature": "0x697edf8a8fe535daa4e784e6a9d20ffd320f0c989cb956e205507269a7b689c54efbb5e2d03637e6c3828aff3cc6847d6350115e1d2789e8af35663359fbb2811b"
+      }
+    ]
+  }
+}

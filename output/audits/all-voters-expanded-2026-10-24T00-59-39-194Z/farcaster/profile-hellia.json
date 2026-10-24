@@ -1,0 +1,69 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=hellia",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.203Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 507736,
+        "displayName": "Hellia",
+        "profile": {
+          "bio": {
+            "text": "My freinds call me Web3 girl",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 116,
+        "followingCount": 173,
+        "username": "hellia",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0b80e2d8-a77d-4f37-e7a3-086bc9f76200/rectcrop3",
+          "verified": false
+        },
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 507736,
+        "custodyAddress": "0x3516a780734c5f8850fe6b12da8e7d9156639be9",
+        "ethWallets": [
+          "0xbC9F92576B5e290e7a44D02F51770E76b550a01E",
+          "0x6d1FE1098B2C9fC70fC25C0f37b3422d76d167A8"
+        ],
+        "solanaWallets": [
+          "2TmnTfN47EZ1KcaGUa72Pr1RqeBib4XnDVAywyWBJ13u"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x6d1FE1098B2C9fC70fC25C0f37b3422d76d167A8",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "2TmnTfN47EZ1KcaGUa72Pr1RqeBib4XnDVAywyWBJ13u",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

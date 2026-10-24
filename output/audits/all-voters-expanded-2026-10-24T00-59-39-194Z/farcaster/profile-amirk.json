@@ -1,0 +1,57 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=amirk",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:05.867Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 786648,
+        "displayName": "Md.Amirul Islam",
+        "profile": {
+          "bio": {
+            "text": "I'm philosopher and business man",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 57,
+        "followingCount": 898,
+        "username": "amirk",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/6a6f9e1c-b269-4528-18bd-8500984a6700/rectcrop3",
+          "verified": false
+        },
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 786648,
+        "custodyAddress": "0x4cd0d5e54d5a48bdcc035bdaaaf6e94e78030619",
+        "ethWallets": [
+          "0x667333F9EFE18309DbF834d2A166812B375e186D"
+        ],
+        "solanaWallets": [],
+        "walletLabels": [
+          {
+            "address": "0x667333F9EFE18309DbF834d2A166812B375e186D",
+            "labels": [
+              "primary"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

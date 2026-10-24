@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=4281",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.921Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 4280,
+        "timestamp": 1666749301,
+        "username": "satori",
+        "owner": "0x847bb1f1ed3bc42a40222ca88e8f39f35c77d56d",
+        "from": 0,
+        "to": 4281,
+        "user_signature": "0x73ebd97f630fe2c3bb522fc9380ee0b815c924b960c1ecbe28d4f4b1e7d569e065f7c3b5f2e35e3016343f2eab9cd52c8e0b4f86ac7fef554f9f74cdfe468ec01c",
+        "server_signature": "0x6fd9f1b6195ec6a140861c193705e2ae15ea277c131cf0061d68bf69b260cff5637c98963b4944eacea6f1a1c3ed1fbf3918d57a21d11d30df96e81ce7b17b331c"
+      }
+    ]
+  }
+}

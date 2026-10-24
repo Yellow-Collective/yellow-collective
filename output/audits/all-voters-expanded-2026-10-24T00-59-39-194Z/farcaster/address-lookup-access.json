@@ -1,0 +1,12 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-verification?address=0xcb6eb98d0533dd42367cd064fc5b988814187527",
+  "status": 401,
+  "retrievedAt": "2026-10-24T01:01:38.488Z",
+  "data": {
+    "errors": [
+      {
+        "message": "Authentication required"
+      }
+    ]
+  }
+}

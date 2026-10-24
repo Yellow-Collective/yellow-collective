@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "name": "59 current wallets",
+      "passed": true
+    },
+    {
+      "name": "308 current rows and2950 votes",
+      "passed": true
+    },
+    {
+      "name": "1042 scoped historical rows and14717 votes",
+      "passed": true
+    },
+    {
+      "name": "All59per-voter records reconcile current totals",
+      "passed": true
+    },
+    {
+      "name": "Four-wallet target batch120 and115.266seconds",
+      "passed": true
+    },
+    {
+      "name": "Every support breakdown reconciles wallet total",
+      "passed": true
+    },
+    {
+      "name": "No direct sameaddress current selfvotes",
+      "passed": true
+    },
+    {
+      "name": "No pair recurring highsimilarity >=2rounds",
+      "passed": true
+    },
+    {
+      "name": "All historical data uniqueness and joins pass",
+      "passed": true
+    }
+  ],
+  "executedAt": "2026-10-24T01:07:13.753Z",
+  "method": "Independent recomputation of selected source-row sums and invariants; not an independent truth/source validation."
+}

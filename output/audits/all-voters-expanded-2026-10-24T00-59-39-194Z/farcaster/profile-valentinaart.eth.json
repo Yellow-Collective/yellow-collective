@@ -1,0 +1,80 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=valentinaart.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.041Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 413213,
+        "displayName": "Valentinaart.eth💜",
+        "profile": {
+          "bio": {
+            "text": "Commissions OPEN\n🆙️Web3 Artist and illustrator🆙️\n💜Discord: Valentinart24 💜",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "url": "",
+          "profileToken": {
+            "tokenUri": ""
+          }
+        },
+        "followerCount": 467,
+        "followingCount": 471,
+        "username": "valentinaartt",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/5589dfe1-8576-45b6-91d2-f3c10cffc600/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0197d601-b338-21b6-6886-3b0c804b9f20",
+            "platform": "x",
+            "username": "LeettleStar_",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 413213,
+        "custodyAddress": "0x9635f53962affb162c10ae0d03b4c721bdd16057",
+        "ethWallets": [
+          "0x9ab51fd89F163D07127df192b615356D53B406f6",
+          "0x22b029b3bA6e6DF0b7c70887D4aED0c56D9B9BC7"
+        ],
+        "solanaWallets": [
+          "CDieyB8CAQfWtaTpWoTaNEdjuyaPKBKfbXqs4bqhPAEY"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x22b029b3bA6e6DF0b7c70887D4aED0c56D9B9BC7",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "CDieyB8CAQfWtaTpWoTaNEdjuyaPKBKfbXqs4bqhPAEY",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

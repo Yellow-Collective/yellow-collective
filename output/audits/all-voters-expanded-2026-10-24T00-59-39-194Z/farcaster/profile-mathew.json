@@ -1,0 +1,92 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=mathew",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.987Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 12048,
+        "displayName": "MattwithouttheT 🎩",
+        "profile": {
+          "bio": {
+            "text": "Navigating the world of finance by day, pondering its flaws by night. ETH Maxi",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "ChIJJ3SpfQsLlVQRkYXR9ua5Nhw",
+            "description": "Portland, OR, USA"
+          },
+          "earlyWalletAdopter": true,
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "token": {
+              "chain": "base",
+              "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+              "name": "Ethereum",
+              "ticker": "ETH",
+              "symbol": "ETH",
+              "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+            }
+          }
+        },
+        "followerCount": 4268,
+        "followingCount": 618,
+        "username": "mathew.eth",
+        "pfp": {
+          "url": "https://ipfs.decentralized-content.com/ipfs/QmPzEHt4mfTGHAoGz5TbaVwD4FTqMPV2qiZ6414s5HmqMi",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019568f8-f0ce-1817-0c59-07a31759c4e2",
+            "platform": "x",
+            "username": "AubergineEmoji",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 12048,
+        "custodyAddress": "0x4fa06cfd75d2e1dd21ab1b7bfa39d93117e8a2b0",
+        "ethWallets": [
+          "0x221289030ed4409284be36371664d39E692ae593",
+          "0xa26cac6A82d76936f7Bff0b53d25fA26FF893706",
+          "0x282d656A9d95c64522F6Bc1a42EE759DE81e8dc0",
+          "0x6796652b84D395269cdA7F4C265c471671601fC6"
+        ],
+        "solanaWallets": [
+          "DtBZrfdQAEBUwsmx9k4P5GQ7MpSVJeEWXN3dJRXDNbuM",
+          "9TPmSXXb87pcxFJLaUwbWBvxHfrHKLY1NoxaQyyj2rjm"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xa26cac6A82d76936f7Bff0b53d25fA26FF893706",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "9TPmSXXb87pcxFJLaUwbWBvxHfrHKLY1NoxaQyyj2rjm",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=13870",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.401Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 13866,
+        "timestamp": 1686748509,
+        "username": "0xsatori",
+        "owner": "0x8fb18d6eadac23568c83dff23179b99d43b46450",
+        "from": 0,
+        "to": 13870,
+        "user_signature": "0x45eb20405a646f158778c503cef324ea239609dba42e2c42c24e4d5ca20ce7b947a4ba800bd546d568ff5144d062f1d7a07f08576e84674f1ab8effcd8d797a91b",
+        "server_signature": "0xcad5d9c56fc483492e6ef919f7e0f5934ac705771f64665dc895829ef8947b906dedb542607d88b25c5380fba740c97c8a2f2dcafd18138e32fec5378c3085fb1c"
+      }
+    ]
+  }
+}

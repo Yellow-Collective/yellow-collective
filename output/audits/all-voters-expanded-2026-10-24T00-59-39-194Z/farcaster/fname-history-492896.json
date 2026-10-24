@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=492896",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.029Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 314652,
+        "timestamp": 1713557448,
+        "username": "amirkarimi",
+        "owner": "0x9fdd8051db432d544815fa6e2155a4def13d7b33",
+        "from": 0,
+        "to": 492896,
+        "user_signature": "0x9b244b455aeee319928fd062713ec72d196cfba773e73ce4560f143734f33b325363e5ad9a2939eb1ccfb1131a96753ed248d85c2b4d877a7818026df51a8d331c",
+        "server_signature": "0xe8cd5131cd10688da0acab14bd75d51afb9342a98ddae94bf7497a7041dea80f58c40ed1327f9b38dbe21aaa4e9db615f09906521590b174ce17cfc516f0a6fe1c"
+      }
+    ]
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "url": "https://api.farcaster.xyz/v2/following?fid=814425&limit=50&cursor=eyJ2IjoyLCJmaWQiOjgxNDQyNSwibGltaXQiOjUwLCJsYXN0Q3JlYXRlZEF0IjoiMjAyNC0wOC0wMlQwNzowNDo0NC4wMDBaIiwibGFzdEZpZCI6MTg1NzB9",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:29.714Z",
+  "data": {
+    "result": {
+      "users": [
+        {
+          "fid": 7637,
+          "displayName": "aferg",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": ""
+          },
+          "followerCount": 14135,
+          "followingCount": 996,
+          "username": "aferg.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/51ef41d4-9189-4d33-fbf6-5cb007e02e00/original",
+            "verified": false
+          },
+          "referrerUsername": "prompterminal",
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 3,
+          "displayName": "Dan Romero",
+          "profile": {
+            "bio": {
+              "text": "Interested in technology and other stuff.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://danromero.org",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/dab99f37-561b-4bd2-6d73-86f828a76d00/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 121253,
+          "followingCount": 78,
+          "username": "dwr",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/bc698287-5adc-4cc5-a503-de16963ed900/original",
+            "verified": false
+          },
+          "referrerUsername": "farcaster",
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 327165,
+          "displayName": "baseenjoyor",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": ""
+          },
+          "followerCount": 5148,
+          "followingCount": 1580,
+          "username": "nicolasdavis",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e5bec610-56b3-4a5d-3a34-3f7cbbf5a200/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 99,
+          "displayName": "Jesse Pollak",
+          "profile": {
+            "bio": {
+              "text": "base builder #001 | DM jessexbt to get started building",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "totalEarned": 4489.510379545145
+          },
+          "followerCount": 127124,
+          "followingCount": 3131,
+          "username": "jesse.base.eth",
+          "pfp": {
+            "url": "https://tba-mobile.mypinata.cloud/ipfs/QmdD5hZrJz1CDVLs2Tg5JLnNR8hjWFVZmMqVWRAWoWYFJd?pinataGatewayToken=3nq0UVhtd3rYmgYDdb1I9qv7rHsw-_DzwdWkZPRQ-QW1avFI9dCS8knaSfq_R5_q",
+            "verified": false
+          },
+          "referrerUsername": "dwr",
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 472,
+          "displayName": "Carella",
+          "profile": {
+            "bio": {
+              "text": "FDE",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/94f75e98-6013-4fc1-4133-98a0de906f00/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 46011,
+          "followingCount": 4,
+          "username": "ccarella",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/c1c4ed86-6392-4bc3-6297-5f6133015f00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 689506,
+          "displayName": "DaVinG 🐸🔵",
+          "profile": {
+            "bio": {
+              "text": "meme builder | digital | ai | JPEG since 2021 | BaseFrens | ⌐◨-◨\nhttps://Foundation.app/@DaVinG ✳️\nhttps://Zora.co/@DaVinG ↑\n🔵 /base-meme\n/yellow 🐊",
+              "mentions": [],
+              "channelMentions": [
+                "base-meme",
+                "yellow"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 181,
+          "followingCount": 169,
+          "username": "daving",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/78026d30-8b0b-4b4b-93ad-1e0c9b81cd00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 492908,
+          "displayName": "Mahnaz 𓆸",
+          "profile": {
+            "bio": {
+              "text": "Painter & Architect · AI-Collaborative Artist · NFTs since '21 𓇬 http://superrare.com/mahnaz",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://mahnaz.art"
+          },
+          "followerCount": 562,
+          "followingCount": 857,
+          "username": "mahnaz.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/6e9c233f-38da-4623-63cd-36412dd3d900/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 792867,
+          "displayName": "HELLia",
+          "profile": {
+            "bio": {
+              "text": "Art on The Horizon...  \n/reveal ⬛,\n🟪\n🟨\nhellia.base.eth,\n⌐◨-◨",
+              "mentions": [],
+              "channelMentions": [
+                "reveal"
+              ]
+            },
+            "location": {
+              "placeId": "ChIJrxNRX7IFzkwR7RXdMeFRaoo",
+              "description": "Ottawa, ON, Canada"
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e467e62c-ba97-4035-e6b2-da1799937d00/original",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "base",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+                "name": "Ethereum",
+                "ticker": "ETH",
+                "symbol": "ETH",
+                "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+              }
+            }
+          },
+          "followerCount": 1680,
+          "followingCount": 1584,
+          "username": "hellia.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4c6f5387-4a5d-4586-624a-43ed40ab3d00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 3642,
+          "displayName": "Toady Hawk",
+          "profile": {
+            "bio": {
+              "text": "onchain experimentation maxi @simbiosalabs.eth, @zerorightsmedia, the /yellow collective",
+              "mentions": [
+                "simbiosalabs.eth",
+                "zerorightsmedia"
+              ],
+              "channelMentions": [
+                "yellow"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "accountLevel": "pro",
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/5af4e7ff-698d-4889-de5d-7f20e55dc900/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 45498,
+          "followingCount": 3259,
+          "username": "toadyhawk.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/6925ce3a-8373-40bc-5ed1-b552db2c3000/original",
+            "verified": false
+          },
+          "referrerUsername": "dwr",
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 645771,
+          "displayName": "Rodeo",
+          "profile": {
+            "bio": {
+              "text": "The creative social network. ✳︎ rodeo.club",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 4991,
+          "followingCount": 607,
+          "username": "rodeodotclub",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/690a97d0-2473-4342-020c-18c16ef09500/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        }
+      ],
+      "leastInteractedWith": {
+        "count": 0,
+        "users": []
+      }
+    }
+  }
+}

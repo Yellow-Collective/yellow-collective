@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=467242",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.979Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 289416,
+        "timestamp": 1712646082,
+        "username": "0xdiablo",
+        "owner": "0xb833324c17d782c1a144b13a63373acc211ecfbc",
+        "from": 0,
+        "to": 467242,
+        "user_signature": "0xbf477b5be315608a013cab1e0cce1fcb1b81d2b1df5a1443112dd8b4bb1dca977a16d9906b5ab45adfbbea45aaf460c9a9807f71e5ffa0b654ffaf655d1ed5531b",
+        "server_signature": "0x4fa1bff21733e094c118d13976d627485ab95f7836134cbb2c8bb12bcf02d0d43b81a764b8d7e735a35c0cbf9cca8d265099c3de7df410879d318ced7f747b8e1b"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=241555",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.554Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 71477,
+        "timestamp": 1706579902,
+        "username": "deguma",
+        "owner": "0x045f60229d7fc07e2582c734121e2310458aef24",
+        "from": 0,
+        "to": 241555,
+        "user_signature": "0x1dd0bde7e2e11d8f030374b7eaf7ecc2c07d2a8b7c7354985d107cc8a4d650a52ff9b9b1863b94ce65416a0af277b9b4fcb9bbc1cf628760dde08f6c708134c11c",
+        "server_signature": "0x40f8d0d79d32aaaa38501f17fdedaa0bf3c5a7a2ee64898ff37683e7333af31f2a5d115801986c2d16ef3f65c015ee306d8186202dd7be98ad1d94af48fc3eee1b"
+      }
+    ]
+  }
+}

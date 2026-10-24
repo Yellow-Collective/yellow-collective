@@ -1,0 +1,82 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=kimmydeuk",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.374Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 374886,
+        "displayName": "Kimmy",
+        "profile": {
+          "bio": {
+            "text": "Nounish 2D Digital Artist ✨️💛",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "url": ""
+        },
+        "followerCount": 271,
+        "followingCount": 266,
+        "username": "kimmydeuk",
+        "pfp": {
+          "url": "https://i.imgur.com/KXJCxkZ.jpg",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0197f3d0-78f9-fb14-783c-ab5a1ef4c42b",
+            "platform": "x",
+            "username": "kimmydeuk",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 374886,
+        "custodyAddress": "0x47a114794a3e2bc41d3736434b72979d64753ef4",
+        "ethWallets": [
+          "0x72D4e991040e3B65FdDbE5f340f65Cf03C506e6F",
+          "0x53A22aD09F36a41AE958c82ec3e4797e9A506462"
+        ],
+        "solanaWallets": [
+          "ECCVxfz1GAhuJCA5JuRDotguaxArqznCjSZKyy88khGh"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x72D4e991040e3B65FdDbE5f340f65Cf03C506e6F",
+            "labels": [
+              "primary"
+            ]
+          },
+          {
+            "address": "0x53A22aD09F36a41AE958c82ec3e4797e9A506462",
+            "labels": [
+              "warpcast"
+            ]
+          },
+          {
+            "address": "ECCVxfz1GAhuJCA5JuRDotguaxArqznCjSZKyy88khGh",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=397136",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.823Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 221149,
+        "timestamp": 1710823404,
+        "username": "valentinaart",
+        "owner": "0x824bd0d5d45ffbd7a911bb2e2e2e98f216f4d490",
+        "from": 0,
+        "to": 397136,
+        "user_signature": "0x7716248558588b107737a0dfe39bd470e3b38530a89a638207aeb1f94079f4430fed9304008119b7e8c974eca09121bfb2d9684ba5736fbfcc23d1a48961ef841c",
+        "server_signature": "0xa36b1e5d0d5a12c4a7941d771ceba85154fc4b8e8e8a373786abd4553bade9a70e93eabcb47cb76c47a1f84589fb140c18ca45d8ace7d21f5d52462a501f9a3d1b"
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "args": {
+    "chainid": "8453",
+    "txhash": "0xd7ab11d953bcb0b7a827b7acac1117b361a7b598d666dc5ba2c757d219fe9491"
+  },
+  "result": {
+    "ok": true,
+    "result": {
+      "type": "0x2",
+      "chainId": "0x2105",
+      "nonce": "0x133133",
+      "gas": "0x4c4b40",
+      "maxFeePerGas": "0x2fbb3d0",
+      "maxPriorityFeePerGas": "0x2dc6c0",
+      "to": "0x4b5c71082d027d16d2a146465d66f9eec11634f6",
+      "value": "0x0",
+      "accessList": [],
+      "input": "0x1a1da075000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000156940000000000000000000000000000000000000000000000000000000000000001000000000000000000000000f7aef946d3f2e58a3685166ace1fc3db76d614de000000000000000000000000000000000000000000000000001c6bf526340000",
+      "r": "0xd476305c1a26528ae92b11dd2dbc3a6b24af23fe69a3703440ad0c46499a5492",
+      "s": "0x22fa9a7116c17d78a88ba2e36bf8a9f35204d22b4641c8b9ef11d03f6d0f7781",
+      "yParity": "0x1",
+      "v": "0x1",
+      "hash": "0xd7ab11d953bcb0b7a827b7acac1117b361a7b598d666dc5ba2c757d219fe9491",
+      "blockHash": "0xccebf3a0c96820301fd0db2ff4b0355ae2f62b735f5f6a67463d6a6e5e01de49",
+      "blockNumber": "0x319508f",
+      "transactionIndex": "0x107",
+      "blockTimestamp": "0x6abcfe01",
+      "from": "0xc2bee8f45dc998b18df043cb79edf88d7f9fd8ad",
+      "gasPrice": "0x7a418e"
+    }
+  }
+}

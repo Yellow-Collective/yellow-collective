@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=884676",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.355Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 697157,
+        "timestamp": 1732520665,
+        "username": "pooms",
+        "owner": "0x387a9ff2af13fad1aea48db7ea761ccea8eff78d",
+        "from": 0,
+        "to": 884676,
+        "user_signature": "0xcc027385eb87cc3cb7eb7a75804815c696a4bb6a428687e7677d28f7fe2707d36c87ec29866e34eb8a8daef6801b577debfd4648da3ae9716b16d4f9fc5a82af1b",
+        "server_signature": "0xa0ed8264466dc55e9db6ea1de90fc903c44c3e28cca2b4cf68e0e827d7da1a28454f5634b04f77371ca0975fe6577e00347a981f6e216ad5d99b72f621820d531c"
+      }
+    ]
+  }
+}

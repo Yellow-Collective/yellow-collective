@@ -1,0 +1,94 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=hellia.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:36.893Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 792867,
+        "displayName": "HELLia",
+        "profile": {
+          "bio": {
+            "text": "Art on The Horizon...  \n/reveal ⬛,\n🟪\n🟨\nhellia.base.eth,\n⌐◨-◨",
+            "mentions": [],
+            "channelMentions": [
+              "reveal"
+            ]
+          },
+          "location": {
+            "placeId": "ChIJrxNRX7IFzkwR7RXdMeFRaoo",
+            "description": "Ottawa, ON, Canada"
+          },
+          "earlyWalletAdopter": true,
+          "url": "",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e467e62c-ba97-4035-e6b2-da1799937d00/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "token": {
+              "chain": "base",
+              "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+              "name": "Ethereum",
+              "ticker": "ETH",
+              "symbol": "ETH",
+              "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+            }
+          }
+        },
+        "followerCount": 1680,
+        "followingCount": 1584,
+        "username": "hellia.eth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4c6f5387-4a5d-4586-624a-43ed40ab3d00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0196fed1-49b5-3aea-e167-3eb0b02a4697",
+            "platform": "x",
+            "username": "hellia_eth",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 792867,
+        "custodyAddress": "0x067b13f75050cb689a55a2bf41e130e4956498d5",
+        "ethWallets": [
+          "0xBE7bFAD8952Ae92abB8779Aa4D6826839e82Fa3D",
+          "0x4B5b9e729e5eAC50B77fbFC48dA84c66F44C87E9",
+          "0xb6Df9dae477E6D8D02737536e39Aa38afF1f681e"
+        ],
+        "solanaWallets": [
+          "6DMQmo6wQKijd4LoQ5YVXULqxNReqfqHvLz7ApNiv7B1"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x4B5b9e729e5eAC50B77fbFC48dA84c66F44C87E9",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "6DMQmo6wQKijd4LoQ5YVXULqxNReqfqHvLz7ApNiv7B1",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=namirai",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:05.869Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 814425,
+        "displayName": "namirai",
+        "profile": {
+          "bio": {
+            "text": "alien | ai artist | digital artist | onchained 2021 \n🔵/yellow 🟡 ⌐◨-◨\nhttp://Foundation.app/namirai 👽\nhttp://SuperRare.com/namirai ↑",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 80,
+        "followingCount": 183,
+        "username": "namirai",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/5e498df2-6a07-4f2d-899b-ece980e3a300/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019285db-bcab-4c50-cf24-3bb8878d405f",
+            "platform": "x",
+            "username": "namirai_",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 814425,
+        "custodyAddress": "0x88a605a57759ad58c83d3e81a75b5cd7eee6e2c8",
+        "ethWallets": [
+          "0xeb8A03b68e4F5Ee0F02Ff612915bFaFba4902C00",
+          "0x6D29c49791832c9aa35C243D4Bd3b748DF3b68CB"
+        ],
+        "solanaWallets": [
+          "AD91SB5pJi3D4Q9xhfQcGAybLsm2ksK3wEogp9Kt8mko"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x6D29c49791832c9aa35C243D4Bd3b748DF3b68CB",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "AD91SB5pJi3D4Q9xhfQcGAybLsm2ksK3wEogp9Kt8mko",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

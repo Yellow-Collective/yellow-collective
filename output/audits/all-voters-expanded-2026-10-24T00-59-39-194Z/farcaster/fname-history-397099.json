@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=397099",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.770Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 221123,
+        "timestamp": 1710816261,
+        "username": "skwalo09",
+        "owner": "0x2a11b0cee2781ddf9f11fffc60e28b52c3478ba8",
+        "from": 0,
+        "to": 397099,
+        "user_signature": "0x48e8dbc1baa1af67918b9511f23822d8f71253d6bc2d68f87e6a124f45ba0ba40960b9c8ddc2444879b1c396b945875e8cdaab2da6b746d56e2e23bd172c038c1b",
+        "server_signature": "0x5f11a49777d97cf92a836364236660f16a3529ab7f56cfa5d222fa808c4cb648471573674480e87623b2a379799292daf233acf3e14f6f6e3dc6941398eec15b1b"
+      }
+    ]
+  }
+}

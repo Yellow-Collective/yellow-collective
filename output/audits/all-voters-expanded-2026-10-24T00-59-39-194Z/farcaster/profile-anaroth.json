@@ -1,0 +1,92 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=anaroth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.540Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 20005,
+        "displayName": "Anaroth",
+        "profile": {
+          "bio": {
+            "text": "Founder of Incipient Strategies | Occasionally Writing | Trading | Golfing Poorly ⛳️ | Tinkering with Recco",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "ChIJd7zN_thz54gRnr-lPAaywwo",
+            "description": "Orlando, FL, USA"
+          },
+          "earlyWalletAdopter": true,
+          "url": "https://recco.wtf",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/53419c44-22bc-4e09-83e6-87ce81344400/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+            "token": {
+              "chain": "base",
+              "ca": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+              "tokenId": "0198da7e-6a9a-b0c3-e6ae-fedf46fc135c",
+              "name": "Coinbase Wrapped BTC",
+              "ticker": "cbBTC",
+              "symbol": "cbBTC",
+              "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e2adaf74-bd75-4c9f-85ab-1aeed39e6c00/original"
+            }
+          }
+        },
+        "followerCount": 1931,
+        "followingCount": 322,
+        "username": "anaroth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d6301f3e-9c77-4b4b-f3d8-001370447800/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0192785e-29d5-f312-24c5-3cd48e368369",
+            "platform": "x",
+            "username": "Anaroth__",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 20005,
+        "custodyAddress": "0x08c656c6ab8aae920688e39b9b4da822de8f130a",
+        "ethWallets": [
+          "0xc578958DD1880cF00BFfbb7Feb9c28cbbbcaD3bF",
+          "0x2a9D91B6c9De04826318D8B94F240E15f907eEC0",
+          "0xbfCC8F43c2F57408584d4D0401f46302662f4c3D"
+        ],
+        "solanaWallets": [
+          "BiLXj5S3wZNmm3XxmeN7wvhEvY9QUHRXuzp7BpVnhijU"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x2a9D91B6c9De04826318D8B94F240E15f907eEC0",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "BiLXj5S3wZNmm3XxmeN7wvhEvY9QUHRXuzp7BpVnhijU",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

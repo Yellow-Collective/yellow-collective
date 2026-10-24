@@ -1,0 +1,80 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=latif",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:38.110Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 510831,
+        "displayName": "latif",
+        "profile": {
+          "bio": {
+            "text": "Artis painting, pixel art, line art, and of course humans.",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "https://www.instagram.com/latif_basya?igsh=eW0xemt3N3FlY3Ry",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/449946a6-96c4-47da-a338-2db01482d700/original"
+        },
+        "followerCount": 1746,
+        "followingCount": 1007,
+        "username": "latif",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0ddf5261-9517-4a92-8552-6dd47e3a1400/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0195751c-b11a-bb18-a609-8520eebf0efa",
+            "platform": "x",
+            "username": "basya_latif",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 510831,
+        "custodyAddress": "0xc3bcdb9da7cda602f5a35ad474d5ca182c70e7d1",
+        "ethWallets": [
+          "0xeF0C7CfFB028eCBD015e241dC00066aA804fA861",
+          "0xfB1BbfF3747b6090fcE6C171EF9BFc2298ad3bd6",
+          "0xCD8B77779E370156C1BEA512E8E22f78B502f2F3"
+        ],
+        "solanaWallets": [
+          "Hs9J6xaRckREsGn1gxZmbBagDgtcvd5kLF8XiLFAVbYm"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xfB1BbfF3747b6090fcE6C171EF9BFc2298ad3bd6",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "Hs9J6xaRckREsGn1gxZmbBagDgtcvd5kLF8XiLFAVbYm",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

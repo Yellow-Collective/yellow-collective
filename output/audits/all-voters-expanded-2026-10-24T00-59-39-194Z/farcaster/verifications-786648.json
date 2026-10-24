@@ -1,0 +1,20 @@
+{
+  "url": "https://api.farcaster.xyz/v2/verifications?fid=786648",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:05.958Z",
+  "data": {
+    "result": {
+      "verifications": [
+        {
+          "fid": 786648,
+          "address": "0x667333F9EFE18309DbF834d2A166812B375e186D",
+          "timestamp": 1721024067521,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": true,
+          "labels": []
+        }
+      ]
+    }
+  }
+}

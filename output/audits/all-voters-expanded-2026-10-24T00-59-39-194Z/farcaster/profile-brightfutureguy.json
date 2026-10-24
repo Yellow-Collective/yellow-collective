@@ -1,0 +1,48 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=brightfutureguy",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.907Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 872791,
+        "displayName": "BrightFutureGuy",
+        "profile": {
+          "bio": {
+            "text": "Love bringing people onchain",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 0,
+        "followingCount": 10,
+        "username": "brightfutureguy",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/94450824-8ce5-49b7-b8d4-a09135951000/rectcrop3",
+          "verified": false
+        },
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 872791,
+        "custodyAddress": "0x70822ae5460ec49e029371ea9b23dd18406ae5ee",
+        "ethWallets": [],
+        "solanaWallets": [],
+        "walletLabels": []
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=trvkc",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:38.135Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 397077,
+        "displayName": "trvkc👌🏻 ⌐◨-◨",
+        "profile": {
+          "bio": {
+            "text": "cryptotrvkc@gmail.com\n\n- 3D generalist\n- Meme based / Thailand\n- Fueled by coffee and supa spicy ramen",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true
+        },
+        "followerCount": 311,
+        "followingCount": 446,
+        "username": "trvkc",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/30e0fc37-170e-4073-27e6-56685e682000/rectcrop3",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019279ba-384c-59af-252f-e9c65887380c",
+            "platform": "x",
+            "username": "SDangpad",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 397077,
+        "custodyAddress": "0xaefdc252bd0828c8f8fb599a9fbeee8b86e3746c",
+        "ethWallets": [
+          "0xA09AA75da763D4aEB692672897C057786Cdd258B",
+          "0x76FA4C19ad3DB64962FD68258E7af0c826b07cE7"
+        ],
+        "solanaWallets": [
+          "FaZeJ2wZZBJXmmUDyP2DykVKsGnZn369Xb2qEcEpbwMA"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x76FA4C19ad3DB64962FD68258E7af0c826b07cE7",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "FaZeJ2wZZBJXmmUDyP2DykVKsGnZn369Xb2qEcEpbwMA",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

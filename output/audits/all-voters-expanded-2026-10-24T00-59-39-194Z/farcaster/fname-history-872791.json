@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=872791",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.328Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 685357,
+        "timestamp": 1730461547,
+        "username": "brightfutureguy",
+        "owner": "0x70822ae5460ec49e029371ea9b23dd18406ae5ee",
+        "from": 0,
+        "to": 872791,
+        "user_signature": "0x2c7e0a7a6bfc94050329ede1dbde5bf9ab539e0dbe079092d766d0473e170f253571b3c42c9ff66d72553daad7b948a64a0fa6f4915de074f3cadea79722fa731c",
+        "server_signature": "0x5ddb9b6aed76ee2fd18f6998aaea7b741c82aaad988749a895c2333056739d3c46035abc4de2a6db0b1592cd78d3e8951fc0e043352fd1b7fb6de2993fe0ee4f1c"
+      }
+    ]
+  }
+}

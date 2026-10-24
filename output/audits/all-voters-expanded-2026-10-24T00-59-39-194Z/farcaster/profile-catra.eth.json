@@ -1,0 +1,108 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=catra.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.686Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 9318,
+        "displayName": "catra ↑",
+        "profile": {
+          "bio": {
+            "text": "Higher.",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "accountLevel": "pro",
+          "url": "https://catra.fyi",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/afd0549b-eb3f-4ad7-e931-84af89e61500/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x0578d8a44db98b23bf096a382e016e29a5ce0ffe",
+            "token": {
+              "chain": "base",
+              "ca": "0x0578d8a44db98b23bf096a382e016e29a5ce0ffe",
+              "tokenId": "0198d411-9d8b-6713-2e80-c5c0df4ef9ab",
+              "name": "higher",
+              "ticker": "HIGHER",
+              "symbol": "HIGHER",
+              "imageUrl": "https://token-media.defined.fi/8453_0x0578d8a44db98b23bf096a382e016e29a5ce0ffe_large_13e6c80c-06f2-4afc-8db4-2da51d11455b.png"
+            }
+          }
+        },
+        "followerCount": 2933,
+        "followingCount": 600,
+        "username": "catra.eth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/3394f729-6abd-43fb-0449-a7ee6ee61900/original",
+          "verified": false
+        },
+        "referrerUsername": "warren",
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01927e6c-8f1a-5086-b1f9-24d61ddb7650",
+            "platform": "x",
+            "username": "catradarusman",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 9318,
+        "custodyAddress": "0xc656b9dc4fc21cb0a01d3efddb8a68c123ddc31b",
+        "ethWallets": [
+          "0x96DF10A852B1528F6b7972cCD83B755F71210b5C",
+          "0xe8bB2E08e6f52f11D8B65e2A3db772DaA60e117e",
+          "0x036cD064D068EB1d99E07d79848c7A4Aab94Bd49",
+          "0x73BBFB27EB1131C7d6f9212ffebFA2e093767EE4",
+          "0x16C421f95F0FF49eB97272d072f2B17491a4478a",
+          "0x59d9FCf5A00b679DB29798F0d6E5b7eEDA30c7D4",
+          "0xD3D0abaDeE3aaf2C7Ff3d0BCdBa1F0b26a3791e4",
+          "0x7352dBE007Cc7294f28743225a9eAe2675673f66"
+        ],
+        "solanaWallets": [
+          "AKT6jmnPAvvKPiFNwsrLAdb8hMpHADWV5fr6TsGiNB7c",
+          "DFqgM6sTHJknZ2NDPWA3PSFCeEEASZeLFyg6JWNaLcr1",
+          "GjHbPmByVHGBGTrz6CQBXSB5tSNbu3Vwaakofbst4Ayd",
+          "GB1ouCFYY3m1e4NBPcu5Kx6L5zWKkdLUHnnx1a6svjkP",
+          "Bk2pWZs4nkBxSmvJhnrxuLYhoa2qcXYcCWYa2mStDHY8"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x036cD064D068EB1d99E07d79848c7A4Aab94Bd49",
+            "labels": [
+              "warpcast"
+            ]
+          },
+          {
+            "address": "GB1ouCFYY3m1e4NBPcu5Kx6L5zWKkdLUHnnx1a6svjkP",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "0xD3D0abaDeE3aaf2C7Ff3d0BCdBa1F0b26a3791e4",
+            "labels": [
+              "primary"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

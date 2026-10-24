@@ -1,0 +1,12 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=netnose.base.eth",
+  "status": 404,
+  "retrievedAt": "2026-10-24T01:03:44.758Z",
+  "data": {
+    "errors": [
+      {
+        "message": "No FID associated with username netnose.base.eth"
+      }
+    ]
+  }
+}

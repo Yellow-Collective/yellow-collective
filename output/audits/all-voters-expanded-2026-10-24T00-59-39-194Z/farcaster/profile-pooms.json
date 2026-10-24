@@ -1,0 +1,91 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=pooms",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.689Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 884676,
+        "displayName": "GENMOJI",
+        "profile": {
+          "bio": {
+            "text": "Web3 native, crypto holder, and blockchain expert. Deep into DeFi, NFTs, and on-chain strategies navigating markets with precision and",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "ChIJZW3qh40Q_zkRz2Ey-U4DfWI",
+            "description": "Jashore, Bangladesh"
+          },
+          "earlyWalletAdopter": true,
+          "url": "",
+          "profileToken": {
+            "tokenUri": "eip155:42161/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "token": {
+              "chain": "arbitrum",
+              "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "tokenId": "0198d3d0-6469-88a3-ca0c-194041759ca8",
+              "name": "Ethereum",
+              "ticker": "ETH",
+              "symbol": "ETH",
+              "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+            }
+          }
+        },
+        "followerCount": 209,
+        "followingCount": 150,
+        "username": "pooms",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/aac98967-e415-47f8-4c5f-ed7f8d95b800/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019362a9-64b1-8af6-0be3-4d6eea873a01",
+            "platform": "x",
+            "username": "creed_binu",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 884676,
+        "custodyAddress": "0x610ad40e7462717fe909d9ede82e430eba04f269",
+        "ethWallets": [
+          "0xF486B301D7eD9a01f60ABB228c687B176F23AB22",
+          "0xe22577eb9EB043b5E717C0eB8B325d737beC6C7B"
+        ],
+        "solanaWallets": [
+          "6yRGxRvuEmqvHoCXEHaoMvYJmF28staqnDXCHncxnQNg",
+          "5vVMJy53WJ698xF5PPPoL7DfGMV6HcanajHjWd3z6rY"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xe22577eb9EB043b5E717C0eB8B325d737beC6C7B",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "5vVMJy53WJ698xF5PPPoL7DfGMV6HcanajHjWd3z6rY",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

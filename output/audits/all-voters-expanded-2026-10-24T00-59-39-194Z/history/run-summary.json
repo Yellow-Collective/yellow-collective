@@ -1,0 +1,1059 @@
+{
+  "quality": {
+    "source": "C:\\Users\\Deej\\Documents\\GitHub\\yellowcollective\\output\\audits\\round-propoganda-2026-10-24T01-00-53-099Z\\database-snapshot.json",
+    "sha256": "f8964bae0fbfa437f09857dc45811eec9c02a6aa25f309a806427a310c9c72cc",
+    "cutoff": "2026-10-24T01:00:53.099Z",
+    "readOnly": "on",
+    "round": "e7c5cc86-dbc3-43fc-8ff1-795d4b997c33",
+    "currentVoters": 59,
+    "currentRows": 308,
+    "currentVotes": 2950,
+    "rawCurrentRows": 308,
+    "rawCurrentVotes": 2950,
+    "historyRows": 1042,
+    "priorRows": 734,
+    "historyVotes": 14717,
+    "priorVotes": 11767,
+    "historyRounds": 8,
+    "allHistoryKeysUnique": true,
+    "duplicateWalletRoundSubmission": [],
+    "currentHistoryMismatch": [],
+    "nullKeys": 0,
+    "invalidVotes": 0,
+    "nonApprovedRows": [],
+    "deletedSubmissionRows": [],
+    "orphanCurrent": [],
+    "join": "current vote -> submission expected many-to-one on submission_id + round_id; voter_history prejoined by SQL, no null key joins",
+    "units": "integer vote allocations; wallet != human; UTC timestamps",
+    "historyLimitation": "Existing retained production vote rows for the 59 current voters across eight rounds. Deleted or removed ballots cannot be reconstructed. Not all participants in prior rounds; voting timestamps may reflect creation and not later changes.",
+    "thresholds": "Exploratory descriptive flags: repeated support >=2 rounds; high ballot similarity >=0.8 entry Jaccard and >=0.8 normalized weighted overlap; nearby <=300s. No probability or proof-of-control interpretation.",
+    "eventCutoff": "2026-10-23T21:00:00+00:00",
+    "extractHistoryRows": 1053,
+    "excludedAfterClose": {
+      "rows": 11,
+      "votes": 51,
+      "ids": [
+        "0426afb6-0711-4f6b-97d1-4ac57aa59f1c",
+        "2a5fd517-8bc1-457c-9044-323bef871385",
+        "2d1dbb44-bd9d-436f-9601-f4405d637741",
+        "3a372694-c08e-4cef-be98-08f71d45b316",
+        "400af575-e72b-4fbc-8b08-7e0e1ba056ca",
+        "78c80e4b-bf6e-4437-b394-f42be729128e",
+        "798f6766-1de2-42a6-ab4c-7a4d721a98fb",
+        "923259aa-ff2d-48fd-bf68-35c23e60a39b",
+        "96ce840c-2993-48ce-bc08-2e1f0ef7ec6e",
+        "a7be5d35-f20b-4fa9-b5d3-2afed265223b",
+        "c3d3cd71-b374-4159-ab2d-af8067d667fb"
+      ]
+    },
+    "budgetSource": "C:\\Users\\Deej\\Documents\\GitHub\\yellowcollective\\output\\audits\\round-propoganda-2026-10-23T21-12-26-163Z\\analysis.json",
+    "budgetSourceSha256": "aed359c65ba2b53b92eddaa4d5dc721213f53784db9446abf576b0e484ce6f15"
+  },
+  "rounds": [
+    {
+      "id": "e1c0a318-add5-4bff-bdb3-0f8897b61acd",
+      "slug": "sticker-packs",
+      "rows": 133,
+      "votes": 2437,
+      "voters": 26,
+      "first": "2026-09-18T03:04:50.804Z",
+      "last": "2026-09-24T19:08:15.736Z",
+      "scope": "Restricted to 59 current voters; not all historical round voters"
+    },
+    {
+      "id": "c9569c28-f599-47cb-8dc3-31e890b977da",
+      "slug": "comic-strips",
+      "rows": 166,
+      "votes": 2261,
+      "voters": 25,
+      "first": "2026-09-25T00:49:57.503Z",
+      "last": "2026-10-01T20:32:26.752Z",
+      "scope": "Restricted to 59 current voters; not all historical round voters"
+    },
+    {
+      "id": "b8767ba2-8c05-415c-8a0a-e07b770e87d1",
+      "slug": "physical-artwork",
+      "rows": 172,
+      "votes": 1474,
+      "voters": 31,
+      "first": "2026-10-08T21:11:19.006Z",
+      "last": "2026-10-15T16:45:38.244Z",
+      "scope": "Restricted to 59 current voters; not all historical round voters"
+    },
+    {
+      "id": "e7c5cc86-dbc3-43fc-8ff1-795d4b997c33",
+      "slug": "propoganda",
+      "rows": 308,
+      "votes": 2950,
+      "voters": 59,
+      "first": "2026-10-17T06:09:16.041Z",
+      "last": "2026-10-23T20:24:45.473Z",
+      "scope": "Restricted to 59 current voters; not all historical round voters"
+    },
+    {
+      "id": "592bb579-9d19-429e-9615-f8301dc374d7",
+      "slug": "yellow-characters",
+      "rows": 90,
+      "votes": 2840,
+      "voters": 27,
+      "first": "2026-09-11T13:04:36.471Z",
+      "last": "2026-09-17T20:54:50.292Z",
+      "scope": "Restricted to 59 current voters; not all historical round voters"
+    },
+    {
+      "id": "3b4b518b-552a-42e6-9a8a-242229d6a9c2",
+      "slug": "future-yellow-rounds",
+      "rows": 54,
+      "votes": 800,
+      "voters": 8,
+      "first": "2026-06-02T21:07:51.298Z",
+      "last": "2026-06-05T21:37:31.010Z",
+      "scope": "Restricted to 59 current voters; not all historical round voters"
+    },
+    {
+      "id": "6a74682b-9318-4fd9-b02a-928e82cf9c5e",
+      "slug": "yellow-poster",
+      "rows": 59,
+      "votes": 1260,
+      "voters": 12,
+      "first": "2026-08-28T13:59:00.932Z",
+      "last": "2026-09-03T19:48:39.794Z",
+      "scope": "Restricted to 59 current voters; not all historical round voters"
+    },
+    {
+      "id": "8d9d9988-77fc-41e7-a27c-2e12e56d265e",
+      "slug": "farcaster-nominations",
+      "rows": 60,
+      "votes": 695,
+      "voters": 7,
+      "first": "2026-08-14T00:13:07.982Z",
+      "last": "2026-08-25T07:04:44.097Z",
+      "scope": "Restricted to 59 current voters; not all historical round voters"
+    }
+  ],
+  "concentration": [
+    {
+      "wallet": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+      "historyRounds": 2,
+      "historyVotes": 45,
+      "priorRows": 1,
+      "submitterCount": 1,
+      "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "physical-artwork",
+        "propoganda"
+      ],
+      "roundCount": 2,
+      "entryCount": 3,
+      "votes": 45,
+      "share": 1,
+      "currentVotes": 30,
+      "priorVotes": 15,
+      "ids": [
+        "cb780788-740d-4f99-a92d-a536f95d4b76",
+        "55a7b1db-78c3-4e45-998c-b5426e46af7f",
+        "e10e7224-d3c3-4e54-97e1-45844e222b3a"
+      ]
+    },
+    {
+      "wallet": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+      "historyRounds": 2,
+      "historyVotes": 152,
+      "priorRows": 1,
+      "submitterCount": 2,
+      "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-characters",
+        "propoganda"
+      ],
+      "roundCount": 2,
+      "entryCount": 4,
+      "votes": 146,
+      "share": 0.9605263157894737,
+      "currentVotes": 45,
+      "priorVotes": 101,
+      "ids": [
+        "4d6e493f-98d5-42a4-9b89-146927417c73",
+        "a1291954-2959-4589-99f9-44660a288b9d",
+        "1438f5fa-c8e7-4031-913d-c699f903fedb",
+        "a8578772-571e-4391-ae88-f6ffa3307961"
+      ]
+    },
+    {
+      "wallet": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+      "historyRounds": 4,
+      "historyVotes": 205,
+      "priorRows": 4,
+      "submitterCount": 2,
+      "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-characters",
+        "sticker-packs",
+        "comic-strips",
+        "propoganda"
+      ],
+      "roundCount": 4,
+      "entryCount": 5,
+      "votes": 190,
+      "share": 0.926829268292683,
+      "currentVotes": 15,
+      "priorVotes": 175,
+      "ids": [
+        "a9780c01-c367-4497-8b99-8091aea53a3d",
+        "10bf5935-2d49-435f-9ab6-f39f2fb101fd",
+        "3c20a44b-1461-48b9-bfaf-bbe3c95b2c23",
+        "848c8b4b-c614-4455-8dea-8ac4ceeb2e96",
+        "13f691a8-5899-4fe7-b344-73d6229e5e34"
+      ]
+    },
+    {
+      "wallet": "0xbe7bfad8952ae92abb8779aa4d6826839e82fa3d",
+      "historyRounds": 2,
+      "historyVotes": 139,
+      "priorRows": 2,
+      "submitterCount": 4,
+      "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-characters",
+        "propoganda"
+      ],
+      "roundCount": 2,
+      "entryCount": 2,
+      "votes": 115,
+      "share": 0.8273381294964028,
+      "currentVotes": 15,
+      "priorVotes": 100,
+      "ids": [
+        "6483ea11-bc5d-4669-909c-cab1edf11bfa",
+        "d40748a6-e9b4-4b79-a8cc-a7d1bd8f7e4b"
+      ]
+    },
+    {
+      "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+      "historyRounds": 5,
+      "historyVotes": 378,
+      "priorRows": 6,
+      "submitterCount": 8,
+      "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-poster",
+        "yellow-characters",
+        "propoganda"
+      ],
+      "roundCount": 3,
+      "entryCount": 5,
+      "votes": 236,
+      "share": 0.6243386243386243,
+      "currentVotes": 34,
+      "priorVotes": 202,
+      "ids": [
+        "b8ef8311-2bbd-4821-a6af-c2bf4f98b536",
+        "d42d6424-2dab-44ca-a42b-6b928de9bfd8",
+        "166e57bc-e5f0-4e5a-a565-9e8d2498e298",
+        "844ff97a-2778-43ec-a6b2-9e8ca1220d03",
+        "a013197b-beb8-478b-84fc-8a70db7cd584"
+      ]
+    },
+    {
+      "wallet": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "historyRounds": 5,
+      "historyVotes": 455,
+      "priorRows": 15,
+      "submitterCount": 9,
+      "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-poster",
+        "yellow-characters",
+        "sticker-packs",
+        "comic-strips",
+        "propoganda"
+      ],
+      "roundCount": 5,
+      "entryCount": 6,
+      "votes": 265,
+      "share": 0.5824175824175825,
+      "currentVotes": 15,
+      "priorVotes": 250,
+      "ids": [
+        "0e5da13d-5534-477d-9363-d26e3f573310",
+        "b091ebf3-3731-4afd-8068-d2bd1e63839a",
+        "aa91bd07-f75d-4990-ae81-647e89575d4f",
+        "7dae4f1b-8aa9-466d-9b43-107e235670f3",
+        "bbb0edc6-5b68-4d14-831d-4d68fb5f8acd",
+        "d0b7a481-0cc6-4672-b0b8-dec6d757dab7"
+      ]
+    },
+    {
+      "wallet": "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+      "historyRounds": 5,
+      "historyVotes": 387,
+      "priorRows": 23,
+      "submitterCount": 13,
+      "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-characters",
+        "sticker-packs",
+        "comic-strips",
+        "physical-artwork",
+        "propoganda"
+      ],
+      "roundCount": 5,
+      "entryCount": 7,
+      "votes": 210,
+      "share": 0.5426356589147286,
+      "currentVotes": 15,
+      "priorVotes": 195,
+      "ids": [
+        "e1ed51e2-054e-4bd0-bca4-5f800d25612c",
+        "58945b5f-1e0f-46c2-99d3-c98ecee4d85f",
+        "fc1f49d5-3f83-4798-9cf7-8635c0457f9e",
+        "1af68b3f-36d6-48b4-90f1-16e69ba27958",
+        "92b77449-084d-4e5c-bd2f-b91c63cfc52f",
+        "db3bf9ac-5fa0-4bf7-a5d8-98c8cabe6106",
+        "37ae7fbb-e108-4447-b331-382b9d002dee"
+      ]
+    },
+    {
+      "wallet": "0x8621ffa9fd2b61bfa485798a1082d23dc920e8d1",
+      "historyRounds": 5,
+      "historyVotes": 304,
+      "priorRows": 10,
+      "submitterCount": 10,
+      "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-characters",
+        "sticker-packs",
+        "comic-strips",
+        "propoganda"
+      ],
+      "roundCount": 4,
+      "entryCount": 4,
+      "votes": 155,
+      "share": 0.5098684210526315,
+      "currentVotes": 15,
+      "priorVotes": 140,
+      "ids": [
+        "c3630e3e-ec68-40b6-8992-fd4062cf899b",
+        "db15cd86-6dba-4248-bbb0-05aa50f0b4ef",
+        "27af1389-66c3-49a5-85db-0d2cd2749087",
+        "9f6d8a85-6d40-4ab5-8eab-0eb50003f709"
+      ]
+    },
+    {
+      "wallet": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "historyRounds": 6,
+      "historyVotes": 506,
+      "priorRows": 22,
+      "submitterCount": 13,
+      "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-poster",
+        "yellow-characters",
+        "sticker-packs",
+        "comic-strips",
+        "physical-artwork",
+        "propoganda"
+      ],
+      "roundCount": 6,
+      "entryCount": 6,
+      "votes": 252,
+      "share": 0.4980237154150198,
+      "currentVotes": 15,
+      "priorVotes": 237,
+      "ids": [
+        "274d021c-9346-4f92-92b1-0a0f4debc70d",
+        "e85f61bf-aa54-41fc-bcdc-8ac9b347ba33",
+        "ccd8f372-6a14-4130-acec-83dbc2c549a7",
+        "3238e967-a0f1-44df-add7-b5c78bb292c2",
+        "0f61baa4-6652-4222-aa3b-fe0f95f73650",
+        "fa2345ec-b38f-47c1-afd9-94026f21f7fe"
+      ]
+    },
+    {
+      "wallet": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+      "historyRounds": 5,
+      "historyVotes": 275,
+      "priorRows": 9,
+      "submitterCount": 5,
+      "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-characters",
+        "sticker-packs",
+        "comic-strips",
+        "physical-artwork",
+        "propoganda"
+      ],
+      "roundCount": 5,
+      "entryCount": 5,
+      "votes": 130,
+      "share": 0.4727272727272727,
+      "currentVotes": 15,
+      "priorVotes": 115,
+      "ids": [
+        "29e1fc33-7cc9-4cd2-b0ee-e2029cbf197c",
+        "a8ca9d9d-899e-48bd-b247-dbfb937ad67f",
+        "15c1db7a-c613-4f7e-ad37-2c4748f0e445",
+        "ecf6c953-1cb8-4fa8-959a-329ef0578fcf",
+        "18e4417f-cee9-4fde-88c7-bd2b41018c87"
+      ]
+    },
+    {
+      "wallet": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+      "historyRounds": 6,
+      "historyVotes": 415,
+      "priorRows": 21,
+      "submitterCount": 12,
+      "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-poster",
+        "yellow-characters",
+        "sticker-packs",
+        "comic-strips",
+        "propoganda"
+      ],
+      "roundCount": 5,
+      "entryCount": 5,
+      "votes": 185,
+      "share": 0.4457831325301205,
+      "currentVotes": 15,
+      "priorVotes": 170,
+      "ids": [
+        "15dba026-70e2-4234-bc0b-014c2db419ed",
+        "e800e9b7-9db9-4b41-9817-07adb5c539d6",
+        "307f2746-8598-45b7-a394-e4edc2c6e415",
+        "9134d2a6-a8ba-45af-a7ee-a3c00c8c9d00",
+        "fa55dcba-044c-475c-8e65-21991fa8e75d"
+      ]
+    },
+    {
+      "wallet": "0x7234c36a71ec237c2ae7698e8916e0735001e9af",
+      "historyRounds": 2,
+      "historyVotes": 80,
+      "priorRows": 3,
+      "submitterCount": 4,
+      "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "physical-artwork",
+        "propoganda"
+      ],
+      "roundCount": 2,
+      "entryCount": 2,
+      "votes": 30,
+      "share": 0.375,
+      "currentVotes": 15,
+      "priorVotes": 15,
+      "ids": [
+        "662f6f3e-8858-40b2-b166-ef9e341ac79c",
+        "c029b9e9-f5d0-46df-b954-756dac9bb1df"
+      ]
+    },
+    {
+      "wallet": "0x7234c36a71ec237c2ae7698e8916e0735001e9af",
+      "historyRounds": 2,
+      "historyVotes": 80,
+      "priorRows": 3,
+      "submitterCount": 4,
+      "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+      "username": "Latif",
+      "currentSubmitter": true,
+      "rounds": [
+        "physical-artwork",
+        "propoganda"
+      ],
+      "roundCount": 2,
+      "entryCount": 2,
+      "votes": 30,
+      "share": 0.375,
+      "currentVotes": 15,
+      "priorVotes": 15,
+      "ids": [
+        "a239eb5b-4556-48d7-a1d1-d0ef90226439",
+        "799bcece-9dbb-46f3-b448-207608a05782"
+      ]
+    },
+    {
+      "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "historyRounds": 3,
+      "historyVotes": 122,
+      "priorRows": 7,
+      "submitterCount": 12,
+      "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "sticker-packs",
+        "propoganda"
+      ],
+      "roundCount": 2,
+      "entryCount": 2,
+      "votes": 40,
+      "share": 0.32786885245901637,
+      "currentVotes": 15,
+      "priorVotes": 25,
+      "ids": [
+        "c6d6d9c9-4a4d-41a9-9959-9da68a4e9448",
+        "ab6b508b-5cf1-464b-8291-94388f1dcf7b"
+      ]
+    },
+    {
+      "wallet": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+      "historyRounds": 5,
+      "historyVotes": 407,
+      "priorRows": 30,
+      "submitterCount": 18,
+      "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-characters",
+        "sticker-packs",
+        "comic-strips",
+        "physical-artwork",
+        "propoganda"
+      ],
+      "roundCount": 5,
+      "entryCount": 8,
+      "votes": 133,
+      "share": 0.32678132678132676,
+      "currentVotes": 15,
+      "priorVotes": 118,
+      "ids": [
+        "8202611a-2fc7-4c4f-b3fb-5b451efb196d",
+        "a6241522-9a72-4703-bd90-f6804ebd5af7",
+        "82e1460a-2149-4275-a5c6-0796a242a0aa",
+        "e4baef7b-fb1d-46da-a966-071a718e6060",
+        "ba4a9293-3235-4635-a44b-df6d5889edd3",
+        "d99fe2d6-11b0-452e-ac3a-dd13e45eef0c",
+        "fb763f9e-e190-47ec-9895-051d8a9d7270",
+        "ea603282-182d-4017-85f0-177d93cf410e"
+      ]
+    },
+    {
+      "wallet": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+      "historyRounds": 7,
+      "historyVotes": 606,
+      "priorRows": 29,
+      "submitterCount": 17,
+      "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "yellow-poster",
+        "sticker-packs",
+        "comic-strips",
+        "propoganda"
+      ],
+      "roundCount": 4,
+      "entryCount": 5,
+      "votes": 190,
+      "share": 0.31353135313531355,
+      "currentVotes": 15,
+      "priorVotes": 175,
+      "ids": [
+        "1748f9f8-4b54-45b8-a981-28bcedcc26f5",
+        "08ef899c-ffca-40b7-b676-f219a98dda36",
+        "1c12aac4-f05c-431e-a9dd-080a9901d78e",
+        "9bb18c2c-354a-4eab-b247-38fe9146d9d0",
+        "8ba52e0d-fd56-4076-90c8-915a7fb340a8"
+      ]
+    },
+    {
+      "wallet": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+      "historyRounds": 3,
+      "historyVotes": 161,
+      "priorRows": 6,
+      "submitterCount": 7,
+      "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+      "username": "Skwalo_09",
+      "currentSubmitter": true,
+      "rounds": [
+        "comic-strips",
+        "propoganda"
+      ],
+      "roundCount": 2,
+      "entryCount": 3,
+      "votes": 50,
+      "share": 0.3105590062111801,
+      "currentVotes": 15,
+      "priorVotes": 35,
+      "ids": [
+        "4194c95c-2525-4242-a7b3-3948f95de9cd",
+        "447e57b1-ebb7-4a7f-b9ac-7b6da87a6d33",
+        "0ffaf5e3-8c89-40fb-9f39-e5ef4fa91763"
+      ]
+    },
+    {
+      "wallet": "0xdd3b3a67c66a5276aacc499ec2abd5241721e008",
+      "historyRounds": 2,
+      "historyVotes": 102,
+      "priorRows": 10,
+      "submitterCount": 13,
+      "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+      "username": null,
+      "currentSubmitter": true,
+      "rounds": [
+        "physical-artwork",
+        "propoganda"
+      ],
+      "roundCount": 2,
+      "entryCount": 2,
+      "votes": 30,
+      "share": 0.29411764705882354,
+      "currentVotes": 15,
+      "priorVotes": 15,
+      "ids": [
+        "1a240827-4189-4a9f-b553-945af3840ecc",
+        "0c3eac8f-8352-4a7d-a80d-37e2a3dae5b7"
+      ]
+    }
+  ],
+  "currentSimilar": [
+    {
+      "a": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+      "b": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+      "overlap": 1,
+      "jaccard": 1,
+      "sec": 34786.087,
+      "exact": true
+    },
+    {
+      "a": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+      "b": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+      "overlap": 1,
+      "jaccard": 1,
+      "sec": 74373.959,
+      "exact": true
+    },
+    {
+      "a": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+      "b": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+      "overlap": 1,
+      "jaccard": 1,
+      "sec": 109160.046,
+      "exact": true
+    },
+    {
+      "a": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "b": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+      "overlap": 0.9215686274509804,
+      "jaccard": 0.8,
+      "sec": 60.818,
+      "exact": false
+    },
+    {
+      "a": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+      "b": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+      "overlap": 0.9019607843137255,
+      "jaccard": 1,
+      "sec": 113.697,
+      "exact": false
+    },
+    {
+      "a": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+      "b": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+      "overlap": 0.9019607843137255,
+      "jaccard": 0.8,
+      "sec": 369.396,
+      "exact": false
+    },
+    {
+      "a": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+      "b": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+      "overlap": 0.8823529411764706,
+      "jaccard": 0.6666666666666666,
+      "sec": 127892.45,
+      "exact": false
+    },
+    {
+      "a": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+      "b": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+      "overlap": 0.8653846153846154,
+      "jaccard": 0.6,
+      "sec": 5206.659,
+      "exact": false
+    },
+    {
+      "a": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+      "b": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+      "overlap": 0.8653846153846153,
+      "jaccard": 0.6,
+      "sec": 115.266,
+      "exact": false
+    },
+    {
+      "a": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+      "b": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+      "overlap": 0.8653846153846153,
+      "jaccard": 0.6,
+      "sec": 5321.925,
+      "exact": false
+    },
+    {
+      "a": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "b": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+      "overlap": 0.8653846153846153,
+      "jaccard": 0.5,
+      "sec": 52021.295,
+      "exact": false
+    },
+    {
+      "a": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+      "b": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "overlap": 0.8653846153846153,
+      "jaccard": 0.5,
+      "sec": 57227.954,
+      "exact": false
+    },
+    {
+      "a": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "b": "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+      "overlap": 0.8505364409914908,
+      "jaccard": 0.8,
+      "sec": 98.129,
+      "exact": false
+    }
+  ],
+  "recurrent": [
+    {
+      "a": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "b": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+      "co": 5,
+      "similar": 1,
+      "exact": 1,
+      "near": 0
+    },
+    {
+      "a": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+      "b": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+      "co": 2,
+      "similar": 1,
+      "exact": 1,
+      "near": 0
+    },
+    {
+      "a": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "b": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+      "co": 2,
+      "similar": 1,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "b": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+      "co": 5,
+      "similar": 1,
+      "exact": 0,
+      "near": 0
+    },
+    {
+      "a": "0x0081e6f9373c1ffb7d7fc702eb15ac805eb50389",
+      "b": "0xa4ec1315f1032b0dd3c5043d3d145f93ec4d009f",
+      "co": 2,
+      "similar": 1,
+      "exact": 0,
+      "near": 0
+    },
+    {
+      "a": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+      "b": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+      "co": 3,
+      "similar": 0,
+      "exact": 0,
+      "near": 2
+    },
+    {
+      "a": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+      "b": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+      "co": 4,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "b": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "co": 4,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "b": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "co": 4,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+      "b": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+      "co": 4,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "b": "0xa635a137bbddc01a7a8a09680a91dd72cb71c100",
+      "co": 5,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+      "b": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+      "co": 3,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+      "b": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+      "co": 2,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+      "b": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+      "co": 3,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    },
+    {
+      "a": "0x94b9cf6ee586e656fb76ce62d0e5956f14cfecc5",
+      "b": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+      "co": 4,
+      "similar": 0,
+      "exact": 0,
+      "near": 1
+    }
+  ],
+  "directSelf": [
+    {
+      "id": "1f34023b-e1f8-4acc-9947-e63a545dbf51",
+      "round_id": "8d9d9988-77fc-41e7-a27c-2e12e56d265e",
+      "round_slug": "farcaster-nominations",
+      "submission_id": "c4ac70d5-9150-4419-88a6-d0a523276317",
+      "wallet_address": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+      "vote_count": 4,
+      "created_at": "2026-08-21T14:54:26.080Z",
+      "submission_title": "UhCaribe!",
+      "submitting_wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "585afa90-a3e6-4ba3-bd86-b0727c6ee86d",
+      "round_id": "8d9d9988-77fc-41e7-a27c-2e12e56d265e",
+      "round_slug": "farcaster-nominations",
+      "submission_id": "86bb9719-5b22-49c6-a416-130625bb80b9",
+      "wallet_address": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+      "vote_count": 57,
+      "created_at": "2026-08-21T14:54:26.080Z",
+      "submission_title": "Guacala Studio",
+      "submitting_wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "0a86bc98-6601-4ff4-bce5-8936ac175c89",
+      "round_id": "8d9d9988-77fc-41e7-a27c-2e12e56d265e",
+      "round_slug": "farcaster-nominations",
+      "submission_id": "10dc35ab-2ef4-49e6-b471-a9defdfd531b",
+      "wallet_address": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "vote_count": 20,
+      "created_at": "2026-08-15T20:27:08.035Z",
+      "submission_title": "EmpressTrash",
+      "submitting_wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "2d9c0c96-d9cf-4016-9f37-204daa58c919",
+      "round_id": "8d9d9988-77fc-41e7-a27c-2e12e56d265e",
+      "round_slug": "farcaster-nominations",
+      "submission_id": "2d4bf018-8529-426f-835d-291f31c3ed09",
+      "wallet_address": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "vote_count": 25,
+      "created_at": "2026-08-15T20:27:08.035Z",
+      "submission_title": "The paper crane",
+      "submitting_wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "c9175eba-64f1-4595-915c-9e1af6cb8c3c",
+      "round_id": "8d9d9988-77fc-41e7-a27c-2e12e56d265e",
+      "round_slug": "farcaster-nominations",
+      "submission_id": "48499851-a5db-4783-b56c-618d464a7d4d",
+      "wallet_address": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "vote_count": 20,
+      "created_at": "2026-08-15T20:27:08.035Z",
+      "submission_title": "CatsWillEatYou",
+      "submitting_wallet": "0x5bfeb4ca066c9458842ac89b6e5cd983bd1a1034",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "60fc8e4e-2ef3-4b70-8796-e4be591ef776",
+      "round_id": "6a74682b-9318-4fd9-b02a-928e82cf9c5e",
+      "round_slug": "yellow-poster",
+      "submission_id": "7c507cc9-f49e-4118-8b7b-c2f5ec8464b5",
+      "wallet_address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "vote_count": 20,
+      "created_at": "2026-09-01T18:08:38.862Z",
+      "submission_title": "Yellowverse",
+      "submitting_wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "b146af67-a8e9-45bb-b9d4-6a74c295858c",
+      "round_id": "6a74682b-9318-4fd9-b02a-928e82cf9c5e",
+      "round_slug": "yellow-poster",
+      "submission_id": "578164c0-121d-43af-9fb7-76d4658bdd6a",
+      "wallet_address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "vote_count": 80,
+      "created_at": "2026-09-01T18:08:38.862Z",
+      "submission_title": "United in Yellow",
+      "submitting_wallet": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "05a2fb00-1d91-447a-9fb6-034ab2d5973d",
+      "round_id": "6a74682b-9318-4fd9-b02a-928e82cf9c5e",
+      "round_slug": "yellow-poster",
+      "submission_id": "3950c7a7-d2b9-48bf-934f-061e7b381583",
+      "wallet_address": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "vote_count": 101,
+      "created_at": "2026-09-03T17:12:08.434Z",
+      "submission_title": "Yellow Adventurer",
+      "submitting_wallet": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "178a2a15-adef-47cf-a35b-87818144989b",
+      "round_id": "3b4b518b-552a-42e6-9a8a-242229d6a9c2",
+      "round_slug": "future-yellow-rounds",
+      "submission_id": "ad279616-36bf-46f8-b148-3df25c051d62",
+      "wallet_address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "vote_count": 16,
+      "created_at": "2026-06-02T21:07:51.298Z",
+      "submission_title": "Yellow Merch Designs",
+      "submitting_wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "2fe4dee2-5748-4d20-8102-e955e3f825ea",
+      "round_id": "3b4b518b-552a-42e6-9a8a-242229d6a9c2",
+      "round_slug": "future-yellow-rounds",
+      "submission_id": "aadd3b20-db35-4a35-86cb-e711075f658a",
+      "wallet_address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "vote_count": 12,
+      "created_at": "2026-06-02T21:07:51.298Z",
+      "submission_title": "Code is Art",
+      "submitting_wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "3d7bb649-0564-4f9c-a246-f6eef0ddda40",
+      "round_id": "3b4b518b-552a-42e6-9a8a-242229d6a9c2",
+      "round_slug": "future-yellow-rounds",
+      "submission_id": "47e9b7de-fa9e-47cd-83bb-e66420c1e2c8",
+      "wallet_address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "vote_count": 13,
+      "created_at": "2026-06-02T21:07:51.298Z",
+      "submission_title": "Yellow Poster or Banner",
+      "submitting_wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "66cee743-e7a5-4e57-8f8a-699336d4f6b9",
+      "round_id": "3b4b518b-552a-42e6-9a8a-242229d6a9c2",
+      "round_slug": "future-yellow-rounds",
+      "submission_id": "abeca650-45c6-47e4-b4a2-91f5bf8f76c7",
+      "wallet_address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "vote_count": 15,
+      "created_at": "2026-06-02T21:07:51.298Z",
+      "submission_title": "Yellow Sticker Pack",
+      "submitting_wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "864d6dde-2b1b-4906-8fad-272d3d358bdf",
+      "round_id": "3b4b518b-552a-42e6-9a8a-242229d6a9c2",
+      "round_slug": "future-yellow-rounds",
+      "submission_id": "d0c2951d-97a4-453c-9a98-6de6eac30bc7",
+      "wallet_address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "vote_count": 11,
+      "created_at": "2026-06-02T21:07:51.298Z",
+      "submission_title": "Physical Artwork",
+      "submitting_wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "ae57bfbe-9ea2-4a63-830c-0b86913b8e5a",
+      "round_id": "3b4b518b-552a-42e6-9a8a-242229d6a9c2",
+      "round_slug": "future-yellow-rounds",
+      "submission_id": "64e974b1-618d-48c5-ad18-2d4047572cd4",
+      "wallet_address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "vote_count": 12,
+      "created_at": "2026-06-02T21:07:51.298Z",
+      "submission_title": "Yellow Comic Strip",
+      "submitting_wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    },
+    {
+      "id": "c5829b8c-0630-4373-bd97-246f05d20c2c",
+      "round_id": "3b4b518b-552a-42e6-9a8a-242229d6a9c2",
+      "round_slug": "future-yellow-rounds",
+      "submission_id": "8049f112-0a55-43b8-b0d8-1ef23af40a25",
+      "wallet_address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "vote_count": 21,
+      "created_at": "2026-06-02T21:07:51.298Z",
+      "submission_title": "Yellow Propaganda",
+      "submitting_wallet": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+      "submission_status": "approved",
+      "submission_deleted_at": null
+    }
+  ]
+}

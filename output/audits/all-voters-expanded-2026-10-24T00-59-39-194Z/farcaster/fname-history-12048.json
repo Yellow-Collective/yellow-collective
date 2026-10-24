@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=12048",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.332Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 12045,
+        "timestamp": 1681452132,
+        "username": "mathew",
+        "owner": "0x4fa06cfd75d2e1dd21ab1b7bfa39d93117e8a2b0",
+        "from": 0,
+        "to": 12048,
+        "user_signature": "0x23f93de1118a485d9d5c9aab59af432d240a8186f33b097b3cd3a1a5c881ad1d2b2caf4f1cc9465ebe9f269220c563a06ecd1d3fbe07aaa8698708509cf33bf21c",
+        "server_signature": "0xe551b7fa9792e7fa70777b0256775d33a9fa91615cb7267e82cb51ad7ec9ac330f1c169166f21d1c0d11355a71f2cc15e11d6fd71e93a2a58149525037a9e7031c"
+      }
+    ]
+  }
+}

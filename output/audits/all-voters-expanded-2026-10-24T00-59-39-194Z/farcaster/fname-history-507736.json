@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=507736",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.082Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 329208,
+        "timestamp": 1714499115,
+        "username": "hellia",
+        "owner": "0x3516a780734c5f8850fe6b12da8e7d9156639be9",
+        "from": 0,
+        "to": 507736,
+        "user_signature": "0x65588506ccac695827917c5ae51addf26b0db704c238e27d26c18e3da7dacac920693ef47ce4ec2df4f4ca15cbce66e017376ac59e3df5b57a1f5db0d7cd85871b",
+        "server_signature": "0xab578549bb1d67aefa22ef261426a04dd7e70fd54e95f5aa55571edf42fe056220af77419407d33370074f2eb4113d485e69cef58442f0ec378a0ab1dbf6a24c1b"
+      }
+    ]
+  }
+}

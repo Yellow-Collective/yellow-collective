@@ -1,0 +1,88 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=tagawamakoto",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.755Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 382205,
+        "displayName": "tagawamakoto.⌐◨-◨",
+        "profile": {
+          "bio": {
+            "text": "“What is essential is invisible to our eyes. But we can express it in art.\" My interpreter is @Kinako588. Ambassador at @kitpasportal,@Liquitex_Jp, and @Apple.",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x0a93a7be7e7e426fc046e204c44d6b03a302b631",
+            "token": {
+              "chain": "base",
+              "ca": "0x0a93a7be7e7e426fc046e204c44d6b03a302b631",
+              "tokenId": "0199094a-698a-a462-44fa-7ffdbc15dd41",
+              "name": "Nouns",
+              "ticker": "NOUNS",
+              "symbol": "NOUNS",
+              "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/2ad69975-906e-4329-21b9-33e6914ae600/original"
+            }
+          }
+        },
+        "followerCount": 531,
+        "followingCount": 413,
+        "username": "tagawamakoto",
+        "pfp": {
+          "url": "https://i.imgur.com/ZWEMVlk.jpg",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01927a8e-087c-092f-09ed-41213275d47b",
+            "platform": "x",
+            "username": "Marcot_no1",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 382205,
+        "custodyAddress": "0xad49268cef0d51b6b1f49bd631a52090f3280d55",
+        "ethWallets": [
+          "0x8F3a83a3356d2666D89d027544BbaFfa12139E3c",
+          "0x0d294a53871B0968a9eF566591cf4eE442f21de7"
+        ],
+        "solanaWallets": [
+          "9t91vck1YZQFEeDLCdLJ88AUpcEZ7kpstsZ9W33QkD82"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x0d294a53871B0968a9eF566591cf4eE442f21de7",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "9t91vck1YZQFEeDLCdLJ88AUpcEZ7kpstsZ9W33QkD82",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

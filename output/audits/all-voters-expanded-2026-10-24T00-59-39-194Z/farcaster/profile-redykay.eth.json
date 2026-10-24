@@ -1,0 +1,88 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=redykay.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:36.902Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 522165,
+        "displayName": "Redy",
+        "profile": {
+          "bio": {
+            "text": "Doing art /redversion",
+            "mentions": [],
+            "channelMentions": [
+              "redversion"
+            ]
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "totalEarned": 305.7620553403163,
+          "url": "",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/403d32bf-1022-41d3-4d9e-777191ffb000/original",
+          "profileToken": {
+            "tokenUri": ""
+          }
+        },
+        "followerCount": 1410,
+        "followingCount": 468,
+        "username": "redykay",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/532c2834-0bd7-4057-0d46-46f469552f00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019d4442-7b9a-4ce2-9af7-1d944891e826",
+            "platform": "x",
+            "username": "redykayy",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 522165,
+        "custodyAddress": "0xd8d96893c412c306f23020c3ca09e598c2aca37c",
+        "ethWallets": [
+          "0x4E0658E1e379Faf0B96b78Cfe7051F87c07900E2",
+          "0x520180B366Ec4E23C6A2bCA394AD53fa220677C2",
+          "0xdDb411c9A9f8485b73C8997AD655A88924577991",
+          "0x25da5bE4EC474801Db974Bb419FE2D782CAB9E79"
+        ],
+        "solanaWallets": [
+          "AGeyMYYtEf3CRRAzxcdVLGYnEBJZsSAvxXHdYaNiPSJF",
+          "5FSJjAwjc7ZtbMgciZbSW3R4x1gCC3zovZvGxsqg8XFC"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x520180B366Ec4E23C6A2bCA394AD53fa220677C2",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "5FSJjAwjc7ZtbMgciZbSW3R4x1gCC3zovZvGxsqg8XFC",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

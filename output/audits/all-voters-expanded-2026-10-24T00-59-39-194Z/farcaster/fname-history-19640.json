@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=19640",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.564Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 19545,
+        "timestamp": 1693526635,
+        "username": "zaal",
+        "owner": "0xd176f46627328a3f8108e923a15ed4b9d762749e",
+        "from": 0,
+        "to": 19640,
+        "user_signature": "0x86cec575282234c61709388a19f62500591e17895a50afb028da8048554be55a0472d1de0e0debd2c83add7b3148bab1022f23c96c4b238cd7f71aa8e8c3a2321b",
+        "server_signature": "0xd0a430a71d5cd79335619ed13e285ba766ed584ae285ab17adfb41a2b14ad1e7259ffc4f606970ab6f79d5b6c077df8783ecdc764cd7e24857217cd65b481eca1c"
+      }
+    ]
+  }
+}

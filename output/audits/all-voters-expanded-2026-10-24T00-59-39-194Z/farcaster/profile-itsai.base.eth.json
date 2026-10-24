@@ -1,0 +1,12 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=itsai.base.eth",
+  "status": 404,
+  "retrievedAt": "2026-10-24T01:03:46.011Z",
+  "data": {
+    "errors": [
+      {
+        "message": "No FID associated with username itsai.base.eth"
+      }
+    ]
+  }
+}

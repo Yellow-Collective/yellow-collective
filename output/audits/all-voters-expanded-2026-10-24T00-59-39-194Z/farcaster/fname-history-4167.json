@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=4167",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.897Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 4166,
+        "timestamp": 1666568730,
+        "username": "nounishprof",
+        "owner": "0xbb54a63ad8241710eba3a98af224080b611ff8e9",
+        "from": 0,
+        "to": 4167,
+        "user_signature": "0xd6732340a722cb7b40f5fc5b34088066b056ed8b61c78b636ab1517dd7af839b040e03348f255a27d365cca1a45fbbaa336381be26f1c5a7bda344525d4103511b",
+        "server_signature": "0x50f44140b2739b13f4aae53f35b641fb4404df68260c4356d55017132ce157d1535384e05df273678b1788c64946f7ae91626f84878ff665aed6c245ce9e25ec1b"
+      }
+    ]
+  }
+}

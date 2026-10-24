@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=847004",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.280Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 660212,
+        "timestamp": 1725036503,
+        "username": "moonza",
+        "owner": "0x722236090d94b9d870d187ac7976f0e924764e82",
+        "from": 0,
+        "to": 847004,
+        "user_signature": "0x815d4f4be23632f33bb5e57fe9bc4868384d738ac3d4b56d216b901d00a0ce275e9586c9b0108847b51ec1d8b7826cd15ab90b407893636b5e350fcc0f0844641b",
+        "server_signature": "0xc5557af76de4810c5d84570f27b349535905fffe0ec2aa954f579c258583754344736bb8e2fa90bf79decdd57d581e56596a4ee17996f84598416ddd2138f4d91c"
+      }
+    ]
+  }
+}

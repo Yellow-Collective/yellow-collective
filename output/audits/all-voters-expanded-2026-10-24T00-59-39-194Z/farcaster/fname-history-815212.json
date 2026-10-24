@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=815212",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.287Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 629514,
+        "timestamp": 1722544095,
+        "username": "desdot",
+        "owner": "0x2af817a878e8979e8518f0010f3d2b84ad8fa25a",
+        "from": 0,
+        "to": 815212,
+        "user_signature": "0x9616fc815128f75f80715174aba1e61e4d0731c6a11233194dd71ecc491644440dac138f464a33d5efbf3ebc1047fd685cef8db1c2d5a45dac9ceadd63b989061c",
+        "server_signature": "0x9b572d601cbef6906e5d43c72045af33a896a356c17daacc5fc98ee9065ca48a0c36094c1396e51ffc0a705e15de44bd32b0adb4565697d032e13e0eda3822a61c"
+      }
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=desdot",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.107Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 815212,
+        "displayName": "des.",
+        "profile": {
+          "bio": {
+            "text": "onchain design studio .\ndesdot.base.eth",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 101,
+        "followingCount": 195,
+        "username": "desdot",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/06661259-92c9-45db-12d8-9ad41d4e9c00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0192a35a-d610-b5ea-109e-1ab460e839c2",
+            "platform": "x",
+            "username": "des_dot",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 815212,
+        "custodyAddress": "0x2af817a878e8979e8518f0010f3d2b84ad8fa25a",
+        "ethWallets": [
+          "0x31475a5652eFbB267b3AFDD9591Ef05406db792B",
+          "0xd19a696567D6D4fA3a0865b9b50a1199b50AF2E3",
+          "0xA83d26761C8F9753F321E9C29b51ddc07eFAADC5"
+        ],
+        "solanaWallets": [
+          "CCt9B1YUSeqw3Ht68LLhEPyom3oLuumPiZnamgjSnTzC"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xd19a696567D6D4fA3a0865b9b50a1199b50AF2E3",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "CCt9B1YUSeqw3Ht68LLhEPyom3oLuumPiZnamgjSnTzC",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

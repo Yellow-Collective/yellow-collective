@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=416580",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.863Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 239803,
+        "timestamp": 1711710759,
+        "username": "msmeghna",
+        "owner": "0x6be8c48d7393cab0b45169743a9ed384dae2db71",
+        "from": 0,
+        "to": 416580,
+        "user_signature": "0x2c14f519a6b290c2c0e1413da7e60d918d8aeaa3205d89e1455488dc776e5b1814a5d7bd43cd349b3007b49c5650d743650d204813dce97ac4495d1cd3f211d61c",
+        "server_signature": "0x9952e83603cd9748a95aedbea2d50295e72e1bbd9956da11bd8a020dab64d1b577ff4df13c9452fc3357733a99e45b7b96732fff0b92c16c3ca09a8ea66c553d1b"
+      }
+    ]
+  }
+}

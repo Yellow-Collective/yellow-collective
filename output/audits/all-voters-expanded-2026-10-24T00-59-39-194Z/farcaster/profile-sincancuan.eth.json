@@ -1,0 +1,91 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=sincancuan.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.760Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 312486,
+        "displayName": "sincancuan.base.eth",
+        "profile": {
+          "bio": {
+            "text": "(Mountaineer | Artist | Crypto Enthusiast). Wonderful Indonesia 🌏",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/59a69d02-d943-4f0f-012a-720788a4f600/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+            "token": {
+              "chain": "base",
+              "ca": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+              "tokenId": "0198cf9a-efd8-6b2b-d06a-3913d55ebbd3",
+              "name": "Degen",
+              "ticker": "DEGEN",
+              "symbol": "DEGEN",
+              "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/300f4011-2af0-4c86-2f7b-97223c3dc900/original"
+            }
+          }
+        },
+        "followerCount": 937,
+        "followingCount": 253,
+        "username": "sincancuan.eth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/3775fbcf-86ec-4f7c-42e7-33eeee642000/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019c3574-b712-779f-0ffa-4272471e6b06",
+            "platform": "x",
+            "username": "sincancuan",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 312486,
+        "custodyAddress": "0x162a5f353c381cf0853d4471cf1dcc3c338c5e5c",
+        "ethWallets": [
+          "0xa635a137bbddC01a7a8A09680a91DD72cb71c100",
+          "0x3A7267635C171d7A8Fb326D57F0fF9D8e79820B8"
+        ],
+        "solanaWallets": [
+          "J6gAiwotzmf2WZD2yQWMgVWqCzumjtZpymSFnWEnrDMd",
+          "4bqGBFedFktugvDGrNNFS4oUpgJ2fpgKEKwU6PD87fML"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x3A7267635C171d7A8Fb326D57F0fF9D8e79820B8",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "4bqGBFedFktugvDGrNNFS4oUpgJ2fpgKEKwU6PD87fML",
+            "labels": [
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=413213",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.838Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 236544,
+        "timestamp": 1711588614,
+        "username": "valentinaartt",
+        "owner": "0x9635f53962affb162c10ae0d03b4c721bdd16057",
+        "from": 0,
+        "to": 413213,
+        "user_signature": "0xd6483e1fcf447f73446682f4aa63245de09db712469aa66b86d6557cfbe2d1670fcdc5fd73b641995a1909e8b17c6d595a754c1575d21337d52be86e76594a4c1c",
+        "server_signature": "0x1ca97128dec167f634a25351f75a5ed9fc42969bc3471e7e96adde0b9463c729261af5218dee448c8ac390053eac3ef21b5a373c0206dc67db472aae1ed35f131b"
+      }
+    ]
+  }
+}

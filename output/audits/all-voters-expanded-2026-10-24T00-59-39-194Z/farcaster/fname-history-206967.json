@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=206967",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.515Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 39614,
+        "timestamp": 1702196941,
+        "username": "netnose",
+        "owner": "0x895d6d226ab780fb59beb5ad2eca2587a03c2934",
+        "from": 0,
+        "to": 206967,
+        "user_signature": "0x85da00858895fecf6a9aa2dcf8ed52834246d591ff818fe90474f5abdf4d629c69b2531f2bba94278f78a637b878828b2c09bac957f496546c2e607ba131b7d71c",
+        "server_signature": "0x8f02f599ee0cfc5c75c41c56ffa7ea2b239818aa29479b461cbe1457f202442d2d61c0640ff08113a3faf39452f4b3ffe9a65f834e82af9076acde3e5af417651c"
+      }
+    ]
+  }
+}

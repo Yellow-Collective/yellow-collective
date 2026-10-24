@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=312486",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.632Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 140185,
+        "timestamp": 1707265684,
+        "username": "sincancuan",
+        "owner": "0xb096f22263543907f09567d0f808c1ea2127a81d",
+        "from": 0,
+        "to": 312486,
+        "user_signature": "0x6d5d7b0fd7024548dd56394c3e005610f93c4d9566cc99fa45d1ee0a1b451ec05289bede99ac67d35bb40e2f22320bd50cf6a659bdc989c853b23fe8634e8f171b",
+        "server_signature": "0xb695f222e033e11cb56350bc9c2a95fed07d678c5f936fd45f34158229363ba976ae00219b5bfa005f41066013f1122ab5222f56c336306393ca10290b99e3b21b"
+      }
+    ]
+  }
+}

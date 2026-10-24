@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=492908",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.067Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 314663,
+        "timestamp": 1713557982,
+        "username": "mahnaaz",
+        "owner": "0x7d7b3c4647a3b377f39e43c71d7417cf0b4c27a1",
+        "from": 0,
+        "to": 492908,
+        "user_signature": "0xafc08f8aca4244f1565fa1a398fb7dc01db2e5b84d4d0a3ee1c4a8bba9de25cf1ae87e6956bdffbf60021e92c158f5026fc31e6c789760f2c817cf57537296831b",
+        "server_signature": "0xabc00c97cc76ed2c8d83d882c2e1d88d9e402180ce8b87dc464b4cf632814fe23f111dc3b3f43e8f787a894c0cbab0073834281983c840d371227dff98adf7ba1c"
+      }
+    ]
+  }
+}

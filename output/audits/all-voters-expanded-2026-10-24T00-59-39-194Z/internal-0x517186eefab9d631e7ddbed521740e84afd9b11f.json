@@ -1,0 +1,36 @@
+{
+  "args": {
+    "chainid": "8453",
+    "address": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+    "startblock": 0,
+    "endblock": 53000299,
+    "offset": 1000,
+    "page": 1,
+    "sort": "asc"
+  },
+  "retrievedAt": "2026-10-24T01:19:09.141Z",
+  "result": {
+    "ok": true,
+    "status": "1",
+    "message": "OK",
+    "result": [
+      {
+        "blockNumber": "52129982",
+        "transactionIndex": "92",
+        "timeStamp": "1791049311",
+        "hash": "0xc2a61e3042be3b016e14e5cd45fb42e587274d105b1c717473eb658aaeb1e692",
+        "from": "0x4b5c71082d027d16d2a146465d66f9eec11634f6",
+        "to": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "value": "7000000000000000",
+        "contractAddress": "",
+        "input": "",
+        "type": "call",
+        "gas": "90000",
+        "gasUsed": "0",
+        "traceId": "0_1",
+        "isError": "0",
+        "errCode": ""
+      }
+    ]
+  }
+}

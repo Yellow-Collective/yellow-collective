@@ -1,0 +1,154 @@
+{
+  "url": "https://api.farcaster.xyz/v2/verifications?fid=6786",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:38.138Z",
+  "data": {
+    "result": {
+      "verifications": [
+        {
+          "fid": 6786,
+          "address": "GX8CUy3Y4PXE6sc6qxFAgGRSFQRGa8yM3VzcJoNaPjPq",
+          "timestamp": 1761718615889,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 6786,
+          "address": "0x8621ffa9Fd2B61BFa485798A1082d23dC920e8d1",
+          "timestamp": 1759089790795,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 6786,
+          "address": "0x5bE8bDC96c423f265FC589ff8611e4C72eE94dCA",
+          "timestamp": 1783662519171,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0xaED498a2cde48087686516CD56596ca77c8B42DF",
+          "timestamp": 1780239982673,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "GhvhNZCgJVSYa3GVUVdZrtaCjR52chf65iEqxUbED8Pz",
+          "timestamp": 1780239982565,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0xB6A465063Be9De31306153BB325Bb37c48F0fC49",
+          "timestamp": 1758648101721,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0x04e0477C4b0c4064738cE44aDaB342eFb90CE2D5",
+          "timestamp": 1755644462681,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0xF2037C88aECFA761b98182480Bd24f6bFcefD224",
+          "timestamp": 1755122100009,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": [
+            "smartWallet"
+          ]
+        },
+        {
+          "fid": 6786,
+          "address": "0x22F487710d93589e3915b4918a00245c43b5fE53",
+          "timestamp": 1752610341250,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0xA8B695a5F80b6b85c215D19f778Be18bf5A937eB",
+          "timestamp": 1744944012854,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0x5d0a2C7A9b2E0Ff95de330476418074f808DfD4e",
+          "timestamp": 1731387810815,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0x1128Ba9d3704710711216726aF6F06817Cf50B02",
+          "timestamp": 1730404475398,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0xDfC6eD58141B68ab1372553fb65903EF223f4b7d",
+          "timestamp": 1712961241949,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "F45zhofLHJHoFZj5UJsbffxHij5HjYNcpecPzNX9Qed4",
+          "timestamp": 1708932184571,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 6786,
+          "address": "0xC1aeBd6f0D37611d744B0ECD0865984fbCb4B4c4",
+          "timestamp": 1693509879748,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        }
+      ]
+    }
+  }
+}

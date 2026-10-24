@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=15069",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.425Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 15065,
+        "timestamp": 1688362719,
+        "username": "nadie",
+        "owner": "0x2a289594bd4a4f3ed6fa40e35657d19805c919c0",
+        "from": 0,
+        "to": 15069,
+        "user_signature": "0xa9ac3f46c11234a517eb8bfd37a3f17e996e51a637c633a554602b5949aacf1647d57be957807ce34553ac7b1ae5c2dbf62d9c82958cf4e669755030e248dbe41c",
+        "server_signature": "0x2ee014dfa0f3766e3dd8dfd4f1b529645fe5e92f48e4fa4e4be1936e3dcd1aea492cdca1419e3e1f7f66f798a25c15c2b7df7e66b7752f796efc4da38588d1411b"
+      }
+    ]
+  }
+}

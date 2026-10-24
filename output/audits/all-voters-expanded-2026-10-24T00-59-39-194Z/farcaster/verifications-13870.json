@@ -1,0 +1,91 @@
+{
+  "url": "https://api.farcaster.xyz/v2/verifications?fid=13870",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.919Z",
+  "data": {
+    "result": {
+      "verifications": [
+        {
+          "fid": 13870,
+          "address": "Y83W5chGEPHNt8JJjYhNB2yCvaVkgC9HES6XkZKcpiv",
+          "timestamp": 1747947705964,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 13870,
+          "address": "0x4b186552933382f5AF7D241ED2d0BB7b79E4d200",
+          "timestamp": 1740157747703,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 13870,
+          "address": "0x26b25433469fA35d3377230B80edcCDE084b9020",
+          "timestamp": 1754066900560,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": [
+            "smartWallet"
+          ]
+        },
+        {
+          "fid": 13870,
+          "address": "0xBcbdFE97e28Ca571F2F48e7fB60a3D5821c6a727",
+          "timestamp": 1746628125970,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 13870,
+          "address": "DU3LVi19cTAqjv7czqVPTns3Rgv155DwiHtdzVpmCmMi",
+          "timestamp": 1708720428430,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 13870,
+          "address": "0x70abdCd7A5A8Ff9cDef1ccA9eA15a5d315780986",
+          "timestamp": 1693509905738,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 13870,
+          "address": "0x05e189E1BbaF77f1654F0983872fd938AE592eDD",
+          "timestamp": 1693509869273,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 13870,
+          "address": "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+          "timestamp": 1693509863881,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        }
+      ]
+    }
+  }
+}

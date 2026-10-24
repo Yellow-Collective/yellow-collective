@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=471160",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.020Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 293291,
+        "timestamp": 1712740433,
+        "username": "pramadan",
+        "owner": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "from": 0,
+        "to": 471160,
+        "user_signature": "0xc4771f52e3e84965b386e8dbc22fae7806da540877e023385795c5b560d2afae714055cfe0d1703415a42cef76a13ce4bfe2083f81a71ee62949c21b7962a2b21b",
+        "server_signature": "0x7a4fe8a7c1d970986148ea134dc1d56b267619acc27bf131367dcc022f104d89362fa90e6c618f75f8e1dbb03d6be195cb42957013eefa8a3e695d867956b4e11b"
+      }
+    ]
+  }
+}

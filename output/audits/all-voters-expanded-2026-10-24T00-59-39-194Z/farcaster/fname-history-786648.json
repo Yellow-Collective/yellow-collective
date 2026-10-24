@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=786648",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.193Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 601936,
+        "timestamp": 1720799910,
+        "username": "amirk",
+        "owner": "0x0dae4616b7704690cec409dc22c07aaed9101c6d",
+        "from": 0,
+        "to": 786648,
+        "user_signature": "0x96599850c010affd2fcc4e00e4fbb191dbbddc2bf47926086f63006ff4a508bb50ba6fdbc0bc5e0f19fc87bc7b68cd3e13ce20a4d3d5604b8d435e3d4c828e391c",
+        "server_signature": "0x5f9691cd95f114e2be51bc14ff5605d16effbddf8c6151b384ac1d55c42d6c683b6fa0d7f7c8726e6a36041ede4e0cf299bc9547344563c76dd9d64218298c071b"
+      }
+    ]
+  }
+}

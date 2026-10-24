@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=938012",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.397Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 750134,
+        "timestamp": 1736188869,
+        "username": "miniom",
+        "owner": "0x1f1446c188334969fc655fad665abb773a5926f0",
+        "from": 0,
+        "to": 938012,
+        "user_signature": "0xaf06f9244264fd4379226626795b31dbdfd95c7517581945b4558a26951434f06cf777e2f3bca84c1357780ec981244e1df5a42ade301a6d014786e7ffc032f81b",
+        "server_signature": "0x9ad9c22b2601b5bf11975b9e970cce4f9527c30d8654c248ae16a511762aeec331583e2af227dfb16c9e864bca0612803ef6d19fe810118b790ace6c713c4c801b"
+      }
+    ]
+  }
+}

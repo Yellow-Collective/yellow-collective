@@ -1,0 +1,45 @@
+{
+  "args": {
+    "chainid": "8453",
+    "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+    "startblock": 0,
+    "endblock": 53000299,
+    "offset": 10000,
+    "page": 1,
+    "sort": "asc"
+  },
+  "retrievedAt": "2026-10-24T01:04:46.740Z",
+  "result": {
+    "ok": true,
+    "status": "1",
+    "message": "OK",
+    "result": [
+      {
+        "blockNumber": "51990689",
+        "timeStamp": "1790770725",
+        "hash": "0x4bde7fd54cc3653eed815b35100969d03ca393dce574b4aba27096b2a796508c",
+        "nonce": "0",
+        "blockHash": "0x390ac2a4a9e90a486bd0e0ad48c3eac9a00feb27f520dfa5e5dcbecc86ff2ea9",
+        "transactionIndex": "136",
+        "from": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "to": "0x0aa23a7e112889c965010558803813710becf263",
+        "value": "7590000000000000",
+        "gas": "100256",
+        "gasPrice": "15001974",
+        "isError": "0",
+        "txreceipt_status": "1",
+        "input": "0x659dd2b400000000000000000000000000000000000000000000000000000000000003bf62635f706632727476626b0b0080218021802180218021802180218021",
+        "contractAddress": "",
+        "cumulativeGasUsed": "31291787",
+        "gasUsed": "55893",
+        "confirmations": "1016582",
+        "methodId": "0x659dd2b4",
+        "functionName": "createBid(uint256 _tokenId)",
+        "L1Gas": "1600",
+        "L1GasPrice": "255186691",
+        "L1FeesPaid": "2588249827",
+        "L1FeeScalar": "0.000000000000"
+      }
+    ]
+  }
+}

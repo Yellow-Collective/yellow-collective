@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=522165",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.120Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 343445,
+        "timestamp": 1715186866,
+        "username": "redykay",
+        "owner": "0xd8d96893c412c306f23020c3ca09e598c2aca37c",
+        "from": 0,
+        "to": 522165,
+        "user_signature": "0xe6d5131357c017a672c0dfd9d36ee22376487d22a8aa73362d73e7bde5fb18007e55d4857a2916e3faacfd8a58f3e1813e894c8ce7b809b05220521e9f5a4ef81b",
+        "server_signature": "0xcfa5e8f2261c801f5ad02a695529a93b0dde3b0ae35174773b9b46e0f2b03b343f460e53c96419606a6665e8d1b2c40068be7cd19c20996628266c17a5ed0e6d1b"
+      }
+    ]
+  }
+}

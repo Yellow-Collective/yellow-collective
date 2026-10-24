@@ -1,0 +1,105 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=netnose.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.383Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 206967,
+        "displayName": "Mirko 🔵🟡 .⌐◨-◨",
+        "profile": {
+          "bio": {
+            "text": "Developer…not enough? // Working on @betrmint // /yellow collective noun #63",
+            "mentions": [
+              "betrmint"
+            ],
+            "channelMentions": [
+              "yellow"
+            ]
+          },
+          "location": {
+            "placeId": "ChIJ_d9lVIMhhkcR7LwZf2LKn3c",
+            "description": "13845 Ronco Biellese, Province of Biella, Italy"
+          },
+          "earlyWalletAdopter": true,
+          "accountLevel": "pro",
+          "url": "",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x051024b653e8ec69e72693f776c41c2a9401fb07",
+            "token": {
+              "chain": "base",
+              "ca": "0x051024b653e8ec69e72693f776c41c2a9401fb07",
+              "tokenId": "0198d3a2-daa3-0161-2a00-99711390e52e",
+              "name": "BETRMINT",
+              "ticker": "BETR",
+              "symbol": "BETR",
+              "imageUrl": "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/3e125e67-7211-4ff1-0366-b17c918d1400/original"
+            }
+          }
+        },
+        "followerCount": 1790,
+        "followingCount": 1104,
+        "username": "netnose",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/998136d4-792c-481b-363e-6a369c116500/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0192c526-e34e-3c62-8e67-dc3021833b6e",
+            "platform": "x",
+            "username": "netnose",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 206967,
+        "custodyAddress": "0x895d6d226ab780fb59beb5ad2eca2587a03c2934",
+        "ethWallets": [
+          "0x4D1FD46F87449Ffe235e3fce21DF8A9bF8BD9206",
+          "0x8d225974a44c45E339Dc16950CD6e5562649c71e",
+          "0xaCD8de8008289DDBf042Cc8cc7738BBfDBB27a02",
+          "0xD5953408717BEa2E5D0f88b579edb938bdfc61b3",
+          "0x00744695715dce1be921Ed0b8Ff05D89DAE50198"
+        ],
+        "solanaWallets": [
+          "FKC5Dvxtu3cUU9J6LJCPj1kMhSKU8ugijaB1JWJr4iBt",
+          "H1Qm8M2ZjpK6EmwaJWykHMgDGftxhAxhPkUosxpSWTVA",
+          "49iFLcwWa2gixh1SbMNK1rjPmDq1P4p6HCDT7BwyhVhF"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x4D1FD46F87449Ffe235e3fce21DF8A9bF8BD9206",
+            "labels": [
+              "primary"
+            ]
+          },
+          {
+            "address": "0x8d225974a44c45E339Dc16950CD6e5562649c71e",
+            "labels": [
+              "warpcast"
+            ]
+          },
+          {
+            "address": "H1Qm8M2ZjpK6EmwaJWykHMgDGftxhAxhPkUosxpSWTVA",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

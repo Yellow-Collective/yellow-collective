@@ -1,0 +1,73 @@
+{
+  "url": "https://api.farcaster.xyz/v2/verifications?fid=12048",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:07.075Z",
+  "data": {
+    "result": {
+      "verifications": [
+        {
+          "fid": 12048,
+          "address": "9TPmSXXb87pcxFJLaUwbWBvxHfrHKLY1NoxaQyyj2rjm",
+          "timestamp": 1747939299790,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 12048,
+          "address": "0xa26cac6A82d76936f7Bff0b53d25fA26FF893706",
+          "timestamp": 1739236593123,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 12048,
+          "address": "0x6796652b84D395269cdA7F4C265c471671601fC6",
+          "timestamp": 1758599347124,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": [
+            "smartWallet"
+          ]
+        },
+        {
+          "fid": 12048,
+          "address": "DtBZrfdQAEBUwsmx9k4P5GQ7MpSVJeEWXN3dJRXDNbuM",
+          "timestamp": 1742507087033,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 12048,
+          "address": "0x282d656A9d95c64522F6Bc1a42EE759DE81e8dc0",
+          "timestamp": 1740286316882,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 12048,
+          "address": "0x221289030ed4409284be36371664d39E692ae593",
+          "timestamp": 1710436871357,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        }
+      ]
+    }
+  }
+}

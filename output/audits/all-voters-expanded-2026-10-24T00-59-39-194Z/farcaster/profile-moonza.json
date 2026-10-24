@@ -1,0 +1,76 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=moonza",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:05.949Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 847004,
+        "displayName": "Moonza",
+        "profile": {
+          "bio": {
+            "text": "Microbiologist & Digital artist\n🔬 🦠 ⌐◨-◨",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 94,
+        "followingCount": 669,
+        "username": "moonza",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/3f7a79a6-d08d-4fe1-e4c4-7d209afe1c00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019298b5-953a-2621-235c-e278fc2488c6",
+            "platform": "x",
+            "username": "0xmoonza",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 847004,
+        "custodyAddress": "0x4534d9d74f7639fcb7ce17c4a9869513f37a3f1e",
+        "ethWallets": [
+          "0x07566caf069465977e9B0d3a96629c73A6C69740",
+          "0x0C15a35d2fbcA969C4FE3bEcAef7Fa1e25deB084"
+        ],
+        "solanaWallets": [
+          "Ai1WSyQ78gfRxbiLn3uh2X63eUwq3fzkDGtZ2joCaJdY"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x0C15a35d2fbcA969C4FE3bEcAef7Fa1e25deB084",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "Ai1WSyQ78gfRxbiLn3uh2X63eUwq3fzkDGtZ2joCaJdY",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

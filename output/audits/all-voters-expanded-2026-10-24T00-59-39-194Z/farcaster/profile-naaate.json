@@ -1,0 +1,106 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=naaate",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:38.074Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 6786,
+        "displayName": "naaate",
+        "profile": {
+          "bio": {
+            "text": "Co-create with AI. Build open projects. /lum /venturetothex",
+            "mentions": [],
+            "channelMentions": [
+              "lum",
+              "venturetothex"
+            ]
+          },
+          "location": {
+            "placeId": "ChIJA-2qKIt9hYARZ5N1NdUVtHE",
+            "description": "Oakland, CA, USA"
+          },
+          "earlyWalletAdopter": true,
+          "url": "",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/fdae5464-da0e-4785-2e60-8fda3b230700/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x0fd7a301b51d0a83fcaf6718628174d527b373b6",
+            "token": {
+              "chain": "base",
+              "ca": "0x0fd7a301b51d0a83fcaf6718628174d527b373b6",
+              "tokenId": "0198e8ef-a956-6e44-2f07-2777507c43a5",
+              "name": "luminous",
+              "ticker": "LUM",
+              "symbol": "LUM",
+              "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/10f785bb-b06b-41c8-9bd2-caabcb725b00/original"
+            }
+          }
+        },
+        "followerCount": 2259,
+        "followingCount": 2491,
+        "username": "naaate",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/10b329a6-cc02-4529-8cbe-f7bf58c7de00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01939066-a306-3cd4-2a63-77fb9afa0e6b",
+            "platform": "x",
+            "username": "0xnaaate",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 6786,
+        "custodyAddress": "0x463783f68f7b90fa3ed9127cd7103c5449f28d4f",
+        "ethWallets": [
+          "0xC1aeBd6f0D37611d744B0ECD0865984fbCb4B4c4",
+          "0xDfC6eD58141B68ab1372553fb65903EF223f4b7d",
+          "0x1128Ba9d3704710711216726aF6F06817Cf50B02",
+          "0x5d0a2C7A9b2E0Ff95de330476418074f808DfD4e",
+          "0x8621ffa9Fd2B61BFa485798A1082d23dC920e8d1",
+          "0xA8B695a5F80b6b85c215D19f778Be18bf5A937eB",
+          "0x22F487710d93589e3915b4918a00245c43b5fE53",
+          "0xF2037C88aECFA761b98182480Bd24f6bFcefD224",
+          "0x04e0477C4b0c4064738cE44aDaB342eFb90CE2D5",
+          "0xB6A465063Be9De31306153BB325Bb37c48F0fC49",
+          "0xaED498a2cde48087686516CD56596ca77c8B42DF",
+          "0x5bE8bDC96c423f265FC589ff8611e4C72eE94dCA"
+        ],
+        "solanaWallets": [
+          "F45zhofLHJHoFZj5UJsbffxHij5HjYNcpecPzNX9Qed4",
+          "GX8CUy3Y4PXE6sc6qxFAgGRSFQRGa8yM3VzcJoNaPjPq",
+          "GhvhNZCgJVSYa3GVUVdZrtaCjR52chf65iEqxUbED8Pz"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x8621ffa9Fd2B61BFa485798A1082d23dC920e8d1",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "GX8CUy3Y4PXE6sc6qxFAgGRSFQRGa8yM3VzcJoNaPjPq",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

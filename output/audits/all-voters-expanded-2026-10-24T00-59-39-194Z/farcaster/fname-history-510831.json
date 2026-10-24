@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=510831",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.085Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 332283,
+        "timestamp": 1714629105,
+        "username": "latif",
+        "owner": "0xc3bcdb9da7cda602f5a35ad474d5ca182c70e7d1",
+        "from": 0,
+        "to": 510831,
+        "user_signature": "0x018f0822e7924ca572932bb13babc5eae02dfb516f875cbdfd8ad4a39fee205221866e7c82ee2274b811eaafa60c3d611408f2e668abc1705209c5daa3c4c1da1c",
+        "server_signature": "0xfc4bff1b7b2b87dae68c9b7c553dc2b746df08af7b5bfc710bd02d1cda41108963a4230c4a1a37068c4ce07271480671a8cb3d450d8827ef3e89378f83a507ed1c"
+      }
+    ]
+  }
+}

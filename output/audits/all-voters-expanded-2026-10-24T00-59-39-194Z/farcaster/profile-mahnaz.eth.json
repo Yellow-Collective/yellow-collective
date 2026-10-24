@@ -1,0 +1,78 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=mahnaz.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:36.737Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 492908,
+        "displayName": "Mahnaz 𓆸",
+        "profile": {
+          "bio": {
+            "text": "Painter & Architect · AI-Collaborative Artist · NFTs since '21 𓇬 http://superrare.com/mahnaz",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "https://mahnaz.art"
+        },
+        "followerCount": 562,
+        "followingCount": 857,
+        "username": "mahnaz.eth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/6e9c233f-38da-4623-63cd-36412dd3d900/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01927b96-5e0a-c8d9-9e32-ec26d570cffb",
+            "platform": "x",
+            "username": "0xMahnaz",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 492908,
+        "custodyAddress": "0x7d7b3c4647a3b377f39e43c71d7417cf0b4c27a1",
+        "ethWallets": [
+          "0x0B81BfFce9970aca9868120eEE1bcc8De19119F7",
+          "0xEbD7C5B211FFec3Ede5063361e0F1Bd38D2068c5"
+        ],
+        "solanaWallets": [
+          "CrUD1cK1HqEeLogrcEjJahush9vpv3jCkEdp5Xrt73bN"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xEbD7C5B211FFec3Ede5063361e0F1Bd38D2068c5",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "CrUD1cK1HqEeLogrcEjJahush9vpv3jCkEdp5Xrt73bN",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

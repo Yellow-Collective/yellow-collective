@@ -1,0 +1,93 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=nadiecito.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:36.877Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 15069,
+        "displayName": "Nadie ⌐◨-◨ (amigo 82)",
+        "profile": {
+          "bio": {
+            "text": "Pixel artist - 2D Generalist",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "ChIJ8bNLzPCmMI4RaGGuUum1Dx8",
+            "description": "Cali, Valle del Cauca, Colombia"
+          },
+          "earlyWalletAdopter": true,
+          "totalEarned": 1504.2410451418143,
+          "url": "https://www.artstation.com/nadiecito",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4daf1bc3-5a30-4b59-84ac-9309288f7b00/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0xd12a36bf9c65980ea689158dd129398e7172d1d5",
+            "token": {
+              "chain": "base",
+              "ca": "0xd12a36bf9c65980ea689158dd129398e7172d1d5",
+              "tokenId": "0198e99a-694e-27ea-bd5f-aeae28867995",
+              "name": "nadiecito",
+              "ticker": "nadiecito",
+              "symbol": "nadiecito",
+              "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafybeifalc3xt3akrmfszocej3gonoeoy7stw4e5ekqjhfcedouzf6kxd4"
+            }
+          }
+        },
+        "followerCount": 1867,
+        "followingCount": 609,
+        "username": "nadiecito.eth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/b5581b20-4f5e-4b23-7ebd-55ae6eabc300/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0192786c-3988-2fa2-becd-9971b1c3861b",
+            "platform": "x",
+            "username": "Ningunartista",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 15069,
+        "custodyAddress": "0x2a289594bd4a4f3ed6fa40e35657d19805c919c0",
+        "ethWallets": [
+          "0x215DB99298af65306A4c60BD3b7612D5F60b03D7",
+          "0x4e2a3A65D0E2bcdb507a70fE2D3fc5dff464aa25",
+          "0x7f60530200a270705E4E317dC87b786627b01872"
+        ],
+        "solanaWallets": [
+          "5D9E6GJcK3Eng1AxiSYDUeSn4aw2bmTrZTFvRusMTFsi",
+          "9AJV1n2p2feHsBV3ouUrXoboFKyk5xrYX5b4XjYkFvi4"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x4e2a3A65D0E2bcdb507a70fE2D3fc5dff464aa25",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "9AJV1n2p2feHsBV3ouUrXoboFKyk5xrYX5b4XjYkFvi4",
+            "labels": [
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

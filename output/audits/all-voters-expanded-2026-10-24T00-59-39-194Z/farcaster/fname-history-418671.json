@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=418671",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.925Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 241827,
+        "timestamp": 1711776052,
+        "username": "itsai",
+        "owner": "0x1fde27f0239bf790997ef4e749edbd663f7558fb",
+        "from": 0,
+        "to": 418671,
+        "user_signature": "0x3907834cc4f82aaaeaef045e9fa05056ca292e72a4a459e361e879cbc68f1e8b4118b4930487f72c070beec105ca9268ff776522b3a343076baaf1e4b4f372a21c",
+        "server_signature": "0xc674bd66e60f207604b2d524c4c25197fcfe7890be53203b02f98652a522c0176b8baa5efbba0544aae72d7d09a1a289a48c442cb38e40e642b118c85005c6a01c"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=468979",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.001Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 291135,
+        "timestamp": 1712678406,
+        "username": "pappardelle",
+        "owner": "0xac02078eed120f2321a8883f15caceb77bac5ce0",
+        "from": 0,
+        "to": 468979,
+        "user_signature": "0x76da64be4f6bfc16fb10d4057a39db8897346f17da8d84e093f4445287cda9482cfe5004cb6e43b3dc20ffc3b91ee1911aba4fdd9dde03ecf1256a2b5241b2d01b",
+        "server_signature": "0xfb26fc57306060d5693d0c462ee6b9969804aeeb583e39524779c5d1630808af75ecda38427af885c7136235cd5de033ea25bf29ce9a8d8ff9967f27322562a21b"
+      }
+    ]
+  }
+}

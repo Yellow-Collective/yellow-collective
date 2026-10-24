@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=4567",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.968Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 4566,
+        "timestamp": 1667239467,
+        "username": "symbiotech",
+        "owner": "0xaf3e331e08b4c14b99449b5550c4b515ff2bedf2",
+        "from": 0,
+        "to": 4567,
+        "user_signature": "0x8789f0fa9d5f261d6a581be97a9ec32f32b7cd3bcc58c8d8067eaf1fbb696b0429ae4d4e6cdab72717528a10d887672b3da0da0211a42d7593e014ccab63d4661b",
+        "server_signature": "0xb091cb6a2c8817a5d81146f99829ef9724c6d03d16f2a8a76b65195abe14f15e49a7cc9d45788f56623db563088dfc5f0ad7bf5bce66d90b2c59591cefa0e7b21b"
+      }
+    ]
+  }
+}

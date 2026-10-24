@@ -1,0 +1,18 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=satori.wtf",
+  "status": 400,
+  "retrievedAt": "2026-10-24T01:01:37.308Z",
+  "data": {
+    "errors": [
+      {
+        "instancePath": "/username",
+        "schemaPath": "ApiFname/pattern",
+        "keyword": "pattern",
+        "params": {
+          "pattern": "^[0-9a-z][0-9a-z-]{0,15}(\\.eth|\\.base\\.eth)?$"
+        },
+        "message": "must match pattern \"^[0-9a-z][0-9a-z-]{0,15}(\\.eth|\\.base\\.eth)?$\""
+      }
+    ]
+  }
+}

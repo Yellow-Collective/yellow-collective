@@ -1,0 +1,84 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=amirk.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:36.572Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 492896,
+        "displayName": "Amir K",
+        "profile": {
+          "bio": {
+            "text": "Artist & Architect · Fracturing architectural forms through 3D, AI & object-oriented ontology · NFTs ’21",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "https://amirk.art"
+        },
+        "followerCount": 402,
+        "followingCount": 838,
+        "username": "amirk.eth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0b77e264-ed80-4eca-38d1-77fbff274000/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01983712-d571-b888-05cb-f1552d251456",
+            "platform": "x",
+            "username": "0xAmirK",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 492896,
+        "custodyAddress": "0x9fdd8051db432d544815fa6e2155a4def13d7b33",
+        "ethWallets": [
+          "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+          "0xfa64dd2bB8d9B89d793F7e3D7a3E215580859Ecf",
+          "0x622B2E727dBA98fe950cFE9F220a4d7dD17730BC"
+        ],
+        "solanaWallets": [
+          "2fbabSz43smLhCAZEdd4R6gUF9mgt7xdHnpFkoi5H8c3"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+            "labels": [
+              "primary"
+            ]
+          },
+          {
+            "address": "0xfa64dd2bB8d9B89d793F7e3D7a3E215580859Ecf",
+            "labels": [
+              "warpcast"
+            ]
+          },
+          {
+            "address": "2fbabSz43smLhCAZEdd4R6gUF9mgt7xdHnpFkoi5H8c3",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

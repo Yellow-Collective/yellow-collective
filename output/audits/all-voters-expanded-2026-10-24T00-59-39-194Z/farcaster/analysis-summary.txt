@@ -1,0 +1,554 @@
+{
+  "coverage": {
+    "requested": 71,
+    "currentVoters": 59,
+    "currentSubmitters": 18,
+    "verified": 42,
+    "verifiedCurrentVoters": 36,
+    "verifiedCurrentSubmitters": 12
+  },
+  "crossWalletOwn": [
+    {
+      "fid": 810468,
+      "name": "nounci",
+      "round": "comic-strips",
+      "entry": "Yellow Meme",
+      "votes": 25,
+      "wallet": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a"
+    },
+    {
+      "fid": 15069,
+      "name": "nadiecito.eth",
+      "round": "yellow-poster",
+      "entry": "Yellow Sunset",
+      "votes": 101,
+      "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+    },
+    {
+      "fid": 15069,
+      "name": "nadiecito.eth",
+      "round": "yellow-characters",
+      "entry": "El Heladero Pengu",
+      "votes": 101,
+      "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+    },
+    {
+      "fid": 15069,
+      "name": "nadiecito.eth",
+      "round": "propoganda",
+      "entry": "Free the DAO",
+      "votes": 4,
+      "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+    },
+    {
+      "fid": 15069,
+      "name": "nadiecito.eth",
+      "round": "propoganda",
+      "entry": "Make Art Great Again",
+      "votes": 15,
+      "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+    },
+    {
+      "fid": 15069,
+      "name": "nadiecito.eth",
+      "round": "propoganda",
+      "entry": "TOO MUCH SLOP",
+      "votes": 15,
+      "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+    },
+    {
+      "fid": 471160,
+      "name": "pramadan.eth",
+      "round": "yellow-poster",
+      "entry": "Yellow Summer",
+      "votes": 80,
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348"
+    },
+    {
+      "fid": 471160,
+      "name": "pramadan.eth",
+      "round": "yellow-characters",
+      "entry": "Candleman",
+      "votes": 10,
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348"
+    },
+    {
+      "fid": 471160,
+      "name": "pramadan.eth",
+      "round": "yellow-characters",
+      "entry": "Mr. Candle",
+      "votes": 10,
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348"
+    },
+    {
+      "fid": 471160,
+      "name": "pramadan.eth",
+      "round": "sticker-packs",
+      "entry": "Yellow Frens",
+      "votes": 20,
+      "wallet": "0xcba18cb7e7c043b378e21607fa104f1767442348"
+    }
+  ],
+  "sameAccountGroups": [
+    {
+      "name": "catra.eth",
+      "wallets": [
+        "0x036cd064d068eb1d99e07d79848c7a4aab94bd49",
+        "0xe8bb2e08e6f52f11d8b65e2a3db772daa60e117e"
+      ],
+      "rows": 12,
+      "votes": 103
+    },
+    {
+      "name": "nounci",
+      "wallets": [
+        "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a"
+      ],
+      "rows": 10,
+      "votes": 103
+    }
+  ],
+  "followingSubmitterEdges": [
+    {
+      "fromFid": 492896,
+      "from": "amirk.eth",
+      "toFid": 522165,
+      "to": "redykay",
+      "scopeAddresses": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "toCurrentSubmitter": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "sourceFile": "following-492896-11.json"
+    },
+    {
+      "fromFid": 492896,
+      "from": "amirk.eth",
+      "toFid": 397077,
+      "to": "trvkc",
+      "scopeAddresses": [
+        "0xa09aa75da763d4aeb692672897c057786cdd258b"
+      ],
+      "toCurrentSubmitter": [
+        "0xa09aa75da763d4aeb692672897c057786cdd258b"
+      ],
+      "sourceFile": "following-492896-11.json"
+    },
+    {
+      "fromFid": 492896,
+      "from": "amirk.eth",
+      "toFid": 471160,
+      "to": "pramadan.eth",
+      "scopeAddresses": [
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "toCurrentSubmitter": [
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "sourceFile": "following-492896-12.json"
+    },
+    {
+      "fromFid": 492896,
+      "from": "amirk.eth",
+      "toFid": 510831,
+      "to": "latif",
+      "scopeAddresses": [
+        "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6"
+      ],
+      "toCurrentSubmitter": [
+        "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6"
+      ],
+      "sourceFile": "following-492896-4.json"
+    },
+    {
+      "fromFid": 492896,
+      "from": "amirk.eth",
+      "toFid": 467242,
+      "to": "0xdiablo",
+      "scopeAddresses": [
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8"
+      ],
+      "toCurrentSubmitter": [
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8"
+      ],
+      "sourceFile": "following-492896-6.json"
+    },
+    {
+      "fromFid": 492908,
+      "from": "mahnaz.eth",
+      "toFid": 471160,
+      "to": "pramadan.eth",
+      "scopeAddresses": [
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "toCurrentSubmitter": [
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "sourceFile": "following-492908-8.json"
+    },
+    {
+      "fromFid": 492908,
+      "from": "mahnaz.eth",
+      "toFid": 522165,
+      "to": "redykay",
+      "scopeAddresses": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "toCurrentSubmitter": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "sourceFile": "following-492908-8.json"
+    },
+    {
+      "fromFid": 492908,
+      "from": "mahnaz.eth",
+      "toFid": 15069,
+      "to": "nadiecito.eth",
+      "scopeAddresses": [
+        "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "0x215db99298af65306a4c60bd3b7612d5f60b03d7"
+      ],
+      "toCurrentSubmitter": [
+        "0x215db99298af65306a4c60bd3b7612d5f60b03d7"
+      ],
+      "sourceFile": "following-492908-9.json"
+    },
+    {
+      "fromFid": 689506,
+      "from": "daving",
+      "toFid": 397099,
+      "to": "skwalo09",
+      "scopeAddresses": [
+        "0x1ba77f0359fb0e0c13a93ba284a084da2122e957"
+      ],
+      "toCurrentSubmitter": [
+        "0x1ba77f0359fb0e0c13a93ba284a084da2122e957"
+      ],
+      "sourceFile": "following-689506-1.json"
+    },
+    {
+      "fromFid": 689506,
+      "from": "daving",
+      "toFid": 471160,
+      "to": "pramadan.eth",
+      "scopeAddresses": [
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "toCurrentSubmitter": [
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "sourceFile": "following-689506-2.json"
+    },
+    {
+      "fromFid": 689506,
+      "from": "daving",
+      "toFid": 15069,
+      "to": "nadiecito.eth",
+      "scopeAddresses": [
+        "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "0x215db99298af65306a4c60bd3b7612d5f60b03d7"
+      ],
+      "toCurrentSubmitter": [
+        "0x215db99298af65306a4c60bd3b7612d5f60b03d7"
+      ],
+      "sourceFile": "following-689506-2.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 416580,
+      "to": "msmeghna",
+      "scopeAddresses": [
+        "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b"
+      ],
+      "toCurrentSubmitter": [
+        "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b"
+      ],
+      "sourceFile": "following-792867-1.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 510831,
+      "to": "latif",
+      "scopeAddresses": [
+        "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6"
+      ],
+      "toCurrentSubmitter": [
+        "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6"
+      ],
+      "sourceFile": "following-792867-12.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 397777,
+      "to": "momotsuki",
+      "scopeAddresses": [
+        "0xed764f46c8b6e4ebeadb795017e436ddb3561476"
+      ],
+      "toCurrentSubmitter": [
+        "0xed764f46c8b6e4ebeadb795017e436ddb3561476"
+      ],
+      "sourceFile": "following-792867-18.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 397077,
+      "to": "trvkc",
+      "scopeAddresses": [
+        "0xa09aa75da763d4aeb692672897c057786cdd258b"
+      ],
+      "toCurrentSubmitter": [
+        "0xa09aa75da763d4aeb692672897c057786cdd258b"
+      ],
+      "sourceFile": "following-792867-22.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 522165,
+      "to": "redykay",
+      "scopeAddresses": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "toCurrentSubmitter": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "sourceFile": "following-792867-22.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 15069,
+      "to": "nadiecito.eth",
+      "scopeAddresses": [
+        "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "0x215db99298af65306a4c60bd3b7612d5f60b03d7"
+      ],
+      "toCurrentSubmitter": [
+        "0x215db99298af65306a4c60bd3b7612d5f60b03d7"
+      ],
+      "sourceFile": "following-792867-22.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 413213,
+      "to": "valentinaartt",
+      "scopeAddresses": [
+        "0x9ab51fd89f163d07127df192b615356d53b406f6"
+      ],
+      "toCurrentSubmitter": [
+        "0x9ab51fd89f163d07127df192b615356d53b406f6"
+      ],
+      "sourceFile": "following-792867-22.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 471160,
+      "to": "pramadan.eth",
+      "scopeAddresses": [
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "toCurrentSubmitter": [
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "sourceFile": "following-792867-23.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 397099,
+      "to": "skwalo09",
+      "scopeAddresses": [
+        "0x1ba77f0359fb0e0c13a93ba284a084da2122e957"
+      ],
+      "toCurrentSubmitter": [
+        "0x1ba77f0359fb0e0c13a93ba284a084da2122e957"
+      ],
+      "sourceFile": "following-792867-6.json"
+    },
+    {
+      "fromFid": 792867,
+      "from": "hellia.eth",
+      "toFid": 467242,
+      "to": "0xdiablo",
+      "scopeAddresses": [
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8"
+      ],
+      "toCurrentSubmitter": [
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8"
+      ],
+      "sourceFile": "following-792867-9.json"
+    },
+    {
+      "fromFid": 814425,
+      "from": "namirai",
+      "toFid": 397077,
+      "to": "trvkc",
+      "scopeAddresses": [
+        "0xa09aa75da763d4aeb692672897c057786cdd258b"
+      ],
+      "toCurrentSubmitter": [
+        "0xa09aa75da763d4aeb692672897c057786cdd258b"
+      ],
+      "sourceFile": "following-814425-1.json"
+    },
+    {
+      "fromFid": 814425,
+      "from": "namirai",
+      "toFid": 467242,
+      "to": "0xdiablo",
+      "scopeAddresses": [
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8"
+      ],
+      "toCurrentSubmitter": [
+        "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8"
+      ],
+      "sourceFile": "following-814425-1.json"
+    },
+    {
+      "fromFid": 814425,
+      "from": "namirai",
+      "toFid": 522165,
+      "to": "redykay",
+      "scopeAddresses": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "toCurrentSubmitter": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "sourceFile": "following-814425-2.json"
+    },
+    {
+      "fromFid": 814425,
+      "from": "namirai",
+      "toFid": 471160,
+      "to": "pramadan.eth",
+      "scopeAddresses": [
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "toCurrentSubmitter": [
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "sourceFile": "following-814425-3.json"
+    },
+    {
+      "fromFid": 815212,
+      "from": "desdot",
+      "toFid": 471160,
+      "to": "pramadan.eth",
+      "scopeAddresses": [
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "toCurrentSubmitter": [
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "sourceFile": "following-815212-3.json"
+    },
+    {
+      "fromFid": 815212,
+      "from": "desdot",
+      "toFid": 522165,
+      "to": "redykay",
+      "scopeAddresses": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "toCurrentSubmitter": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "sourceFile": "following-815212-3.json"
+    },
+    {
+      "fromFid": 847004,
+      "from": "moonza",
+      "toFid": 522165,
+      "to": "redykay",
+      "scopeAddresses": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "toCurrentSubmitter": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "sourceFile": "following-847004-4.json"
+    },
+    {
+      "fromFid": 847004,
+      "from": "moonza",
+      "toFid": 471160,
+      "to": "pramadan.eth",
+      "scopeAddresses": [
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "toCurrentSubmitter": [
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "sourceFile": "following-847004-6.json"
+    },
+    {
+      "fromFid": 938012,
+      "from": "miniom",
+      "toFid": 374886,
+      "to": "kimmydeuk",
+      "scopeAddresses": [
+        "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f"
+      ],
+      "toCurrentSubmitter": [
+        "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f"
+      ],
+      "sourceFile": "following-938012-3.json"
+    },
+    {
+      "fromFid": 938012,
+      "from": "miniom",
+      "toFid": 397077,
+      "to": "trvkc",
+      "scopeAddresses": [
+        "0xa09aa75da763d4aeb692672897c057786cdd258b"
+      ],
+      "toCurrentSubmitter": [
+        "0xa09aa75da763d4aeb692672897c057786cdd258b"
+      ],
+      "sourceFile": "following-938012-4.json"
+    },
+    {
+      "fromFid": 938012,
+      "from": "miniom",
+      "toFid": 471160,
+      "to": "pramadan.eth",
+      "scopeAddresses": [
+        "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "toCurrentSubmitter": [
+        "0x1bae19af613bd5db94baf043d5817e16a53a4c33"
+      ],
+      "sourceFile": "following-938012-6.json"
+    },
+    {
+      "fromFid": 938012,
+      "from": "miniom",
+      "toFid": 522165,
+      "to": "redykay",
+      "scopeAddresses": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "toCurrentSubmitter": [
+        "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2"
+      ],
+      "sourceFile": "following-938012-7.json"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=792867",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.215Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 607985,
+        "timestamp": 1721124530,
+        "username": "0xhellia",
+        "owner": "0x212fc47e707ed36409154ebf8bcfd2aa0e26517b",
+        "from": 0,
+        "to": 792867,
+        "user_signature": "0x84b8fd7b2dd59361f36175929d789e6fc0ce5f2bbdf30e0b609b4aaacd21832412380a52ecfdc2fc83d4bd49e5e1c752505441bb5a8e48b44bb49ff2448b284d1c",
+        "server_signature": "0xbbde04f41cd3faa8e46b82bbd2f611ef6f05ede9318bd2a35a86ce96921665ed4e2b088f39ebf67b5d3172559b6ebdd976073a8708f8c368bbff4f00ecf2a2771c"
+      }
+    ]
+  }
+}

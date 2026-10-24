@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=263648",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.625Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 92707,
+        "timestamp": 1706923537,
+        "username": "fattybuthappy",
+        "owner": "0x691afd8f360ee850773a3a87882606a8014c4e0c",
+        "from": 0,
+        "to": 263648,
+        "user_signature": "0xaab8bed46902999d33ebc4a1e0373b687c2ba0aaf3ed142527a70d40c2ce1bca70d3df81eba328411ce7ef9c72d33227958ce0ed36c4b5fbf4b3fa046d75b8471b",
+        "server_signature": "0xc3c81dcab18767627c2eb7b15a424a79ca62bf5d7f8addf0a59b7aff16928f8b08eb17bbfdba57d0564690cc6ef7997108ef55cc2497dddfa5cb5eacb32355161b"
+      }
+    ]
+  }
+}

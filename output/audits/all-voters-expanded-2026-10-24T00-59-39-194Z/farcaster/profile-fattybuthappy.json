@@ -1,0 +1,91 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=fattybuthappy",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:07.207Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 263648,
+        "displayName": "Fattybuthappy",
+        "profile": {
+          "bio": {
+            "text": "Regular guy collecting moments",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "https://fattybuthappy-creations.vercel.app/",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/1f613612-43cc-4f42-b2bc-35e6b87d0a00/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0xc4d2254c433b485d2c650716196020dbb0abd9c1",
+            "token": {
+              "chain": "base",
+              "ca": "0xc4d2254c433b485d2c650716196020dbb0abd9c1",
+              "tokenId": "0199207c-b4ff-bf7f-b08b-15a4501d1fd4",
+              "name": "fattybuthappy",
+              "ticker": "fattybuthappy",
+              "symbol": "fattybuthappy",
+              "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafkreidfuiyxadscx4qusomsjhblhb7p2jxo6vp5kx4e3xehsiedkiin44"
+            }
+          }
+        },
+        "followerCount": 1803,
+        "followingCount": 443,
+        "username": "fattybuthappy",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/f4a7a0b0-85de-44cd-4dc1-89143c73a600/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01929d40-3135-ef5b-ec33-3b2028f2f41a",
+            "platform": "x",
+            "username": "Fattybuthappyy",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 263648,
+        "custodyAddress": "0xcadaba3dbb89f6b32fc968d1e75d109c6b0e58be",
+        "ethWallets": [
+          "0x14935B6B19c0b4B3a7F68d9B8E4E8652315759D0",
+          "0xEDc1a397589A0236C4810883b7d559288a5Fe7e1"
+        ],
+        "solanaWallets": [
+          "3LPfBvFeaMBsyqWJrL13DeYMH87GfHL3UAn5VZNTtQvU"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x14935B6B19c0b4B3a7F68d9B8E4E8652315759D0",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "3LPfBvFeaMBsyqWJrL13DeYMH87GfHL3UAn5VZNTtQvU",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

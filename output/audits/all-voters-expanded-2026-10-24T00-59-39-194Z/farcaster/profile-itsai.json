@@ -1,0 +1,97 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=itsai",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:03:46.086Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 418671,
+        "displayName": "Itsai ⌐◨-◨",
+        "profile": {
+          "bio": {
+            "text": "Freezerverse founder. Multimedia designer. Do you like /icecream ?",
+            "mentions": [],
+            "channelMentions": [
+              "icecream"
+            ]
+          },
+          "location": {
+            "placeId": "ChIJB3UJ2yYAzoURQeheJnYQBlQ",
+            "description": "Mexico City, CDMX, Mexico"
+          },
+          "earlyWalletAdopter": true,
+          "totalEarned": 4284.444563523524,
+          "url": "https://pawr.link/itsainft",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/a93667b5-d6c9-4712-2f71-904231fd7b00/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+            "token": {
+              "chain": "base",
+              "ca": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+              "tokenId": "0198d43e-3f47-b053-b6a0-f0b0b0bd2865",
+              "name": "Aerodrome",
+              "ticker": "AERO",
+              "symbol": "AERO",
+              "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/7d6d104f-89f8-4489-672c-326086a17400/original"
+            }
+          }
+        },
+        "followerCount": 2725,
+        "followingCount": 1444,
+        "username": "itsai",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/a6259e05-a4f5-43a3-0a0d-76867b9b4f00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0192783b-ff4c-b4fe-d2c8-3d0cd558025b",
+            "platform": "x",
+            "username": "freezerverse",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 418671,
+        "custodyAddress": "0x1fde27f0239bf790997ef4e749edbd663f7558fb",
+        "ethWallets": [
+          "0xf1f5D35c46Fd62fDD9150C39acc4A1b6A8327Ae4",
+          "0x42ab6bb431cE40507E5943b1DeBe1DAcF1F703F7",
+          "0xFb79956f340b62b23A96FdC907635f86b51c0d8C",
+          "0xb9098D7f3C19A19a22B82010756E480c9B8B3Fa7"
+        ],
+        "solanaWallets": [
+          "9brAB42Ajwg2jN1fW41vn1zi28gJ595WjgGSHpAqwfcY",
+          "88GTvBC16oNZTffLXk2Vnq21j5s4piRXDALHskm1bFRe"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x42ab6bb431cE40507E5943b1DeBe1DAcF1F703F7",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "88GTvBC16oNZTffLXk2Vnq21j5s4piRXDALHskm1bFRe",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

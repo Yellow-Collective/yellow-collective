@@ -1,0 +1,87 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=0xsatori",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.839Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 13870,
+        "displayName": "Satori",
+        "profile": {
+          "bio": {
+            "text": "⌐◨-◨",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/cb889d64-9b50-4663-1a95-ba61e98f8300/original",
+          "profileToken": {
+            "tokenUri": ""
+          }
+        },
+        "followerCount": 3796,
+        "followingCount": 1527,
+        "username": "0xsatori",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/649c99e3-5010-467e-205f-1c096de73500/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01929b85-810e-48c1-36d2-895b4a851e28",
+            "platform": "x",
+            "username": "0xSatori",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 13870,
+        "custodyAddress": "0x8fb18d6eadac23568c83dff23179b99d43b46450",
+        "ethWallets": [
+          "0xdcf37d8Aa17142f053AAA7dc56025aB00D897a19",
+          "0x05e189E1BbaF77f1654F0983872fd938AE592eDD",
+          "0x70abdCd7A5A8Ff9cDef1ccA9eA15a5d315780986",
+          "0x4b186552933382f5AF7D241ED2d0BB7b79E4d200",
+          "0xBcbdFE97e28Ca571F2F48e7fB60a3D5821c6a727",
+          "0x26b25433469fA35d3377230B80edcCDE084b9020"
+        ],
+        "solanaWallets": [
+          "DU3LVi19cTAqjv7czqVPTns3Rgv155DwiHtdzVpmCmMi",
+          "Y83W5chGEPHNt8JJjYhNB2yCvaVkgC9HES6XkZKcpiv"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x4b186552933382f5AF7D241ED2d0BB7b79E4d200",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "Y83W5chGEPHNt8JJjYhNB2yCvaVkgC9HES6XkZKcpiv",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=2606779",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.569Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 1337849,
+        "timestamp": 1769949576,
+        "username": "monilchonkar",
+        "owner": "0x60f9efb42a3a1c03d79174ad2d1eaa0f47b7631b",
+        "from": 0,
+        "to": 2606779,
+        "user_signature": "0xf2912d8ddf91dd06669b839a683f882cae3df498f0a1fac1f6424ed205b1268b0df6b317e15f4c743bd67dd1d4372a8b3aed8b044e02048ac215be469cac502e1c",
+        "server_signature": "0xa3ba276a57a865478a5632a464030455374f69d34b672aeccb8f23f3cbc089014f26cc115aa820d6fae5a21501d6152848fa5fc9efe3b8e92357b94d2af1caf21c"
+      }
+    ]
+  }
+}

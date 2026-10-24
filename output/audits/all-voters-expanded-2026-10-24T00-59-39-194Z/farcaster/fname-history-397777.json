@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=397777",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.809Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 221673,
+        "timestamp": 1710885020,
+        "username": "momotsuki",
+        "owner": "0x3335aa3f2ee73e2ff7bcce6dabce3b49646aa34e",
+        "from": 0,
+        "to": 397777,
+        "user_signature": "0xc0bd08884ce3153eae5691cb37344c111a80d39fb8d0f769980ae727986c549235a22e32236a040be571617850be7f491ab45e4fbfe6b0b424b23e3e381253401b",
+        "server_signature": "0xd0a1fd6eeb9ec60e64e8658eebb707af38509913ce2ab8a67928b351448c6e9c68dbcc59a4e87d20d8c4f004a84fb4b74d2499f82f782ebdf8cf9c86b533b4631b"
+      }
+    ]
+  }
+}

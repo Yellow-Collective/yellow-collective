@@ -1,0 +1,44 @@
+{
+  "url": "https://api.farcaster.xyz/v2/verifications?fid=374886",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.469Z",
+  "data": {
+    "result": {
+      "verifications": [
+        {
+          "fid": 374886,
+          "address": "ECCVxfz1GAhuJCA5JuRDotguaxArqznCjSZKyy88khGh",
+          "timestamp": 1748108839431,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 374886,
+          "address": "0x72D4e991040e3B65FdDbE5f340f65Cf03C506e6F",
+          "timestamp": 1709797691576,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": true,
+          "labels": []
+        },
+        {
+          "fid": 374886,
+          "address": "0x53A22aD09F36a41AE958c82ec3e4797e9A506462",
+          "timestamp": 1742366325714,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        }
+      ]
+    }
+  }
+}

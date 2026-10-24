@@ -1,0 +1,70 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=mahnaz",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.032Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 335151,
+        "displayName": "Mahnaz 🎩",
+        "profile": {
+          "bio": {
+            "text": "Im mahi",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 14,
+        "followingCount": 80,
+        "username": "mahnaz",
+        "pfp": {
+          "url": "https://i.imgur.com/7zvUUk2.jpg",
+          "verified": false
+        },
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 335151,
+        "custodyAddress": "0x5cce0ab99f432e58c99ad19b527a858fccd0b708",
+        "ethWallets": [
+          "0x164Af4245734Ef265bbF28DE9dFF071F71227C16",
+          "0x1Af071fBdaa4638d099C2fbbCD290eEdb39E70A2"
+        ],
+        "solanaWallets": [
+          "GyrXLT7PHcsL47AaGuYS36niwX4mYJYQ36pvp8bS1iBT",
+          "2KFfuJeNPjo66FC4Cm7eniBu45AeTWNvje9fcyAsA6u4"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x1Af071fBdaa4638d099C2fbbCD290eEdb39E70A2",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "2KFfuJeNPjo66FC4Cm7eniBu45AeTWNvje9fcyAsA6u4",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

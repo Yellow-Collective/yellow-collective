@@ -1,0 +1,71 @@
+{
+  "args": {
+    "chainid": "8453",
+    "address": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+    "startblock": 0,
+    "endblock": 53000299,
+    "offset": 10000,
+    "page": 1,
+    "sort": "asc"
+  },
+  "retrievedAt": "2026-10-24T01:04:47.805Z",
+  "result": {
+    "ok": true,
+    "status": "1",
+    "message": "OK",
+    "result": [
+      {
+        "blockNumber": "51928304",
+        "blockHash": "0x606924220ca159bd7cd94ec0a1fbad095ec4274810a599e048d9e2caf31e4423",
+        "timeStamp": "1790645955",
+        "hash": "0x7e1b6ff64b19be2055911f4e95c76943dd7ababbac2ddc50a45fa852c6ca8960",
+        "nonce": "0",
+        "transactionIndex": "6",
+        "from": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "to": "0x0aa23a7e112889c965010558803813710becf263",
+        "value": "0",
+        "gas": "330477",
+        "gasPrice": "11068000",
+        "L1Gas": "1600",
+        "L1GasPrice": "795012634",
+        "L1FeeScalar": "0.000000000000",
+        "L1FeesPaid": "8085850373",
+        "input": "0xf25efffc62635f706632727476626b0b0080218021802180218021802180218021",
+        "methodId": "0xf25efffc",
+        "functionName": "settleCurrentAndCreateNewAuction()",
+        "contractAddress": "",
+        "cumulativeGasUsed": "594475",
+        "txreceipt_status": "1",
+        "gasUsed": "198576",
+        "confirmations": "1078968",
+        "isError": "0"
+      },
+      {
+        "blockNumber": "51928353",
+        "blockHash": "0xc985d2e23a338ef5b7bd886b998cf9f8460f0862ea94bb1729f025201dd52f22",
+        "timeStamp": "1790646053",
+        "hash": "0x6c3ff8aefefac69dff4c44ccce24121e1b031c6e494cc4926e5faf100074f7b0",
+        "nonce": "1",
+        "transactionIndex": "165",
+        "from": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "to": "0x0aa23a7e112889c965010558803813710becf263",
+        "value": "6900000000000000",
+        "gas": "110603",
+        "gasPrice": "10173000",
+        "L1Gas": "1600",
+        "L1GasPrice": "782606004",
+        "L1FeeScalar": "0.000000000000",
+        "L1FeesPaid": "7420067530",
+        "input": "0x659dd2b400000000000000000000000000000000000000000000000000000000000003be62635f706632727476626b0b0080218021802180218021802180218021",
+        "methodId": "0x659dd2b4",
+        "functionName": "createBid(uint256 _tokenId)",
+        "contractAddress": "",
+        "cumulativeGasUsed": "46126698",
+        "txreceipt_status": "1",
+        "gasUsed": "67483",
+        "confirmations": "1078919",
+        "isError": "0"
+      }
+    ]
+  }
+}

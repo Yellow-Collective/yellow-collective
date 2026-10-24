@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=335151",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.637Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 162411,
+        "timestamp": 1707575968,
+        "username": "mahnaz",
+        "owner": "0x5cce0ab99f432e58c99ad19b527a858fccd0b708",
+        "from": 0,
+        "to": 335151,
+        "user_signature": "0x1e3c073cc5166520112e59c1af523e615246c1e74a0e4bc248a9442d495fb6f741846baa140adb5c291351907a8281588ee28be4b059ed7f4eae0d7498ab9f861b",
+        "server_signature": "0x919b3466f9bb01deeb9bda7cd7046754c34376052ae874fcf22abe36991453ea48f5b72acc61580df03008062597fffe0ef8e8dbb6a9350e60bfc61c8b12358a1c"
+      }
+    ]
+  }
+}

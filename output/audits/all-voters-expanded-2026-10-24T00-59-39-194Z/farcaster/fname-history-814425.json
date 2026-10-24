@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=814425",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.257Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 628749,
+        "timestamp": 1722492003,
+        "username": "namirai",
+        "owner": "0x88a605a57759ad58c83d3e81a75b5cd7eee6e2c8",
+        "from": 0,
+        "to": 814425,
+        "user_signature": "0xd4647e321a8563facfd808d2a5589a0c56c1cf46a83453fe80216fa85c30080f2c36cfce5bdd44dac0f9af8351f5aba321ce7557c7eef5658872088820a619c61c",
+        "server_signature": "0xf521f4b62cf71de4dd9d5cdebef3891fe50a273c06e58d538fbfb75db4a45d2c7c8e73ca1d8244365b089da124e39dae372d80c98b111d112f20e6a6ac6ea99a1b"
+      }
+    ]
+  }
+}

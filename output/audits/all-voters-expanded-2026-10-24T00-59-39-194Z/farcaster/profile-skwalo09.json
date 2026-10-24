@@ -1,0 +1,82 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=skwalo09",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:38.358Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 397099,
+        "displayName": "Skwalo09 ⌐ⓝ°ⓒ",
+        "profile": {
+          "bio": {
+            "text": "TNS community artist for 4 years \n\n- AlpsDao Rare Noggle Creator\n-Commissioned  By TinyDinos\n-Commissioned by TNS for POAP",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x051024b653e8ec69e72693f776c41c2a9401fb07",
+            "token": {
+              "chain": "base",
+              "ca": "0x051024b653e8ec69e72693f776c41c2a9401fb07",
+              "tokenId": "0198d3a2-daa3-0161-2a00-99711390e52e",
+              "name": "BETRMINT",
+              "ticker": "BETR",
+              "symbol": "BETR",
+              "imageUrl": "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/3e125e67-7211-4ff1-0366-b17c918d1400/original"
+            }
+          }
+        },
+        "followerCount": 223,
+        "followingCount": 213,
+        "username": "skwalo09",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/b8279bc5-9c23-4862-6c5f-22fa13124000/original",
+          "verified": false
+        },
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 397099,
+        "custodyAddress": "0x1829600f0af79c0142678b757b4d3efa8b524b98",
+        "ethWallets": [
+          "0x946894b0104495BB7719B39d9D35818957deF023",
+          "0x1BA77F0359fb0E0C13a93ba284A084da2122e957"
+        ],
+        "solanaWallets": [
+          "sUpeVB5pvk6B3tJGre9GfrtEybhTFdocn9LvtMaoppn"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x1BA77F0359fb0E0C13a93ba284A084da2122e957",
+            "labels": [
+              "warpcast"
+            ]
+          },
+          {
+            "address": "sUpeVB5pvk6B3tJGre9GfrtEybhTFdocn9LvtMaoppn",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

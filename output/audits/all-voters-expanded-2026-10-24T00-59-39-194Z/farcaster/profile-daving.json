@@ -1,0 +1,80 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=daving",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:03:47.549Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 689506,
+        "displayName": "DaVinG 🐸🔵",
+        "profile": {
+          "bio": {
+            "text": "meme builder | digital | ai | JPEG since 2021 | BaseFrens | ⌐◨-◨\nhttps://Foundation.app/@DaVinG ✳️\nhttps://Zora.co/@DaVinG ↑\n🔵 /base-meme\n/yellow 🐊",
+            "mentions": [],
+            "channelMentions": [
+              "base-meme",
+              "yellow"
+            ]
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true
+        },
+        "followerCount": 181,
+        "followingCount": 169,
+        "username": "daving",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/78026d30-8b0b-4b4b-93ad-1e0c9b81cd00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0192a1b9-4bd1-8815-0c6b-db18155d742d",
+            "platform": "x",
+            "username": "DaVinG__",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 689506,
+        "custodyAddress": "0x7175d97728c2a2bbe30354e5fdcf6f7d60d0db89",
+        "ethWallets": [
+          "0x08165c34b6689A7b35EC1A57d1265f83e758240c",
+          "0xa0DeF5B256374B75510a4D175417236FC6aF7478"
+        ],
+        "solanaWallets": [
+          "JaQmSNgnPLtWyd9XQYkzKF67TXTFSzDsSRe5FWSY9Dv"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xa0DeF5B256374B75510a4D175417236FC6aF7478",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "JaQmSNgnPLtWyd9XQYkzKF67TXTFSzDsSRe5FWSY9Dv",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

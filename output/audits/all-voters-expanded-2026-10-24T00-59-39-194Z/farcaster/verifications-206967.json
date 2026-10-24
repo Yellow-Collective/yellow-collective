@@ -1,0 +1,91 @@
+{
+  "url": "https://api.farcaster.xyz/v2/verifications?fid=206967",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.798Z",
+  "data": {
+    "result": {
+      "verifications": [
+        {
+          "fid": 206967,
+          "address": "H1Qm8M2ZjpK6EmwaJWykHMgDGftxhAxhPkUosxpSWTVA",
+          "timestamp": 1747942637989,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 206967,
+          "address": "0x4D1FD46F87449Ffe235e3fce21DF8A9bF8BD9206",
+          "timestamp": 1703087938894,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": true,
+          "labels": []
+        },
+        {
+          "fid": 206967,
+          "address": "0x00744695715dce1be921Ed0b8Ff05D89DAE50198",
+          "timestamp": 1780125532388,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 206967,
+          "address": "49iFLcwWa2gixh1SbMNK1rjPmDq1P4p6HCDT7BwyhVhF",
+          "timestamp": 1780125532378,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 206967,
+          "address": "0xD5953408717BEa2E5D0f88b579edb938bdfc61b3",
+          "timestamp": 1768855367621,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 206967,
+          "address": "0xaCD8de8008289DDBf042Cc8cc7738BBfDBB27a02",
+          "timestamp": 1758877615684,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": [
+            "smartWallet"
+          ]
+        },
+        {
+          "fid": 206967,
+          "address": "FKC5Dvxtu3cUU9J6LJCPj1kMhSKU8ugijaB1JWJr4iBt",
+          "timestamp": 1742580783485,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 206967,
+          "address": "0x8d225974a44c45E339Dc16950CD6e5562649c71e",
+          "timestamp": 1739229604853,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        }
+      ]
+    }
+  }
+}

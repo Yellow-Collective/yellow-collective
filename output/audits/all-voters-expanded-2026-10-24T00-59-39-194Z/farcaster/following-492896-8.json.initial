@@ -1,0 +1,12 @@
+{
+  "url": "https://api.farcaster.xyz/v2/following?fid=492896&limit=50&cursor=eyJ2IjoyLCJmaWQiOjQ5Mjg5NiwibGltaXQiOjUwLCJsYXN0Q3JlYXRlZEF0IjoiMjAyNC0xMS0yMlQyMDo1ODowOC4wMDBaIiwibGFzdEZpZCI6NzM4NTc0fQ",
+  "status": 429,
+  "retrievedAt": "2026-10-24T01:04:30.087Z",
+  "data": {
+    "errors": [
+      {
+        "message": "Exceeded rate limit of 20 requests per 10 seconds. Try again later."
+      }
+    ]
+  }
+}

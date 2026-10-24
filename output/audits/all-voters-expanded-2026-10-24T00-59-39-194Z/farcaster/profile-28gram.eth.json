@@ -1,0 +1,12 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=28gram.eth",
+  "status": 404,
+  "retrievedAt": "2026-10-24T01:01:37.682Z",
+  "data": {
+    "errors": [
+      {
+        "message": "No FID associated with username 28gram.eth"
+      }
+    ]
+  }
+}

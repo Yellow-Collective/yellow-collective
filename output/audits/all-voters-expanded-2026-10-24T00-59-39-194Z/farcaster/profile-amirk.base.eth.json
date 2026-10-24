@@ -1,0 +1,43 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=amirk.base.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:03:47.248Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 1685502,
+        "displayName": "Amir",
+        "profile": {
+          "bio": {
+            "text": "",
+            "mentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 0,
+        "followingCount": 0,
+        "username": "amirk.base.eth",
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 1685502,
+        "custodyAddress": "0xe7a2af79a6a8fe1f074193a338f3368b76cebc0c",
+        "ethWallets": [],
+        "solanaWallets": [],
+        "walletLabels": []
+      }
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=pappardelle",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.550Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 468979,
+        "displayName": "Pappardelle.eth   Angel investor",
+        "profile": {
+          "bio": {
+            "text": "Vibecode your game from your pumpfun meme on existing infrastructure, with your agent, for free",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "ChIJu46S-ZZhLxMROG5lkwZ3D7k",
+            "description": "Rome, Metropolitan City of Rome Capital, Italy"
+          },
+          "earlyWalletAdopter": true,
+          "accountLevel": "pro",
+          "url": "https://world.devfridge.cool/skill",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/75934c35-faf7-4073-1c61-2195ba1b0f00/original",
+          "profileToken": {
+            "tokenUri": "solana:101/address:39kMeX4HVRW9qbbiHSPbRQ9xeXUF18GrNP6gL61Ppump",
+            "token": {
+              "chain": "solana",
+              "ca": "39kMeX4HVRW9qbbiHSPbRQ9xeXUF18GrNP6gL61Ppump",
+              "tokenId": "01a00b21-7c51-8eb0-1f25-28b77eb5ccf4",
+              "name": "pappardelle",
+              "ticker": "PASTA",
+              "symbol": "PASTA",
+              "imageUrl": "https://token-media.defined.fi/1399811149_39kMeX4HVRW9qbbiHSPbRQ9xeXUF18GrNP6gL61Ppump_large_8fa15db3630e.png"
+            }
+          }
+        },
+        "followerCount": 2412,
+        "followingCount": 6097,
+        "username": "pappardelle",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/b6d6679a-566c-4265-765e-2960dc985200/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01955d6d-0434-c15c-ecec-9c91addfa2b8",
+            "platform": "x",
+            "username": "AnonimoCommando",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 468979,
+        "custodyAddress": "0xac02078eed120f2321a8883f15caceb77bac5ce0",
+        "ethWallets": [
+          "0x5D69C42A3a481d0CCFd88CFA8a2a08e2BF456134",
+          "0xD16550c814F796aF0968BA5c4be67c1c933a7B21",
+          "0xe6C79accCe9aDB0c77a64dD8Fa8C4A7Ef581fbB6"
+        ],
+        "solanaWallets": [
+          "qJPqQaCioqHcp15ioHqaXK84nmRbpgeKJTZX5dP6s39"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x5D69C42A3a481d0CCFd88CFA8a2a08e2BF456134",
+            "labels": [
+              "primary"
+            ]
+          },
+          {
+            "address": "0xD16550c814F796aF0968BA5c4be67c1c933a7B21",
+            "labels": [
+              "warpcast"
+            ]
+          },
+          {
+            "address": "qJPqQaCioqHcp15ioHqaXK84nmRbpgeKJTZX5dP6s39",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "0 (likely to engage in spammy behavior)"
+      }
+    }
+  }
+}

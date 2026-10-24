@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=689506",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.152Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 506209,
+        "timestamp": 1718617616,
+        "username": "daving",
+        "owner": "0x7175d97728c2a2bbe30354e5fdcf6f7d60d0db89",
+        "from": 0,
+        "to": 689506,
+        "user_signature": "0x226a2a9d6b4fb94023f6d3da88d2255caf77ad269d3e6e0b3c6405e17f53e33b5ec246876570d8a22e7c3e0bc93cecbd27e7fdaddfc71e0d8bdc32af93c4b6011c",
+        "server_signature": "0x2f5d31fc11ccc627949959e095a8286f77e5d2e61f7041110b619c631c7ad95a4a85ff46970bfbd7a532d20906cab81c7ef83820dd32922a414a6fc4bc17f68b1b"
+      }
+    ]
+  }
+}

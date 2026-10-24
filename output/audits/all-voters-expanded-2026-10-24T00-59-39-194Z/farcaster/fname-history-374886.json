@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=374886",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.696Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 199959,
+        "timestamp": 1709118627,
+        "username": "kimmydeuk",
+        "owner": "0x47a114794a3e2bc41d3736434b72979d64753ef4",
+        "from": 0,
+        "to": 374886,
+        "user_signature": "0x3ceb9fdb359dd4baf57ec042bb5afe42ee3c340a78bc9895a86c357397b86c594ef9dbc4e51cbce4dd81b390fd2b4f6f68033d1cfa0507ce3e09701d3d26b5cc1c",
+        "server_signature": "0x053eb7ce02d83c0075d736986f9f4078fc374884336b651e5074285f40137a1111671905d24365ef3a2b2a6a7574f5d0470bb0765b786a01ce169f6cf54902a01b"
+      }
+    ]
+  }
+}

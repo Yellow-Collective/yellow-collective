@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=9318",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.346Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 9317,
+        "timestamp": 1676686593,
+        "username": "catra",
+        "owner": "0xc656b9dc4fc21cb0a01d3efddb8a68c123ddc31b",
+        "from": 0,
+        "to": 9318,
+        "user_signature": "0x6d23e37cb275c7d32275715ad6b12920f5bec7539271ffe9e56bfe40430a720f4adcd87d378a65f27efc51b22a8dea87242f9b1a4566a3983b3e9d6937eb0b111c",
+        "server_signature": "0x2264368d2554d8bd4fd475eda6d069aa5666647356c06ca0143c65a6b1b63333646d5522d1fda13aaf23235d8f81ce82fbecdbaa6080aaba5938bd417923b2a61b"
+      }
+    ]
+  }
+}

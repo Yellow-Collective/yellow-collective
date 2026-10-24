@@ -1,0 +1,88 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=momotsuki",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.960Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 397777,
+        "displayName": "Momotsuki",
+        "profile": {
+          "bio": {
+            "text": "Doodle artist",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x051024b653e8ec69e72693f776c41c2a9401fb07",
+            "token": {
+              "chain": "base",
+              "ca": "0x051024b653e8ec69e72693f776c41c2a9401fb07",
+              "tokenId": "0198d3a2-daa3-0161-2a00-99711390e52e",
+              "name": "BETRMINT",
+              "ticker": "BETR",
+              "symbol": "BETR",
+              "imageUrl": "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/3e125e67-7211-4ff1-0366-b17c918d1400/original"
+            }
+          }
+        },
+        "followerCount": 294,
+        "followingCount": 199,
+        "username": "momotsuki",
+        "pfp": {
+          "url": "https://ipfs.decentralized-content.com/ipfs/bafybeico6wmg3cs4pfurv3b7jw6yttoakluu47q5sc3d32vrb4dmhluizu",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01997dca-985c-798d-6589-a64a7cfb38cd",
+            "platform": "x",
+            "username": "mo_motsuki",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 397777,
+        "custodyAddress": "0xf820ea140e3a886334e9e97037b2df298ba575fa",
+        "ethWallets": [
+          "0xf3F10b550BAD88d0eCD6aFf1919279B2a0EF78d7",
+          "0xed764F46c8b6E4ebEadb795017e436DdB3561476"
+        ],
+        "solanaWallets": [
+          "AkQDLHTojrRmyi73kG7AsEZqsz1UUiZn5V8ZyybKW1Ra"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xed764F46c8b6E4ebEadb795017e436DdB3561476",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "AkQDLHTojrRmyi73kG7AsEZqsz1UUiZn5V8ZyybKW1Ra",
+            "labels": [
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

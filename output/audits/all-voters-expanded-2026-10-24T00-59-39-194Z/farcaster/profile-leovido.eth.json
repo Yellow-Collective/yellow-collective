@@ -1,0 +1,87 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=leovido.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.547Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 203666,
+        "displayName": "C. Leovido 🍃🟡",
+        "profile": {
+          "bio": {
+            "text": "Mobile @ Checkout.com. RN + iOS. Reading ZK, building private things, occasionally still thinking in piano keys.",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "https://linktr.ee/leovido",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/8095b21b-f708-49ff-7cce-b9008520ac00/original",
+          "profileToken": {
+            "tokenUri": ""
+          }
+        },
+        "followerCount": 4142,
+        "followingCount": 1680,
+        "username": "leovido.eth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/c633699f-cc4b-4136-725a-98a84184b400/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0195b846-a314-2a55-5ac5-ed07afedbfab",
+            "platform": "x",
+            "username": "c_leovido",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 203666,
+        "custodyAddress": "0xdd4899614d8fcd30f1ebe0cd695eb51cbf34f086",
+        "ethWallets": [
+          "0xdd3b3A67C66A5276aaCC499ec2abD5241721e008",
+          "0xc41B192Df74fe564108110Fe854b2bEE70bB0B3A",
+          "0xA159dDbd37A081C6aF3E0e0F9ca4133478625Dd4",
+          "0x38c062DA3Db9f636834c1609dF6f5Eea45c7f7f9",
+          "0x8d1af12f07DD1b17abA675A052d439B594c6F2a7",
+          "0xB201434595639F99c37cE2fea7f6fB5fB12848E3"
+        ],
+        "solanaWallets": [
+          "83VF9bSsC6Kz4y8byT3vHFxoiX9tZu7tAbYX1s8PuBJE",
+          "FxAiqjU3Hbee863f9PxDwm5xaaf1NC1XFNW3o46EnM7p",
+          "9ott8HvRj8dFc5kwUoSqFMxjn3R2acRodLKFNhV95cTJ"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xA159dDbd37A081C6aF3E0e0F9ca4133478625Dd4",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "FxAiqjU3Hbee863f9PxDwm5xaaf1NC1XFNW3o46EnM7p",
+            "labels": [
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

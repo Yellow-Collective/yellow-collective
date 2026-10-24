@@ -1,0 +1,49 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=satori",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:03:44.266Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 4281,
+        "displayName": "Satori",
+        "profile": {
+          "bio": {
+            "text": "",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          }
+        },
+        "followerCount": 123,
+        "followingCount": 66,
+        "username": "satori",
+        "pfp": {
+          "url": "https://i.imgur.com/U0ENQpw.jpg",
+          "verified": false
+        },
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "pending",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 4281,
+        "custodyAddress": "0x137b7adc5e414792ba3c1d45cb0a44fb83d1b8bc",
+        "ethWallets": [],
+        "solanaWallets": [],
+        "walletLabels": [],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

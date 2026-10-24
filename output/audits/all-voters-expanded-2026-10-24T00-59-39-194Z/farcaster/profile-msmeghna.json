@@ -1,0 +1,91 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=msmeghna",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:38.227Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 416580,
+        "displayName": "Meghna ⌐◨-◨",
+        "profile": {
+          "bio": {
+            "text": "Architect | Traditional mixed media artist 🌈 | Digital artist | Photography enthusiast | NFTNYC'23/24 🎨 https://www.instagram.com/ms.meghna",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/85e45f79-0c55-4ffb-d9ad-fc0e32853200/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x051024b653e8ec69e72693f776c41c2a9401fb07",
+            "token": {
+              "chain": "base",
+              "ca": "0x051024b653e8ec69e72693f776c41c2a9401fb07",
+              "tokenId": "0198d3a2-daa3-0161-2a00-99711390e52e",
+              "name": "BETRMINT",
+              "ticker": "BETR",
+              "symbol": "BETR",
+              "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0a162730-c586-46f6-5517-da0013a90a00/original"
+            }
+          }
+        },
+        "followerCount": 2984,
+        "followingCount": 1159,
+        "username": "msmeghna",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/042b5979-b3cb-4801-7244-5e8a84100b00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01927ba0-4711-e22c-0365-ccb3e8664aaf",
+            "platform": "x",
+            "username": "msmeghna_",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 416580,
+        "custodyAddress": "0x230263955078f65c39e68b33dbb82e7891150e6b",
+        "ethWallets": [
+          "0x65C4aBeacF97978349612022c56498502F997f69",
+          "0x15C6a4bF9023Ad20C51CbEa9992A5bcCf83F3e7B",
+          "0xb0591d2d5911DAFE518b73A0Ed8007B377Fe32a8"
+        ],
+        "solanaWallets": [
+          "J2LJg8tM6UL6xL4FF2XrGkVTT6iPiGVqDRkFX1i48i9W"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x15C6a4bF9023Ad20C51CbEa9992A5bcCf83F3e7B",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "J2LJg8tM6UL6xL4FF2XrGkVTT6iPiGVqDRkFX1i48i9W",
+            "labels": [
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

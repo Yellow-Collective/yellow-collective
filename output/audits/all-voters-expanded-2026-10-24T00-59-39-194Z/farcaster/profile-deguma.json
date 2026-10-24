@@ -1,0 +1,78 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=deguma",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:07.152Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 241555,
+        "displayName": "Deguma",
+        "profile": {
+          "bio": {
+            "text": "Artis",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "totalEarned": 0
+        },
+        "followerCount": 127,
+        "followingCount": 276,
+        "username": "deguma",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/b88a93b9-7a91-4157-bdb3-f29228bf4200/rectcrop3",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019546eb-02e0-874a-4bf4-22dd2c9075e0",
+            "platform": "x",
+            "username": "Degudhadharma",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 241555,
+        "custodyAddress": "0x045f60229d7fc07e2582c734121e2310458aef24",
+        "ethWallets": [
+          "0xC2320b6B6e7486b1743d6d0CfC62Ad5cfc23F86e",
+          "0x0081e6f9373c1ffB7D7FC702EB15aC805EB50389"
+        ],
+        "solanaWallets": [
+          "AKAbH5wwi9ruu8C6vGNis9TMEefCGidpgty3jpryxJWg"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xC2320b6B6e7486b1743d6d0CfC62Ad5cfc23F86e",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "AKAbH5wwi9ruu8C6vGNis9TMEefCGidpgty3jpryxJWg",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "url": "https://api.farcaster.xyz/v2/verifications?fid=492896",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:36.733Z",
+  "data": {
+    "result": {
+      "verifications": [
+        {
+          "fid": 492896,
+          "address": "2fbabSz43smLhCAZEdd4R6gUF9mgt7xdHnpFkoi5H8c3",
+          "timestamp": 1749068487382,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 492896,
+          "address": "0xDc37e6f67BFb7361e25731fC477903e172D211f1",
+          "timestamp": 1715838265595,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": true,
+          "labels": []
+        },
+        {
+          "fid": 492896,
+          "address": "0x622B2E727dBA98fe950cFE9F220a4d7dD17730BC",
+          "timestamp": 1752945133204,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": [
+            "smartWallet"
+          ]
+        },
+        {
+          "fid": 492896,
+          "address": "0xfa64dd2bB8d9B89d793F7e3D7a3E215580859Ecf",
+          "timestamp": 1740558909734,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        }
+      ]
+    }
+  }
+}

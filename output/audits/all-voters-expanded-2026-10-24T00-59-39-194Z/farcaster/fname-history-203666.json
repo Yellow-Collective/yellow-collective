@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=203666",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.487Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 36605,
+        "timestamp": 1702120259,
+        "username": "almashii27",
+        "owner": "0xdd4899614d8fcd30f1ebe0cd695eb51cbf34f086",
+        "from": 0,
+        "to": 203666,
+        "user_signature": "0x46c50e457fa69c08538cb7549bdaf56f307d35f23cbedc098d050e684040ff250f07291a058cc6570f43801ae4dabf3db19dbb726e7ddf372ad042f1e1c282121c",
+        "server_signature": "0x6f5029c54d3b6eec84cb4bbf7f069216553076c560523a5b1b4c558febc4d65f595a9aac3678d7693b3a160e5ce54913857eb575c9c790d92a0f7af6937375a11c"
+      }
+    ]
+  }
+}

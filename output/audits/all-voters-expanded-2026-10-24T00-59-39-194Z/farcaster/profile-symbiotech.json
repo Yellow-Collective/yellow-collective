@@ -1,0 +1,102 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=symbiotech",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:07.308Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 4567,
+        "displayName": "Symbiotech",
+        "profile": {
+          "bio": {
+            "text": "FID 4567 | /42069 | /symbiotic | /yellow | /abide | /666 |",
+            "mentions": [],
+            "channelMentions": [
+              "42069",
+              "symbiotic",
+              "yellow",
+              "abide",
+              "666"
+            ]
+          },
+          "location": {
+            "placeId": "ChIJ4_zZRufYfVMRh-nRrbbh1I8",
+            "description": "Vernon, BC, Canada"
+          },
+          "earlyWalletAdopter": true,
+          "url": "https://linktr.ee/symbiotechstudios",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e203a332-0b07-4e47-8aaa-4619f9eec200/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0xf95fbc0ffe0179ed78323aa584d3faaaa9c3012a",
+            "token": {
+              "chain": "base",
+              "ca": "0xf95fbc0ffe0179ed78323aa584d3faaaa9c3012a",
+              "tokenId": "0198e9d5-00e6-1754-dc9e-b2444704fe88",
+              "name": "symbiotech",
+              "ticker": "symbiotech",
+              "symbol": "symbiotech",
+              "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafybeid2hilg3wpvfb6gqplec4hz6be5ui2ozaahxbr6i3cbprkzvtutdm"
+            }
+          }
+        },
+        "followerCount": 9271,
+        "followingCount": 1468,
+        "username": "symbiotech",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/396038fd-b2e1-4dab-f3b1-23f1fe6c9d00/original",
+          "verified": false
+        },
+        "referrerUsername": "dwr",
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019277d6-9c02-96a0-5f88-f33d132a5cc2",
+            "platform": "x",
+            "username": "Symbiotech",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 4567,
+        "custodyAddress": "0xaf3e331e08b4c14b99449b5550c4b515ff2bedf2",
+        "ethWallets": [
+          "0x5A4b655F79696e2eEa0Bb1d8aC2A6E0C69E8b82A",
+          "0x17879EA11Fd8eDd3b0b5f0D35030446a64Ebc91d",
+          "0x5bFeb4Ca066c9458842AC89b6e5cd983bd1a1034",
+          "0x313aF5659d36298480d052e5Eae6D9E4fe3bD411",
+          "0xbf0D78EbE5E2c5A8eD9DBe42D539f5E8EA115D61",
+          "0xB5C60a9383215E6B18E82e96b05626604788df27"
+        ],
+        "solanaWallets": [
+          "7Mw1YVqFZyZhTzX85L1v7Hn6Jx2q5B8ptHiVh1BFSKqb",
+          "GamfcTf1fKDkq8i6QNchdARNVGB3Svk3R58uuCSovVEF"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x5A4b655F79696e2eEa0Bb1d8aC2A6E0C69E8b82A",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "GamfcTf1fKDkq8i6QNchdARNVGB3Svk3R58uuCSovVEF",
+            "labels": [
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

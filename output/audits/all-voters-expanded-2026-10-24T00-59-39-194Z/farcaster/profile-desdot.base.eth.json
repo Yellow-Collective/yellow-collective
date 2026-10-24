@@ -1,0 +1,12 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=desdot.base.eth",
+  "status": 404,
+  "retrievedAt": "2026-10-24T01:03:47.931Z",
+  "data": {
+    "errors": [
+      {
+        "message": "No FID associated with username desdot.base.eth"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1782 @@
+{
+  "url": "https://api.farcaster.xyz/v2/following?fid=938012&limit=50&cursor=eyJ2IjoyLCJmaWQiOjkzODAxMiwibGltaXQiOjUwLCJsYXN0Q3JlYXRlZEF0IjoiMjAyNS0wMy0yOVQxOTo1MjoxNi4wMDBaIiwibGFzdEZpZCI6NTE0NTkzfQ",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:06:12.469Z",
+  "data": {
+    "result": {
+      "users": [
+        {
+          "fid": 497045,
+          "displayName": "Zeta",
+          "profile": {
+            "bio": {
+              "text": "2D & 3D Artist 🎨\nDrawing my way up to enlightenment 🐸",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "profileToken": {
+              "tokenUri": "eip155:1/erc20:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "token": {
+                "chain": "ethereum",
+                "ca": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "tokenId": "01990853-0415-7931-93cc-985490688801",
+                "name": "USDC",
+                "ticker": "USDC",
+                "symbol": "USDC",
+                "imageUrl": "https://token-media.defined.fi/1_0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48_large_small_thumb_0b0a2829-b254-446e-8b44-95d16a7657fe.png"
+              }
+            }
+          },
+          "followerCount": 298,
+          "followingCount": 1062,
+          "username": "deuzz",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/bbc5bf1d-821d-4769-74a1-b6eb7aa62e00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 15792,
+          "displayName": "🅴🅳🆄🎩",
+          "profile": {
+            "bio": {
+              "text": "Phygital Artist.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/affc8364-6c30-4f6c-4a61-4fe52b629900/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 1135,
+          "followingCount": 864,
+          "username": "edurubio",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/5c8d751d-8a2c-4bef-2389-eaa497735100/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 281676,
+          "displayName": "Anemale",
+          "profile": {
+            "bio": {
+              "text": "Artist & builder of Anemale Generis\nA living onchain system for world creation\nDad ×3 · Dog dad to Jungle",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://miniane.vercel.app",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/313af01a-046d-450b-ceec-55ecffa2c400/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 7669,
+          "followingCount": 2105,
+          "username": "anemale.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0fe290ec-b8d3-4e62-6d51-1392373cd900/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 374641,
+          "displayName": "Travis Sapolin",
+          "profile": {
+            "bio": {
+              "text": "instagram.com/lilnouners",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJOwg_06VPwokRYv534QaPC8g",
+              "description": "New York, NY, USA"
+            },
+            "url": "https://lilnouns.auction",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "base",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+                "name": "Ethereum",
+                "ticker": "ETH",
+                "symbol": "ETH",
+                "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+              }
+            }
+          },
+          "followerCount": 976,
+          "followingCount": 1126,
+          "username": "travsap",
+          "pfp": {
+            "url": "https://i.imgur.com/NS4rK6z.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 789811,
+          "displayName": "PavelDurov",
+          "profile": {
+            "bio": {
+              "text": "Programming is the art of creating and implementing software to solve problems, automate tasks, and bring ideas to life. It involves writing code in various lan",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJaeYLa_dKCzkR_-qm3uLwXsU",
+              "description": "Dibai, Uttar Pradesh, India"
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 110,
+          "followingCount": 811,
+          "username": "egormatveev",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/7a47ed16-c282-414a-752f-a3df493cd800/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 334050,
+          "displayName": "Megget.⌐◨-◨🟡🟪🎩",
+          "profile": {
+            "bio": {
+              "text": "🤖 Human cast machine                                                      \n📝 Casts about: shark spam, GM, generic",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 1671,
+          "followingCount": 836,
+          "username": "megget.eth",
+          "pfp": {
+            "url": "https://i.imgur.com/ARedS8Z.gif",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 850263,
+          "displayName": "Medi",
+          "profile": {
+            "bio": {
+              "text": "web3 designer, influencer",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 28,
+          "followingCount": 601,
+          "username": "starikan",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/faedd696-2290-4c28-3073-228606137100/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 872568,
+          "displayName": "J'Mariano",
+          "profile": {
+            "bio": {
+              "text": "I make videos— telling Onchain stories | here for DAO communities & CM /pronouns",
+              "mentions": [],
+              "channelMentions": [
+                "pronouns"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://www.youtube.com/@creator-mariano",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x9342736cb110c07b811bb13b87682fd166d25a46",
+              "token": {
+                "chain": "base",
+                "ca": "0x9342736cb110c07b811bb13b87682fd166d25a46",
+                "tokenId": "0198eebe-8f8d-3935-29e5-bf984da4764f",
+                "name": "cryptfi_mariano",
+                "ticker": "cryptfi_mariano",
+                "symbol": "cryptfi_mariano",
+                "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafybeick36omhirsb36qu62st3jjbjuv4rc7xe576cenndxbw4xf7vls3i"
+              }
+            }
+          },
+          "followerCount": 902,
+          "followingCount": 905,
+          "username": "cryptfi-mariano",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/eea0fa61-57c8-40b4-502f-a576e55e5500/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 849559,
+          "displayName": "Satir Faster",
+          "profile": {
+            "bio": {
+              "text": "rich bitch xDD",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 29,
+          "followingCount": 655,
+          "username": "satirist",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e034df2a-8781-4798-85f9-1ece1cc05d00/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 304703,
+          "displayName": "Regaza 🎩",
+          "profile": {
+            "bio": {
+              "text": "Hello friend lets go 🟦💙",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "base",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+                "name": "Ethereum",
+                "ticker": "ETH",
+                "symbol": "ETH",
+                "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+              }
+            }
+          },
+          "followerCount": 659,
+          "followingCount": 2182,
+          "username": "regaza15",
+          "pfp": {
+            "url": "https://i.imgur.com/7UBo2wD.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 824091,
+          "displayName": "Chuddle",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 7,
+          "followingCount": 69,
+          "username": "chuddle",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/bd3f9f47-c85c-47eb-14b6-e1b0007d2500/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 257519,
+          "displayName": "KAKANG",
+          "profile": {
+            "bio": {
+              "text": "Follow back",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "url": ""
+          },
+          "followerCount": 147,
+          "followingCount": 1405,
+          "username": "bellacintya",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/11f6da9c-9177-47c1-f376-b975394e7000/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 515734,
+          "displayName": "ElchicoDeLasPlantas.eth",
+          "profile": {
+            "bio": {
+              "text": "Soy el chico de las plantas",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "base",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+                "name": "Ethereum",
+                "ticker": "ETH",
+                "symbol": "ETH",
+                "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+              }
+            }
+          },
+          "followerCount": 157,
+          "followingCount": 393,
+          "username": "elchicoplantas",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/72e218c5-f452-4fa5-920f-2c5e2ce94600/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 568791,
+          "displayName": "Vadym",
+          "profile": {
+            "bio": {
+              "text": "I like web3. Live on Poland",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 52,
+          "followingCount": 1467,
+          "username": "kvest",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9e37dfce-b4ce-4144-db10-f6a95c856000/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 891604,
+          "displayName": "Sophia",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 8,
+          "followingCount": 311,
+          "username": "sophiac",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ce54816f-1aa7-4574-bfaa-58dce7d54700/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 395732,
+          "displayName": "A-mão",
+          "profile": {
+            "bio": {
+              "text": "Uma mao tentando ter uma vida decente",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "accountLevel": "pro"
+          },
+          "followerCount": 373,
+          "followingCount": 2677,
+          "username": "avidadeumamao",
+          "pfp": {
+            "url": "https://i.imgur.com/5lITs0v.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 271713,
+          "displayName": "Archilles.base.eth",
+          "profile": {
+            "bio": {
+              "text": "Keep building on base.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "base",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+                "name": "Ethereum",
+                "ticker": "ETH",
+                "symbol": "ETH",
+                "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/42b0e48e-b77e-4c48-8770-4621d5f75700/original"
+              }
+            }
+          },
+          "followerCount": 530,
+          "followingCount": 694,
+          "username": "fadlyyy",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9c7cb077-97af-4548-fdcc-445fe8e1b100/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 259565,
+          "displayName": "Jay 🔵🎩⚡👾🎭🧔🏻",
+          "profile": {
+            "bio": {
+              "text": "I'm an explorer and a crypto enthosiast.\nA photographer and a speech therapist. \nA father of two and a husband of one wife. Cheers 🥂",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/8995c17a-57ac-41ec-51e6-16f8b8607700/original"
+          },
+          "followerCount": 1024,
+          "followingCount": 1813,
+          "username": "banton1.eth",
+          "pfp": {
+            "url": "https://ceebpezmlnbcdnxrm4jx6lfibq52xjqzk4yxqtvzgcsvq6ms3qba.arweave.net/EQgXkyxbQiG28WcTfyyoDDurphlXMXhOuTClWHmS3AI/",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 302269,
+          "displayName": "Vladislav",
+          "profile": {
+            "bio": {
+              "text": "web 3.0",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 123,
+          "followingCount": 1840,
+          "username": "arcling.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/28bf7c1e-ccb3-4c47-2ecf-193f531d2d00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 345650,
+          "displayName": "Ratanbikash",
+          "profile": {
+            "bio": {
+              "text": "Follow back 100% dear",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xd85c31854c2b0fb40aaa9e2fc4da23c21f829d46",
+              "token": {
+                "chain": "base",
+                "ca": "0xd85c31854c2b0fb40aaa9e2fc4da23c21f829d46",
+                "tokenId": "019a0843-1cfe-2e14-91f1-a706bfadf9a6",
+                "name": "Ping",
+                "ticker": "PING",
+                "symbol": "PING",
+                "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/7c3e187f-56e9-4fe0-a541-016a6af36700/original"
+              }
+            }
+          },
+          "followerCount": 1080,
+          "followingCount": 2040,
+          "username": "rratanbikash",
+          "pfp": {
+            "url": "https://res.cloudinary.com/base-app/image/upload/f_auto/v1766917512/75c1b4d5-7545-496f-a467-d172e6a1a075.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 399310,
+          "displayName": "Bad Boy🧬",
+          "profile": {
+            "bio": {
+              "text": "pocidoank.reserve.superfluid.eth",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x0039f0623a35c4bae5493549f47a654e084317d0",
+              "token": {
+                "chain": "base",
+                "ca": "0x0039f0623a35c4bae5493549f47a654e084317d0",
+                "tokenId": "0198eeba-e4fa-cf0a-7dce-e4bc949ce0df",
+                "name": "badb0y",
+                "ticker": "badb0y",
+                "symbol": "badb0y",
+                "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/f2ffa642-6126-4af8-9832-bfa7b79b9900/original"
+              }
+            }
+          },
+          "followerCount": 788,
+          "followingCount": 1593,
+          "username": "pocidoank",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/1a89287a-7930-4206-8495-476842a5ef00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 263048,
+          "displayName": "Saurabh",
+          "profile": {
+            "bio": {
+              "text": "Trade. Manage Risk. Repeat. 🔁\nConsistency is Key 🔑",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "solana:101/address:11111111111111111111111111111111",
+              "token": {
+                "chain": "solana",
+                "ca": "11111111111111111111111111111111",
+                "tokenId": "0198d320-b901-8c93-fa74-e44ad8480b69",
+                "name": "Solana",
+                "ticker": "SOL",
+                "symbol": "SOL",
+                "imageUrl": "https://assets.coingecko.com/coins/images/4128/standard/solana.png?1718769756"
+              }
+            }
+          },
+          "followerCount": 554,
+          "followingCount": 2375,
+          "username": "saurabh8963",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/779faf85-cb30-4e14-48d2-b8a5c8e21800/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 416242,
+          "displayName": "ryjinblox",
+          "profile": {
+            "bio": {
+              "text": "swaggy #nounish #based Poap Artist at TNS. Created the Gator and Sushi Head in Yellow Collection / logo designer",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "url": "",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 91,
+          "followingCount": 431,
+          "username": "gianmadz",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/14e22ad3-d85f-4d4e-cc56-c6018d1e3100/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 486435,
+          "displayName": "Muhammad Yaseen  🎩",
+          "profile": {
+            "bio": {
+              "text": "You can do anything but not everything. 😶",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 3042,
+          "followingCount": 5844,
+          "username": "liai",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/33e3638a-94ff-4571-2e64-8d7279a6b900/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 414259,
+          "displayName": "earthcone",
+          "profile": {
+            "bio": {
+              "text": "share love & enjoy the world <3 🌏-'",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 553,
+          "followingCount": 512,
+          "username": "earthcone",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/6f0e4c79-6ea1-4930-2974-40290e716b00/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 491433,
+          "displayName": "Polkacvdo",
+          "profile": {
+            "bio": {
+              "text": "2D animator",
+              "mentions": [],
+              "channelMentions": []
+            }
+          },
+          "followerCount": 105,
+          "followingCount": 605,
+          "username": "p01k",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/05e37e6a-eb6e-4921-5746-37c20c577e00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 279720,
+          "displayName": "Asadullah",
+          "profile": {
+            "bio": {
+              "text": "income nai taka nai",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 995,
+          "followingCount": 2144,
+          "username": "asadgalib",
+          "pfp": {
+            "url": "https://i.imgur.com/zjUXjiz.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 573158,
+          "displayName": "Skrolif",
+          "profile": {
+            "bio": {
+              "text": "💵💵💵",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "accountLevel": "pro",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "base",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+                "name": "Ethereum",
+                "ticker": "ETH",
+                "symbol": "ETH",
+                "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+              }
+            }
+          },
+          "followerCount": 1388,
+          "followingCount": 3060,
+          "username": "skrolif",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/26a12e59-e8fc-4718-e618-6adc73f78d00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 397077,
+          "displayName": "trvkc👌🏻 ⌐◨-◨",
+          "profile": {
+            "bio": {
+              "text": "cryptotrvkc@gmail.com\n\n- 3D generalist\n- Meme based / Thailand\n- Fueled by coffee and supa spicy ramen",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 311,
+          "followingCount": 446,
+          "username": "trvkc",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/30e0fc37-170e-4073-27e6-56685e682000/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 989942,
+          "displayName": "Noahaddicted",
+          "profile": {
+            "bio": {
+              "text": "Just For Fun n Cuan💎💎",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 98,
+          "followingCount": 510,
+          "username": "noahcuan",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d3e7d638-39bb-4385-cd91-c7ace1a3e300/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 691255,
+          "displayName": "Marcus Almeida",
+          "profile": {
+            "bio": {
+              "text": "Entrepreneur",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 17,
+          "followingCount": 175,
+          "username": "khsjr",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/94ee5de2-58c8-4698-e6af-64a6dd8ab700/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 268808,
+          "displayName": "DBVVS",
+          "profile": {
+            "bio": {
+              "text": "Bangers",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x1bc0c42215582d5a085795f4badbac3ff36d1bcb",
+              "token": {
+                "chain": "base",
+                "ca": "0x1bc0c42215582d5a085795f4badbac3ff36d1bcb",
+                "tokenId": "0198d475-02c7-94fb-839a-94dc4ac32993",
+                "name": "tokenbot",
+                "ticker": "CLANKER",
+                "symbol": "CLANKER",
+                "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/295953fa-15ed-4d3c-241d-b6c1758c6200/original"
+              }
+            }
+          },
+          "followerCount": 562,
+          "followingCount": 790,
+          "username": "bonkonsol",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d2f1ab2d-35d9-49fd-30ce-f4b8800ef700/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 386213,
+          "displayName": "🔵🎩Crpdaddy.⌐◨-◨",
+          "profile": {
+            "bio": {
+              "text": "Father of 3 little munchkins |Professionally viber | Collector | I build dank memes /yellow /groupies /mfers hostin /crpdaddy /pirates-bay 🏴‍☠️",
+              "mentions": [],
+              "channelMentions": [
+                "yellow",
+                "groupies",
+                "mfers",
+                "crpdaddy",
+                "pirates-bay"
+              ]
+            },
+            "location": {
+              "placeId": "ChIJ7cv00DwsDogRAMDACa2m4K8",
+              "description": "Chicago, IL, USA"
+            },
+            "earlyWalletAdopter": true,
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/30e9be05-cd82-4907-de2a-a6cf1e493e00/original"
+          },
+          "followerCount": 2431,
+          "followingCount": 1013,
+          "username": "crpdaddy.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/b29a62db-3e4a-4ee9-de51-b4140b02cb00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 360601,
+          "displayName": "Loudman.⌐◨-◨ 🏴‍☠️",
+          "profile": {
+            "bio": {
+              "text": "Collective noun #67 ⌐◨-◨ 🟡  | Captain of /pirates-bay | Vibeman",
+              "mentions": [],
+              "channelMentions": [
+                "pirates-bay"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "totalEarned": 4120.440497033516,
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ffee4e9f-5f93-47b3-e4f1-e9bdc37d1c00/original",
+            "profileToken": {
+              "tokenUri": "eip155:1/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "ethereum",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d3c5-362b-bc05-1ba0-9e5744febc19",
+                "name": "Ethereum",
+                "ticker": "ETH",
+                "symbol": "ETH",
+                "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+              }
+            }
+          },
+          "followerCount": 3136,
+          "followingCount": 2021,
+          "username": "loudman.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d98bfb05-0994-443d-c696-d84434001000/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 342737,
+          "displayName": "t",
+          "profile": {
+            "bio": {
+              "text": "tech vs. absurd – you're not real – /addresso - /sauce – /cto – mostly a tombstoned account",
+              "mentions": [],
+              "channelMentions": [
+                "addresso",
+                "sauce",
+                "cto"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 1375,
+          "followingCount": 317,
+          "username": "tudorizer",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/5f8589ef-0a53-43e8-22f3-070c69880a00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 326433,
+          "displayName": "Tmophoto",
+          "profile": {
+            "bio": {
+              "text": "metal casting, 3d prints,\nAI, robotics and mashups of all of these things.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": ""
+          },
+          "followerCount": 3459,
+          "followingCount": 1072,
+          "username": "tmophoto",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/8505af61-b5d9-44b3-0499-394a62b2d100/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 323746,
+          "displayName": "JackWyldes",
+          "profile": {
+            "bio": {
+              "text": "Free Agent \nHard Fits \nLoves Chinchillas \nFailed Artist",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 2182,
+          "followingCount": 827,
+          "username": "jackwyldes.eth",
+          "pfp": {
+            "url": "https://tba-mobile.mypinata.cloud/ipfs/QmZCPS637XHZDuzZTm29vsM8TQ6pcG6gbdRzoEnoxmw9sB?pinataGatewayToken=PMz6RFTDuk-300OttNnb_U0PSKbbXQdzLmUqdiEq7lesXcsVK8TK7S5GoOtxRGl2",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 318473,
+          "displayName": "leopastel.eth",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 1590,
+          "followingCount": 755,
+          "username": "leopastel",
+          "pfp": {
+            "url": "https://tba-mobile.mypinata.cloud/ipfs/QmVREzdkBnDqEKJGz22DdBoLJ5xUHLdXMw5fGbZXFqfPLZ?pinataGatewayToken=PMz6RFTDuk-300OttNnb_U0PSKbbXQdzLmUqdiEq7lesXcsVK8TK7S5GoOtxRGl2",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 312486,
+          "displayName": "sincancuan.base.eth",
+          "profile": {
+            "bio": {
+              "text": "(Mountaineer | Artist | Crypto Enthusiast). Wonderful Indonesia 🌏",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/59a69d02-d943-4f0f-012a-720788a4f600/original",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+              "token": {
+                "chain": "base",
+                "ca": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+                "tokenId": "0198cf9a-efd8-6b2b-d06a-3913d55ebbd3",
+                "name": "Degen",
+                "ticker": "DEGEN",
+                "symbol": "DEGEN",
+                "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/300f4011-2af0-4c86-2f7b-97223c3dc900/original"
+              }
+            }
+          },
+          "followerCount": 937,
+          "followingCount": 253,
+          "username": "sincancuan.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/3775fbcf-86ec-4f7c-42e7-33eeee642000/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 309310,
+          "displayName": "MetaMú",
+          "profile": {
+            "bio": {
+              "text": "Art, music, fulfillment, and the pursuit of happiness! Web3 connoisseur.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://zora.co/metamu",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/59d8b181-fde0-4617-ad50-b302d9c88500/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 1577,
+          "followingCount": 1620,
+          "username": "metamu",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/a7da8fba-1793-4536-37d7-92195ad1e500/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 307834,
+          "displayName": "Trebor🎩🟡",
+          "profile": {
+            "bio": {
+              "text": "I just dont give a fuck anymore.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJ53USP0nBhkcRjQ50xhPN_zw",
+              "description": "Milan, Metropolitan City of Milan, Italy"
+            },
+            "earlyWalletAdopter": true,
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+              "token": {
+                "chain": "base",
+                "ca": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+                "tokenId": "0198cf9a-efd8-6b2b-d06a-3913d55ebbd3",
+                "name": "Degen",
+                "ticker": "DEGEN",
+                "symbol": "DEGEN",
+                "imageUrl": "https://coin-images.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225"
+              }
+            }
+          },
+          "followerCount": 14276,
+          "followingCount": 1003,
+          "username": "trebor69",
+          "pfp": {
+            "url": "https://i.imgur.com/Hblvxb0.gif",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 283144,
+          "displayName": "Renée Campbell",
+          "profile": {
+            "bio": {
+              "text": "Reneecampbell.eth \n\nReneecampbell.degen.eth\n\n* https://bio.site/ReneeCampbell \n\n*  /flora \n* /reneecampbell \n\nCreator of Worlds",
+              "mentions": [],
+              "channelMentions": [
+                "flora",
+                "reneecampbell"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/a857bda2-9536-40bf-9e04-933670ae8a00/original",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+              "token": {
+                "chain": "base",
+                "ca": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+                "tokenId": "0198cf9a-efd8-6b2b-d06a-3913d55ebbd3",
+                "name": "Degen",
+                "ticker": "DEGEN",
+                "symbol": "DEGEN",
+                "imageUrl": "https://coin-images.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225"
+              }
+            }
+          },
+          "followerCount": 7418,
+          "followingCount": 1107,
+          "username": "reneecampbell",
+          "pfp": {
+            "url": "https://i.imgur.com/88Qqtm0.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 273430,
+          "displayName": "The Wizard",
+          "profile": {
+            "bio": {
+              "text": "Founder @luminode | Building enterprise-grade software",
+              "mentions": [
+                "luminode"
+              ],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://luminode.io",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d8203fcb-cc20-439b-089f-dd8ba5034c00/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 1276,
+          "followingCount": 497,
+          "username": "queue",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/cec85c0a-7b2a-428b-0b95-db7c9a1b2900/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 269723,
+          "displayName": "AlphaLB 🎩🔵 -‘",
+          "profile": {
+            "bio": {
+              "text": "FID 269723 | 🟡 YC #45 | Web3 Marketing and Strategy @therzlt | /basedwisdom /alphazone\nPFP @ccarella",
+              "mentions": [
+                "therzlt"
+              ],
+              "channelMentions": [
+                "basedwisdom",
+                "alphazone"
+              ]
+            },
+            "location": {
+              "placeId": "ChIJO_PkYRozGQ0R0DaQ5L3rAAQ",
+              "description": "Lisbon, Portugal"
+            }
+          },
+          "followerCount": 419,
+          "followingCount": 527,
+          "username": "alphalb.eth",
+          "pfp": {
+            "url": "https://i.imgur.com/gcsrRwy.gif",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 263648,
+          "displayName": "Fattybuthappy",
+          "profile": {
+            "bio": {
+              "text": "Regular guy collecting moments",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://fattybuthappy-creations.vercel.app/",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/1f613612-43cc-4f42-b2bc-35e6b87d0a00/original",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xc4d2254c433b485d2c650716196020dbb0abd9c1",
+              "token": {
+                "chain": "base",
+                "ca": "0xc4d2254c433b485d2c650716196020dbb0abd9c1",
+                "tokenId": "0199207c-b4ff-bf7f-b08b-15a4501d1fd4",
+                "name": "fattybuthappy",
+                "ticker": "fattybuthappy",
+                "symbol": "fattybuthappy",
+                "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafkreidfuiyxadscx4qusomsjhblhb7p2jxo6vp5kx4e3xehsiedkiin44"
+              }
+            }
+          },
+          "followerCount": 1803,
+          "followingCount": 443,
+          "username": "fattybuthappy",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/f4a7a0b0-85de-44cd-4dc1-89143c73a600/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 263373,
+          "displayName": "↑Dom",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4dcae491-67e7-42fb-0ee6-2f0a6cc95100/original",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x0ab8f0f8d61d02aa022893399a168ddc53b1b330",
+              "token": {
+                "chain": "base",
+                "ca": "0x0ab8f0f8d61d02aa022893399a168ddc53b1b330",
+                "tokenId": "0198f7b9-ae7a-d321-6c21-c189c6f9b908",
+                "name": "onchaindom",
+                "ticker": "onchaindom",
+                "symbol": "onchaindom",
+                "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafybeih3s6fqc6rp3s2wkkkhzfvtrkpcjfnu2tv533fhp7iz5qmo6gkpy4"
+              }
+            }
+          },
+          "followerCount": 545,
+          "followingCount": 494,
+          "username": "onchaindom.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9f8231a0-95d2-4d12-2394-f491cfb38a00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 248226,
+          "displayName": "y0b",
+          "profile": {
+            "bio": {
+              "text": "Invisible Gardener. Regen practices. Degen research. Building StatelessDAO open source co-ops. Pixeloodles & Degenomemetics:  https://zora.co/@invisiblegardener",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 1018,
+          "followingCount": 683,
+          "username": "y0b",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/459aa3f8-df13-4772-35f4-3b9ca52f4e00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 247143,
+          "displayName": "Kyle Patrick",
+          "profile": {
+            "bio": {
+              "text": "Tinkering on Farcaster and writing about it. t.me/kyleterminal @readme @ambassadors",
+              "mentions": [
+                "readme",
+                "ambassadors"
+              ],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJi8MeVwPKlzMRH8FpEHXV0Wk",
+              "description": "Manila, Metro Manila, Philippines"
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/b6fca2ad-f70d-46a4-9efc-29ab2e83f300/original",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x043eb4b75d0805c43d7c834902e335621983cf03",
+              "token": {
+                "chain": "base",
+                "ca": "0x043eb4b75d0805c43d7c834902e335621983cf03",
+                "tokenId": "0198e8ed-d81c-4099-efcd-d4c03a9d54ab",
+                "name": "CAD Coin",
+                "ticker": "CADC",
+                "symbol": "CADC",
+                "imageUrl": "https://token-media.defined.fi/8453_0x043eb4b75d0805c43d7c834902e335621983cf03_large.png"
+              }
+            }
+          },
+          "followerCount": 18030,
+          "followingCount": 2456,
+          "username": "kylepatrick.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/15b35784-d490-4144-15c4-62edc2a58c00/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 245124,
+          "displayName": "sgniwder",
+          "profile": {
+            "bio": {
+              "text": "builds things",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ecad1742-8e0f-4538-94b3-fbeab785a800/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 8166,
+          "followingCount": 1005,
+          "username": "sgniwder",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ea12248b-a362-4de3-5dc5-6e0716c40800/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 243818,
+          "displayName": "meta-david ⛓️",
+          "profile": {
+            "bio": {
+              "text": "Leading Americas at ChainUp | Host of The Blockchain Experience podcast /theblockexp | Ex-Samsung | Ex-Hewlett-Packard",
+              "mentions": [],
+              "channelMentions": [
+                "theblockexp"
+              ]
+            },
+            "location": {
+              "placeId": "ChIJOwg_06VPwokRYv534QaPC8g",
+              "description": "New York, NY, USA"
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/bbb73285-0b44-43a3-ec2e-fcdacb692500/original",
+            "profileToken": {
+              "tokenUri": "eip155:999/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "hyperevm",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d320-b401-3f0e-0ba9-5aecbf959427",
+                "name": "Hyperliquid",
+                "ticker": "HYPE",
+                "symbol": "HYPE",
+                "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ff611f0b-754e-482b-ddf5-083c695b2b00/original"
+              }
+            }
+          },
+          "followerCount": 3908,
+          "followingCount": 712,
+          "username": "metadavid",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/66be8e25-9f0b-4feb-4d42-b2adb2f66800/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        }
+      ],
+      "leastInteractedWith": {
+        "count": 349,
+        "users": [
+          {
+            "fid": 99,
+            "displayName": "Jesse Pollak",
+            "profile": {
+              "bio": {
+                "text": "base builder #001 | DM jessexbt to get started building",
+                "mentions": [],
+                "channelMentions": []
+              },
+              "location": {
+                "placeId": "",
+                "description": ""
+              },
+              "earlyWalletAdopter": true,
+              "totalEarned": 4489.510379545145
+            },
+            "followerCount": 127124,
+            "followingCount": 3131,
+            "username": "jesse.base.eth",
+            "pfp": {
+              "url": "https://tba-mobile.mypinata.cloud/ipfs/QmdD5hZrJz1CDVLs2Tg5JLnNR8hjWFVZmMqVWRAWoWYFJd?pinataGatewayToken=3nq0UVhtd3rYmgYDdb1I9qv7rHsw-_DzwdWkZPRQ-QW1avFI9dCS8knaSfq_R5_q",
+              "verified": false
+            },
+            "referrerUsername": "dwr",
+            "viewerContext": {
+              "following": true,
+              "followedBy": false,
+              "enableNotifications": false
+            }
+          },
+          {
+            "fid": 5650,
+            "displayName": "Vitalik Buterin",
+            "profile": {
+              "bio": {
+                "text": "hullo",
+                "mentions": [],
+                "channelMentions": []
+              },
+              "location": {
+                "placeId": "",
+                "description": ""
+              },
+              "earlyWalletAdopter": true,
+              "url": "",
+              "profileToken": {
+                "tokenUri": ""
+              }
+            },
+            "followerCount": 110289,
+            "followingCount": 110,
+            "username": "vitalik.eth",
+            "pfp": {
+              "url": "https://media.firefly.land/lens/126a045e-f7bb-44cc-80b1-2bd63ce9be58.png",
+              "verified": false
+            },
+            "viewerContext": {
+              "following": true,
+              "followedBy": false,
+              "enableNotifications": false
+            }
+          }
+        ]
+      }
+    },
+    "next": {
+      "cursor": "eyJ2IjoyLCJmaWQiOjkzODAxMiwibGltaXQiOjUwLCJsYXN0Q3JlYXRlZEF0IjoiMjAyNS0wMy0yOFQxODoxNDo1Mi4wMDBaIiwibGFzdEZpZCI6MjQzODE4fQ"
+    }
+  }
+}

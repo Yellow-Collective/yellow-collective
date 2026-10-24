@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=374867",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.707Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 199939,
+        "timestamp": 1709116845,
+        "username": "0xaprilia",
+        "owner": "0xcee47cf04f7f94692810e1bb4adfd1f11dd60b93",
+        "from": 0,
+        "to": 374867,
+        "user_signature": "0x414127abd16fdbc154e32b1cf716592d46e0e0613040992050b20359a7889d13330de9307b6541017310d38315a827f21e8ba0815a909412ce4fced388cf5bf61c",
+        "server_signature": "0xa688334db6c0ae59bfc9d6c2ceab43d14ee77365a5f8fef499baeeb10692df2775633930f555a275eb5bb3527ba3bdf181697265d99ae3894484127650a299711c"
+      }
+    ]
+  }
+}

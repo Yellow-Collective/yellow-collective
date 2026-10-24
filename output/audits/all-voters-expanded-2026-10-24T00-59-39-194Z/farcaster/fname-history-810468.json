@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=810468",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.212Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 625006,
+        "timestamp": 1722088785,
+        "username": "nounci",
+        "owner": "0xc1ce1fe46e6b9daf2477a79f10f36cd2c72f0931",
+        "from": 0,
+        "to": 810468,
+        "user_signature": "0x0680c97f49c48d8c8fc5dfc38664c86a6ba7407ad5de292c5056eab7f7e041b241bc3694b11c7a7d26cf4ed3548ee9fd26db5bd1b6968ae756f55002b54f269d1c",
+        "server_signature": "0x14f94c85659bf5157e01404a62d0bd82ec7b9a0759d085d32ffb3bead36b1924108de227c797332d83b3b5c1f5d29dcf1cb617feb6aaa1999c3f0abf4ef038c61b"
+      }
+    ]
+  }
+}

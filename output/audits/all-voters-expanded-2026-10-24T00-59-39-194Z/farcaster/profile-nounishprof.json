@@ -1,0 +1,100 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=nounishprof",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.601Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 4167,
+        "displayName": "Nounish Prof ⌐◧-◧🎩",
+        "profile": {
+          "bio": {
+            "text": "building /gmfarcaster network |\nblockchain ENT prof |  ⌐◧-◧",
+            "mentions": [],
+            "channelMentions": [
+              "gmfarcaster"
+            ]
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "accountLevel": "pro",
+          "url": "https://gmfarcaster.com/",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/1bc84933-1f44-46c1-be8c-2aa1c8e81100/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x4d18e6e2823b81e63dd9a9f71d3cbfb3650fdb07",
+            "token": {
+              "chain": "base",
+              "ca": "0x4d18e6e2823b81e63dd9a9f71d3cbfb3650fdb07",
+              "tokenId": "0198d3d5-4f50-f2fe-34d9-baade3852fe5",
+              "name": "nounishprof",
+              "ticker": "NOUNISHPROF",
+              "symbol": "NOUNISHPROF",
+              "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0e0686be-ae1a-47d2-c737-5beecfe21700/rectcrop3"
+            }
+          }
+        },
+        "followerCount": 25643,
+        "followingCount": 4166,
+        "username": "nounishprof",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/df01c21c-97d9-4552-6532-5b224b72bf00/original",
+          "verified": false
+        },
+        "referrerUsername": "sidenoun",
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "01928d28-2c66-de82-071a-14cf92b32da9",
+            "platform": "x",
+            "username": "ProfWerder",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 4167,
+        "custodyAddress": "0xbb54a63ad8241710eba3a98af224080b611ff8e9",
+        "ethWallets": [
+          "0xCEEd9585854F12F81A0103861b83b995A64AD915",
+          "0x554aAa13361123C45DAe97b4155dFcE5827E39cf",
+          "0x9353CC2583356cE6eA8f92E239D7C9Eb8412ACAF",
+          "0x72a980640A6F3B284D0ffDBA4857865FC7E0Ee79",
+          "0xd19B676d39170eA25A8BD73647561f5EfCf1B7c7",
+          "0xdaD9478b3889EebaeA59E6727E6835f84E765a39"
+        ],
+        "solanaWallets": [
+          "G7LU4fomCvLnDeZgnJX3XL3ZGzWFkqT77tApbkrw3n5A",
+          "HxtJ8asbVDKi3aPZqzeY1vw3naWak1G9rKAXge4nipz8"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x9353CC2583356cE6eA8f92E239D7C9Eb8412ACAF",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "HxtJ8asbVDKi3aPZqzeY1vw3naWak1G9rKAXge4nipz8",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

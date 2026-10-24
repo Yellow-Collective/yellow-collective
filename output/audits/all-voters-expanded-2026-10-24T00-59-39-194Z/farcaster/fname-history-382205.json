@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=382205",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.752Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 206985,
+        "timestamp": 1709849157,
+        "username": "tagawamakoto",
+        "owner": "0xad49268cef0d51b6b1f49bd631a52090f3280d55",
+        "from": 0,
+        "to": 382205,
+        "user_signature": "0x2734318cd29a37f46e2f796556a39f5dc36428c525df1efb6b4570114e1216477faaa8cf783a2499de0330784fbcb78a3a5606fd83aa0ade7618be4dbe08a7821b",
+        "server_signature": "0xd068d8892a3fc6b42f5d0f815ae1880fed3057cff2a18a098648d67a73a6fe9e679cd7269a7e35833b2ed03623317f8936aa8670c1f45021150022ab68b320211c"
+      }
+    ]
+  }
+}

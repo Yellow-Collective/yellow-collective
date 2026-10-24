@@ -1,0 +1,80 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=0xdiablo",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.906Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 467242,
+        "displayName": "0xdiablo",
+        "profile": {
+          "bio": {
+            "text": "I am a Digital Artist, Music Producer, Thespian and web3 enthusiast.\n\nHappy to connect.",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true
+        },
+        "followerCount": 307,
+        "followingCount": 339,
+        "username": "0xdiablo",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/46264a71-0ad2-4528-65c5-8c253fadd300/rectcrop3",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0192c2d4-7643-3827-fa6f-728f36e3d254",
+            "platform": "x",
+            "username": "thegr8liberat0r",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 467242,
+        "custodyAddress": "0xb833324c17d782c1a144b13a63373acc211ecfbc",
+        "ethWallets": [
+          "0x057EF74529604D7BeEc67A13FC189fC4263Cb64d",
+          "0x8661eE79c9eC060BD263F41420fF1B4A36bB3cE8",
+          "0xa4766930cc0B134b1eef868aC760652D495287D0",
+          "0x0b6baae216e912022ede01aAF4103D5421a34fDb"
+        ],
+        "solanaWallets": [
+          "G551bfsjM9WX8qv7czu3UgrZTW87s2dh4k9rcHMswaF5",
+          "EbixWwE5KC5nY9jFpppuYVgXnhBHYbFFj3BoT2caSkxH"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xa4766930cc0B134b1eef868aC760652D495287D0",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "EbixWwE5KC5nY9jFpppuYVgXnhBHYbFFj3BoT2caSkxH",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

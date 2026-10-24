@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=6786",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:31.138Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 6785,
+        "timestamp": 1670542086,
+        "username": "naaate",
+        "owner": "0x44b6c61299460ef30e492dc839713df7a1d96b7c",
+        "from": 0,
+        "to": 6786,
+        "user_signature": "0x7d72e2a8bfc52fecb5bd48abed8db722c7aa5033909f6d500134bd3325ab3af2650a1bdfeb0faed91fbf9b2f17972a11f6ba5cecd2ec5ac248c85ff6e73421281b",
+        "server_signature": "0x6287f1adf1129c9c0971b4d7fb23d62fe8ffb829baf3f8dcc0ccb11840edfe192fa9041913f015713e294fef7fd508d90f0ca8e3d22a85c7c681ce1bb97709071c"
+      }
+    ]
+  }
+}

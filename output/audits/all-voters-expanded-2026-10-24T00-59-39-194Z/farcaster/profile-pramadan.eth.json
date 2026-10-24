@@ -1,0 +1,97 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=pramadan.eth",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.047Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 471160,
+        "displayName": "Panji.base.eth 🟡 ⌐◨-◨",
+        "profile": {
+          "bio": {
+            "text": "Self-taught digital artist \n| BETR Believer | @betrmint The Most Prolific BETR Artist 2025 | member of /yellow 🟡\n\n\nArt commission opens! 🙌",
+            "mentions": [
+              "betrmint"
+            ],
+            "channelMentions": [
+              "yellow"
+            ]
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "url": "",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/de8bea97-b393-4c9a-4f0d-6ffe6dcba000/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x051024b653e8ec69e72693f776c41c2a9401fb07",
+            "token": {
+              "chain": "base",
+              "ca": "0x051024b653e8ec69e72693f776c41c2a9401fb07",
+              "tokenId": "0198d3a2-daa3-0161-2a00-99711390e52e",
+              "name": "BETRMINT",
+              "ticker": "BETR",
+              "symbol": "BETR",
+              "imageUrl": "https://wrpcd.net/cdn-cgi/imagedelivery/BXluQx4ige9GuW0Ia56BHw/3e125e67-7211-4ff1-0366-b17c918d1400/original"
+            }
+          }
+        },
+        "followerCount": 2363,
+        "followingCount": 1219,
+        "username": "pramadan.eth",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e5204bda-d012-4e63-97de-5aff39547700/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "019587b5-af24-dcec-53cc-617a01953e17",
+            "platform": "x",
+            "username": "PanjiRamad35176",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 471160,
+        "custodyAddress": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "ethWallets": [
+          "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33",
+          "0xCBA18CB7e7c043B378E21607fa104F1767442348",
+          "0x4720Dbb48C8f0Bb302Fd21DD325A83b2D1f82B22",
+          "0x557f30E8c87DD764a5EcC6CbE60061159BCF76Ab"
+        ],
+        "solanaWallets": [
+          "93673LvVGeXb8X3kHRqK9W1QDiPvjdRcYKCaZtfCrhu2",
+          "F6at6HdAKZaPbdVswM3aMv35VZXdyvnJU5FMRQrdkeQt"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xCBA18CB7e7c043B378E21607fa104F1767442348",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "F6at6HdAKZaPbdVswM3aMv35VZXdyvnJU5FMRQrdkeQt",
+            "labels": [
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

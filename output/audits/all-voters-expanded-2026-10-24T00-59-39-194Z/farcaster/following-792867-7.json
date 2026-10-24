@@ -1,0 +1,1686 @@
+{
+  "url": "https://api.farcaster.xyz/v2/following?fid=792867&limit=50&cursor=eyJ2IjoyLCJmaWQiOjc5Mjg2NywibGltaXQiOjUwLCJsYXN0Q3JlYXRlZEF0IjoiMjAyNS0wMi0yMFQxMDoyMToxNC4wMDBaIiwibGFzdEZpZCI6OTc4NzU3fQ",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:05:37.650Z",
+  "data": {
+    "result": {
+      "users": [
+        {
+          "fid": 875556,
+          "displayName": "Marzi",
+          "profile": {
+            "bio": {
+              "text": "Painter, designer & enthusiast in Web3 world \n\nhttps://linktr.ee/marzieh.ojaghi",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "token": {
+                "chain": "base",
+                "ca": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenId": "0198d322-89f9-f515-3baa-e4b497ba9a91",
+                "name": "Ethereum",
+                "ticker": "ETH",
+                "symbol": "ETH",
+                "imageUrl": "https://assets.coingecko.com/coins/images/279/standard/ethereum.png"
+              }
+            }
+          },
+          "followerCount": 2361,
+          "followingCount": 884,
+          "username": "marziojaqi",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/02017682-bcc8-446b-c5e5-a428ac3d8100/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 690823,
+          "displayName": "Vrbs ▀▄▀",
+          "profile": {
+            "bio": {
+              "text": "▀▄▀ Vrbs is a Nounish DAO on Base. With Vrbs, you can earn a vote for your efforts. 1/1 art created by the community with daily auctions @\nvrbs.build",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 134,
+          "followingCount": 69,
+          "username": "vrbs",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/27ea35df-11d0-4ec1-3973-54bfac702300/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 269091,
+          "displayName": "nick",
+          "profile": {
+            "bio": {
+              "text": "building diviswap.com | read my mind at https://nickysap.substack.com/",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://diviswap.com",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 5799,
+          "followingCount": 463,
+          "username": "nickysap",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/c7bc3fb3-7fe6-4bbf-86c4-af4cb983b700/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 430312,
+          "displayName": "Mark Coull",
+          "profile": {
+            "bio": {
+              "text": "Had to sell my photography gear due to redundancy…",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x5ba8d32579a4497c12d327289a103c3ad5b64eb1",
+              "token": {
+                "chain": "base",
+                "ca": "0x5ba8d32579a4497c12d327289a103c3ad5b64eb1",
+                "tokenId": "0198d47f-9409-6a41-9cf2-721c757d6861",
+                "name": "Tipn",
+                "ticker": "TIPN",
+                "symbol": "TIPN",
+                "imageUrl": "https://coin-images.coingecko.com/coins/images/66706/large/gRSe-UCA_400x400.jpg?1750271503"
+              }
+            }
+          },
+          "followerCount": 2720,
+          "followingCount": 1762,
+          "username": "astromarkc",
+          "pfp": {
+            "url": "https://i.imgur.com/l6tKvMn.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 398407,
+          "displayName": "syr",
+          "profile": {
+            "bio": {
+              "text": "Hi, I'm syr! Artist | Illustrator | Commission – OPEN💚",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 95,
+          "followingCount": 121,
+          "username": "syrupynut",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/61c72142-60e8-4808-97a8-f0a43e3c5300/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 321551,
+          "displayName": "Tù.úk'z",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "url": "https://linktr.ee/tuukzs"
+          },
+          "followerCount": 2081,
+          "followingCount": 154,
+          "username": "tkzs",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/f05130d3-6002-431c-1d2c-47face823700/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 379821,
+          "displayName": "Annabella",
+          "profile": {
+            "bio": {
+              "text": "✨ Lifestyle & creativity blogger\n📖 Sharing my journey through fitness, art & everyday life\n🤝 Building community in web3",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": ""
+          },
+          "followerCount": 124,
+          "followingCount": 98,
+          "username": "annabella",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e9141dfc-0aa6-4581-070b-ad658212d300/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 466693,
+          "displayName": "MutaLoop",
+          "profile": {
+            "bio": {
+              "text": "Iniciando en este hermoso mundo de animacion desde Argentina",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 214,
+          "followingCount": 326,
+          "username": "mutaloop",
+          "pfp": {
+            "url": "https://i.imgur.com/6vXWjJW.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 3635,
+          "displayName": "androidsixteen",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4a3c34c4-0aa8-46db-8b83-59b16a327e00/original",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 7814,
+          "followingCount": 1202,
+          "username": "androidsixteen.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/f37da1df-3658-4c53-9db6-b5d1aad2b200/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 874953,
+          "displayName": "Aidamj Ⓜ️🎩",
+          "profile": {
+            "bio": {
+              "text": "l am a physical and digital painter and l'm very interested in photography👩🏻‍🎨🎨📸\nhttps://linktr.ee/Aidamj?utm_source=linktree_profile_share&ltsid=09c04489-",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 482,
+          "followingCount": 926,
+          "username": "aidamj",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/a6770b55-8f86-415c-4666-f1bca827f400/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 289295,
+          "displayName": "Min 🎩 Ⓜ️",
+          "profile": {
+            "bio": {
+              "text": "I LOVE ⛰️🐶📸🍜☕️🍺🚲\n",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 3722,
+          "followingCount": 1473,
+          "username": "minhle",
+          "pfp": {
+            "url": "https://ipfs.decentralized-content.com/ipfs/bafybeideqg7wbienr7dceqbhxt3mumodnjytrxcxopy2zlgc46dmpf24ry",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 282672,
+          "displayName": "Alina Ferry",
+          "profile": {
+            "bio": {
+              "text": "*Your friendly neighborhood drama queen. Tall. Reddish-blonde. Doesn’t smile*\nNormie homie. \n\nSheFi Cohort 12 | \n\nWomen in Tech @ Studio",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJE9on3F3HwoAR9AhGJW_fL-I",
+              "description": "Los Angeles, CA, USA"
+            },
+            "earlyWalletAdopter": true,
+            "url": ""
+          },
+          "followerCount": 3514,
+          "followingCount": 1015,
+          "username": "alinaferry",
+          "pfp": {
+            "url": "https://tba-mobile.mypinata.cloud/ipfs/QmbLg9mEy628dFJfv6yZRV2fCxsf5yDSmSNtQx1xEShkeT?pinataGatewayToken=PMz6RFTDuk-300OttNnb_U0PSKbbXQdzLmUqdiEq7lesXcsVK8TK7S5GoOtxRGl2",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 15949,
+          "displayName": "Never Mind .base.eth",
+          "profile": {
+            "bio": {
+              "text": "I don't even have a \"pla\"\n😼Cat lover",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJh3Q88XtkQIgR_ZSajaOj1YY",
+              "description": "Germantown, OH, USA"
+            },
+            "earlyWalletAdopter": true,
+            "url": ""
+          },
+          "followerCount": 3353,
+          "followingCount": 442,
+          "username": "naimeh",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d2450939-6504-4da2-a08a-dfb93567e100/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 871846,
+          "displayName": "Kate Yarter",
+          "profile": {
+            "bio": {
+              "text": "🎵 Sound Engineer, Singer/Songwriter, Music Producer, Multi-Instrumentalist & Artist. Wife of @bizarrebeast | Linktr.ee/kateyarter",
+              "mentions": [
+                "bizarrebeast"
+              ],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJS5dFe_cZTIYRj2dH9qSb7Lk",
+              "description": "Dallas, TX, USA"
+            },
+            "earlyWalletAdopter": true,
+            "url": ""
+          },
+          "followerCount": 645,
+          "followingCount": 745,
+          "username": "kateyarter",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/634c9e7d-0b7a-45e3-4d33-9e048dae1400/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 17855,
+          "displayName": "saeideart |SR ",
+          "profile": {
+            "bio": {
+              "text": "I'm saeideart\n\nhttps://twitter.com/saeideart_tez\n\n                            Protest Artist\n\n\n\nhttps://linktr.ee/saeideart",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 891,
+          "followingCount": 864,
+          "username": "saeideart",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4ab616f9-c433-4f29-21d7-5507c0d59100/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 474224,
+          "displayName": "Reihan Sky🎩✨🫶",
+          "profile": {
+            "bio": {
+              "text": "Mom, In love with the sky❤️, astrophotography✨ and NFTs.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 1056,
+          "followingCount": 553,
+          "username": "reisky",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/04815f72-37f1-40b4-fe09-8f3f79c84a00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 386021,
+          "displayName": "GRESSIE 🎩",
+          "profile": {
+            "bio": {
+              "text": "Visual artist dedicated to the exploration of emotions.\nCreating @seekermagazine mod /seekermagazine / https://linktr.ee/gressie",
+              "mentions": [
+                "seekermagazine"
+              ],
+              "channelMentions": [
+                "seekermagazine"
+              ]
+            },
+            "location": {
+              "placeId": "ChIJvQz5TjvKvJURh47oiC6Bs6A",
+              "description": "Buenos Aires, Argentina"
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x134f2bfdd5682ed3e8ac43c0866728bf56b2ed82",
+              "token": {
+                "chain": "base",
+                "ca": "0x134f2bfdd5682ed3e8ac43c0866728bf56b2ed82",
+                "tokenId": "0198edc5-cc52-ef63-2023-5f0faacbda2f",
+                "name": "gressie",
+                "ticker": "gressie",
+                "symbol": "gressie",
+                "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafybeialngclc7ftpu7lm47hpja2pdzlxtu4ftq4gn3aojhorbs4munq7e"
+              }
+            }
+          },
+          "followerCount": 918,
+          "followingCount": 926,
+          "username": "gressie",
+          "pfp": {
+            "url": "https://res.cloudinary.com/base-app/image/upload/f_auto/v1767629189/e215e4ac-19c3-4842-800f-5c6b07d29a11.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 4407,
+          "displayName": "keccers",
+          "profile": {
+            "bio": {
+              "text": "The Farcaster formerly known as Kchamp. Books, beats, bodybuilding, bright ideas and beautiful things.\n\nkatherinechampagne.com",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+              "token": {
+                "chain": "base",
+                "ca": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+                "tokenId": "0198da7e-6a9a-b0c3-e6ae-fedf46fc135c",
+                "name": "Coinbase Wrapped BTC",
+                "ticker": "cbBTC",
+                "symbol": "cbBTC",
+                "imageUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727"
+              }
+            }
+          },
+          "followerCount": 41424,
+          "followingCount": 1524,
+          "username": "keccers.eth",
+          "pfp": {
+            "url": "https://i.imgur.com/kynnpYw.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 499987,
+          "displayName": "SajiFall",
+          "profile": {
+            "bio": {
+              "text": "Fine art & Documentary Photographer /   \n12 IRL Exhibition around the world \n\nhttps://linktr.ee/SajiFallah",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 152,
+          "followingCount": 473,
+          "username": "sajifall",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d3043e7b-dd29-4d06-6ec4-9e856dfa0400/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 266951,
+          "displayName": "bee",
+          "profile": {
+            "bio": {
+              "text": "https://linktr.ee/bookofbee /mfers",
+              "mentions": [],
+              "channelMentions": [
+                "mfers"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 2254,
+          "followingCount": 117,
+          "username": "bookofbee",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/64c97971-0fea-45bd-075a-9e08e9db6700/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 230172,
+          "displayName": "Alessandro Fiore",
+          "profile": {
+            "bio": {
+              "text": "https://linktr.ee/whitekross",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 536,
+          "followingCount": 508,
+          "username": "whitekross",
+          "pfp": {
+            "url": "https://i.imgur.com/FSJla3H.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 952305,
+          "displayName": "Vika.⌐◨-◨",
+          "profile": {
+            "bio": {
+              "text": "Crafting words, collecting nogs and building vibes ⌐◨-◨\n\nManaging content and community @noggles",
+              "mentions": [
+                "noggles"
+              ],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 40,
+          "followingCount": 206,
+          "username": "vikanouns",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d111304c-be58-4d61-589a-f35dbf31f700/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 267104,
+          "displayName": "FeMMie",
+          "profile": {
+            "bio": {
+              "text": "Embracing the Decentralized Revolution.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "totalEarned": 4770.792905787627,
+            "url": "",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/42511ef9-a5ab-4096-d69c-b7d2079a6f00/original",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+              "token": {
+                "chain": "base",
+                "ca": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+                "tokenId": "0198da7e-6a9a-b0c3-e6ae-fedf46fc135c",
+                "name": "Coinbase Wrapped BTC",
+                "ticker": "cbBTC",
+                "symbol": "cbBTC",
+                "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e2adaf74-bd75-4c9f-85ab-1aeed39e6c00/original"
+              }
+            }
+          },
+          "followerCount": 6163,
+          "followingCount": 676,
+          "username": "femmie",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/e328d40e-a05a-407e-65be-b326285e9400/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 216827,
+          "displayName": "KolinDin.eth",
+          "profile": {
+            "bio": {
+              "text": "Minimalism is the key. It's still photography.\n\nhttps://art.kolindin.com",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJ--acWvtHDW0RF5miQ2HvAAU",
+              "description": "Auckland, New Zealand"
+            }
+          },
+          "followerCount": 135,
+          "followingCount": 133,
+          "username": "kolin",
+          "pfp": {
+            "url": "https://i.imgur.com/UnkvIfL.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 419388,
+          "displayName": "Ykha Amelz",
+          "profile": {
+            "bio": {
+              "text": "2D Artist. Heavily inspired by cartoons & comics. Powered by caffeine and two fat meatballs living rent-free in my 🏡\n\nhttps://thehug.xyz/artists/ykha_amelz",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 1169,
+          "followingCount": 748,
+          "username": "ykha",
+          "pfp": {
+            "url": "https://i.imgur.com/NIYd8IE.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 318162,
+          "displayName": "Dalek🎩💜",
+          "profile": {
+            "bio": {
+              "text": "spacemonkeys,crypto, burgers, pizza, elephants,art,degen,pepe. Join the /spacemonkeys channel for all the latest ",
+              "mentions": [],
+              "channelMentions": [
+                "spacemonkeys"
+              ]
+            },
+            "location": {
+              "placeId": "ChIJm0xQOaul4IgRntFVevWwC7s",
+              "description": "Cape Canaveral, FL 32920, USA"
+            }
+          },
+          "followerCount": 1451,
+          "followingCount": 533,
+          "username": "dalek",
+          "pfp": {
+            "url": "https://i.imgur.com/Q7YCuh8.jpg",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 300880,
+          "displayName": "Killer Acid",
+          "profile": {
+            "bio": {
+              "text": "Killer Acid, since 2010. Art, comics, stuff.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "accountLevel": "pro",
+            "url": "https://www.killeracid.com"
+          },
+          "followerCount": 1400,
+          "followingCount": 281,
+          "username": "killeracid",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/aa46e736-ce53-41d4-b5e9-a48c032c8700/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 5551,
+          "displayName": "MUMBOT",
+          "profile": {
+            "bio": {
+              "text": "🌱 Founder of MUMBOT WORLD & GHOST CLUB 👻 Art & Aughostus toy in SPACE on Ax-3 🚀  /ghostcasters ✨ https://linktr.ee/mumbot",
+              "mentions": [],
+              "channelMentions": [
+                "ghostcasters"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 1491,
+          "followingCount": 423,
+          "username": "mumbot",
+          "pfp": {
+            "url": "https://i.imgur.com/txhUsSc.png",
+            "verified": false
+          },
+          "referrerUsername": "dwr",
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 691654,
+          "displayName": "Neros",
+          "profile": {
+            "bio": {
+              "text": "#Based | Smart Contract Security Researcher | DM for Audits",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "url": "",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 100,
+          "followingCount": 758,
+          "username": "neros.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/5a0b6dc2-4eeb-45df-d447-d2324ab39200/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 435314,
+          "displayName": "OFF",
+          "profile": {
+            "bio": {
+              "text": "artist | code-based glitch | gif | video | 3D on objkt.com/@iamoff | Host of /error",
+              "mentions": [],
+              "channelMentions": [
+                "error"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 554,
+          "followingCount": 503,
+          "username": "ctrlshiftoff",
+          "pfp": {
+            "url": "https://i.imgur.com/6dyMaSB.gif",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 268438,
+          "displayName": "cashlessman",
+          "profile": {
+            "bio": {
+              "text": "dev - building https://trrack.fit. open for opportunities",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://sahban.dev",
+            "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/84023122-584e-4bc5-428d-244ed028a900/original",
+            "profileToken": {
+              "tokenUri": "eip155:4663/erc20:0x7e452ca8a3de41cdfd362083f5a16d145fa9145f",
+              "token": {
+                "chain": "robinhood",
+                "ca": "0x7e452ca8a3de41cdfd362083f5a16d145fa9145f",
+                "tokenId": "01a08166-e628-38b7-ef03-a9fb2961680c",
+                "name": "TrrackFit",
+                "ticker": "TRRACK",
+                "symbol": "TRRACK",
+                "imageUrl": "https://token-media.defined.fi/4663_0x7e452ca8a3de41cdfd362083f5a16d145fa9145f_large_9534210aaaca.png"
+              }
+            }
+          },
+          "followerCount": 10303,
+          "followingCount": 751,
+          "username": "cashlessman.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/a74b030e-2d92-405c-c2d0-1696f5d51d00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 443868,
+          "displayName": "Görkem Emir",
+          "profile": {
+            "bio": {
+              "text": "Dark Humor Cartoonist\nhttps://linktr.ee/ggorkk\nhttps://twitter.com/emirgorkk",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJsS1zINVH0xQRjSuEwLBX3As",
+              "description": "Ankara, Türkiye"
+            }
+          },
+          "followerCount": 132,
+          "followingCount": 251,
+          "username": "gork",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/966afddb-8dd7-4115-edee-44a283e65700/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 505044,
+          "displayName": "Celalettin Aladağ",
+          "profile": {
+            "bio": {
+              "text": "Photographer📸 artist\n\n\nhttps://linktr.ee/celalettinAladag",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 351,
+          "followingCount": 800,
+          "username": "celaletinaladag",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/6896b69b-d972-4be6-1c3d-9e59e506f100/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 650687,
+          "displayName": "iSaber🧬💻🎮",
+          "profile": {
+            "bio": {
+              "text": "< Developer - Generative Artist >‌‌\n\n                              🛸",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x2826272e099b12aa3f661bba0adc5130d3630382",
+              "token": {
+                "chain": "base",
+                "ca": "0x2826272e099b12aa3f661bba0adc5130d3630382",
+                "tokenId": "0198ec3a-d5de-2e32-f17e-b44fab587b9f",
+                "name": "Genyleap",
+                "ticker": "GENY",
+                "symbol": "GENY",
+                "imageUrl": "https://assets.geckoterminal.com/n8ymlddl0uru9v2olqh9ut4dx9ac"
+              }
+            }
+          },
+          "followerCount": 1223,
+          "followingCount": 738,
+          "username": "i-saber",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4ea2eccf-009f-419e-2568-9a73409c7100/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 875975,
+          "displayName": "Skunkape",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "url": ""
+          },
+          "followerCount": 79,
+          "followingCount": 70,
+          "username": "skunkape",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0e93f967-7b3b-4e99-2b47-c2d3a7a38e00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 548932,
+          "displayName": "shabnampo 🧬",
+          "profile": {
+            "bio": {
+              "text": "Canceptual artist   |  vector Illustration artist  |   I’m not a photographer, but I take photos in my own way\nhttps://linktr.ee/shabnam.pourjalil",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0xacf3f6066beae88320262a733a333f7c38de03ce",
+              "token": {
+                "chain": "base",
+                "ca": "0xacf3f6066beae88320262a733a333f7c38de03ce",
+                "tokenId": "0198eef0-efef-ebaf-37ad-b0e62719dd34",
+                "name": "shabnampo",
+                "ticker": "shabnampo",
+                "symbol": "shabnampo",
+                "imageUrl": "https://ipfs.decentralized-content.com/ipfs/bafkreic3ug37jss5mxesrxa6c7huqmpb7ednmxloytylvbpywopt6yk3mm"
+              }
+            }
+          },
+          "followerCount": 2827,
+          "followingCount": 1594,
+          "username": "shabnampo",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/9217ee7a-e143-40d4-64a0-d7bff3e31400/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 452379,
+          "displayName": "Kira",
+          "profile": {
+            "bio": {
+              "text": "Anime fine art. Tez+ Sol+ Eth\n\nhttps://holyempresskira.carrd.co",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 143,
+          "followingCount": 126,
+          "username": "holyempresskira",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/d46bc645-77ed-44dc-bcf5-06295eaa0000/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 456593,
+          "displayName": "Burka Bayram 🎩",
+          "profile": {
+            "bio": {
+              "text": "Graphic designer, visual artist, collector by accident, creator of Sloth Zine 🦥 linktr.ee/burkabayram",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "url": "",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 651,
+          "followingCount": 393,
+          "username": "burkabayram",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/a515b8f9-94e6-4991-127f-f985a1611900/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 455449,
+          "displayName": "✷)",
+          "profile": {
+            "bio": {
+              "text": "Artista digital /\nmultimedia explorer",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "url": "",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 859,
+          "followingCount": 568,
+          "username": "edercruz",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/15b0a84b-a78a-4d36-944d-fdd28360b500/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 3506,
+          "displayName": "Chintan",
+          "profile": {
+            "bio": {
+              "text": "Crypto needs utility | Head of Eng @baseapp |Building the best onchain experiences | base[hunt, cafe,merch]  | always in search of 🍕🍷",
+              "mentions": [
+                "baseapp"
+              ],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 2463,
+          "followingCount": 322,
+          "username": "chintan",
+          "pfp": {
+            "url": "https://tba-mobile.mypinata.cloud/ipfs/QmUi8XsUDL5RPTCNq1gnGNFboULuZ7FZ9jwPJ2qUGbbVf3?pinataGatewayToken=3nq0UVhtd3rYmgYDdb1I9qv7rHsw-_DzwdWkZPRQ-QW1avFI9dCS8knaSfq_R5_q",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 11304,
+          "displayName": "John Granata",
+          "profile": {
+            "bio": {
+              "text": "@coinbase @base",
+              "mentions": [
+                "coinbase"
+              ],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 1494,
+          "followingCount": 441,
+          "username": "jagra.base.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/6fcd07ea-8a8d-451f-ab29-57241491e400/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 8749,
+          "displayName": "aflock",
+          "profile": {
+            "bio": {
+              "text": "Head of Engineering @Base 🔵\n\n\nNick's friend\n\nMoshis in bio",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 928,
+          "followingCount": 402,
+          "username": "aflock",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/ffcdeecb-47cd-42d9-e9a8-32d84b900c00/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 11510,
+          "displayName": "Xen Baynham-Herd",
+          "profile": {
+            "bio": {
+              "text": "Director of Growth at @base",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJdd4hrwug2EcRmSrV3Vo6llI",
+              "description": "London, UK"
+            }
+          },
+          "followerCount": 8787,
+          "followingCount": 2006,
+          "username": "xenbh.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/8ae137d7-90e1-4f29-e4c7-7f818ec86b00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 725,
+          "displayName": "sahil",
+          "profile": {
+            "bio": {
+              "text": "building @openrank and @cura",
+              "mentions": [
+                "openrank",
+                "cura"
+              ],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJIQBpAG2ahYAR_6128GcTUEo",
+              "description": "San Francisco, CA, USA"
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": ""
+            }
+          },
+          "followerCount": 3245,
+          "followingCount": 485,
+          "username": "sahil",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/1d7b15c6-2848-483f-1f74-9efef0ebeb00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 249332,
+          "displayName": "Alex Mack 🏔️",
+          "profile": {
+            "bio": {
+              "text": "Photographer | Artist | PhD🫀🤘\n/mountains /alexmack \n👉 alexmack.ca",
+              "mentions": [],
+              "channelMentions": [
+                "mountains",
+                "alexmack"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 6276,
+          "followingCount": 574,
+          "username": "alexmack",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/2f377d2e-4460-4318-6287-3f39ea8fb500/rectcrop3",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 419852,
+          "displayName": "Jeroen Verhulst",
+          "profile": {
+            "bio": {
+              "text": "Photographer focused on landscapes, light & emotion.\nBased in the Netherlands sharing analog and digital work.",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "ChIJK4rHcKOQxEcRag0fQtmEZeU",
+              "description": "Oost-Souburg, Netherlands"
+            },
+            "earlyWalletAdopter": true,
+            "url": "https://www.jeroenverhulst.nl",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x0358795322c04de04ead2338a803a9d3518a9877",
+              "token": {
+                "chain": "base",
+                "ca": "0x0358795322c04de04ead2338a803a9d3518a9877",
+                "tokenId": "01991e28-3d80-d99b-6a56-bbe52e0990b6",
+                "name": "TYSM",
+                "ticker": "TYSM",
+                "symbol": "TYSM",
+                "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/45578aeb-41f7-4e8c-1c97-3a31a8679600/original"
+              }
+            }
+          },
+          "followerCount": 1611,
+          "followingCount": 830,
+          "username": "jeroenv78",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/b8b5b963-e353-4b0a-c299-e681d5548d00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 379835,
+          "displayName": "llrsart.base.eth",
+          "profile": {
+            "bio": {
+              "text": "human, normal human, does not have any talents.😁\nFrom Turkiye 🇹🇷\nLiving Montenegro 🇲🇪",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:8453/erc20:0x76e743333a5f385086d303e104839a3451e18cc1",
+              "token": {
+                "chain": "base",
+                "ca": "0x76e743333a5f385086d303e104839a3451e18cc1",
+                "tokenId": "01996c48-1d1d-88d9-5e1a-1f0358565250",
+                "name": "Mustafa Can🇹🇷",
+                "ticker": "LLRSART",
+                "symbol": "LLRSART",
+                "imageUrl": "https://assets.geckoterminal.com/3p8vg0tjdiemjskpe1ub7pflnb27"
+              }
+            }
+          },
+          "followerCount": 673,
+          "followingCount": 2050,
+          "username": "llrsart",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/2b1cff82-f26e-40f6-e42b-bd8f61424b00/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 18138,
+          "displayName": "Gloria",
+          "profile": {
+            "bio": {
+              "text": "",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true
+          },
+          "followerCount": 192,
+          "followingCount": 279,
+          "username": "gloriakexinwu",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/35aec757-9315-4235-2dbd-07ca496b8100/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 542439,
+          "displayName": "Myro",
+          "profile": {
+            "bio": {
+              "text": "Art . Coffee Enthusiast .\nHistory . Crypto .",
+              "mentions": [],
+              "channelMentions": []
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            },
+            "earlyWalletAdopter": true,
+            "totalEarned": 78.63973330055593,
+            "url": "",
+            "profileToken": {
+              "tokenUri": "eip155:4663/erc20:0x18e674231a58c239dc7daedcffe15ec3a24cff5c",
+              "token": {
+                "chain": "robinhood",
+                "ca": "0x18e674231a58c239dc7daedcffe15ec3a24cff5c",
+                "tokenId": "019fd58a-c15d-bccc-5df1-0a9b5d6b83f1",
+                "name": "Hookr.fun",
+                "ticker": "HOOKR",
+                "symbol": "HOOKR",
+                "imageUrl": "https://token-media.defined.fi/4663_0x18e674231a58c239dc7daedcffe15ec3a24cff5c_large_85f0202054d1.png"
+              }
+            }
+          },
+          "followerCount": 411,
+          "followingCount": 447,
+          "username": "satoshimyro.eth",
+          "pfp": {
+            "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/317ed7b0-81d3-49e4-f6c3-e3c7294bf200/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        },
+        {
+          "fid": 899180,
+          "displayName": "JamAI",
+          "profile": {
+            "bio": {
+              "text": "🔗ai.jam.so 🐿️ created by @jam to serve creators and communities of /jamfrens",
+              "mentions": [
+                "jam"
+              ],
+              "channelMentions": [
+                "jamfrens"
+              ]
+            },
+            "location": {
+              "placeId": "",
+              "description": ""
+            }
+          },
+          "followerCount": 3578,
+          "followingCount": 1,
+          "username": "jamai",
+          "pfp": {
+            "url": "https://takocdn.xyz/images/1de00487-0215-4477-418b-40c4b2b61300/original",
+            "verified": false
+          },
+          "viewerContext": {
+            "following": false,
+            "followedBy": false,
+            "enableNotifications": false
+          }
+        }
+      ],
+      "leastInteractedWith": {
+        "count": 257,
+        "users": [
+          {
+            "fid": 10411,
+            "displayName": "ozkan",
+            "profile": {
+              "bio": {
+                "text": "Crypto & Finance | Travel & Lifestyle |",
+                "mentions": [],
+                "channelMentions": []
+              },
+              "location": {
+                "placeId": "",
+                "description": ""
+              },
+              "url": "",
+              "bannerImageUrl": "https://media.firefly.land/farcaster/60A1D474-E027-477B-B29B-4BD709608957.png",
+              "profileToken": {
+                "tokenUri": "eip155:8453/erc20:0xeaa79516660ec64b1724c93868886cb93e399b07",
+                "token": {
+                  "chain": "base",
+                  "ca": "0xeaa79516660ec64b1724c93868886cb93e399b07",
+                  "tokenId": "019a9917-2d8a-d463-7308-df18bf6fac52",
+                  "name": "ozkan",
+                  "ticker": "OZK",
+                  "symbol": "OZK",
+                  "imageUrl": "https://turquoise-blank-swallow-685.mypinata.cloud/ipfs/bafkreidfydhmv6oukyq3c2nzfkhfmexyrkwlneahfs3ia7n4gelhqdh6eu"
+                }
+              }
+            },
+            "followerCount": 218,
+            "followingCount": 131,
+            "username": "ozkan",
+            "pfp": {
+              "url": "https://media.firefly.land/farcaster/C6388C68-A1E3-41D8-B2A2-117BD2B3808B.png",
+              "verified": false
+            },
+            "viewerContext": {
+              "following": true,
+              "followedBy": false,
+              "enableNotifications": false
+            }
+          },
+          {
+            "fid": 901432,
+            "displayName": "Chartist AI (beta)",
+            "profile": {
+              "bio": {
+                "text": "AI agent for technical analysis. |\nBeta version only work for whitelist. |\n\nMade by @jiri123.eth |\nNo official token yet",
+                "mentions": [
+                  "jiri123.eth"
+                ],
+                "channelMentions": []
+              },
+              "location": {
+                "placeId": "",
+                "description": ""
+              }
+            },
+            "followerCount": 76,
+            "followingCount": 1,
+            "username": "chartist",
+            "pfp": {
+              "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/881ed21e-fd09-4377-cab7-752168361e00/rectcrop3",
+              "verified": false
+            },
+            "viewerContext": {
+              "following": true,
+              "followedBy": false,
+              "enableNotifications": false
+            }
+          }
+        ]
+      }
+    },
+    "next": {
+      "cursor": "eyJ2IjoyLCJmaWQiOjc5Mjg2NywibGltaXQiOjUwLCJsYXN0Q3JlYXRlZEF0IjoiMjAyNS0wMi0wNVQxMzo1Nzo0Ny4wMDBaIiwibGFzdEZpZCI6ODk5MTgwfQ"
+    }
+  }
+}

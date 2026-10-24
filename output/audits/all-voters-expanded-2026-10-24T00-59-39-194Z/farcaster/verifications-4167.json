@@ -1,0 +1,91 @@
+{
+  "url": "https://api.farcaster.xyz/v2/verifications?fid=4167",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.675Z",
+  "data": {
+    "result": {
+      "verifications": [
+        {
+          "fid": 4167,
+          "address": "HxtJ8asbVDKi3aPZqzeY1vw3naWak1G9rKAXge4nipz8",
+          "timestamp": 1747937646762,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 4167,
+          "address": "0x9353CC2583356cE6eA8f92E239D7C9Eb8412ACAF",
+          "timestamp": 1739238524732,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": true,
+          "label": "Warpcast Wallet",
+          "labels": [
+            "warpcastWallet"
+          ]
+        },
+        {
+          "fid": 4167,
+          "address": "0xdaD9478b3889EebaeA59E6727E6835f84E765a39",
+          "timestamp": 1759584933260,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": [
+            "smartWallet"
+          ]
+        },
+        {
+          "fid": 4167,
+          "address": "0xd19B676d39170eA25A8BD73647561f5EfCf1B7c7",
+          "timestamp": 1757084810568,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 4167,
+          "address": "0x72a980640A6F3B284D0ffDBA4857865FC7E0Ee79",
+          "timestamp": 1753820910873,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 4167,
+          "address": "0x554aAa13361123C45DAe97b4155dFcE5827E39cf",
+          "timestamp": 1738441760757,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 4167,
+          "address": "G7LU4fomCvLnDeZgnJX3XL3ZGzWFkqT77tApbkrw3n5A",
+          "timestamp": 1732289081828,
+          "version": "v2",
+          "protocol": "solana",
+          "isPrimary": false,
+          "labels": []
+        },
+        {
+          "fid": 4167,
+          "address": "0xCEEd9585854F12F81A0103861b83b995A64AD915",
+          "timestamp": 1693509795749,
+          "version": "v2",
+          "protocol": "ethereum",
+          "isPrimary": false,
+          "labels": []
+        }
+      ]
+    }
+  }
+}

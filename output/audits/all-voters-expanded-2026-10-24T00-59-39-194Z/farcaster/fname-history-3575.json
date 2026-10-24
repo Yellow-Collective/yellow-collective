@@ -1,0 +1,19 @@
+{
+  "url": "https://fnames.farcaster.xyz/transfers?fid=3575",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:04:30.692Z",
+  "data": {
+    "transfers": [
+      {
+        "id": 3574,
+        "timestamp": 1665885418,
+        "username": "noun22",
+        "owner": "0x3e8ecd08127a5acaf14850f3083827c955cbe2b4",
+        "from": 0,
+        "to": 3575,
+        "user_signature": "0x4acca4905cf26ca2748e93742c7ab6c13cd2f7b84a0adfd7d46e417e46a0fa6e046052a4ea4b646ecf62dad4deb64c70cc0bd7ce119f95938df9ee6893461ba01b",
+        "server_signature": "0x78dd08db1c610bef716a7e2ed6fcdbee592f274b9147f80534390607522d08b81f2b3bb0306d1e49b38bbc78e66afc72d7179a848327bbc1af0cbe19ef14360b1b"
+      }
+    ]
+  }
+}

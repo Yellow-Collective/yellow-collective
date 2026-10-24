@@ -1,0 +1,84 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=nounci",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:01:37.993Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 810468,
+        "displayName": "Leonardo Da Nounci",
+        "profile": {
+          "bio": {
+            "text": "I make art | GreatGreatGreatGrandson of Leonardo Da Vinci",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "",
+            "description": ""
+          },
+          "earlyWalletAdopter": true,
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0x051024b653e8ec69e72693f776c41c2a9401fb07",
+            "token": {
+              "chain": "base",
+              "ca": "0x051024b653e8ec69e72693f776c41c2a9401fb07",
+              "tokenId": "0198d3a2-daa3-0161-2a00-99711390e52e",
+              "name": "BETRMINT",
+              "ticker": "BETR",
+              "symbol": "BETR",
+              "imageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/0a162730-c586-46f6-5517-da0013a90a00/original"
+            }
+          }
+        },
+        "followerCount": 179,
+        "followingCount": 168,
+        "username": "nounci",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4d953c33-c7bd-4d5d-e325-fe86e19d3700/rectcrop3",
+          "verified": false
+        },
+        "connectedAccounts": [],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 810468,
+        "custodyAddress": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "ethWallets": [
+          "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a",
+          "0x97c8B754a6956832e56b3958943D0ce47fde4665",
+          "0x17C42E6ea504Cd4d2662225621afCE14BD725178",
+          "0xb9A5DdFbAFca307a2E85DdDC0C269519837c8b63"
+        ],
+        "solanaWallets": [
+          "2wq643JJnBXvPEWX1pZMvDRinUgiBkGL2jJq86RgaVmj"
+        ],
+        "walletLabels": [
+          {
+            "address": "0x97c8B754a6956832e56b3958943D0ce47fde4665",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "2wq643JJnBXvPEWX1pZMvDRinUgiBkGL2jJq86RgaVmj",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}

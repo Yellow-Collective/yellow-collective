@@ -1,0 +1,95 @@
+{
+  "url": "https://api.farcaster.xyz/v2/user-by-username?username=zaal",
+  "status": 200,
+  "retrievedAt": "2026-10-24T01:02:06.878Z",
+  "data": {
+    "result": {
+      "user": {
+        "fid": 19640,
+        "displayName": "Zaal",
+        "profile": {
+          "bio": {
+            "text": "Founder of the zao focused on bringing the profit margin data and IP rights to independent artists",
+            "mentions": [],
+            "channelMentions": []
+          },
+          "location": {
+            "placeId": "ChIJORt_M6XxrkwRCBgXqD0LeDk",
+            "description": "Ellsworth, ME 04605, USA"
+          },
+          "earlyWalletAdopter": true,
+          "totalEarned": 0,
+          "url": "https://thezao.com/nexus",
+          "bannerImageUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/2b365692-aaf5-417c-cc8f-3afce97f6100/original",
+          "profileToken": {
+            "tokenUri": "eip155:8453/erc20:0xbb48f19b0494ff7c1fe5dc2032aeee14312f0b07",
+            "token": {
+              "chain": "base",
+              "ca": "0xbb48f19b0494ff7c1fe5dc2032aeee14312f0b07",
+              "tokenId": "019b7a49-eef5-5720-ec8f-94d21eb808a9",
+              "name": "ZABAL",
+              "ticker": "ZABAL",
+              "symbol": "ZABAL",
+              "imageUrl": "https://aquamarine-hidden-peafowl-945.mypinata.cloud/ipfs/bafybeibcjnzmmvybxzlrkxav4swybsogkottpr6yxw6milqcvbyk5sqcs4"
+            }
+          }
+        },
+        "followerCount": 3256,
+        "followingCount": 3029,
+        "username": "zaal",
+        "pfp": {
+          "url": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/f9277373-2f85-411b-5d94-d8e11a43de00/original",
+          "verified": false
+        },
+        "connectedAccounts": [
+          {
+            "connectedAccountId": "0192aef0-d1c2-4fd4-596b-c8086781fc34",
+            "platform": "x",
+            "username": "bettercallzaal",
+            "expired": false
+          }
+        ],
+        "viewerContext": {
+          "following": false,
+          "followedBy": false,
+          "canSendDirectCasts": false,
+          "optInStatus": "opted_in",
+          "enableNotifications": false,
+          "hasUploadedInboxKeys": true
+        }
+      },
+      "collectionsOwned": [],
+      "extras": {
+        "fid": 19640,
+        "custodyAddress": "0x021a565c437b7d4c34204071f95ed437162a5fcb",
+        "ethWallets": [
+          "0x7234c36A71ec237c2Ae7698e8916e0735001E9Af",
+          "0xb79cdAbF6f2fB8Fea70C2e515AEC35E827bF7932",
+          "0x519087bd1B8a2687f685f885F64f3444C1610659",
+          "0x2E49a7e806be10B863bC132e7a9E70cF7D0D4216"
+        ],
+        "solanaWallets": [
+          "89yVBkoZNYubBFaRit45Tyc1bBxoACvxSZJKgr492GS2",
+          "4aY165b2vWGLWTboE9WQSW6BprcVAs2WJo5E4jhvW1Bk"
+        ],
+        "walletLabels": [
+          {
+            "address": "0xb79cdAbF6f2fB8Fea70C2e515AEC35E827bF7932",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          },
+          {
+            "address": "89yVBkoZNYubBFaRit45Tyc1bBxoACvxSZJKgr492GS2",
+            "labels": [
+              "primary",
+              "warpcast"
+            ]
+          }
+        ],
+        "publicSpamLabel": "2 (unlikely to engage in spammy behavior)"
+      }
+    }
+  }
+}
