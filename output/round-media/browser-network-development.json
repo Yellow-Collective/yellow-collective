@@ -1,0 +1,1975 @@
+[
+  {
+    "viewport": "desktop",
+    "initialMediaRequests": 5,
+    "initialMediaBodyBytes": 37991,
+    "initialOriginalRequests": 0,
+    "developmentNavigationRequests": 48,
+    "developmentNavigationBodyBytes": 48203120,
+    "developmentNavigationWireBodyBytes": 11208285,
+    "gifFramesDiffer": true,
+    "noHorizontalOverflow": true,
+    "warmChecks": [
+      "warm manifest moderation removes card and open gallery; stale direct asset request denied404/no-store",
+      "revision change refreshes lightweight SSR metadata and artwork titles",
+      "failed manifest refresh hides prior artwork and exposes recovery message",
+      "deactivation denies old direct image URLs"
+    ],
+    "blockedExternalOrigins": [
+      "https://fonts.googleapis.com",
+      "https://verify.walletconnect.com",
+      "https://explorer-api.walletconnect.com"
+    ],
+    "pageErrors": [],
+    "requests": [
+      {
+        "phase": "initial",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65252,
+        "wireBodyBytes": 7355,
+        "cacheControl": "no-store, must-revalidate",
+        "sha256": "2cb2af314d924c9305b19d912de4d7455d2d9eee77ce209beb6a9c34531d2e87"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4372657,
+        "wireBodyBytes": 1018501,
+        "cacheControl": "no-store, must-revalidate",
+        "sha256": "d715dd570ff013058a898ec3cc9341cddfc750ec5cbc46ada0279713649fc3c2"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 472,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate",
+        "sha256": "54e70a23e0ab61b5776963bf05f17336f0e58e7a7f697884f6d93e556848e7ec"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14366,
+        "wireBodyBytes": 14366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "af3b049ea9ae0d4a51d695340db65672e248e584f3aa6fb767ac0e42b1c5b513"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 503,
+        "type": "image",
+        "bodyBytes": 25,
+        "wireBodyBytes": -31,
+        "cacheControl": "",
+        "sha256": "175cf19fd369a52b7b810305b8d59b61b9aad65029c97d65bc82af0702287edd"
+      },
+      {
+        "phase": "retry",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/_next/data/development/rounds/bandwidth-fixture.json?slug=bandwidth-fixture",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7756,
+        "wireBodyBytes": 848,
+        "cacheControl": "no-store, must-revalidate",
+        "sha256": "fd7ef097c66ade8c4697b799a2d05bd5764fd599d0b571f58000f0aa19905d64"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 471,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate",
+        "sha256": "63f6bb2ec47426ffa753bbcf53ead4f27d8bb45be25c578b3df827ce507335d8"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/_next/data/development/rounds/bandwidth-fixture.json?slug=bandwidth-fixture",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 8451,
+        "wireBodyBytes": 873,
+        "cacheControl": "no-store, must-revalidate",
+        "sha256": "303063b82aaeda629f38d563eca23d33fb943f81edb043a8f77bca29e985801d"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 39,
+        "wireBodyBytes": 39,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "69b514da1e2945edbe57b0cf02591bb706f53bff8b00cc21cdb15122c4fd30ec"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65252,
+        "wireBodyBytes": 7355,
+        "cacheControl": "no-store, must-revalidate",
+        "sha256": "2cb2af314d924c9305b19d912de4d7455d2d9eee77ce209beb6a9c34531d2e87"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4372657,
+        "wireBodyBytes": 1018501,
+        "cacheControl": "no-store, must-revalidate",
+        "sha256": "d715dd570ff013058a898ec3cc9341cddfc750ec5cbc46ada0279713649fc3c2"
+      }
+    ],
+    "navigationResources": [
+      {
+        "phase": "initial",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65252,
+        "wireBodyBytes": 7355,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/media/ecaa078c765a8a2b-s.p.ttf",
+        "status": 200,
+        "type": "font",
+        "bodyBytes": 78756,
+        "wireBodyBytes": 43870,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/react-refresh.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 79591,
+        "wireBodyBytes": 25386,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/development/_buildManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 497,
+        "wireBodyBytes": 497,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/development/_ssgManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 76,
+        "wireBodyBytes": 76,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4372657,
+        "wireBodyBytes": 1018501,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/main.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7183310,
+        "wireBodyBytes": 1836614,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/_app.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 18038327,
+        "wireBodyBytes": 3747812,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_walletconnect_ethereum-provider_dist_index_es_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 1821066,
+        "wireBodyBytes": 488240,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/development/_devMiddlewareManifest.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 12,
+        "cacheControl": ""
+      },
+      {
+        "phase": "initial",
+        "path": "/black-drip.png",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 4918,
+        "wireBodyBytes": 4918,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/noggles.svg",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 2481,
+        "wireBodyBytes": 588,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_components_CustomConnectButton_tsx.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 3328317,
+        "wireBodyBytes": 878263,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/gallery/settings",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 29,
+        "wireBodyBytes": 29,
+        "cacheControl": "no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000002",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000003",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000004",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000005",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000006",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000007",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000008",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000009",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000A",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000b",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_injectedW-6bd71d.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4652,
+        "wireBodyBytes": 2587,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_safeWalle-2b5310.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 6956,
+        "wireBodyBytes": 3751,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_rainbowWa-c24323.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 13363,
+        "wireBodyBytes": 5751,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000C",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_coinbaseW-ea0973.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4392,
+        "wireBodyBytes": 2351,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_metaMaskW-22d2d9.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 22276,
+        "wireBodyBytes": 7063,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_rabbyWall-b76e40.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 11041,
+        "wireBodyBytes": 6030,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_phantomWa-4dbbdd.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7855,
+        "wireBodyBytes": 4379,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_walletCon-defb51.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7325,
+        "wireBodyBytes": 3869,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_braveWall-ff5f52.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 8505,
+        "wireBodyBytes": 4719,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_login-EJZTP74Q_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 30888,
+        "wireBodyBytes": 13980,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_assets-7THATBKH_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 57249,
+        "wireBodyBytes": 18534,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_components_HeaderWalletState_tsx.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7680,
+        "wireBodyBytes": 3188,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_walletconnect_modal_dist_index_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 261841,
+        "wireBodyBytes": 69058,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_walletconnect_modal-ui_dist_index_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 1438673,
+        "wireBodyBytes": 345469,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 472,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_coinbase_wallet-sdk_dist_index_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2567574,
+        "wireBodyBytes": 648331,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_components_HeaderTreasuryPill_tsx.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 3402155,
+        "wireBodyBytes": 881059,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_farcaster_miniapp-sdk_dist_index_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 5337401,
+        "wireBodyBytes": 1105115,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/manager/addresses/0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 224,
+        "wireBodyBytes": 224,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/nouns/balance/0x0b379F1848fA2aab7790966373618F4B0Fea6A6e",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3,
+        "wireBodyBytes": 3,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/nouns/balance/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3,
+        "wireBodyBytes": 3,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-first",
+        "path": "/_next/static/development/_devPagesManifest.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3336,
+        "wireBodyBytes": 817,
+        "cacheControl": ""
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14366,
+        "wireBodyBytes": 14366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 503,
+        "type": "image",
+        "bodyBytes": 25,
+        "wireBodyBytes": -31,
+        "cacheControl": ""
+      },
+      {
+        "phase": "retry",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 8467,
+        "wireBodyBytes": 1753,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/_next/data/development/rounds/bandwidth-fixture.json?slug=bandwidth-fixture",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7756,
+        "wireBodyBytes": 848,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 8467,
+        "wireBodyBytes": 1750,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 471,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/_next/data/development/rounds/bandwidth-fixture.json?slug=bandwidth-fixture",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 8451,
+        "wireBodyBytes": 873,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 39,
+        "wireBodyBytes": 39,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65252,
+        "wireBodyBytes": 7355,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/media/ecaa078c765a8a2b-s.p.ttf",
+        "status": 200,
+        "type": "font",
+        "bodyBytes": 78756,
+        "wireBodyBytes": 43870,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/development/_buildManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 497,
+        "wireBodyBytes": 497,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/react-refresh.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 79591,
+        "wireBodyBytes": 25386,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/development/_ssgManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 76,
+        "wireBodyBytes": 76,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4372657,
+        "wireBodyBytes": 1018501,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/main.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7183310,
+        "wireBodyBytes": 1836614,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/pages/_app.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 18038327,
+        "wireBodyBytes": 3747812,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/development/_devMiddlewareManifest.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 12,
+        "cacheControl": ""
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_walletconnect_ethereum-provider_dist_index_es_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 1821066,
+        "wireBodyBytes": 488240,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/black-drip.png",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 4918,
+        "wireBodyBytes": 4918,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/gallery/settings",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 29,
+        "wireBodyBytes": 29,
+        "cacheControl": "no-store, max-age=0"
+      }
+    ]
+  },
+  {
+    "viewport": "mobile",
+    "initialMediaRequests": 2,
+    "initialMediaBodyBytes": 21751,
+    "initialOriginalRequests": 0,
+    "developmentNavigationRequests": 44,
+    "developmentNavigationBodyBytes": 48181962,
+    "developmentNavigationWireBodyBytes": 11187127,
+    "gifFramesDiffer": true,
+    "noHorizontalOverflow": true,
+    "warmChecks": [],
+    "blockedExternalOrigins": [
+      "https://fonts.googleapis.com",
+      "https://verify.walletconnect.com",
+      "https://explorer-api.walletconnect.com"
+    ],
+    "pageErrors": [],
+    "requests": [
+      {
+        "phase": "initial",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65252,
+        "wireBodyBytes": 7355,
+        "cacheControl": "no-store, must-revalidate",
+        "sha256": "2cb2af314d924c9305b19d912de4d7455d2d9eee77ce209beb6a9c34531d2e87"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4372657,
+        "wireBodyBytes": 1018501,
+        "cacheControl": "no-store, must-revalidate",
+        "sha256": "d715dd570ff013058a898ec3cc9341cddfc750ec5cbc46ada0279713649fc3c2"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 472,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate",
+        "sha256": "54e70a23e0ab61b5776963bf05f17336f0e58e7a7f697884f6d93e556848e7ec"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14366,
+        "wireBodyBytes": 14366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "af3b049ea9ae0d4a51d695340db65672e248e584f3aa6fb767ac0e42b1c5b513"
+      },
+      {
+        "phase": "failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 503,
+        "type": "image",
+        "bodyBytes": 25,
+        "wireBodyBytes": -31,
+        "cacheControl": "",
+        "sha256": "175cf19fd369a52b7b810305b8d59b61b9aad65029c97d65bc82af0702287edd"
+      },
+      {
+        "phase": "retry",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      }
+    ],
+    "navigationResources": [
+      {
+        "phase": "initial",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65252,
+        "wireBodyBytes": 7355,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/media/ecaa078c765a8a2b-s.p.ttf",
+        "status": 200,
+        "type": "font",
+        "bodyBytes": 78756,
+        "wireBodyBytes": 43870,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/react-refresh.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 79591,
+        "wireBodyBytes": 25386,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/development/_buildManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 497,
+        "wireBodyBytes": 497,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/development/_ssgManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 76,
+        "wireBodyBytes": 76,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4372657,
+        "wireBodyBytes": 1018501,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/main.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7183310,
+        "wireBodyBytes": 1836614,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/_app.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 18038327,
+        "wireBodyBytes": 3747812,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_walletconnect_ethereum-provider_dist_index_es_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 1821066,
+        "wireBodyBytes": 488240,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/development/_devMiddlewareManifest.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 12,
+        "cacheControl": ""
+      },
+      {
+        "phase": "initial",
+        "path": "/noggles.svg",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 2481,
+        "wireBodyBytes": 588,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/gallery/settings",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 29,
+        "wireBodyBytes": 29,
+        "cacheControl": "no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000002",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000003",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000004",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000005",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000006",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000007",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000008",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000009",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000A",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 472,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000b",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000C",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_injectedW-6bd71d.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4652,
+        "wireBodyBytes": 2587,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_safeWalle-2b5310.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 6956,
+        "wireBodyBytes": 3751,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_rainbowWa-c24323.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 13363,
+        "wireBodyBytes": 5751,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_coinbaseW-ea0973.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4392,
+        "wireBodyBytes": 2351,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_metaMaskW-22d2d9.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 22276,
+        "wireBodyBytes": 7063,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_rabbyWall-b76e40.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 11041,
+        "wireBodyBytes": 6030,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_phantomWa-4dbbdd.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7855,
+        "wireBodyBytes": 4379,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_walletCon-defb51.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7325,
+        "wireBodyBytes": 3869,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_wallets_walletConnectors_braveWall-ff5f52.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 8505,
+        "wireBodyBytes": 4719,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_assets-7THATBKH_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 57249,
+        "wireBodyBytes": 18534,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_rainbow-me_rainbowkit_dist_login-EJZTP74Q_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 30888,
+        "wireBodyBytes": 13980,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_components_HeaderWalletState_tsx.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7680,
+        "wireBodyBytes": 3188,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_walletconnect_modal_dist_index_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 261841,
+        "wireBodyBytes": 69058,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_components_CustomConnectButton_tsx.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 3328317,
+        "wireBodyBytes": 878263,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_walletconnect_modal-ui_dist_index_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 1438673,
+        "wireBodyBytes": 345469,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_coinbase_wallet-sdk_dist_index_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2567574,
+        "wireBodyBytes": 648331,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_components_HeaderTreasuryPill_tsx.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 3402155,
+        "wireBodyBytes": 881059,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/_pages-dir-browser_node_modules_farcaster_miniapp-sdk_dist_index_js.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 5337401,
+        "wireBodyBytes": 1105115,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/manager/addresses/0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 224,
+        "wireBodyBytes": 224,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/nouns/balance/0x0b379F1848fA2aab7790966373618F4B0Fea6A6e",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3,
+        "wireBodyBytes": 3,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/nouns/balance/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3,
+        "wireBodyBytes": 3,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14366,
+        "wireBodyBytes": 14366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 8467,
+        "wireBodyBytes": 1752,
+        "cacheControl": "no-store, must-revalidate"
+      },
+      {
+        "phase": "failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 503,
+        "type": "image",
+        "bodyBytes": 25,
+        "wireBodyBytes": -31,
+        "cacheControl": ""
+      },
+      {
+        "phase": "retry",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      }
+    ]
+  }
+]

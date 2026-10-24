@@ -1,0 +1,2963 @@
+[
+  {
+    "viewport": "desktop",
+    "initialMediaRequests": 8,
+    "initialMediaBodyBytes": 54231,
+    "initialOriginalRequests": 0,
+    "gifFramesDiffer": true,
+    "noHorizontalOverflow": true,
+    "warmChecks": [
+      "warm manifest moderation removes card and open gallery; stale direct asset request denied404/no-store",
+      "revision change refreshes lightweight SSR metadata and artwork titles",
+      "failed manifest refresh hides prior artwork and exposes recovery message",
+      "deactivation denies old direct image URLs"
+    ],
+    "blockedExternalOrigins": [
+      "https://fonts.googleapis.com",
+      "https://verify.walletconnect.com",
+      "https://explorer-api.walletconnect.com"
+    ],
+    "pageErrors": [],
+    "requests": [
+      {
+        "phase": "initial",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65851,
+        "wireBodyBytes": 7533,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "sha256": "34c21b75dca88a01d4cb5a59dbf59ee7d9ac2e02055064500cf1ae6b807895cb"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D-7add7f8f098d8945.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 41010,
+        "wireBodyBytes": 11029,
+        "cacheControl": "public, max-age=31536000, immutable",
+        "sha256": "6d6a240d71c4ecb7d488ce49cfe6988ad4f24519a42d91fa8365a0635c28b664"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 472,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate",
+        "sha256": "54e70a23e0ab61b5776963bf05f17336f0e58e7a7f697884f6d93e556848e7ec"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14366,
+        "wireBodyBytes": 14366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "af3b049ea9ae0d4a51d695340db65672e248e584f3aa6fb767ac0e42b1c5b513"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 503,
+        "type": "image",
+        "bodyBytes": 25,
+        "wireBodyBytes": -31,
+        "cacheControl": "",
+        "sha256": "175cf19fd369a52b7b810305b8d59b61b9aad65029c97d65bc82af0702287edd"
+      },
+      {
+        "phase": "retry",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 6979,
+        "wireBodyBytes": 456,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate",
+        "sha256": "34e4d55ac5fca09ffb1c0a19010679413c48aed290a3cba2832432ecc1521c5e"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/rounds/bandwidth-fixture.json?slug=bandwidth-fixture",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7756,
+        "wireBodyBytes": 848,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "sha256": "fd7ef097c66ade8c4697b799a2d05bd5764fd599d0b571f58000f0aa19905d64"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 471,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate",
+        "sha256": "63f6bb2ec47426ffa753bbcf53ead4f27d8bb45be25c578b3df827ce507335d8"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/rounds/bandwidth-fixture.json?slug=bandwidth-fixture",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 8451,
+        "wireBodyBytes": 873,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "sha256": "303063b82aaeda629f38d563eca23d33fb943f81edb043a8f77bca29e985801d"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 39,
+        "wireBodyBytes": 39,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "69b514da1e2945edbe57b0cf02591bb706f53bff8b00cc21cdb15122c4fd30ec"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65851,
+        "wireBodyBytes": 7533,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "sha256": "34c21b75dca88a01d4cb5a59dbf59ee7d9ac2e02055064500cf1ae6b807895cb"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D-7add7f8f098d8945.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 41010,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable",
+        "sha256": "6d6a240d71c4ecb7d488ce49cfe6988ad4f24519a42d91fa8365a0635c28b664"
+      }
+    ],
+    "navigationResources": [
+      {
+        "phase": "initial",
+        "path": "/_next/static/css/33170c4170b5d975.css",
+        "status": 200,
+        "type": "stylesheet",
+        "bodyBytes": 192578,
+        "wireBodyBytes": 28103,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65851,
+        "wireBodyBytes": 7533,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/media/ecaa078c765a8a2b-s.p.ttf",
+        "status": 200,
+        "type": "font",
+        "bodyBytes": 78756,
+        "wireBodyBytes": 43870,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/framework-97862ef36bc4065f.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 139889,
+        "wireBodyBytes": 45019,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/932-0e051552d7571cbc.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 26887,
+        "wireBodyBytes": 8792,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2909-6a3626bba1f407d0.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 26796,
+        "wireBodyBytes": 8127,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/main-504c54c78a4580bd.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 129410,
+        "wireBodyBytes": 37842,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/black-drip.png",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 4918,
+        "wireBodyBytes": 4918,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/noggles.svg",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 2481,
+        "wireBodyBytes": 588,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/63-a06be927fd26a7d3.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 15045,
+        "wireBodyBytes": 4927,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8521-7b30dccb37c98203.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 10222,
+        "wireBodyBytes": 3699,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/6886-49f1a453b77ca9a4.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12899,
+        "wireBodyBytes": 5164,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D-7add7f8f098d8945.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 41010,
+        "wireBodyBytes": 11029,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2970-bdc9d8159bab5618.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 150887,
+        "wireBodyBytes": 43528,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/t4WBBud5ebpz7T4-y1XTY/_buildManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 5325,
+        "wireBodyBytes": 1771,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/t4WBBud5ebpz7T4-y1XTY/_ssgManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 243,
+        "wireBodyBytes": 243,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/_app-9631e1b8a0e49131.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 1796954,
+        "wireBodyBytes": 537763,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5541-f07f0afcbd5b020e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 10489,
+        "wireBodyBytes": 3613,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/9432.6289be30e5dad78a.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 80,
+        "wireBodyBytes": 80,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8389.c626adf2586c3684.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 23306,
+        "wireBodyBytes": 8095,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8732.b32caa318198a674.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 338725,
+        "wireBodyBytes": 96450,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/gallery/settings",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 29,
+        "wireBodyBytes": 29,
+        "cacheControl": "no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000002",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000003",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000004",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000005",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000006",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000007",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000008",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000009",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000A",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000b",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000C",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7216.d3d5f933076b5366.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 14686,
+        "wireBodyBytes": 5536,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 472,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/index.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 632,
+        "wireBodyBytes": 632,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=31535940"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/members.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 60,
+        "wireBodyBytes": 60,
+        "cacheControl": "s-maxage=1, stale-while-revalidate=31535999"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/about.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 674,
+        "wireBodyBytes": 674,
+        "cacheControl": "s-maxage=1, stale-while-revalidate=31535999"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8179-519fdcfd1a7e7628.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 374406,
+        "wireBodyBytes": 134593,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/9d008a28.63856b505aec29f2.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 109695,
+        "wireBodyBytes": 25694,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/3911.1369d21b1ddd6a98.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 994,
+        "wireBodyBytes": 994,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/treasury.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 165,
+        "wireBodyBytes": 165,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=31535940"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2063.b1c86cf9288511a4.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 882,
+        "wireBodyBytes": 882,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5213.f3e27626ed96246a.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 205272,
+        "wireBodyBytes": 60714,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/199.b7950ce8592b48a3.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2009,
+        "wireBodyBytes": 1122,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_vercel/insights/script.js",
+        "status": 404,
+        "type": "script",
+        "bodyBytes": 0,
+        "wireBodyBytes": 0,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/1294.2479b62bfffb8e2b.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4734,
+        "wireBodyBytes": 1748,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/6023.f55547e30ed8762e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 8546,
+        "wireBodyBytes": 2243,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7189.a8b05bde84dc3317.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 3753,
+        "wireBodyBytes": 2021,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8540.f7cd5f9dea6c1654.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2374,
+        "wireBodyBytes": 1410,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/1484.69d10db227bca7f8.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2102,
+        "wireBodyBytes": 1150,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/3224.f5be6b8704c0ee3c.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2666,
+        "wireBodyBytes": 1573,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5651.6e375a71102e2453.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 23702,
+        "wireBodyBytes": 6768,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2413.dae5ff452b4d2aa9.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 257,
+        "wireBodyBytes": 257,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7033.d803092ebf7114e6.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12410,
+        "wireBodyBytes": 5154,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2237-f9c0f1d7b7da4f43.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 327,
+        "wireBodyBytes": 327,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/3882.47d52119e75f6eb6.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4199,
+        "wireBodyBytes": 1988,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/4835.0cc353404e5230b5.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 17519,
+        "wireBodyBytes": 6473,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/1163-74966c10acb7ecfe.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 47125,
+        "wireBodyBytes": 15493,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5479-fe70ba63cad3b439.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12000,
+        "wireBodyBytes": 4164,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7131.9584f842f7ea112e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 92,
+        "wireBodyBytes": 92,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/profile/%5BaddressOrEns%5D-0bee9ef3144dc4d0.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 39987,
+        "wireBodyBytes": 12586,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/noundry-cae7419a278b6701.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 53658,
+        "wireBodyBytes": 16016,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/4881.f93d696bfb5d60a3.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12503,
+        "wireBodyBytes": 4679,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7269.ec3a450de9e94fa6.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 344440,
+        "wireBodyBytes": 106094,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/manager/addresses/0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 224,
+        "wireBodyBytes": 224,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/nouns/balance/0x0b379F1848fA2aab7790966373618F4B0Fea6A6e",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3,
+        "wireBodyBytes": 3,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2094.2b66c98baa581172.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 134692,
+        "wireBodyBytes": 42068,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 21,
+        "wireBodyBytes": 32,
+        "cacheControl": "no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/nouns/balance/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3,
+        "wireBodyBytes": 3,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14366,
+        "wireBodyBytes": 14366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds-2840914a05abe3ca.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 2708,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5479-fe70ba63cad3b439.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 4164,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/1163-74966c10acb7ecfe.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 15493,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/profile/%5BaddressOrEns%5D-0bee9ef3144dc4d0.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 12586,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/4734-2f82fffdefb84018.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 4566,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5566-286a02624126d46e.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 6385,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5171-24a18186f431a3cd.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 5180,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/6541-2430b4bccd1ee6cc.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 4028,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/index-9b2cce9e7dc4a79f.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 17214,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/dashboard-83fd00ef48d9f005.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 9992,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5446-95332cb95fbe7e48.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 5649,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/art-eb50832a295a3c34.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 2846,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/projects-234b16641e40b283.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 2101,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/playground-436e4fd87875249a.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 5185,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/probe-2b76749e5c460f6c.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 4729,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/noundry-cae7419a278b6701.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 16016,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/about-d9cac9b5f6bfb50c.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 4336,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/members-858ce088c2b93b1b.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 3872,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/proposals-4458a8f811245fe7.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 2843,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/treasury-5da82d960c069226.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 5075,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/contracts-a658f44e7ea15fde.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 3048,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/rounds-2840914a05abe3ca.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7982,
+        "wireBodyBytes": 2708,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/4734-2f82fffdefb84018.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 48094,
+        "wireBodyBytes": 4566,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/5171-24a18186f431a3cd.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 13623,
+        "wireBodyBytes": 5180,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/5566-286a02624126d46e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 18008,
+        "wireBodyBytes": 6385,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/index-9b2cce9e7dc4a79f.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 57209,
+        "wireBodyBytes": 17214,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/_next/static/chunks/8179-519fdcfd1a7e7628.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 134593,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/6541-2430b4bccd1ee6cc.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 10043,
+        "wireBodyBytes": 4028,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/dashboard-83fd00ef48d9f005.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 31629,
+        "wireBodyBytes": 9992,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/8179-519fdcfd1a7e7628.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 374406,
+        "wireBodyBytes": 134593,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/5446-95332cb95fbe7e48.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 14291,
+        "wireBodyBytes": 5649,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/art-eb50832a295a3c34.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 8318,
+        "wireBodyBytes": 2846,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/projects-234b16641e40b283.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 5392,
+        "wireBodyBytes": 2101,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/playground-436e4fd87875249a.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 15892,
+        "wireBodyBytes": 5185,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/probe-2b76749e5c460f6c.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 15157,
+        "wireBodyBytes": 4729,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/members-858ce088c2b93b1b.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 10287,
+        "wireBodyBytes": 3872,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/about-d9cac9b5f6bfb50c.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12123,
+        "wireBodyBytes": 4336,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/proposals-4458a8f811245fe7.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 8662,
+        "wireBodyBytes": 2843,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/treasury-5da82d960c069226.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 15676,
+        "wireBodyBytes": 5075,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/_next/static/chunks/pages/contracts-a658f44e7ea15fde.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7472,
+        "wireBodyBytes": 3048,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 503,
+        "type": "image",
+        "bodyBytes": 25,
+        "wireBodyBytes": -31,
+        "cacheControl": ""
+      },
+      {
+        "phase": "retry",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 21,
+        "wireBodyBytes": 32,
+        "cacheControl": "no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 6979,
+        "wireBodyBytes": 456,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/rounds/bandwidth-fixture.json?slug=bandwidth-fixture",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7756,
+        "wireBodyBytes": 848,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 21,
+        "wireBodyBytes": 32,
+        "cacheControl": "no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 471,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/rounds/bandwidth-fixture.json?slug=bandwidth-fixture",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 8451,
+        "wireBodyBytes": 873,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-moderation",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A01%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 39,
+        "wireBodyBytes": 39,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/farcaster.svg",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 913,
+        "wireBodyBytes": -2225,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/github.svg",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1265,
+        "wireBodyBytes": -2256,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65851,
+        "wireBodyBytes": 7533,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/css/33170c4170b5d975.css",
+        "status": 200,
+        "type": "stylesheet",
+        "bodyBytes": 192578,
+        "wireBodyBytes": -2200,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/media/ecaa078c765a8a2b-s.p.ttf",
+        "status": 200,
+        "type": "font",
+        "bodyBytes": 78756,
+        "wireBodyBytes": -2185,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/932-0e051552d7571cbc.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 26887,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/framework-97862ef36bc4065f.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 139889,
+        "wireBodyBytes": -2214,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/main-504c54c78a4580bd.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 129410,
+        "wireBodyBytes": -2214,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/2909-6a3626bba1f407d0.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 26796,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/black-drip.png",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 4918,
+        "wireBodyBytes": -2200,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/63-a06be927fd26a7d3.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 15045,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/noggles.svg",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 2481,
+        "wireBodyBytes": -2256,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/2970-bdc9d8159bab5618.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 150887,
+        "wireBodyBytes": -2214,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/6886-49f1a453b77ca9a4.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12899,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/8521-7b30dccb37c98203.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 10222,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/t4WBBud5ebpz7T4-y1XTY/_buildManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 5325,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/t4WBBud5ebpz7T4-y1XTY/_ssgManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 243,
+        "wireBodyBytes": -2180,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D-7add7f8f098d8945.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 41010,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/pages/_app-9631e1b8a0e49131.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 1796954,
+        "wireBodyBytes": -2215,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/9432.6289be30e5dad78a.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 80,
+        "wireBodyBytes": -2179,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/5541-f07f0afcbd5b020e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 10489,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/8389.c626adf2586c3684.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 23306,
+        "wireBodyBytes": -2213,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/_next/static/chunks/8732.b32caa318198a674.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 338725,
+        "wireBodyBytes": -2214,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "warm-failure",
+        "path": "/api/gallery/settings",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 29,
+        "wireBodyBytes": 29,
+        "cacheControl": "no-store, max-age=0"
+      }
+    ],
+    "buildId": "t4WBBud5ebpz7T4-y1XTY",
+    "serverMode": "production",
+    "applicationNavigationRequests": 97,
+    "applicationNavigationBodyBytes": 4563823,
+    "applicationNavigationWireBodyBytes": 1549926,
+    "initialMediaWireBodyBytes": 47106
+  },
+  {
+    "viewport": "mobile",
+    "initialMediaRequests": 2,
+    "initialMediaBodyBytes": 21751,
+    "initialOriginalRequests": 0,
+    "gifFramesDiffer": true,
+    "noHorizontalOverflow": true,
+    "warmChecks": [],
+    "blockedExternalOrigins": [
+      "https://fonts.googleapis.com",
+      "https://verify.walletconnect.com",
+      "https://explorer-api.walletconnect.com"
+    ],
+    "pageErrors": [],
+    "requests": [
+      {
+        "phase": "initial",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65851,
+        "wireBodyBytes": 7533,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "sha256": "34c21b75dca88a01d4cb5a59dbf59ee7d9ac2e02055064500cf1ae6b807895cb"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D-7add7f8f098d8945.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 41010,
+        "wireBodyBytes": 11029,
+        "cacheControl": "public, max-age=31536000, immutable",
+        "sha256": "6d6a240d71c4ecb7d488ce49cfe6988ad4f24519a42d91fa8365a0635c28b664"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 472,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate",
+        "sha256": "54e70a23e0ab61b5776963bf05f17336f0e58e7a7f697884f6d93e556848e7ec"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "d012bc5986a3ae8b01833f95d3646f8177b1cf3f1d237e8a9e2042de52f87075"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "533d127da8660eeda5065788136d1c79ef7ca947421e32ecda12537d58613fcc"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "563b395b679b371b20ac53b0ad811ac3dcf8996ad988cab7092687d9993ea495"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14366,
+        "wireBodyBytes": 14366,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "af3b049ea9ae0d4a51d695340db65672e248e584f3aa6fb767ac0e42b1c5b513"
+      },
+      {
+        "phase": "failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 503,
+        "type": "image",
+        "bodyBytes": 25,
+        "wireBodyBytes": -31,
+        "cacheControl": "",
+        "sha256": "175cf19fd369a52b7b810305b8d59b61b9aad65029c97d65bc82af0702287edd"
+      },
+      {
+        "phase": "retry",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0",
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      }
+    ],
+    "navigationResources": [
+      {
+        "phase": "initial",
+        "path": "/rounds/bandwidth-fixture",
+        "status": 200,
+        "type": "document",
+        "bodyBytes": 65851,
+        "wireBodyBytes": 7533,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/media/ecaa078c765a8a2b-s.p.ttf",
+        "status": 200,
+        "type": "font",
+        "bodyBytes": 78756,
+        "wireBodyBytes": 43870,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/css/33170c4170b5d975.css",
+        "status": 200,
+        "type": "stylesheet",
+        "bodyBytes": 192578,
+        "wireBodyBytes": 28103,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/main-504c54c78a4580bd.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 129410,
+        "wireBodyBytes": 37842,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2909-6a3626bba1f407d0.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 26796,
+        "wireBodyBytes": 8127,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/932-0e051552d7571cbc.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 26887,
+        "wireBodyBytes": 8792,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/framework-97862ef36bc4065f.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 139889,
+        "wireBodyBytes": 45019,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/noggles.svg",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 2481,
+        "wireBodyBytes": 588,
+        "cacheControl": "public, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2970-bdc9d8159bab5618.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 150887,
+        "wireBodyBytes": 43528,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/63-a06be927fd26a7d3.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 15045,
+        "wireBodyBytes": 4927,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/6886-49f1a453b77ca9a4.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12899,
+        "wireBodyBytes": 5164,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8521-7b30dccb37c98203.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 10222,
+        "wireBodyBytes": 3699,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/t4WBBud5ebpz7T4-y1XTY/_buildManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 5325,
+        "wireBodyBytes": 1771,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds/%5Bslug%5D-7add7f8f098d8945.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 41010,
+        "wireBodyBytes": 11029,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/t4WBBud5ebpz7T4-y1XTY/_ssgManifest.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 243,
+        "wireBodyBytes": 243,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/_app-9631e1b8a0e49131.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 1796954,
+        "wireBodyBytes": 537763,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/9432.6289be30e5dad78a.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 80,
+        "wireBodyBytes": 80,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5541-f07f0afcbd5b020e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 10489,
+        "wireBodyBytes": 3613,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8389.c626adf2586c3684.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 23306,
+        "wireBodyBytes": 8095,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8732.b32caa318198a674.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 338725,
+        "wireBodyBytes": 96450,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/gallery/settings",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 29,
+        "wireBodyBytes": 29,
+        "cacheControl": "no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000002",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000003",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000004",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000005",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000006",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000007",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000008",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000009",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000A",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000b",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/ens/name/0x000000000000000000000000000000000000000C",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7216.d3d5f933076b5366.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 14686,
+        "wireBodyBytes": 5536,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/media?v=2",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 7597,
+        "wireBodyBytes": 472,
+        "cacheControl": "public, max-age=15, s-maxage=15, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/data/t4WBBud5ebpz7T4-y1XTY/index.json",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 632,
+        "wireBodyBytes": 632,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=31535940"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8179-519fdcfd1a7e7628.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 374406,
+        "wireBodyBytes": 134593,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/3911.1369d21b1ddd6a98.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 994,
+        "wireBodyBytes": 994,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/199.b7950ce8592b48a3.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2009,
+        "wireBodyBytes": 1122,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_vercel/insights/script.js",
+        "status": 404,
+        "type": "script",
+        "bodyBytes": 0,
+        "wireBodyBytes": 0,
+        "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2063.b1c86cf9288511a4.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 882,
+        "wireBodyBytes": 882,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/9d008a28.63856b505aec29f2.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 109695,
+        "wireBodyBytes": 25694,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/1294.2479b62bfffb8e2b.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4734,
+        "wireBodyBytes": 1748,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5213.f3e27626ed96246a.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 205272,
+        "wireBodyBytes": 60714,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/6023.f55547e30ed8762e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 8546,
+        "wireBodyBytes": 2243,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7189.a8b05bde84dc3317.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 3753,
+        "wireBodyBytes": 2021,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/8540.f7cd5f9dea6c1654.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2374,
+        "wireBodyBytes": 1410,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/1484.69d10db227bca7f8.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2102,
+        "wireBodyBytes": 1150,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/3224.f5be6b8704c0ee3c.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 2666,
+        "wireBodyBytes": 1573,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5651.6e375a71102e2453.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 23702,
+        "wireBodyBytes": 6768,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2413.dae5ff452b4d2aa9.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 257,
+        "wireBodyBytes": 257,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7033.d803092ebf7114e6.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12410,
+        "wireBodyBytes": 5154,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2237-f9c0f1d7b7da4f43.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 327,
+        "wireBodyBytes": 327,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/3882.47d52119e75f6eb6.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 4199,
+        "wireBodyBytes": 1988,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7131.9584f842f7ea112e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 92,
+        "wireBodyBytes": 92,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/4835.0cc353404e5230b5.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 17519,
+        "wireBodyBytes": 6473,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/4881.f93d696bfb5d60a3.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12503,
+        "wireBodyBytes": 4679,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5566-286a02624126d46e.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 6385,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/4734-2f82fffdefb84018.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 4566,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/1163-74966c10acb7ecfe.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 15493,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5171-24a18186f431a3cd.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 5180,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/7269.ec3a450de9e94fa6.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 344440,
+        "wireBodyBytes": 106094,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/index-9b2cce9e7dc4a79f.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 17214,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds-2840914a05abe3ca.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 2708,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/manager/addresses/0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 224,
+        "wireBodyBytes": 224,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/nouns/balance/0x0b379F1848fA2aab7790966373618F4B0Fea6A6e",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3,
+        "wireBodyBytes": 3,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5566-286a02624126d46e.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 18008,
+        "wireBodyBytes": 6385,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/5171-24a18186f431a3cd.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 13623,
+        "wireBodyBytes": 5180,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/4734-2f82fffdefb84018.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 48094,
+        "wireBodyBytes": 4566,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/1163-74966c10acb7ecfe.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 47125,
+        "wireBodyBytes": 15493,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 500,
+        "type": "fetch",
+        "bodyBytes": 21,
+        "wireBodyBytes": 32,
+        "cacheControl": "no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/api/nouns/balance/0x55333306a4c6e74eb9e23a521a24fb78be2de92c",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 3,
+        "wireBodyBytes": 3,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=86400"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 1366,
+        "wireBodyBytes": 1366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 720,
+        "wireBodyBytes": 720,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/index-9b2cce9e7dc4a79f.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 57209,
+        "wireBodyBytes": 17214,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14154,
+        "wireBodyBytes": 14154,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/2094.2b66c98baa581172.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 134692,
+        "wireBodyBytes": 42068,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "initial",
+        "path": "/_next/static/chunks/pages/rounds-2840914a05abe3ca.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 7982,
+        "wireBodyBytes": 2708,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/_next/static/chunks/5479-fe70ba63cad3b439.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 12000,
+        "wireBodyBytes": 4164,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/_next/static/chunks/5479-fe70ba63cad3b439.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 4164,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/_next/static/chunks/pages/profile/%5BaddressOrEns%5D-0bee9ef3144dc4d0.js",
+        "status": 200,
+        "type": "other",
+        "bodyBytes": 0,
+        "wireBodyBytes": 12586,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "grid-scroll",
+        "path": "/_next/static/chunks/pages/profile/%5BaddressOrEns%5D-0bee9ef3144dc4d0.js",
+        "status": 200,
+        "type": "script",
+        "bodyBytes": 39987,
+        "wireBodyBytes": 12586,
+        "cacheControl": "public, max-age=31536000, immutable"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "open-first",
+        "path": "/api/ens/name/0x0000000000000000000000000000000000000001",
+        "status": 200,
+        "type": "fetch",
+        "bodyBytes": 2,
+        "wireBodyBytes": 2,
+        "cacheControl": "s-maxage=60, stale-while-revalidate=300"
+      },
+      {
+        "phase": "open-gif",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 14366,
+        "wireBodyBytes": 14366,
+        "cacheControl": "private, no-store, max-age=0"
+      },
+      {
+        "phase": "failure",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z",
+        "status": 503,
+        "type": "image",
+        "bodyBytes": 25,
+        "wireBodyBytes": -31,
+        "cacheControl": ""
+      },
+      {
+        "phase": "retry",
+        "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1",
+        "status": 200,
+        "type": "image",
+        "bodyBytes": 138552,
+        "wireBodyBytes": 138552,
+        "cacheControl": "private, no-store, max-age=0"
+      }
+    ],
+    "buildId": "t4WBBud5ebpz7T4-y1XTY",
+    "serverMode": "production",
+    "applicationNavigationRequests": 76,
+    "applicationNavigationBodyBytes": 4564821,
+    "applicationNavigationWireBodyBytes": 1428481,
+    "initialMediaWireBodyBytes": 14626
+  }
+]

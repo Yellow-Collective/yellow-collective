@@ -1,0 +1,894 @@
+yarn run v1.22.22
+$ node tests/profile-utils.test.mjs && node tests/ens-resolution.test.mjs && node tests/bid-comments.test.mjs && node tests/miniapp-auction-bidding.test.mjs && node tests/community-projects.test.mjs && node tests/community-project-gallery-captions-static.test.mjs && node tests/noundry-preview-tiles-static.test.mjs && node tests/noundry-studio-custom-trait-static.test.mjs && node tests/noundry-author-management.test.mjs && node tests/signature-auth.test.mjs && node tests/signature-auth-client.test.mjs && node tests/round-submission-wallet-ui.test.mjs && node tests/admin-session.test.mjs && node tests/admin-permissions.test.mjs && node tests/admin-dashboard-tabs-static.test.mjs && node tests/members-page-sort.test.mjs && node tests/members-data-loading.test.mjs && node tests/members-refresh.test.mjs && node tests/member-enrichment.test.mjs && node tests/members-runtime.test.mjs && node tests/about-page-static-generation.test.mjs && node tests/notifications.test.mjs && node tests/proposal-number-routing.test.mjs && node tests/nouns-proposal-detail.test.mjs && node tests/proposal-time-format.test.mjs && node tests/proposal-lifecycle.test.mjs && node tests/url-safety.test.mjs && node tests/round-image-upload.test.mjs && node tests/round-submission-images.test.mjs && node tests/admin-round-submission-media.test.mjs && node tests/round-submission-edit.test.mjs && node tests/round-submission-edit-ui.test.mjs && node tests/admin-round-form.test.mjs && node tests/admin-round-save-flow-static.test.mjs && node tests/round-voting-snapshot.test.mjs && node tests/round-submission-copy.test.mjs && node tests/round-request-flow-static.test.mjs && node tests/round-wallet-identity-static.test.mjs && node tests/round-submission-markdown-static.test.mjs && node tests/round-timeline-static.test.mjs && node tests/rounds-page-ordering-static.test.mjs && node tests/round-detail-ssr-image-size.test.mjs && node tests/round-additive-voting.test.mjs && node tests/round-submissions-export.test.mjs && node tests/round-submissions-export-server.test.mjs && node tests/admin-round-votes.test.mjs && node tests/homepage-active-rounds.test.mjs && node tests/dashboard.test.mjs && node tests/activity.test.mjs && node tests/noundry-round-submit-dark-mode.test.mjs && node tests/noundry-trait-round-submission.test.mjs && node tests/playground-trait-browser-static.test.mjs && node tests/wallet-runtime-guard.test.mjs && node tests/create-proposal-static.test.mjs && node tests/treasury-portfolio-static.test.mjs && node tests/metagov-snapshot-vote.test.mjs && node tests/metagov-flow.test.mjs && node tests/security-static.test.mjs && node tests/round-video-submissions.test.mjs && node tests/round-video-attachment.test.mjs && node tests/round-media-regressions.test.mjs && node tests/database-lifecycle.test.mjs && yarn test:round-media
+ok - normalizes valid wallets and rejects invalid values
+ok - compares own-profile addresses case-insensitively
+ok - builds profile paths from wallet addresses even when ENS is available
+ok - prefers an uploaded profile image before a Collective Noun fallback
+ok - normalizes profile social links
+ok - validates metadata input
+ok - parses profile update messages
+ok - normalizes valid ENS names across TLDs
+ok - rejects invalid ENS-like profile identifiers
+ok - profile route no longer gates ENS resolution to .eth names only
+ok - mainnet ENS fallback RPCs exclude providers that fail universal resolver gateways
+ok - ENS data resolver avoids weak fallback winners for forward lookups
+ok - ENS forward address API exposes the shared resolver with rate limits
+ok - ENS reverse lookup avoids viem universal resolver gateways
+ok - ENS reverse lookup falls back to raw reverse record reads
+ok - normalizes bid comments by trimming whitespace
+ok - rejects empty, unsupported, and over-length comments
+ok - creates the same UTF-8 data suffix nouns.build appends to bids
+ok - truncates comments by UTF-8 byte length without splitting characters
+ok - appends bid comment data suffix to prepared transaction calldata
+ok - merges comments into the matching transaction hash only
+TAP version 13
+# Subtest: Farcaster signer prepares and sends a bid through installed Wagmi without losing payload fields
+ok 1 - Farcaster signer prepares and sends a bid through installed Wagmi without losing payload fields
+  ---
+  duration_ms: 73.1513
+  ...
+# Subtest: a wallet that rejects gas estimation still reproduces the remaining preparation failure
+ok 2 - a wallet that rejects gas estimation still reproduces the remaining preparation failure
+  ---
+  duration_ms: 36.304
+  ...
+# Subtest: Wagmi refuses a bid on a different active chain before sending
+ok 3 - Wagmi refuses a bid on a different active chain before sending
+  ---
+  duration_ms: 28.822
+  ...
+# Subtest: connection-only click and connection errors are visible in the bid form
+ok 4 - connection-only click and connection errors are visible in the bid form
+  ---
+  duration_ms: 89.9612
+  ...
+# Subtest: preparation errors are visible and retry only preparation
+ok 5 - preparation errors are visible and retry only preparation
+  ---
+  duration_ms: 41.6803
+  ...
+# Subtest: active Farcaster bidding is available even when the legacy prepared writer is absent
+ok 6 - active Farcaster bidding is available even when the legacy prepared writer is absent
+  ---
+  duration_ms: 40.1069
+  ...
+# Subtest: approval and confirmation stay distinct, block duplicates and expose a submitted hash
+ok 7 - approval and confirmation stay distinct, block duplicates and expose a submitted hash
+  ---
+  duration_ms: 32.5696
+  ...
+# Subtest: wallet rejection permits a deliberate retry and preserves the entered bid
+ok 8 - wallet rejection permits a deliberate retry and preserves the entered bid
+  ---
+  duration_ms: 29.6171
+  ...
+# Subtest: web connect remains the browser modal; invalid, stale and wrong-chain bids never send
+ok 9 - web connect remains the browser modal; invalid, stale and wrong-chain bids never send
+  ---
+  duration_ms: 45.2919
+  ...
+# Subtest: receipt success clears inputs, while refresh failure retains confirmation truth
+ok 10 - receipt success clears inputs, while refresh failure retains confirmation truth
+  ---
+  duration_ms: 27.705
+  ...
+# Subtest: wallet error messages stay useful without exposing raw diagnostics
+ok 11 - wallet error messages stay useful without exposing raw diagnostics
+  ---
+  duration_ms: 0.6277
+  ...
+# Subtest: the bid form retains token, referral, ETH amount and optional comment in its prepared payload
+ok 12 - the bid form retains token, referral, ETH amount and optional comment in its prepared payload
+  ---
+  duration_ms: 31.0531
+  ...
+# Subtest: Mini App connection hook exposes failure, unlocks retry and blocks same-render duplicate connects
+ok 13 - Mini App connection hook exposes failure, unlocks retry and blocks same-render duplicate connects
+  ---
+  duration_ms: 9.352
+  ...
+# Subtest: native approval uses the active connector without wallet-side estimation and preserves the exact bid
+ok 14 - native approval uses the active connector without wallet-side estimation and preserves the exact bid
+  ---
+  duration_ms: 15.6407
+  ...
+# Subtest: native preflight refuses changed account, wrong chain, unavailable provider and invalid payload before a send
+ok 15 - native preflight refuses changed account, wrong chain, unavailable provider and invalid payload before a send
+  ---
+  duration_ms: 1.1682
+  ...
+# Subtest: rejection is retryable but a lost or invalid transaction response has an unknown outcome
+ok 16 - rejection is retryable but a lost or invalid transaction response has an unknown outcome
+  ---
+  duration_ms: 0.9878
+  ...
+# Subtest: native component opens one approval, tracks the returned hash across connector changes and blocks stale handlers
+ok 17 - native component opens one approval, tracks the returned hash across connector changes and blocks stale handlers
+  ---
+  duration_ms: 50.4841
+  ...
+# Subtest: native rejection allows another deliberate approval, while unknown response locks further bids
+ok 18 - native rejection allows another deliberate approval, while unknown response locks further bids
+  ---
+  duration_ms: 35.0307
+  ...
+# Subtest: a different connector inside the miniapp keeps the web preparation guard
+ok 19 - a different connector inside the miniapp keeps the web preparation guard
+  ---
+  duration_ms: 30.0113
+  ...
+# Subtest: native bidding still rejects invalid, below-minimum, stale and wrong-chain inputs without requesting approval
+ok 20 - native bidding still rejects invalid, below-minimum, stale and wrong-chain inputs without requesting approval
+  ---
+  duration_ms: 33.07
+  ...
+# Subtest: installed Farcaster SDK bridge accepts the native bid even when the host refuses gas estimation
+ok 21 - installed Farcaster SDK bridge accepts the native bid even when the host refuses gas estimation
+  ---
+  duration_ms: 21.9577
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1644.4197
+ok - normalizes project member addresses as checksum deduped wallets
+ok - accepts missing legacy member address arrays
+ok - reports invalid project member address input
+ok - community project gallery captions stay modal-only
+ok - Noundry previews stay clipped and borderless
+ok - Noundry studio promotes edited default traits to custom
+ok - Noundry authors can securely manage metadata only
+ok - valid signed request verifies and replay with same nonce fails
+ok - authorization header encoding works with browser Buffer polyfills
+ok - signed request message uses SIWE fields and keeps request bindings
+ok - production challenge uses the forwarded request origin over stale site config
+ok - production challenge rejects unrelated forwarded hosts
+ok - modified body, endpoint, method, wallet, chain, and expiry fail
+TAP version 13
+# Subtest: stalled nonce request exits with recovery guidance before signing
+ok 1 - stalled nonce request exits with recovery guidance before signing
+  ---
+  duration_ms: 105.1412
+  ...
+# Subtest: stalled wallet signing exits and ignores late success without retrying
+ok 2 - stalled wallet signing exits and ignores late success without retrying
+  ---
+  duration_ms: 21.2612
+  ...
+# Subtest: missing connector explains how to reconnect
+ok 3 - missing connector explains how to reconnect
+  ---
+  duration_ms: 20.1005
+  ...
+# Subtest: successful signing clears deadlines and returns authorization
+ok 4 - successful signing clears deadlines and returns authorization
+  ---
+  duration_ms: 17.3447
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 183.8955
+TAP version 13
+# Subtest: cached address without a connector blocks both video authorization and submission
+ok 1 - cached address without a connector blocks both video authorization and submission
+  ---
+  duration_ms: 185.0018
+  ...
+# Subtest: POST and body timeouts release progress, preserve inputs and block duplicates including late responses
+ok 2 - POST and body timeouts release progress, preserve inputs and block duplicates including late responses
+  ---
+  duration_ms: 102.2559
+  ...
+# Subtest: 400 after dispatch and malformed success remain uncertain; confirmed success clears the form
+ok 3 - 400 after dispatch and malformed success remain uncertain; confirmed success clears the form
+  ---
+  duration_ms: 104.4719
+  ...
+# Subtest: proven validation rejection and auth rejection preserve draft and permit deliberate retry
+ok 4 - proven validation rejection and auth rejection preserve draft and permit deliberate retry
+  ---
+  duration_ms: 113.8798
+  ...
+# Subtest: signing failure preserves form and releases submit despite a still-pending wagmi mutation
+ok 5 - signing failure preserves form and releases submit despite a still-pending wagmi mutation
+  ---
+  duration_ms: 24.1172
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 557.0806
+ok - admin session token verifies
+ok - tampered admin session token fails
+ok - expired admin session token fails
+ok - admin wallet normalization validates addresses
+ok - global admin detection is normalized
+ok - global admin always has full access
+ok - scoped admin permissions allow and deny by section
+ok - admin access records sanitize add/remove/toggle payloads
+ok - admin dashboard static checks passed
+ok - members page supports voting power sort
+ok - members load holder-first with optional enrichment
+ok - ISR failure preservation, deferred build, refresh UI, unavailable stats
+ok - enrichment preserves partial results and bounds upstream work
+ok - members retry, share refreshes, and distinguish missing stats from zero
+ok - about page defers external data loading until ISR
+ok - mini app manifest includes Neynar webhookUrl on the miniapp config
+ok - admin permissions include notifications
+ok - notification cron auth accepts the Vercel CRON_SECRET fallback
+ok - notification settings sanitize unknown keys and validate rendered copy length
+ok - notification sender rejects non-canonical target URLs
+ok - disabled alert settings prevent send attempts
+ok - notification send attempts persist explicit target FIDs for the admin log
+ok - dry-run notification attempts do not burn future real sends
+ok - notification token sync fetches Neynar audience without exposing token secrets
+ok - notification poll cadence is controlled by admin settings
+ok - proposal notifications cover every event since the last successful poll
+ok - round notifications cover every event since the last successful poll
+ok - one-time notification timing waits for the exact timestamp and expires safely
+ok - proposal 29 ending reminder has a guarded one-time cron route
+ok - auction notifications use poll windows and a cursor for settled auctions
+ok - notification test send preflights Neynar tokens before a real send
+ok - audience sync clears stale token fields and reports zero-token syncs clearly
+ok - admin dashboard exposes a notification log with recipient limitations
+ok - admin dashboard renders the notification log at the bottom of the notifications tab
+ok - admin dashboard exposes Mini App audience sync
+ok - admin notification lists are capped to five visible rows
+ok - Mini App notification prompt persists a user response
+ok - Mini App passive saves do not downgrade synced notification status
+ok - Mini App prompt treats notification details as optional context
+ok - Mini App prompt forwards notification metadata without suppressing failed retries
+ok - notification test sends use an admin-scoped endpoint
+ok - Vercel cron is configured for the authenticated notification poll route
+TAP version 13
+# Subtest: builds canonical Yellow proposal URLs from proposal numbers
+ok 1 - builds canonical Yellow proposal URLs from proposal numbers
+  ---
+  duration_ms: 1.0763
+  ...
+# Subtest: resolves numbered proposal routes and keeps legacy hash routes working
+ok 2 - resolves numbered proposal routes and keeps legacy hash routes working
+  ---
+  duration_ms: 0.3262
+  ...
+# Subtest: loads proposalNumber from the subgraph and uses it in proposal pages
+ok 3 - loads proposalNumber from the subgraph and uses it in proposal pages
+  ---
+  duration_ms: 0.3533
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12.5803
+TAP version 13
+# Subtest: maps a complete Goldsky proposal to the NounsDaoProposal contract
+ok 1 - maps a complete Goldsky proposal to the NounsDaoProposal contract
+  ---
+  duration_ms: 2.1904
+  ...
+# Subtest: falls through indexer and Goldsky misses to targeted RPC
+ok 2 - falls through indexer and Goldsky misses to targeted RPC
+  ---
+  duration_ms: 0.5405
+  ...
+# Subtest: continues to Goldsky when PostgreSQL detail lookup rejects
+ok 3 - continues to Goldsky when PostgreSQL detail lookup rejects
+  ---
+  duration_ms: 0.3595
+  ...
+# Subtest: merges fresh Goldsky list entries when the indexer is behind
+ok 4 - merges fresh Goldsky list entries when the indexer is behind
+  ---
+  duration_ms: 0.32
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16.8984
+TAP version 13
+# Subtest: proposal times zero-pad single-digit minutes
+ok 1 - proposal times zero-pad single-digit minutes
+  ---
+  duration_ms: 1.795
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10.7913
+TAP version 13
+# Subtest: state 4 produces the queue action
+ok 1 - state 4 produces the queue action
+  ---
+  duration_ms: 1.4018
+  ...
+# Subtest: state 5 before ETA produces the security-delay countdown
+ok 2 - state 5 before ETA produces the security-delay countdown
+  ---
+  duration_ms: 0.274
+  ...
+# Subtest: state 5 at or after ETA produces the execute action
+ok 3 - state 5 at or after ETA produces the execute action
+  ---
+  duration_ms: 0.206
+  ...
+# Subtest: missing ETA is surfaced instead of enabling execution
+ok 4 - missing ETA is surfaced instead of enabling execution
+  ---
+  duration_ms: 0.2052
+  ...
+# Subtest: expired and executed proposals produce no action
+ok 5 - expired and executed proposals produce no action
+  ---
+  duration_ms: 0.3273
+  ...
+# Subtest: preview proposals never produce lifecycle transactions
+ok 6 - preview proposals never produce lifecycle transactions
+  ---
+  duration_ms: 0.1863
+  ...
+# Subtest: lifecycle component preserves payloads and both wallet transaction paths
+ok 7 - lifecycle component preserves payloads and both wallet transaction paths
+  ---
+  duration_ms: 2.6565
+  ...
+# Subtest: proposal page keeps vote and lifecycle actions in one responsive placement
+ok 8 - proposal page keeps vote and lifecycle actions in one responsive placement
+  ---
+  duration_ms: 1.6568
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 22.6878
+ok - accepts safe HTTPS URLs and intentional internal paths
+ok - rejects dangerous or obfuscated URL schemes
+ok - upgrades legacy Yellow http links and limits http localhost to dev
+ok - image helper rejects html/svg data URLs and accepts uploaded bitmaps
+ok - accepts supported round image files up to the size limit
+ok - rejects non-image or unsupported round image files
+ok - rejects round image files above the size limit
+ok - keeps encoded round images below the submission payload budget
+ok - uses one shared round image upload field across request and admin forms
+ok - preserves GIF bytes without using a canvas
+ok - rejects GIF files exceeding the preserved-animation budget
+ok - rejects stalled and failed file reads with recoverable errors
+ok - normalizes legacy cover images into an ordered image list
+ok - preserves explicit submission image order
+ok - appends sequential image uploads without replacing earlier images
+ok - defines a ten-image and aggregate payload limit
+ok - rejects too many images and oversized aggregate payloads
+ok - persists ordered images and keeps the legacy cover column
+ok - validates image collections at the server boundary
+ok - submission UI uploads multiple files and exposes ordered removal
+ok - every project submission entry point sends ordered images and a legacy cover
+ok - validates inline GIF content, size, dimensions and data encoding
+ok - accepts complete animation frames and rejects truncated frame blocks
+ok - admin rounds permission guards and round-scoped ordered GIF persistence preserve cover, video and votes
+ok - malformed, oversized, excessive and wrong-round images cannot persist
+ok - metadata edits preserve legacy galleries above the new upload budget
+ok - owner edit eligibility and strict editable-field allowlist
+ok - narrow atomic owner update preserves source/video/status; admin edit preserves consumed ledger
+ok - owner, resource, moderation, deletion, edit-use and round deadline checks reject without consumption
+ok - invalid/no-op saves preserve allowance; pending status remains pending
+ok - serialized concurrent fixture attempts have one successful edit (model, not PostgreSQL concurrency proof)
+ok - Noundry text edits preserve canonical SVG/link/source and custom descriptions render
+ok - private owner reads filter wallet and list full submission media
+ok - signed API actions, owner-derived scope, no-store errors, method/extra-field denial and durable used-edit recovery
+ok - admin changes before owner edit do not consume the owner allowance
+TAP version 13
+# Subtest: one-time save warns before signing; cancel preserves draft and successful save disables another edit
+ok 1 - one-time save warns before signing; cancel preserves draft and successful save disables another edit
+  ---
+  duration_ms: 111.8979
+  ...
+# Subtest: signed owner list renders full shared cards and selecting Edit loads the protected editor
+ok 2 - signed owner list renders full shared cards and selecting Edit loads the protected editor
+  ---
+  duration_ms: 69.4311
+  ...
+# Subtest: owner card list is cleared when the connected wallet changes
+ok 3 - owner card list is cleared when the connected wallet changes
+  ---
+  duration_ms: 56.8295
+  ...
+# Subtest: return to owned cards needs no new signature and reflects the used edit after save
+ok 4 - return to owned cards needs no new signature and reflects the used edit after save
+  ---
+  duration_ms: 42.3024
+  ...
+# Subtest: shared full card renders project media, description, wallet and owner action without votes
+ok 5 - shared full card renders project media, description, wallet and owner action without votes
+  ---
+  duration_ms: 63.5249
+  ...
+# Subtest: failed save preserves draft and does not consume the allowance
+ok 6 - failed save preserves draft and does not consume the allowance
+  ---
+  duration_ms: 35.8611
+  ...
+# Subtest: wallet changes during signing stop the edit before a PATCH request
+ok 7 - wallet changes during signing stop the edit before a PATCH request
+  ---
+  duration_ms: 30.7053
+  ...
+# Subtest: disconnect and reconnect same wallet preserves unsaved draft without reloading
+ok 8 - disconnect and reconnect same wallet preserves unsaved draft without reloading
+  ---
+  duration_ms: 33.8092
+  ...
+# Subtest: different wallet or submission cannot receive retained draft
+ok 9 - different wallet or submission cannot receive retained draft
+  ---
+  duration_ms: 62.8257
+  ...
+# Subtest: late load after disconnect and same-wallet reconnect cannot overwrite draft
+ok 10 - late load after disconnect and same-wallet reconnect cannot overwrite draft
+  ---
+  duration_ms: 28.1841
+  ...
+# Subtest: same-render double save cannot dispatch duplicate edits
+ok 11 - same-render double save cannot dispatch duplicate edits
+  ---
+  duration_ms: 26.0724
+  ...
+# Subtest: voting deadline disables saving and trait controls preserve canonical media
+ok 12 - voting deadline disables saving and trait controls preserve canonical media
+  ---
+  duration_ms: 23.1503
+  ...
+# Subtest: cached address without a connected connector cannot start loading
+ok 13 - cached address without a connected connector cannot start loading
+  ---
+  duration_ms: 21.1541
+  ...
+# Subtest: load signing timeout leaves a recoverable editor and retry loads the entry
+ok 14 - load signing timeout leaves a recoverable editor and retry loads the entry
+  ---
+  duration_ms: 26.4938
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 650.4566
+ok - keeps a previously saved ISO value when the date input is unchanged
+ok - converts a changed date input into an ISO value
+ok - uses submissions open as the round start date in admin payloads
+ok - preserves an unchanged custom snapshot ISO value
+ok - clears the custom timestamp for the voting-start preset
+ok - provides reusable round voting snapshot helpers
+ok - defaults the effective snapshot to voting start
+ok - uses the configured custom snapshot timestamp
+ok - requires custom snapshots to be valid and no later than voting start
+ok - detects effective snapshot changes without blocking unrelated edits
+ok - does not consider a future snapshot ready
+ok - persists snapshot configuration for rounds and round requests
+ok - resolves snapshots for every voting strategy and preserves resolved blocks
+ok - serializes snapshot edits with resolution and rejects timing drift after capture
+ok - returns an explicit pending snapshot state before capture
+ok - exposes snapshot selection in admin and request interfaces
+ok - exposes the hybrid strategy and base allocation controls
+ok - initializes new hybrid form allocations without resetting deliberate values
+ok - contains snapshot controls within their responsive fieldset
+ok - shows public snapshot timing
+ok - builds Round-title-aware submission placeholders
+ok - uses generic submission placeholders when the Round title is absent
+ok - the submission form uses persistent labels and contextual placeholders
+ok - public Round pages and validation use submission terminology
+ok - admin request list excludes approved round requests
+ok - approving a round request creates a draft round
+ok - runtime and standalone schemas migrate both strategy constraints
+ok - round request normalization uses the strategy-specific allocation default
+ok - round pages do not hardcode admin wallet ENS labels
+ok - round wallet connect buttons are client-only during SSR
+ok - round submission distinguishes wallet confirmation from network submission
+TAP version 13
+# Subtest: round submission descriptions render GitHub-flavored Markdown
+ok 1 - round submission descriptions render GitHub-flavored Markdown
+  ---
+  duration_ms: 1.8042
+  ...
+# Subtest: round submission Markdown keeps list and heading typography scoped
+ok 2 - round submission Markdown keeps list and heading typography scoped
+  ---
+  duration_ms: 0.3021
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13.4859
+ok - desktop timeline track is centered through milestone circles
+ok - rounds page sorts upcoming rounds by submissions open date
+ok - round detail defers inline data images out of SSR markup
+ok - round detail no longer renders direct image tags for large round media
+ok - round detail SSR props strip inline data images before serialization
+ok - round media payload restores stripped inline images client-side
+ok - rounds recover after initialization query 1 fails
+ok - rounds recover after initialization query 3 fails
+ok - allows a partial vote allocation
+ok - allows later submissions within the remaining balance
+ok - rejects submissions that exceed the remaining balance
+ok - rejects overwrite-style zero or negative submissions
+ok - round voting power reads getVotes from the Collective Noun contract
+ok - historical voting power sends the snapshot block to the RPC call
+ok - fixed votes per wallet still return zero without delegated Collective Noun votes
+ok - base votes plus voting power adds the default base to one delegated vote
+ok - base votes plus voting power adds the default base to seven delegated votes
+ok - base votes plus voting power supports a custom base
+ok - base votes plus voting power remains unavailable without delegated votes
+ok - base votes plus voting power rejects unsafe final allocations
+ok - new hybrid rounds and requests default to 100 base votes without rewriting existing values
+ok - new rounds default to a 25-vote per-entry cap without rewriting legacy rounds
+ok - initialization backfills the 25-vote cap only for Comic Strips and Sticker Packs
+ok - hybrid round info uses concise voting copy
+ok - hybrid base allocations must be positive safe whole numbers
+ok - one vote per wallet still requires delegated Collective Noun votes
+ok - existing flat voting strategies retain their positive allocations
+ok - token-weighted rounds use delegated Collective Noun votes
+ok - every voting strategy reads eligibility from the resolved snapshot block
+ok - snapshot block lookup uses the block at or before the target and rejects future targets
+ok - round vote persistence is additive and never deletes prior wallet votes
+ok - round voting UI and info bar enforce and disclose the configured per-entry cap
+ok - round voting UI hides owner allocation controls only while voting is open
+ok - castRoundVotes rejects a case-insensitive self-vote before inserting votes
+ok - castRoundVotes rejects an additive allocation above the per-entry cap
+ok - castRoundVotes applies the per-entry cap across separate vote actions
+ok - castRoundVotes allows a wallet to vote for another submitter
+ok - concurrent additive votes serialize and cannot overspend the wallet balance
+ok - public image queries bind integer gallery indices and omit stored originals
+ok - round tally queries continue summing all additive vote rows
+ok - existing round votes remain reported even when current voting power is zero
+ok - round voting UI separates locked votes, pending votes, and remaining votes
+ok - round voting copy describes delegated Collective Noun voting power
+ok - round submissions CSV export
+ok - round submissions ZIP artwork export
+ok - admin round vote management
+ok - selects only open rounds, preserves ordering, and caps the homepage at three
+ok - returns no homepage rounds when the public feature gate is disabled
+ok - selects the next two upcoming rounds in opening order
+ok - loads rounds defensively without changing homepage ISR
+ok - renders the active-round section between Hero and Description
+ok - hides empty results and links cards plus the all-rounds action correctly
+TAP version 13
+# Subtest: filters every dashboard section and sorts the nearest deadline first
+ok 1 - filters every dashboard section and sorts the nearest deadline first
+  ---
+  duration_ms: 3.5994
+  ...
+# Subtest: keeps empty sections useful and isolates provider failures
+ok 2 - keeps empty sections useful and isolates provider failures
+  ---
+  duration_ms: 0.4392
+  ...
+# Subtest: caps compact rows at three while retaining the accurate active count
+ok 3 - caps compact rows at three while retaining the accurate active count
+  ---
+  duration_ms: 0.5685
+  ...
+# Subtest: maps Snapshot titles and canonical proposal links to Nouns proposal numbers
+ok 4 - maps Snapshot titles and canonical proposal links to Nouns proposal numbers
+  ---
+  duration_ms: 0.9783
+  ...
+# Subtest: dashboard page loads public dashboard data without wallet connection
+ok 5 - dashboard page loads public dashboard data without wallet connection
+  ---
+  duration_ms: 5.1097
+  ...
+# Subtest: header policy has desktop/mobile parity without exposing admin navigation
+ok 6 - header policy has desktop/mobile parity without exposing admin navigation
+  ---
+  duration_ms: 18.7806
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 58.9426
+TAP version 13
+# Subtest: validates category, limit, cursor, and singular API query values
+ok 1 - validates category, limit, cursor, and singular API query values
+  ---
+  duration_ms: 3.1443
+  ...
+# Subtest: sorts newest first, uses deterministic IDs for ties, and deduplicates
+ok 2 - sorts newest first, uses deterministic IDs for ties, and deduplicates
+  ---
+  duration_ms: 25.6862
+  ...
+# Subtest: filters before cursor pagination and returns pages without overlap
+ok 3 - filters before cursor pagination and returns pages without overlap
+  ---
+  duration_ms: 1.2565
+  ...
+# Subtest: activity providers expose only supported timestamp-backed event variants
+ok 4 - activity providers expose only supported timestamp-backed event variants
+  ---
+  duration_ms: 33.3854
+  ...
+# Subtest: dashboard feed uses ten-item pages, scroll containment, governance filters, and profile identity
+ok 5 - dashboard feed uses ten-item pages, scroll containment, governance filters, and profile identity
+  ---
+  duration_ms: 4.8007
+  ...
+# Subtest: activity avatars advance through unique image candidates and always render a visible fallback
+ok 6 - activity avatars advance through unique image candidates and always render a visible fallback
+  ---
+  duration_ms: 8.3993
+  ...
+# Subtest: governance activity exposes titles and separate vote reasons without proposal bodies
+ok 7 - governance activity exposes titles and separate vote reasons without proposal bodies
+  ---
+  duration_ms: 15.6701
+  ...
+# Subtest: API and database queries enforce read-only validation and public records
+ok 8 - API and database queries enforce read-only validation and public records
+  ---
+  duration_ms: 32.5934
+  ...
+# Subtest: public feed follows the panel grid and leaves admin separate
+ok 9 - public feed follows the panel grid and leaves admin separate
+  ---
+  duration_ms: 9.5983
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 163.748
+ok - round submission modal keeps its text dark in dark mode
+ok - round trait tags keep dark text in dark mode
+ok - builds six trait generations and six collection generations
+ok - forces the submitted trait into every generated tile and one collection tile
+ok - uses stable and distinct seeds for both preview sets
+ok - derives bounded text when optional input is blank or short
+ok - truncates derived text to the configured maximum
+ok - prefers ENS, then profile name, then the full wallet for trait submitters
+ok - recognizes legacy and explicitly marked autogenerated trait descriptions
+ok - round trait descriptions render a live ENS or profile identity
+ok - new autogenerated trait descriptions record the best identity and marker
+ok - round info omits submission type and trait links show the trait title
+ok - escapes every SVG attribute metacharacter in stored pixel colors
+ok - omits blank optional text from the trait submission payload
+ok - trims and includes a provided optional description
+ok - accepts only the trusted generated image and canonical trait link
+ok - shows trait round actions only to the connected trait author
+ok - Playground trait browser, remix URLs, and ZIP export wiring
+TAP version 13
+# Subtest: Farcaster Mini App connector stays out of the normal wallet config
+ok 1 - Farcaster Mini App connector stays out of the normal wallet config
+  ---
+  duration_ms: 8.7296
+  ...
+# Subtest: Mini App wallet connection is explicit and gated by runtime detection
+ok 2 - Mini App wallet connection is explicit and gated by runtime detection
+  ---
+  duration_ms: 16.9141
+  ...
+# Subtest: proposal vote modal can fall back to the Mini App wallet provider
+ok 3 - proposal vote modal can fall back to the Mini App wallet provider
+  ---
+  duration_ms: 6.7127
+  ...
+# Subtest: CSP allows the imported Google font stylesheet and font files
+ok 4 - CSP allows the imported Google font stylesheet and font files
+  ---
+  duration_ms: 1.0444
+  ...
+# Subtest: Wagmi receives an ethers v5 provider with synchronous network chainId
+ok 5 - Wagmi receives an ethers v5 provider with synchronous network chainId
+  ---
+  duration_ms: 4.7815
+  ...
+# Subtest: BuilderSDK server providers stay on ethers v5
+ok 6 - BuilderSDK server providers stay on ethers v5
+  ---
+  duration_ms: 33.9504
+  ...
+# Subtest: treasury API returns a primitive balance string
+ok 7 - treasury API returns a primitive balance string
+  ---
+  duration_ms: 32.5181
+  ...
+# Subtest: previous auction fetch waits for auction contract and token id
+ok 8 - previous auction fetch waits for auction contract and token id
+  ---
+  duration_ms: 6.3149
+  ...
+# Subtest: bid calldata uses ethers6-compatible token id values
+ok 9 - bid calldata uses ethers6-compatible token id values
+  ---
+  duration_ms: 16.3677
+  ...
+# Subtest: auction bid preparation uses serializable ethers v5 BigNumber values
+ok 10 - auction bid preparation uses serializable ethers v5 BigNumber values
+  ---
+  duration_ms: 3.9064
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 165.2492
+TAP version 13
+# Subtest: create proposal separates transaction validity from custom calldata confirmation
+ok 1 - create proposal separates transaction validity from custom calldata confirmation
+  ---
+  duration_ms: 3.0938
+  ...
+# Subtest: create proposal tells users when calldata confirmation is the remaining blocker
+ok 2 - create proposal tells users when calldata confirmation is the remaining blocker
+  ---
+  duration_ms: 0.4781
+  ...
+# Subtest: create proposal requires explicit positive token amounts and NFT ids
+ok 3 - create proposal requires explicit positive token amounts and NFT ids
+  ---
+  duration_ms: 0.851
+  ...
+# Subtest: create proposal normalizes numeric form values before trimming
+ok 4 - create proposal normalizes numeric form values before trimming
+  ---
+  duration_ms: 0.4939
+  ...
+# Subtest: create proposal button is pale blue until it is submittable
+ok 5 - create proposal button is pale blue until it is submittable
+  ---
+  duration_ms: 0.8124
+  ...
+# Subtest: create proposal resolves ENS names before preparing proposal actions
+ok 6 - create proposal resolves ENS names before preparing proposal actions
+  ---
+  duration_ms: 0.5728
+  ...
+# Subtest: create proposal previews final proposal body and transactions before submit
+ok 7 - create proposal previews final proposal body and transactions before submit
+  ---
+  duration_ms: 1.0788
+  ...
+# Subtest: proposal markdown renders heading levels in descending size order
+ok 8 - proposal markdown renders heading levels in descending size order
+  ---
+  duration_ms: 0.5107
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37.8843
+ok - treasury page keeps Pages Router data flow and portfolio components
+ok - treasury page does not render the NFT placeholder panel
+ok - treasury token type includes raw balance metadata for the new UI
+ok - treasury page uses existing explorer and env boundaries
+ok - treasury header starts directly with the page title
+ok - treasury light cards force readable text in dark mode
+ok - treasury components exist with expected implementation details
+ok - Snapshot vote proxy uses proposal snapshot block for holder gating
+ok - Snapshot status API returns proposal-snapshot voting power
+ok - Snapshot vote card uses proposal-snapshot voting power
+ok - Snapshot proposal matching covers current title/body/link formats
+ok - Site metagov status API and UI are wired independently of public gating
+ok - Site metagov state reader returns persisted status and execution data
+ok - Snapshot vote UI exposes success, error, eligibility, and disabled states
+ok - Shared modal wrapper stays above header overlays
+ok - Metagov core covers proposal eligibility, Snapshot shape, stale dry-run recovery, and winner resolution
+ok - Metagov skips final execution only when Snapshot has no submitted votes
+ok - State persistence writes atomically and recovers after restart
+ok - Safe gas buffering and receipt status normalization cover GS013 regression
+ok - Startup reconciliation removes only authoritative stale executions
+ok - Final Nouns DAO execution path is dry-run capable, Safe-only, and zero-weight tolerant
+ok - Farcaster SDK uses no remote runtime import
+ok - Farcaster embed uses Mini App launch with legacy frame fallback
+ok - admin dashboard does not put signatures in URLs
+ok - admin API does not accept signed auth from query params
+ok - global security headers and restricted image hosts are configured
+ok - production effective framing permits only approved public ancestors and preserves administrative protection
+ok - development effective framing permits only approved public ancestors and preserves administrative protection
+ok - test effective framing permits only approved public ancestors and preserves administrative protection
+ok - optional portfolio origin defaults off and rejects malformed or expanded framing permission
+ok - Vercel config adds no competing framing headers
+ok - desktop and mobile administrative links trigger document navigation for CSP enforcement
+ok - public community and Noundry administrative edit links trigger document navigation
+ok - inline administration denies ordinary frames and preserves standalone, self frames, and SDK-confirmed Mini Apps
+ok - ordinary public frames remain distinct from SDK-confirmed Mini Apps
+ok - clipboard denial offers a current-page fallback and successful standalone copying remains intact
+ok - authoritative format, codec, duration, dimensions and metadata limits
+ok - admission serialization, owner denial, expiry, closure, finalization idempotency and unknown outcome quarantine
+ok - protected upload handler rejects anonymous and unexpected fields; configuration disables UI
+ok - hidden submission playback cannot acquire signed object URL
+ok - cleanup defaults to dry-run and rejects keys outside reserved namespace
+ok - scoped signed POST enforces content length/type and GET has bounded expiry; missing configuration fails closed
+ok - active submission quota and wallet daily budget deny before issuing storage credentials
+ok - attached staging cleanup advances beyond the first 100 rows, validates namespace and marks only successful deletions
+ok - attachment rejects wrong owner, unready, expired, disabled and closed-round uploads before inserting
+ok - video metadata and consumed reservation commit together; same upload cannot attach twice
+ok - image submissions count outstanding reservations; own ready video reservation is excluded for attachment
+ok - failed reservation consumption rolls back inserted submission and preserves readiness
+ok - post-commit reread runs after release and reread failure never rolls back committed data
+ok - submit outcome distinguishes validation/rollback from attempted commit and committed readback failure
+ok - missing route, malformed JSON and bad capability responses expose retry and recover
+ok - intentional disable, request timeout and stale responses preserve safe behavior
+ok - GIF bytes survive upload, validation and storage; hydration defers originals to the asset route
+ok - deployed media check finds GIF preservation in shared Next.js chunks
+ok - release check rejects HTTP 200 pages containing round-loading errors
+ok - data/rounds.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - data/site-settings.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - data/coins.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - data/profile.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - data/notifications.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - data/noundry/submissions.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - data/community-project-submissions.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - utils/signature-auth-server.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - data/nouns-dao/indexer.ts: lifecycle attachment, bounded pool and initialization recovery
+ok - official helper extends request lifetime for the pool idle timeout
+$ node tests/round-vote-response.test.mjs && node tests/round-media-contract.test.mjs && node tests/round-image-delivery.test.mjs && node tests/round-image-storage.test.mjs && node tests/round-media-gallery.test.mjs
+ok - vote receipt 112 bytes; explicit fields, auth/no-store, committed-refresh failure recovery
+ok - compact media removes nested image bytes without mutating domain records and preserves order
+ok - per-entry delivery preserves animated GIF hash, produces bounded preview, denies hidden/cross-scope assets and keeps errors uncached
+offline AWS signed fixture preview URL: 657 bytes; provider URL lengths require hosted verification
+round image storage processing tests passed
+ok - real gallery component mounts only the selected original and accessible numbered controls
+ok - eight-frame GIF remains byte-identical while static grid preview is smaller
+ok - 100 entries times five 128-byte ASCII URLs satisfy manifest budget and scrub nested SSR media
+Done in 56.88s.

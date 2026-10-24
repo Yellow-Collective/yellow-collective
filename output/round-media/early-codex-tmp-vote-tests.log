@@ -1,0 +1,36 @@
+ok - rounds recover after initialization query 1 fails
+ok - rounds recover after initialization query 3 fails
+ok - allows a partial vote allocation
+ok - allows later submissions within the remaining balance
+ok - rejects submissions that exceed the remaining balance
+ok - rejects overwrite-style zero or negative submissions
+ok - round voting power reads getVotes from the Collective Noun contract
+ok - historical voting power sends the snapshot block to the RPC call
+ok - fixed votes per wallet still return zero without delegated Collective Noun votes
+ok - base votes plus voting power adds the default base to one delegated vote
+ok - base votes plus voting power adds the default base to seven delegated votes
+ok - base votes plus voting power supports a custom base
+ok - base votes plus voting power remains unavailable without delegated votes
+ok - base votes plus voting power rejects unsafe final allocations
+ok - new hybrid rounds and requests default to 100 base votes without rewriting existing values
+ok - new rounds default to a 25-vote per-entry cap without rewriting legacy rounds
+ok - initialization backfills the 25-vote cap only for Comic Strips and Sticker Packs
+ok - hybrid round info uses concise voting copy
+ok - hybrid base allocations must be positive safe whole numbers
+ok - one vote per wallet still requires delegated Collective Noun votes
+ok - existing flat voting strategies retain their positive allocations
+ok - token-weighted rounds use delegated Collective Noun votes
+ok - every voting strategy reads eligibility from the resolved snapshot block
+ok - snapshot block lookup uses the block at or before the target and rejects future targets
+ok - round vote persistence is additive and never deletes prior wallet votes
+ok - round voting UI and info bar enforce and disclose the configured per-entry cap
+ok - round voting UI hides owner allocation controls only while voting is open
+ok - castRoundVotes rejects a case-insensitive self-vote before inserting votes
+ok - castRoundVotes rejects an additive allocation above the per-entry cap
+ok - castRoundVotes applies the per-entry cap across separate vote actions
+ok - castRoundVotes allows a wallet to vote for another submitter
+ok - concurrent additive votes serialize and cannot overspend the wallet balance
+ok - round tally queries continue summing all additive vote rows
+ok - existing round votes remain reported even when current voting power is zero
+ok - round voting UI separates locked votes, pending votes, and remaining votes
+ok - round voting copy describes delegated Collective Noun voting power

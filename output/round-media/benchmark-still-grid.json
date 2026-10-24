@@ -1,0 +1,139 @@
+{
+  "fixture": {
+    "submissions": 100,
+    "imagesPerSubmission": 5,
+    "distinctOriginals": 3,
+    "compression": "JSON UTF-8, gzip level 9, Brotli quality 11; identical corpus reused across entries",
+    "corpus": [
+      {
+        "name": "artwork.png",
+        "originalBytes": 138552,
+        "previewBytes": 14154,
+        "width": 1956,
+        "height": 1046,
+        "frames": 1,
+        "sha256": "2e34630c7afabf0b212ee52faf27acab8a3071f7dff782f33a4220ef53a5172a"
+      },
+      {
+        "name": "portrait.png",
+        "originalBytes": 33054,
+        "previewBytes": 1366,
+        "width": 1200,
+        "height": 630,
+        "frames": 1,
+        "sha256": "bd60b593377ec1d882bc4e56a9a4617a4cf3a5348137def101181254e61565ed"
+      },
+      {
+        "name": "animation.gif",
+        "originalBytes": 14366,
+        "previewBytes": 720,
+        "width": 320,
+        "height": 320,
+        "frames": 8,
+        "sha256": "af3b049ea9ae0d4a51d695340db65672e248e584f3aa6fb767ac0e42b1c5b513"
+      }
+    ]
+  },
+  "mediaJson": {
+    "before": {
+      "raw": 49961800,
+      "gzip9": 32167780,
+      "brotli11": 161137
+    },
+    "afterGatewayManifest": {
+      "raw": 61981,
+      "gzip9": 2242,
+      "brotli11": 1178
+    },
+    "migrated128ByteUrls": {
+      "raw": 71619,
+      "gzip9": 2194,
+      "brotli11": 1174
+    }
+  },
+  "voteJson": {
+    "before": {
+      "raw": 51752016,
+      "gzip9": 32509454,
+      "brotli11": 313117
+    },
+    "after": {
+      "raw": 112,
+      "gzip9": 110,
+      "brotli11": 82
+    },
+    "postCommitFullSubmissionReads": {
+      "before": 1,
+      "after": 0
+    }
+  },
+  "ssrProps": {
+    "before": {
+      "raw": 1981384,
+      "gzip9": 28668,
+      "brotli11": 13721
+    },
+    "after": {
+      "raw": 135920,
+      "gzip9": 4192,
+      "brotli11": 2153
+    }
+  },
+  "initialMediaNavigation": {
+    "before": {
+      "requests": 1,
+      "raw": 49961800,
+      "gzip9": 32167780,
+      "brotli11": 161137,
+      "originalsEmbedded": 500,
+      "previewImageRequests": 0,
+      "databaseReads": 4
+    },
+    "legacyGateway": {
+      "applicationRequests": 102,
+      "storageRequests": 0,
+      "raw": 626209,
+      "gzip9": 566470,
+      "brotli11": 565406,
+      "originalsFetched": 0,
+      "previewImageRequests": 101,
+      "databaseReads": 103,
+      "coldThumbnailDecodes": 3
+    },
+    "migratedPrivateStorage": {
+      "applicationRequests": 102,
+      "storageRequests": 100,
+      "raw": 626209,
+      "gzip9": 566470,
+      "brotli11": 565406,
+      "originalsFetched": 0,
+      "previewImageRequests": 101,
+      "databaseReads": 103,
+      "thumbnailDecodes": 1,
+      "legacyCoverRequests": 1
+    }
+  },
+  "openingOriginal": {
+    "corpusFirstPng": {
+      "additionalApplicationRequests": 1,
+      "additionalStorageRequestsIfMigrated": 1,
+      "bytes": 138552
+    },
+    "animatedGif": {
+      "additionalApplicationRequests": 1,
+      "additionalStorageRequestsIfMigrated": 1,
+      "bytes": 14366,
+      "frames": 8,
+      "sha256": "af3b049ea9ae0d4a51d695340db65672e248e584f3aa6fb767ac0e42b1c5b513"
+    },
+    "hiddenGalleryRequests": 0
+  },
+  "assumptions": [
+    "Transfer totals model media only and omit HTML/app JS/TLS/header bytes; actual browser evidence is separate.",
+    "Database reads count two manifest queries and one eligibility read per asset; schema work is excluded after initialization.",
+    "Private storage redirects add a request per displayed asset; legacy fallback serves one bounded asset through the function and performs cold preview work.",
+    "Signed provider URL lengths are not measured by this fixture; actual offline presigning is reported separately if available.",
+    "No production requests, uploads, database access, or billable transforms.",
+    "The three repeated originals yield unusually strong Brotli compression. Full-grid modeled Brotli bytes regress versus that baseline; the fixture is retained unchanged and this miss is reported."
+  ]
+}

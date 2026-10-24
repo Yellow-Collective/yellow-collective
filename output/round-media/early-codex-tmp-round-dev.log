@@ -1,0 +1,181 @@
+   ▲ Next.js 15.5.24
+   - Local:        http://localhost:3100
+   - Network:      http://192.168.1.90:3100
+   - Experiments (use with caution):
+     · staticGenerationMaxConcurrency: 1
+     · staticGenerationMinPagesPerWorker: 1000
+
+ ✓ Starting...
+ ✓ Ready in 2.7s
+ ○ Compiling /rounds/[slug] ...
+ ✓ Compiled /rounds/[slug] in 8s (3232 modules)
+Warning: A title element received an array with more than 1 element as children. In browsers title Elements can only have Text Nodes as children. If the children being rendered output more than a single text node in aggregate the browser will display markup and comments as text in the title and hydration will likely fail and fall back to client rendering
+    at title
+    at head
+    at Head (C:\Users\Deej\Documents\src\pages\_document.tsx:424:8)
+    at html
+    at Html (C:\Users\Deej\Documents\src\pages\_document.tsx:1145:7)
+    at Document
+ GET /rounds/bandwidth-fixture 200 in 15601ms
+ ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ○ Compiling /api/ens/name/[address] ...
+ ✓ Compiled /api/ens/name/[address] in 583ms (348 modules)
+ ✓ Compiled (356 modules)
+ GET /api/gallery/settings 200 in 3054ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000001 200 in 3030ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000002 200 in 3030ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000003 200 in 3019ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000004 200 in 3014ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000005 200 in 2315ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000006 200 in 1032ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000007 200 in 1032ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000008 200 in 1032ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000009 200 in 2062ms
+ GET /api/ens/name/0x000000000000000000000000000000000000000A 200 in 2063ms
+ GET /api/ens/name/0x000000000000000000000000000000000000000b 200 in 2063ms
+ GET /api/ens/name/0x000000000000000000000000000000000000000C 200 in 1039ms
+ ✓ Compiled /api/rounds/[slug]/media in 339ms (376 modules)
+ GET /api/rounds/bandwidth-fixture/media?v=2 200 in 1498ms
+ ✓ Compiled /api/rounds/[slug]/asset in 136ms (378 modules)
+ ✓ Compiled /api/nouns/balance/[user] in 279ms (384 modules)
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 848ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 915ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 1036ms
+ GET /api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 1043ms
+ ✓ Compiled (395 modules)
+ GET /api/manager/addresses/0x220e41499cf4d93a3629a5509410cbf9e6e0b109 200 in 1981ms
+Unable to load manager DAO addresses; using configured Yellow Collective contracts. [Error: failed to meet quorum (method="getBlockNumber", params={}, results=[{"weight":1,"start":1792423294824,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":42,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://evm.stupidtech.net/v1/8453"}},{"weight":1,"start":1792423295824,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":42,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://mainnet.base.org"}}], provider={"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"providerConfigs":[{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://evm.stupidtech.net/v1/8453"},"_nextId":43,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":1,"stallTimeout":1000,"weight":1},{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://mainnet.base.org"},"_nextId":43,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":2,"stallTimeout":1000,"weight":1}],"quorum":1,"_highestBlockNumber":-1,"_internalBlockNumber":{}}, code=SERVER_ERROR, version=providers/5.8.0)] {
+  reason: 'failed to meet quorum',
+  code: 'SERVER_ERROR',
+  method: 'getBlockNumber',
+  params: {},
+  results: [Array],
+  provider: [FallbackProvider]
+}
+ GET /api/nouns/balance/0x0b379F1848fA2aab7790966373618F4B0Fea6A6e 200 in 2336ms
+ ✓ Compiled /api/treasury/[address] in 569ms (395 modules)
+ ✓ Compiled (397 modules)
+ ⨯ [Error: failed to meet quorum (method="getBlockNumber", params={}, results=[{"weight":1,"start":1792423296660,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":42,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://evm.stupidtech.net/v1/8453"}},{"weight":1,"start":1792423297660,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":42,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://mainnet.base.org"}}], provider={"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"providerConfigs":[{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://evm.stupidtech.net/v1/8453"},"_nextId":43,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":1,"stallTimeout":1000,"weight":1},{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://mainnet.base.org"},"_nextId":43,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":2,"stallTimeout":1000,"weight":1}],"quorum":1,"_highestBlockNumber":-1,"_internalBlockNumber":{}}, code=SERVER_ERROR, version=providers/5.8.0)] {
+  reason: 'failed to meet quorum',
+  code: 'SERVER_ERROR',
+  method: 'getBlockNumber',
+  params: {},
+  results: [Array],
+  provider: [FallbackProvider],
+  page: '/api/treasury/[address]'
+}
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 2017ms
+ ○ Compiling /_error ...
+ GET /api/nouns/balance/0x55333306a4c6e74eb9e23a521a24fb78be2de92c 200 in 42ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z 200 in 26ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 2141ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000001 200 in 1037ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 1043ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z 200 in 17ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 3472ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 3469ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 3472ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 214ms
+ ✓ Compiled /_error in 3s (3425 modules)
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1 200 in 1949ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=old 404 in 12ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 2495ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 2800ms
+ GET /api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c 500 in 6305ms
+ GET /_next/data/development/rounds/bandwidth-fixture.json?slug=bandwidth-fixture 200 in 3228ms
+ ⨯ [Error: failed to meet quorum (method="getBlockNumber", params={}, results=[{"weight":1,"start":1792423307593,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":42,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://evm.stupidtech.net/v1/8453"}},{"weight":1,"start":1792423308593,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":42,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://mainnet.base.org"}}], provider={"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"providerConfigs":[{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://evm.stupidtech.net/v1/8453"},"_nextId":43,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":1,"stallTimeout":1000,"weight":1},{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://mainnet.base.org"},"_nextId":43,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":2,"stallTimeout":1000,"weight":1}],"quorum":1,"_highestBlockNumber":-1,"_internalBlockNumber":{}}, code=SERVER_ERROR, version=providers/5.8.0)] {
+  reason: 'failed to meet quorum',
+  code: 'SERVER_ERROR',
+  method: 'getBlockNumber',
+  params: {},
+  results: [Array],
+  provider: [FallbackProvider],
+  page: '/api/treasury/[address]'
+}
+ GET /api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c 500 in 1255ms
+ GET /api/rounds/bandwidth-fixture/media?v=2 200 in 25ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 46ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 46ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-004&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 46ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-005&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 44ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-007&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 58ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-008&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 58ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-010&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 17ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-011&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 12ms
+ GET /api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 317ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 314ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-006&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 229ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-009&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 154ms
+ GET /_next/data/development/rounds/bandwidth-fixture.json?slug=bandwidth-fixture 200 in 307ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000001 200 in 1018ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A01%3A00.000Z 200 in 1029ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A01%3A00.000Z 200 in 17ms
+Round media load failed
+ GET /api/rounds/bandwidth-fixture/media?v=2 500 in 10ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=original&v=old 404 in 10ms
+Warning: A title element received an array with more than 1 element as children. In browsers title Elements can only have Text Nodes as children. If the children being rendered output more than a single text node in aggregate the browser will display markup and comments as text in the title and hydration will likely fail and fall back to client rendering
+    at title
+    at head
+    at Head (C:\Users\Deej\Documents\src\pages\_document.tsx:424:8)
+    at html
+    at Html (C:\Users\Deej\Documents\src\pages\_document.tsx:1145:7)
+    at Document
+ GET /rounds/bandwidth-fixture 200 in 295ms
+ GET /api/gallery/settings 200 in 36ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000001 200 in 1051ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000002 200 in 1051ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000003 200 in 1048ms
+Warning: A title element received an array with more than 1 element as children. In browsers title Elements can only have Text Nodes as children. If the children being rendered output more than a single text node in aggregate the browser will display markup and comments as text in the title and hydration will likely fail and fall back to client rendering
+    at title
+    at head
+    at Head (C:\Users\Deej\Documents\src\pages\_document.tsx:424:8)
+    at html
+    at Html (C:\Users\Deej\Documents\src\pages\_document.tsx:1145:7)
+    at Document
+ GET /rounds/bandwidth-fixture 200 in 286ms
+ GET /api/gallery/settings 200 in 24ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000001 200 in 1034ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000002 200 in 1034ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000003 200 in 1034ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000004 200 in 2051ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000005 200 in 2037ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000006 200 in 2040ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000007 200 in 2040ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000008 200 in 2039ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000009 200 in 3061ms
+ GET /api/ens/name/0x000000000000000000000000000000000000000A 200 in 2037ms
+ GET /api/rounds/bandwidth-fixture/media?v=2 200 in 1024ms
+ GET /api/ens/name/0x000000000000000000000000000000000000000b 200 in 3046ms
+ GET /api/ens/name/0x000000000000000000000000000000000000000C 200 in 3046ms
+ GET /api/rounds/bandwidth-fixture/asset?cover=1&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 18ms
+Unable to load manager DAO addresses; using configured Yellow Collective contracts. [Error: failed to meet quorum (method="getBlockNumber", params={}, results=[{"weight":1,"start":1792423345993,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":43,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://evm.stupidtech.net/v1/8453"}},{"weight":1,"start":1792423346993,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":43,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://mainnet.base.org"}}], provider={"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"providerConfigs":[{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://evm.stupidtech.net/v1/8453"},"_nextId":44,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":1,"stallTimeout":1000,"weight":1},{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://mainnet.base.org"},"_nextId":44,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":2,"stallTimeout":1000,"weight":1}],"quorum":1,"_highestBlockNumber":-1,"_internalBlockNumber":{}}, code=SERVER_ERROR, version=providers/5.8.0)] {
+  reason: 'failed to meet quorum',
+  code: 'SERVER_ERROR',
+  method: 'getBlockNumber',
+  params: {},
+  results: [Array],
+  provider: [FallbackProvider]
+}
+ GET /api/manager/addresses/0x220e41499cf4d93a3629a5509410cbf9e6e0b109 200 in 1030ms
+ GET /api/nouns/balance/0x0b379F1848fA2aab7790966373618F4B0Fea6A6e 200 in 1054ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 30ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-001&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 30ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 30ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-003&index=0&variant=preview&v=2026-10-19T12%3A00%3A00.000Z 200 in 30ms
+ ⨯ [Error: failed to meet quorum (method="getBlockNumber", params={}, results=[{"weight":1,"start":1792423347064,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":44,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://evm.stupidtech.net/v1/8453"}},{"weight":1,"start":1792423348064,"error":{"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\"method\":\"eth_blockNumber\",\"params\":[],\"id\":44,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","serverError":{},"url":"https://mainnet.base.org"}}], provider={"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"providerConfigs":[{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://evm.stupidtech.net/v1/8453"},"_nextId":45,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":1,"stallTimeout":1000,"weight":1},{"provider":{"_isProvider":true,"_events":[],"_emitted":{"block":-2},"disableCcipRead":false,"formatter":{"formats":{"transaction":{},"transactionRequest":{},"receiptLog":{},"receipt":{},"block":{},"blockWithTransactions":{},"filter":{},"filterLog":{}}},"anyNetwork":false,"_network":{"chainId":8453,"name":"unknown"},"_maxInternalBlockNumber":-1024,"_lastBlockNumber":-2,"_maxFilterBlockRange":10,"_pollingInterval":4000,"_fastQueryDate":0,"connection":{"url":"https://mainnet.base.org"},"_nextId":45,"_eventLoopCache":{"eth_blockNumber":{}},"_internalBlockNumber":null},"priority":2,"stallTimeout":1000,"weight":1}],"quorum":1,"_highestBlockNumber":-1,"_internalBlockNumber":{}}, code=SERVER_ERROR, version=providers/5.8.0)] {
+  reason: 'failed to meet quorum',
+  code: 'SERVER_ERROR',
+  method: 'getBlockNumber',
+  params: {},
+  results: [Array],
+  provider: [FallbackProvider],
+  page: '/api/treasury/[address]'
+}
+ GET /api/nouns/balance/0x55333306a4c6e74eb9e23a521a24fb78be2de92c 200 in 1042ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=0&variant=original&v=2026-10-19T12%3A00%3A00.000Z 200 in 17ms
+ GET /api/ens/name/0x0000000000000000000000000000000000000001 200 in 1029ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original&v=2026-10-19T12%3A00%3A00.000Z 200 in 11ms
+ GET /api/treasury/0x55333306a4c6e74eb9e23a521a24fb78be2de92c 500 in 2202ms
+ GET /api/rounds/bandwidth-fixture/asset?id=submission-000&index=3&variant=original&v=2026-10-19T12%3A00%3A00.000Z&retry=1 200 in 18ms
+ ✓ Compiled in 2.2s (3425 modules)

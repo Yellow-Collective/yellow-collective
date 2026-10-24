@@ -1,0 +1,58 @@
+ok - warm moderation, edit, manifest failure and round deactivation browser checks
+[
+  {
+    "viewport": "desktop",
+    "serverMode": "production",
+    "buildId": "Z5d2XAmzWM-0IuPPiixwt",
+    "initialMediaRequests": 8,
+    "initialMediaBodyBytes": 81523,
+    "initialMediaWireBodyBytes": 74398,
+    "initialOriginalRequests": 2,
+    "initialStaticOriginalRequests": 0,
+    "initialHiddenGalleryOriginalRequests": 0,
+    "initialAnimatedGifOriginals": 2,
+    "gridGifFramesDiffer": true,
+    "applicationNavigationRequests": 116,
+    "applicationNavigationBodyBytes": 4890997,
+    "applicationNavigationWireBodyBytes": 1667009,
+    "gifFramesDiffer": true,
+    "noHorizontalOverflow": true,
+    "warmChecks": [
+      "warm manifest moderation removes card and open gallery; stale direct asset request denied404/no-store",
+      "revision change refreshes lightweight SSR metadata and artwork titles",
+      "failed manifest refresh hides prior artwork and exposes recovery message",
+      "deactivation denies old direct image URLs"
+    ],
+    "blockedExternalOrigins": [
+      "https://fonts.googleapis.com",
+      "https://verify.walletconnect.com",
+      "https://explorer-api.walletconnect.com"
+    ],
+    "pageErrors": []
+  },
+  {
+    "viewport": "mobile",
+    "serverMode": "production",
+    "buildId": "Z5d2XAmzWM-0IuPPiixwt",
+    "initialMediaRequests": 2,
+    "initialMediaBodyBytes": 21751,
+    "initialMediaWireBodyBytes": 14626,
+    "initialOriginalRequests": 0,
+    "initialStaticOriginalRequests": 0,
+    "initialHiddenGalleryOriginalRequests": 0,
+    "initialAnimatedGifOriginals": 0,
+    "gridGifFramesDiffer": true,
+    "applicationNavigationRequests": 76,
+    "applicationNavigationBodyBytes": 4564821,
+    "applicationNavigationWireBodyBytes": 1428480,
+    "gifFramesDiffer": true,
+    "noHorizontalOverflow": true,
+    "warmChecks": [],
+    "blockedExternalOrigins": [
+      "https://fonts.googleapis.com",
+      "https://verify.walletconnect.com",
+      "https://explorer-api.walletconnect.com"
+    ],
+    "pageErrors": []
+  }
+]

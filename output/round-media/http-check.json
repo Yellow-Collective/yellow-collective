@@ -1,0 +1,72 @@
+[
+  {
+    "path": "/api/rounds/bandwidth-fixture/media?v=2",
+    "status": 200,
+    "bytes": 7597,
+    "cache": "public, max-age=15, s-maxage=15, must-revalidate",
+    "etag": "\"ru6suwiq035v1\""
+  },
+  {
+    "path": "/api/rounds/bandwidth-fixture/media?v=2",
+    "status": 304,
+    "bytes": 0,
+    "cache": "public, max-age=15, s-maxage=15, must-revalidate",
+    "etag": "\"ru6suwiq035v1\""
+  },
+  {
+    "path": "/api/rounds/bandwidth-fixture/media",
+    "status": 200,
+    "bytes": 8649,
+    "cache": "public, max-age=15, s-maxage=15, must-revalidate",
+    "etag": "\"gi98m19if6o9\""
+  },
+  {
+    "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=2&variant=original",
+    "status": 200,
+    "bytes": 14366,
+    "cache": "private, no-store, max-age=0",
+    "etag": "\"180oum952wo13rq\""
+  },
+  {
+    "path": "/api/rounds/bandwidth-fixture/asset?id=submission-002&index=0&variant=preview",
+    "status": 200,
+    "bytes": 14366,
+    "cache": "private, no-store, max-age=0",
+    "etag": "\"180oum952wo13rq\""
+  },
+  {
+    "path": "/api/rounds/bandwidth-fixture/asset?id=absent&index=0&variant=original",
+    "status": 404,
+    "bytes": 28,
+    "cache": "private, no-store, max-age=0",
+    "etag": "\"og5cyrxkuks\""
+  },
+  {
+    "path": "/api/rounds/bandwidth-fixture/asset?id=submission-000&index=invalid&variant=original",
+    "status": 400,
+    "bytes": 34,
+    "cache": "private, no-store, max-age=0",
+    "etag": "\"ox4f04a35fy\""
+  },
+  {
+    "path": "/api/rounds/bandwidth-fixture/vote",
+    "status": 405,
+    "bytes": 31,
+    "cache": "no-store, max-age=0",
+    "etag": "\"q7enjxdx0kv\""
+  },
+  {
+    "path": "/rounds/bandwidth-fixture",
+    "status": 200,
+    "bytes": 65851,
+    "cache": "private, no-cache, no-store, max-age=0, must-revalidate",
+    "etag": "\"g53f2jaudx1et0\""
+  },
+  {
+    "path": "/_next/data/Z5d2XAmzWM-0IuPPiixwt/rounds/bandwidth-fixture.json",
+    "status": 200,
+    "bytes": 8367,
+    "cache": "private, no-cache, no-store, max-age=0, must-revalidate",
+    "etag": "\"k2f73rl5t86gf\""
+  }
+]
