@@ -1,0 +1,43 @@
+{
+  "cutoff": "2026-10-23T21:12:26.163Z",
+  "readOnly": "on",
+  "totals": {
+    "submissions": 23,
+    "vote_rows": 308,
+    "voters": 59,
+    "allocated_votes": 2950,
+    "orphaned_votes": 0,
+    "direct_self_vote_rows": 0,
+    "winners": 10,
+    "moderation_rows": 0,
+    "awards": 10
+  },
+  "activeApprovedSubmissions": 22,
+  "deletedSubmissions": 1,
+  "votesForExcludedSubmissions": 0,
+  "invalidVoteRows": 0,
+  "capViolations": 0,
+  "budgetViolations": 0,
+  "eligibilityFailures": 0,
+  "eventTypes": {
+    "Transfer": 2251,
+    "DelegateVotesChanged": 3385,
+    "DelegateChanged": 34
+  },
+  "coverage": {
+    "fromBlock": 0,
+    "toBlock": 53000299,
+    "ranges": 54,
+    "gaps": 0,
+    "failedRanges": 0,
+    "duplicateEvents": 0,
+    "maxLogsPerRange": 341
+  },
+  "snapshotSupply": 841,
+  "liveTokenLedger": 841,
+  "burnedTokens": 132,
+  "voterBalanceMismatches": 0,
+  "voterPowerMismatches": 0,
+  "verifiedMaterialReceipts": 5,
+  "receiptEventMatches": 15
+}

@@ -1,0 +1,3 @@
+const {utils}=require('ethers');
+(async()=>{await Promise.all(['https://evm.stupidtech.net/v1/8453'].map(async url=>{try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_getLogs',params:[{address:'0x220e41499cf4d93a3629a5509410cbf9e6e0b109',fromBlock:'0x'+(52800000).toString(16),toBlock:'0x'+(52850000).toString(16),topics:[utils.id('Transfer(address,address,uint256)')]}]}),signal:AbortSignal.timeout(12000)});const j=await r.json();console.log(JSON.stringify({url,status:r.status,count:j.result?.length,error:j.error}));}catch(e){console.log(JSON.stringify({url,error:e.message}));}}));})()
+

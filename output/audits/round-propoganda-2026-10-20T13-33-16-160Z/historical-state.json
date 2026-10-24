@@ -1,0 +1,1884 @@
+{
+  "snapshot": {
+    "block": 52697526,
+    "results": [
+      {
+        "address": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xCb6Eb98D0533dd42367cd064fC5b988814187527"
+      },
+      {
+        "address": "0x036cd064d068eb1d99e07d79848c7a4aab94bd49",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x036cd064d068eb1d99e07d79848c7a4aab94bd49",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x036cd064d068eb1d99e07d79848c7a4aab94bd49",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x036cD064D068EB1d99E07d79848c7A4Aab94Bd49"
+      },
+      {
+        "address": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xBA8e0841CD9a95c80ccBD502B08F73F8e30f2186"
+      },
+      {
+        "address": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xc578958DD1880cF00BFfbb7Feb9c28cbbbcaD3bF"
+      },
+      {
+        "address": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x003276C5C24cDaFf1d804170Ab5cBB914F51f78a"
+      },
+      {
+        "address": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x5D69C42A3a481d0CCFd88CFA8a2a08e2BF456134"
+      },
+      {
+        "address": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x8661eE79c9eC060BD263F41420fF1B4A36bB3cE8"
+      },
+      {
+        "address": "0xc78d75b064848e70c365e7a49867c81cfab23e54",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xc78d75b064848e70c365e7a49867c81cfab23e54",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xc78d75b064848e70c365e7a49867c81cfab23e54",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xc78d75B064848e70c365e7A49867C81CfAb23e54"
+      },
+      {
+        "address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "fn": "getVotes",
+        "success": true,
+        "value": "50"
+      },
+      {
+        "address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "3"
+      },
+      {
+        "address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4b186552933382f5AF7D241ED2d0BB7b79E4d200"
+      },
+      {
+        "address": "0xceed9585854f12f81a0103861b83b995a64ad915",
+        "fn": "getVotes",
+        "success": true,
+        "value": "7"
+      },
+      {
+        "address": "0xceed9585854f12f81a0103861b83b995a64ad915",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "7"
+      },
+      {
+        "address": "0xceed9585854f12f81a0103861b83b995a64ad915",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xCEEd9585854F12F81A0103861b83b995A64AD915"
+      },
+      {
+        "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x9ab51fd89F163D07127df192b615356D53B406f6"
+      },
+      {
+        "address": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xa87Daa2Bc3bd0eCca4C9111776BAB2c9d44D6c6B"
+      },
+      {
+        "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xCBA18CB7e7c043B378E21607fa104F1767442348"
+      },
+      {
+        "address": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x97c8B754a6956832e56b3958943D0ce47fde4665"
+      },
+      {
+        "address": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "fn": "getVotes",
+        "success": true,
+        "value": "23"
+      },
+      {
+        "address": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "23"
+      },
+      {
+        "address": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4D1FD46F87449Ffe235e3fce21DF8A9bF8BD9206"
+      },
+      {
+        "address": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x8F3a83a3356d2666D89d027544BbaFfa12139E3c"
+      },
+      {
+        "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a"
+      },
+      {
+        "address": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xae4705dC0816ee6d8a13F1C72780Ec5021915Fed"
+      },
+      {
+        "address": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xA09AA75da763D4aEB692672897C057786Cdd258B"
+      },
+      {
+        "address": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x1BA77F0359fb0E0C13a93ba284A084da2122e957"
+      },
+      {
+        "address": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x2262d4288F35B75831f0B132a7B1fCf719430274"
+      },
+      {
+        "address": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4a90F5A9401158a70F5F307aa13fF0B0E62c7B51"
+      },
+      {
+        "address": "0xa4ec1315f1032b0dd3c5043d3d145f93ec4d009f",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa4ec1315f1032b0dd3c5043d3d145f93ec4d009f",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa4ec1315f1032b0dd3c5043d3d145f93ec4d009f",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xA4Ec1315f1032B0dD3c5043d3d145f93Ec4D009f"
+      },
+      {
+        "address": "0x7234c36a71ec237c2ae7698e8916e0735001e9af",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x7234c36a71ec237c2ae7698e8916e0735001e9af",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x7234c36a71ec237c2ae7698e8916e0735001e9af",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x7234c36A71ec237c2Ae7698e8916e0735001E9Af"
+      },
+      {
+        "address": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xa2746b2A56F9886925C03AF1d1E10B8b3DfBBE29"
+      },
+      {
+        "address": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x282d656A9d95c64522F6Bc1a42EE759DE81e8dc0"
+      },
+      {
+        "address": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x3ba02da5b9fe77Aed5592E934f7ec15381b3dDed"
+      },
+      {
+        "address": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4e2a3A65D0E2bcdb507a70fE2D3fc5dff464aa25"
+      },
+      {
+        "address": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xed764F46c8b6E4ebEadb795017e436DdB3561476"
+      },
+      {
+        "address": "0xdd3b3a67c66a5276aacc499ec2abd5241721e008",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xdd3b3a67c66a5276aacc499ec2abd5241721e008",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xdd3b3a67c66a5276aacc499ec2abd5241721e008",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xdd3b3A67C66A5276aaCC499ec2abD5241721e008"
+      },
+      {
+        "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xf1f5D35c46Fd62fDD9150C39acc4A1b6A8327Ae4"
+      },
+      {
+        "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xac1A6F43425EFdD808748a6EB992fa047e90776e"
+      },
+      {
+        "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xF7AEF946D3f2E58a3685166ACE1fc3dB76d614de"
+      },
+      {
+        "address": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x517186eeFAB9D631e7dDBeD521740e84afd9b11F"
+      },
+      {
+        "address": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x5eaa352F438023f956f8e6BD581F37a67971E46B"
+      },
+      {
+        "address": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xe348B541dD51C5e7B32557F055f7205e6D8C0a6D"
+      },
+      {
+        "address": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x9ffAab6c24d4fb58d61b26B08c8795E9E323F28B"
+      },
+      {
+        "address": "0xef1b8fa58e790310a56736bce71f1f658d905d36",
+        "fn": "getVotes",
+        "success": true,
+        "value": "4"
+      },
+      {
+        "address": "0xef1b8fa58e790310a56736bce71f1f658d905d36",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "4"
+      },
+      {
+        "address": "0xef1b8fa58e790310a56736bce71f1f658d905d36",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xeF1b8Fa58E790310a56736bcE71f1F658D905D36"
+      },
+      {
+        "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x9234CcDeA92b38071458b6837bdDBDdd874bFc26"
+      },
+      {
+        "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xe212d2Ca76E29c0d3A8ebFB665Abf4679535DF27"
+      },
+      {
+        "address": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x215DB99298af65306A4c60BD3b7612D5F60b03D7"
+      },
+      {
+        "address": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xfB1BbfF3747b6090fcE6C171EF9BFc2298ad3bd6"
+      },
+      {
+        "address": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x15C6a4bF9023Ad20C51CbEa9992A5bcCf83F3e7B"
+      },
+      {
+        "address": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x6681abA8a0EC9F26846e1fC1231994A42D0Dea6B"
+      },
+      {
+        "address": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4E0658E1e379Faf0B96b78Cfe7051F87c07900E2"
+      },
+      {
+        "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+      },
+      {
+        "address": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xc19F77dd0781605b2F551CFBfB3161FF2D7e93C8"
+      },
+      {
+        "address": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x46978b8E5F2D1E6E077D35047337B4fcC18d4079"
+      },
+      {
+        "address": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x5CE3E4c14fec4Bf6d6Fe942828b65785026c069B"
+      },
+      {
+        "address": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+        "fn": "getVotes",
+        "success": true,
+        "value": "7"
+      },
+      {
+        "address": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x72D4e991040e3B65FdDbE5f340f65Cf03C506e6F"
+      },
+      {
+        "address": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x7802cC411BFe02655FaDfa5b23F9db3382D84a44"
+      },
+      {
+        "address": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x8eC956961CC68313dC67237376ED16f6721A46B6"
+      }
+    ]
+  },
+  "cutoff": {
+    "block": 52856924,
+    "results": [
+      {
+        "address": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xCb6Eb98D0533dd42367cd064fC5b988814187527"
+      },
+      {
+        "address": "0x036cd064d068eb1d99e07d79848c7a4aab94bd49",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x036cd064d068eb1d99e07d79848c7a4aab94bd49",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x036cd064d068eb1d99e07d79848c7a4aab94bd49",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x036cD064D068EB1d99E07d79848c7A4Aab94Bd49"
+      },
+      {
+        "address": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xba8e0841cd9a95c80ccbd502b08f73f8e30f2186",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xBA8e0841CD9a95c80ccBD502B08F73F8e30f2186"
+      },
+      {
+        "address": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xc578958dd1880cf00bffbb7feb9c28cbbbcad3bf",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xc578958DD1880cF00BFfbb7Feb9c28cbbbcaD3bF"
+      },
+      {
+        "address": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x003276c5c24cdaff1d804170ab5cbb914f51f78a",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x003276C5C24cDaFf1d804170Ab5cBB914F51f78a"
+      },
+      {
+        "address": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x5D69C42A3a481d0CCFd88CFA8a2a08e2BF456134"
+      },
+      {
+        "address": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x8661eE79c9eC060BD263F41420fF1B4A36bB3cE8"
+      },
+      {
+        "address": "0xc78d75b064848e70c365e7a49867c81cfab23e54",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xc78d75b064848e70c365e7a49867c81cfab23e54",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xc78d75b064848e70c365e7a49867c81cfab23e54",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xc78d75B064848e70c365e7A49867C81CfAb23e54"
+      },
+      {
+        "address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "fn": "getVotes",
+        "success": true,
+        "value": "50"
+      },
+      {
+        "address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "3"
+      },
+      {
+        "address": "0xdcf37d8aa17142f053aaa7dc56025ab00d897a19",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4b186552933382f5AF7D241ED2d0BB7b79E4d200"
+      },
+      {
+        "address": "0xceed9585854f12f81a0103861b83b995a64ad915",
+        "fn": "getVotes",
+        "success": true,
+        "value": "7"
+      },
+      {
+        "address": "0xceed9585854f12f81a0103861b83b995a64ad915",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "7"
+      },
+      {
+        "address": "0xceed9585854f12f81a0103861b83b995a64ad915",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xCEEd9585854F12F81A0103861b83b995A64AD915"
+      },
+      {
+        "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x9ab51fd89F163D07127df192b615356D53B406f6"
+      },
+      {
+        "address": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa87daa2bc3bd0ecca4c9111776bab2c9d44d6c6b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xa87Daa2Bc3bd0eCca4C9111776BAB2c9d44D6c6B"
+      },
+      {
+        "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xcba18cb7e7c043b378e21607fa104f1767442348",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xCBA18CB7e7c043B378E21607fa104F1767442348"
+      },
+      {
+        "address": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "fn": "getVotes",
+        "success": true,
+        "value": "3"
+      },
+      {
+        "address": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "3"
+      },
+      {
+        "address": "0x97c8b754a6956832e56b3958943d0ce47fde4665",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x97c8B754a6956832e56b3958943D0ce47fde4665"
+      },
+      {
+        "address": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "fn": "getVotes",
+        "success": true,
+        "value": "23"
+      },
+      {
+        "address": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "23"
+      },
+      {
+        "address": "0x4d1fd46f87449ffe235e3fce21df8a9bf8bd9206",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4D1FD46F87449Ffe235e3fce21DF8A9bF8BD9206"
+      },
+      {
+        "address": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x8F3a83a3356d2666D89d027544BbaFfa12139E3c"
+      },
+      {
+        "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x3b6a7fdeabd4405991bfb1c80e61e1056da20c9a",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x3B6a7fDeABd4405991bfb1c80E61e1056da20c9a"
+      },
+      {
+        "address": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xae4705dc0816ee6d8a13f1c72780ec5021915fed",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xae4705dC0816ee6d8a13F1C72780Ec5021915Fed"
+      },
+      {
+        "address": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xA09AA75da763D4aEB692672897C057786Cdd258B"
+      },
+      {
+        "address": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "fn": "getVotes",
+        "success": true,
+        "value": "3"
+      },
+      {
+        "address": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "3"
+      },
+      {
+        "address": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x1BA77F0359fb0E0C13a93ba284A084da2122e957"
+      },
+      {
+        "address": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x2262d4288f35b75831f0b132a7b1fcf719430274",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x2262d4288F35B75831f0B132a7B1fCf719430274"
+      },
+      {
+        "address": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x4a90f5a9401158a70f5f307aa13ff0b0e62c7b51",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4a90F5A9401158a70F5F307aa13fF0B0E62c7B51"
+      },
+      {
+        "address": "0xa4ec1315f1032b0dd3c5043d3d145f93ec4d009f",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa4ec1315f1032b0dd3c5043d3d145f93ec4d009f",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa4ec1315f1032b0dd3c5043d3d145f93ec4d009f",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xA4Ec1315f1032B0dD3c5043d3d145f93Ec4D009f"
+      },
+      {
+        "address": "0x7234c36a71ec237c2ae7698e8916e0735001e9af",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x7234c36a71ec237c2ae7698e8916e0735001e9af",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x7234c36a71ec237c2ae7698e8916e0735001e9af",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x7234c36A71ec237c2Ae7698e8916e0735001E9Af"
+      },
+      {
+        "address": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xa2746b2a56f9886925c03af1d1e10b8b3dfbbe29",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xa2746b2A56F9886925C03AF1d1E10B8b3DfBBE29"
+      },
+      {
+        "address": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x282d656A9d95c64522F6Bc1a42EE759DE81e8dc0"
+      },
+      {
+        "address": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x3ba02da5b9fe77Aed5592E934f7ec15381b3dDed"
+      },
+      {
+        "address": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4e2a3A65D0E2bcdb507a70fE2D3fc5dff464aa25"
+      },
+      {
+        "address": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xed764F46c8b6E4ebEadb795017e436DdB3561476"
+      },
+      {
+        "address": "0xdd3b3a67c66a5276aacc499ec2abd5241721e008",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xdd3b3a67c66a5276aacc499ec2abd5241721e008",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xdd3b3a67c66a5276aacc499ec2abd5241721e008",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xdd3b3A67C66A5276aaCC499ec2abD5241721e008"
+      },
+      {
+        "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xf1f5d35c46fd62fdd9150c39acc4a1b6a8327ae4",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xf1f5D35c46Fd62fDD9150C39acc4A1b6A8327Ae4"
+      },
+      {
+        "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xac1a6f43425efdd808748a6eb992fa047e90776e",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xac1A6F43425EFdD808748a6EB992fa047e90776e"
+      },
+      {
+        "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xF7AEF946D3f2E58a3685166ACE1fc3dB76d614de"
+      },
+      {
+        "address": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x517186eeFAB9D631e7dDBeD521740e84afd9b11F"
+      },
+      {
+        "address": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x5eaa352F438023f956f8e6BD581F37a67971E46B"
+      },
+      {
+        "address": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xe348B541dD51C5e7B32557F055f7205e6D8C0a6D"
+      },
+      {
+        "address": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x9ffAab6c24d4fb58d61b26B08c8795E9E323F28B"
+      },
+      {
+        "address": "0xef1b8fa58e790310a56736bce71f1f658d905d36",
+        "fn": "getVotes",
+        "success": true,
+        "value": "4"
+      },
+      {
+        "address": "0xef1b8fa58e790310a56736bce71f1f658d905d36",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "4"
+      },
+      {
+        "address": "0xef1b8fa58e790310a56736bce71f1f658d905d36",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xeF1b8Fa58E790310a56736bcE71f1F658D905D36"
+      },
+      {
+        "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x9234ccdea92b38071458b6837bddbddd874bfc26",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x9234CcDeA92b38071458b6837bdDBDdd874bFc26"
+      },
+      {
+        "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0xe212d2ca76e29c0d3a8ebfb665abf4679535df27",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xe212d2Ca76E29c0d3A8ebFB665Abf4679535DF27"
+      },
+      {
+        "address": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x215DB99298af65306A4c60BD3b7612D5F60b03D7"
+      },
+      {
+        "address": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+        "fn": "getVotes",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "2"
+      },
+      {
+        "address": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xfB1BbfF3747b6090fcE6C171EF9BFc2298ad3bd6"
+      },
+      {
+        "address": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x15C6a4bF9023Ad20C51CbEa9992A5bcCf83F3e7B"
+      },
+      {
+        "address": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x6681abA8a0EC9F26846e1fC1231994A42D0Dea6B"
+      },
+      {
+        "address": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "fn": "getVotes",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "1"
+      },
+      {
+        "address": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x4E0658E1e379Faf0B96b78Cfe7051F87c07900E2"
+      },
+      {
+        "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x1bAe19AF613BD5Db94bAf043D5817e16a53A4C33"
+      },
+      {
+        "address": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+        "fn": "delegates",
+        "success": true,
+        "value": "0xc19F77dd0781605b2F551CFBfB3161FF2D7e93C8"
+      },
+      {
+        "address": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x46978b8E5F2D1E6E077D35047337B4fcC18d4079"
+      },
+      {
+        "address": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x5CE3E4c14fec4Bf6d6Fe942828b65785026c069B"
+      },
+      {
+        "address": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+        "fn": "getVotes",
+        "success": true,
+        "value": "7"
+      },
+      {
+        "address": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x72D4e991040e3B65FdDbE5f340f65Cf03C506e6F"
+      },
+      {
+        "address": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x7802cC411BFe02655FaDfa5b23F9db3382D84a44"
+      },
+      {
+        "address": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+        "fn": "getVotes",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+        "fn": "balanceOf",
+        "success": true,
+        "value": "0"
+      },
+      {
+        "address": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+        "fn": "delegates",
+        "success": true,
+        "value": "0x8eC956961CC68313dC67237376ED16f6721A46B6"
+      }
+    ]
+  }
+}

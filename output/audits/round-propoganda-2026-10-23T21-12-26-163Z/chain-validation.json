@@ -1,0 +1,135 @@
+{
+  "completeRanges": 54,
+  "largestRangeLogCount": 341,
+  "duplicateEvents": 0,
+  "supply": {
+    "snapshot": "841",
+    "cutoff": "841"
+  },
+  "snapshotLedgerTokens": 973,
+  "ledgerBalanceMismatches": 0,
+  "blockMeta": {
+    "snapshot": {
+      "block": 52697526,
+      "hash": "0xc58239acbc4f1d987efe4c1dd67878a734f29eaab40bf027b18b5661af31db39",
+      "time": "2026-10-16T20:59:59.000Z"
+    },
+    "cutoff": {
+      "block": 53000299,
+      "hash": "0xad0107232394b8a2de46fce520846afe7f19b2904f1dff21bf13b539002f18c2",
+      "time": "2026-10-23T21:12:25.000Z"
+    }
+  },
+  "auctionSourceIsContract": true,
+  "chainReceipts": [
+    {
+      "hash": "0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd",
+      "status": "0x1",
+      "from": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+      "to": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+      "value": "0x0",
+      "selector": "0x23b872dd",
+      "time": "2026-08-08T20:48:15.000Z",
+      "logAddresses": [
+        "0x220e41499cf4d93a3629a5509410cbf9e6e0b109"
+      ]
+    },
+    {
+      "hash": "0xbb6e12f73cc88206bb3d1a1595ee26e80df0eb3efe6da35bebb6057cf2838027",
+      "status": "0x1",
+      "from": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "to": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+      "value": "0x0",
+      "selector": "0x23b872dd",
+      "time": "2026-09-22T07:50:11.000Z",
+      "logAddresses": [
+        "0x220e41499cf4d93a3629a5509410cbf9e6e0b109"
+      ]
+    },
+    {
+      "hash": "0xe8d03281c3f5c5cff59d7870d941dbe43c3a0b6756653e25bfe09ca05906a817",
+      "status": "0x1",
+      "from": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+      "to": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+      "value": "0x0",
+      "selector": "0x23b872dd",
+      "time": "2026-09-24T15:00:39.000Z",
+      "logAddresses": [
+        "0x220e41499cf4d93a3629a5509410cbf9e6e0b109"
+      ]
+    },
+    {
+      "hash": "0x1b9b4fd469d897cb3e27bb91dbea6be51b686db3e0d1fc3d07ea936493f80ffc",
+      "status": "0x1",
+      "from": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+      "to": "0x66950320086664429c69735318724ae24ec0d835",
+      "value": "0x1aa535d3d0c0000",
+      "selector": "0x4c674c2d",
+      "time": "2025-01-06T19:47:19.000Z",
+      "logAddresses": [
+        "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+        "0x0000000000000068f116a894984e2db1123eb395"
+      ]
+    },
+    {
+      "hash": "0xb51c6f70c0f7f9ac6000ba029343ab059db31ed6458ec862c72d55e7095565f5",
+      "status": "0x1",
+      "from": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0x0",
+      "selector": "0xf25efffc",
+      "time": "2026-07-04T11:23:03.000Z",
+      "logAddresses": [
+        "0x7777777f279eba3d3ad8f4e708545291a6fdba8b",
+        "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+        "0x0aa23a7e112889c965010558803813710becf263"
+      ]
+    },
+    {
+      "hash": "0x45e11edd571fdeb3d0e369dcbb244beea452647efe107ae3e1ee7ec9f29936c3",
+      "status": "0x1",
+      "from": "0x9afc8bf27d746cb6b864ed1289389693f948957a",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0x0",
+      "selector": "0xf25efffc",
+      "time": "2024-07-06T06:27:17.000Z",
+      "logAddresses": [
+        "0x7777777f279eba3d3ad8f4e708545291a6fdba8b",
+        "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+        "0x0aa23a7e112889c965010558803813710becf263"
+      ]
+    },
+    {
+      "hash": "0x030b6a76ffccf4389bb38e4210adbc849844a9729de26ee8f4547269798081a2",
+      "status": "0x1",
+      "from": "0xca89e2472fe57bdc74f2361ceea5962fb205119c",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0x0",
+      "selector": "0xf25efffc",
+      "time": "2024-10-23T23:48:51.000Z",
+      "logAddresses": [
+        "0x7777777f279eba3d3ad8f4e708545291a6fdba8b",
+        "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+        "0x0aa23a7e112889c965010558803813710becf263"
+      ]
+    },
+    {
+      "hash": "0x23eaa01450c7b25d19eca3acb77884bce3b319d9f5e0cfce0b5442194e6fae49",
+      "from": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0x0",
+      "selector": "0xf25efffc",
+      "time": "2026-01-06T04:24:23.000Z",
+      "logAddresses": []
+    },
+    {
+      "hash": "0x8373363887bdc33511d93aa8acfb92c166b7c498bddec05055925819a0fc2ccf",
+      "from": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "to": "0x0aa23a7e112889c965010558803813710becf263",
+      "value": "0x0",
+      "selector": "0xf25efffc",
+      "time": "2024-10-08T21:32:21.000Z",
+      "logAddresses": []
+    }
+  ]
+}

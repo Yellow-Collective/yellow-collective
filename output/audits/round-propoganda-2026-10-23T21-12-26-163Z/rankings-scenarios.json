@@ -1,0 +1,1744 @@
+{
+  "tieRule": "vote count DESC, submission created_at DESC, matching inspected finalizer source",
+  "scenarios": {
+    "actual": [
+      {
+        "id": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "title": "Support Yellow Artists",
+        "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "createdAt": "2026-10-15T17:56:53.504486+00:00",
+        "votes": 318,
+        "rank": 1
+      },
+      {
+        "id": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+        "title": "Perpetual Collective Machine - Loop Animation",
+        "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "createdAt": "2026-10-16T15:06:51.729658+00:00",
+        "votes": 300,
+        "rank": 2
+      },
+      {
+        "id": "90ca347b-d774-4aaf-8089-c290184fc6db",
+        "title": "💛Paint the world Yellow💛",
+        "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "createdAt": "2026-10-15T17:24:45.142605+00:00",
+        "votes": 296,
+        "rank": 3
+      },
+      {
+        "id": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+        "title": "Draw or Die! 🫀 by msmeghna",
+        "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "createdAt": "2026-10-15T14:25:26.417363+00:00",
+        "votes": 276,
+        "rank": 4
+      },
+      {
+        "id": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+        "title": "TOO MUCH SLOP",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "createdAt": "2026-10-14T19:48:58.34971+00:00",
+        "votes": 247,
+        "rank": 5
+      },
+      {
+        "id": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "createdAt": "2026-10-16T20:01:08.154167+00:00",
+        "votes": 245,
+        "rank": 6
+      },
+      {
+        "id": "f65d2947-c100-4dc4-af85-c055f481a600",
+        "title": "Yellow🟡 The Culture We Own",
+        "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "createdAt": "2026-10-14T14:12:11.918654+00:00",
+        "votes": 182,
+        "rank": 7
+      },
+      {
+        "id": "c243f71d-0621-4ed6-9fce-a6d0a88ce158",
+        "title": "YELLOW IS EVERYWHERE",
+        "submitter": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+        "createdAt": "2026-10-16T17:55:30.004546+00:00",
+        "votes": 167,
+        "rank": 8
+      },
+      {
+        "id": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "title": "The Museum Has No Front Desk",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "createdAt": "2026-10-16T20:17:51.828503+00:00",
+        "votes": 161,
+        "rank": 9
+      },
+      {
+        "id": "a1622728-cc2c-400c-9e55-f09aa1843af6",
+        "title": "Keep the yellow spirit!",
+        "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+        "createdAt": "2026-10-15T21:19:25.197717+00:00",
+        "votes": 115,
+        "rank": 10
+      },
+      {
+        "id": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+        "title": "Make Art Great Again",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "createdAt": "2026-10-15T18:54:03.711226+00:00",
+        "votes": 99,
+        "rank": 11
+      },
+      {
+        "id": "20f9ff2a-39a8-4b47-8226-6984cd5336e9",
+        "title": "On-chain Art for All",
+        "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+        "createdAt": "2026-10-15T05:22:48.365701+00:00",
+        "votes": 92,
+        "rank": 12
+      },
+      {
+        "id": "a030c210-8a88-4a99-b758-170fd1e76d59",
+        "title": "More Art, Less Algorithm",
+        "submitter": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+        "createdAt": "2026-10-15T19:15:59.398612+00:00",
+        "votes": 89,
+        "rank": 13
+      },
+      {
+        "id": "bc5bc19e-50b3-4687-b708-a4e5d1a23d56",
+        "title": "Less Talk. Make More",
+        "submitter": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+        "createdAt": "2026-10-15T15:10:35.066517+00:00",
+        "votes": 86,
+        "rank": 14
+      },
+      {
+        "id": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+        "title": "FARCASTER EAT FIRST",
+        "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "createdAt": "2026-10-15T17:48:27.873368+00:00",
+        "votes": 74,
+        "rank": 15
+      },
+      {
+        "id": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+        "title": "Free the DAO",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "createdAt": "2026-10-15T18:53:13.492026+00:00",
+        "votes": 69,
+        "rank": 16
+      },
+      {
+        "id": "c7710a24-55cd-45db-885a-0ac9aa4968c6",
+        "title": "Yellow",
+        "submitter": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+        "createdAt": "2026-10-16T20:59:50.533473+00:00",
+        "votes": 29,
+        "rank": 17
+      },
+      {
+        "id": "31b03063-53cb-4484-ad48-32e3d7eb8a64",
+        "title": "Road to Yellow",
+        "submitter": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+        "createdAt": "2026-10-15T20:27:48.642453+00:00",
+        "votes": 28,
+        "rank": 18
+      },
+      {
+        "id": "d9b6dd64-d853-4f0e-bfdb-1cacdf5c59bb",
+        "title": "Build the culture",
+        "submitter": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+        "createdAt": "2026-10-16T05:48:24.977723+00:00",
+        "votes": 26,
+        "rank": 19
+      },
+      {
+        "id": "ac8e8bc0-d9a8-47d4-9fa3-2f47041026a5",
+        "title": "The Culture Is the Currency",
+        "submitter": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+        "createdAt": "2026-10-16T15:54:45.06577+00:00",
+        "votes": 19,
+        "rank": 20
+      },
+      {
+        "id": "7ecfba6f-e584-4bbe-91d2-d4432aa646bc",
+        "title": "Creative Freedom 🪽",
+        "submitter": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+        "createdAt": "2026-10-15T16:45:39.77074+00:00",
+        "votes": 17,
+        "rank": 21
+      },
+      {
+        "id": "5bb2cc39-4bb2-4f98-8875-cd9788f1a77d",
+        "title": "This Could Have Been a Mural",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "createdAt": "2026-10-16T20:00:30.391608+00:00",
+        "votes": 15,
+        "rank": 22
+      }
+    ],
+    "late7_all": {
+      "excludedVotes": 360,
+      "rankings": [
+        {
+          "id": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+          "createdAt": "2026-10-15T14:25:26.417363+00:00",
+          "votes": 276,
+          "rank": 1
+        },
+        {
+          "id": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+          "createdAt": "2026-10-16T15:06:51.729658+00:00",
+          "votes": 255,
+          "rank": 2
+        },
+        {
+          "id": "90ca347b-d774-4aaf-8089-c290184fc6db",
+          "title": "💛Paint the world Yellow💛",
+          "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+          "createdAt": "2026-10-15T17:24:45.142605+00:00",
+          "votes": 250,
+          "rank": 3
+        },
+        {
+          "id": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+          "title": "TOO MUCH SLOP",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-14T19:48:58.34971+00:00",
+          "votes": 247,
+          "rank": 4
+        },
+        {
+          "id": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+          "title": "Support Yellow Artists",
+          "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+          "createdAt": "2026-10-15T17:56:53.504486+00:00",
+          "votes": 213,
+          "rank": 5
+        },
+        {
+          "id": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+          "title": "We can make it!",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:01:08.154167+00:00",
+          "votes": 173,
+          "rank": 6
+        },
+        {
+          "id": "c243f71d-0621-4ed6-9fce-a6d0a88ce158",
+          "title": "YELLOW IS EVERYWHERE",
+          "submitter": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+          "createdAt": "2026-10-16T17:55:30.004546+00:00",
+          "votes": 167,
+          "rank": 7
+        },
+        {
+          "id": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+          "title": "The Museum Has No Front Desk",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:17:51.828503+00:00",
+          "votes": 161,
+          "rank": 8
+        },
+        {
+          "id": "f65d2947-c100-4dc4-af85-c055f481a600",
+          "title": "Yellow🟡 The Culture We Own",
+          "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+          "createdAt": "2026-10-14T14:12:11.918654+00:00",
+          "votes": 116,
+          "rank": 9
+        },
+        {
+          "id": "a1622728-cc2c-400c-9e55-f09aa1843af6",
+          "title": "Keep the yellow spirit!",
+          "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+          "createdAt": "2026-10-15T21:19:25.197717+00:00",
+          "votes": 115,
+          "rank": 10
+        },
+        {
+          "id": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+          "title": "Make Art Great Again",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:54:03.711226+00:00",
+          "votes": 99,
+          "rank": 11
+        },
+        {
+          "id": "20f9ff2a-39a8-4b47-8226-6984cd5336e9",
+          "title": "On-chain Art for All",
+          "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+          "createdAt": "2026-10-15T05:22:48.365701+00:00",
+          "votes": 92,
+          "rank": 12
+        },
+        {
+          "id": "a030c210-8a88-4a99-b758-170fd1e76d59",
+          "title": "More Art, Less Algorithm",
+          "submitter": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+          "createdAt": "2026-10-15T19:15:59.398612+00:00",
+          "votes": 89,
+          "rank": 13
+        },
+        {
+          "id": "bc5bc19e-50b3-4687-b708-a4e5d1a23d56",
+          "title": "Less Talk. Make More",
+          "submitter": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+          "createdAt": "2026-10-15T15:10:35.066517+00:00",
+          "votes": 86,
+          "rank": 14
+        },
+        {
+          "id": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+          "title": "FARCASTER EAT FIRST",
+          "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+          "createdAt": "2026-10-15T17:48:27.873368+00:00",
+          "votes": 67,
+          "rank": 15
+        },
+        {
+          "id": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+          "title": "Free the DAO",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:53:13.492026+00:00",
+          "votes": 50,
+          "rank": 16
+        },
+        {
+          "id": "c7710a24-55cd-45db-885a-0ac9aa4968c6",
+          "title": "Yellow",
+          "submitter": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+          "createdAt": "2026-10-16T20:59:50.533473+00:00",
+          "votes": 29,
+          "rank": 17
+        },
+        {
+          "id": "31b03063-53cb-4484-ad48-32e3d7eb8a64",
+          "title": "Road to Yellow",
+          "submitter": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+          "createdAt": "2026-10-15T20:27:48.642453+00:00",
+          "votes": 28,
+          "rank": 18
+        },
+        {
+          "id": "d9b6dd64-d853-4f0e-bfdb-1cacdf5c59bb",
+          "title": "Build the culture",
+          "submitter": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+          "createdAt": "2026-10-16T05:48:24.977723+00:00",
+          "votes": 26,
+          "rank": 19
+        },
+        {
+          "id": "ac8e8bc0-d9a8-47d4-9fa3-2f47041026a5",
+          "title": "The Culture Is the Currency",
+          "submitter": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+          "createdAt": "2026-10-16T15:54:45.06577+00:00",
+          "votes": 19,
+          "rank": 20
+        },
+        {
+          "id": "7ecfba6f-e584-4bbe-91d2-d4432aa646bc",
+          "title": "Creative Freedom 🪽",
+          "submitter": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+          "createdAt": "2026-10-15T16:45:39.77074+00:00",
+          "votes": 17,
+          "rank": 21
+        },
+        {
+          "id": "5bb2cc39-4bb2-4f98-8875-cd9788f1a77d",
+          "title": "This Could Have Been a Mural",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:00:30.391608+00:00",
+          "votes": 15,
+          "rank": 22
+        }
+      ],
+      "changed": [
+        {
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "beforeRank": 4,
+          "afterRank": 1,
+          "beforeVotes": 276,
+          "afterVotes": 276
+        },
+        {
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "beforeRank": 2,
+          "afterRank": 2,
+          "beforeVotes": 300,
+          "afterVotes": 255
+        },
+        {
+          "title": "💛Paint the world Yellow💛",
+          "beforeRank": 3,
+          "afterRank": 3,
+          "beforeVotes": 296,
+          "afterVotes": 250
+        },
+        {
+          "title": "TOO MUCH SLOP",
+          "beforeRank": 5,
+          "afterRank": 4,
+          "beforeVotes": 247,
+          "afterVotes": 247
+        },
+        {
+          "title": "Support Yellow Artists",
+          "beforeRank": 1,
+          "afterRank": 5,
+          "beforeVotes": 318,
+          "afterVotes": 213
+        },
+        {
+          "title": "We can make it!",
+          "beforeRank": 6,
+          "afterRank": 6,
+          "beforeVotes": 245,
+          "afterVotes": 173
+        },
+        {
+          "title": "YELLOW IS EVERYWHERE",
+          "beforeRank": 8,
+          "afterRank": 7,
+          "beforeVotes": 167,
+          "afterVotes": 167
+        },
+        {
+          "title": "The Museum Has No Front Desk",
+          "beforeRank": 9,
+          "afterRank": 8,
+          "beforeVotes": 161,
+          "afterVotes": 161
+        },
+        {
+          "title": "Yellow🟡 The Culture We Own",
+          "beforeRank": 7,
+          "afterRank": 9,
+          "beforeVotes": 182,
+          "afterVotes": 116
+        },
+        {
+          "title": "FARCASTER EAT FIRST",
+          "beforeRank": 15,
+          "afterRank": 15,
+          "beforeVotes": 74,
+          "afterVotes": 67
+        },
+        {
+          "title": "Free the DAO",
+          "beforeRank": 16,
+          "afterRank": 16,
+          "beforeVotes": 69,
+          "afterVotes": 50
+        }
+      ],
+      "top10Entered": [],
+      "top10Exited": []
+    },
+    "late7_support": {
+      "excludedVotes": 105,
+      "rankings": [
+        {
+          "id": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+          "createdAt": "2026-10-16T15:06:51.729658+00:00",
+          "votes": 300,
+          "rank": 1
+        },
+        {
+          "id": "90ca347b-d774-4aaf-8089-c290184fc6db",
+          "title": "💛Paint the world Yellow💛",
+          "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+          "createdAt": "2026-10-15T17:24:45.142605+00:00",
+          "votes": 296,
+          "rank": 2
+        },
+        {
+          "id": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+          "createdAt": "2026-10-15T14:25:26.417363+00:00",
+          "votes": 276,
+          "rank": 3
+        },
+        {
+          "id": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+          "title": "TOO MUCH SLOP",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-14T19:48:58.34971+00:00",
+          "votes": 247,
+          "rank": 4
+        },
+        {
+          "id": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+          "title": "We can make it!",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:01:08.154167+00:00",
+          "votes": 245,
+          "rank": 5
+        },
+        {
+          "id": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+          "title": "Support Yellow Artists",
+          "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+          "createdAt": "2026-10-15T17:56:53.504486+00:00",
+          "votes": 213,
+          "rank": 6
+        },
+        {
+          "id": "f65d2947-c100-4dc4-af85-c055f481a600",
+          "title": "Yellow🟡 The Culture We Own",
+          "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+          "createdAt": "2026-10-14T14:12:11.918654+00:00",
+          "votes": 182,
+          "rank": 7
+        },
+        {
+          "id": "c243f71d-0621-4ed6-9fce-a6d0a88ce158",
+          "title": "YELLOW IS EVERYWHERE",
+          "submitter": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+          "createdAt": "2026-10-16T17:55:30.004546+00:00",
+          "votes": 167,
+          "rank": 8
+        },
+        {
+          "id": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+          "title": "The Museum Has No Front Desk",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:17:51.828503+00:00",
+          "votes": 161,
+          "rank": 9
+        },
+        {
+          "id": "a1622728-cc2c-400c-9e55-f09aa1843af6",
+          "title": "Keep the yellow spirit!",
+          "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+          "createdAt": "2026-10-15T21:19:25.197717+00:00",
+          "votes": 115,
+          "rank": 10
+        },
+        {
+          "id": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+          "title": "Make Art Great Again",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:54:03.711226+00:00",
+          "votes": 99,
+          "rank": 11
+        },
+        {
+          "id": "20f9ff2a-39a8-4b47-8226-6984cd5336e9",
+          "title": "On-chain Art for All",
+          "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+          "createdAt": "2026-10-15T05:22:48.365701+00:00",
+          "votes": 92,
+          "rank": 12
+        },
+        {
+          "id": "a030c210-8a88-4a99-b758-170fd1e76d59",
+          "title": "More Art, Less Algorithm",
+          "submitter": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+          "createdAt": "2026-10-15T19:15:59.398612+00:00",
+          "votes": 89,
+          "rank": 13
+        },
+        {
+          "id": "bc5bc19e-50b3-4687-b708-a4e5d1a23d56",
+          "title": "Less Talk. Make More",
+          "submitter": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+          "createdAt": "2026-10-15T15:10:35.066517+00:00",
+          "votes": 86,
+          "rank": 14
+        },
+        {
+          "id": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+          "title": "FARCASTER EAT FIRST",
+          "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+          "createdAt": "2026-10-15T17:48:27.873368+00:00",
+          "votes": 74,
+          "rank": 15
+        },
+        {
+          "id": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+          "title": "Free the DAO",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:53:13.492026+00:00",
+          "votes": 69,
+          "rank": 16
+        },
+        {
+          "id": "c7710a24-55cd-45db-885a-0ac9aa4968c6",
+          "title": "Yellow",
+          "submitter": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+          "createdAt": "2026-10-16T20:59:50.533473+00:00",
+          "votes": 29,
+          "rank": 17
+        },
+        {
+          "id": "31b03063-53cb-4484-ad48-32e3d7eb8a64",
+          "title": "Road to Yellow",
+          "submitter": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+          "createdAt": "2026-10-15T20:27:48.642453+00:00",
+          "votes": 28,
+          "rank": 18
+        },
+        {
+          "id": "d9b6dd64-d853-4f0e-bfdb-1cacdf5c59bb",
+          "title": "Build the culture",
+          "submitter": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+          "createdAt": "2026-10-16T05:48:24.977723+00:00",
+          "votes": 26,
+          "rank": 19
+        },
+        {
+          "id": "ac8e8bc0-d9a8-47d4-9fa3-2f47041026a5",
+          "title": "The Culture Is the Currency",
+          "submitter": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+          "createdAt": "2026-10-16T15:54:45.06577+00:00",
+          "votes": 19,
+          "rank": 20
+        },
+        {
+          "id": "7ecfba6f-e584-4bbe-91d2-d4432aa646bc",
+          "title": "Creative Freedom 🪽",
+          "submitter": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+          "createdAt": "2026-10-15T16:45:39.77074+00:00",
+          "votes": 17,
+          "rank": 21
+        },
+        {
+          "id": "5bb2cc39-4bb2-4f98-8875-cd9788f1a77d",
+          "title": "This Could Have Been a Mural",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:00:30.391608+00:00",
+          "votes": 15,
+          "rank": 22
+        }
+      ],
+      "changed": [
+        {
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "beforeRank": 2,
+          "afterRank": 1,
+          "beforeVotes": 300,
+          "afterVotes": 300
+        },
+        {
+          "title": "💛Paint the world Yellow💛",
+          "beforeRank": 3,
+          "afterRank": 2,
+          "beforeVotes": 296,
+          "afterVotes": 296
+        },
+        {
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "beforeRank": 4,
+          "afterRank": 3,
+          "beforeVotes": 276,
+          "afterVotes": 276
+        },
+        {
+          "title": "TOO MUCH SLOP",
+          "beforeRank": 5,
+          "afterRank": 4,
+          "beforeVotes": 247,
+          "afterVotes": 247
+        },
+        {
+          "title": "We can make it!",
+          "beforeRank": 6,
+          "afterRank": 5,
+          "beforeVotes": 245,
+          "afterVotes": 245
+        },
+        {
+          "title": "Support Yellow Artists",
+          "beforeRank": 1,
+          "afterRank": 6,
+          "beforeVotes": 318,
+          "afterVotes": 213
+        }
+      ],
+      "top10Entered": [],
+      "top10Exited": []
+    },
+    "old4_beneficiary": {
+      "excludedVotes": 120,
+      "rankings": [
+        {
+          "id": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+          "title": "Support Yellow Artists",
+          "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+          "createdAt": "2026-10-15T17:56:53.504486+00:00",
+          "votes": 318,
+          "rank": 1
+        },
+        {
+          "id": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+          "createdAt": "2026-10-16T15:06:51.729658+00:00",
+          "votes": 300,
+          "rank": 2
+        },
+        {
+          "id": "90ca347b-d774-4aaf-8089-c290184fc6db",
+          "title": "💛Paint the world Yellow💛",
+          "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+          "createdAt": "2026-10-15T17:24:45.142605+00:00",
+          "votes": 296,
+          "rank": 3
+        },
+        {
+          "id": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+          "createdAt": "2026-10-15T14:25:26.417363+00:00",
+          "votes": 276,
+          "rank": 4
+        },
+        {
+          "id": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+          "title": "TOO MUCH SLOP",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-14T19:48:58.34971+00:00",
+          "votes": 247,
+          "rank": 5
+        },
+        {
+          "id": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+          "title": "We can make it!",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:01:08.154167+00:00",
+          "votes": 185,
+          "rank": 6
+        },
+        {
+          "id": "f65d2947-c100-4dc4-af85-c055f481a600",
+          "title": "Yellow🟡 The Culture We Own",
+          "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+          "createdAt": "2026-10-14T14:12:11.918654+00:00",
+          "votes": 182,
+          "rank": 7
+        },
+        {
+          "id": "c243f71d-0621-4ed6-9fce-a6d0a88ce158",
+          "title": "YELLOW IS EVERYWHERE",
+          "submitter": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+          "createdAt": "2026-10-16T17:55:30.004546+00:00",
+          "votes": 167,
+          "rank": 8
+        },
+        {
+          "id": "a1622728-cc2c-400c-9e55-f09aa1843af6",
+          "title": "Keep the yellow spirit!",
+          "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+          "createdAt": "2026-10-15T21:19:25.197717+00:00",
+          "votes": 115,
+          "rank": 9
+        },
+        {
+          "id": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+          "title": "The Museum Has No Front Desk",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:17:51.828503+00:00",
+          "votes": 101,
+          "rank": 10
+        },
+        {
+          "id": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+          "title": "Make Art Great Again",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:54:03.711226+00:00",
+          "votes": 99,
+          "rank": 11
+        },
+        {
+          "id": "20f9ff2a-39a8-4b47-8226-6984cd5336e9",
+          "title": "On-chain Art for All",
+          "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+          "createdAt": "2026-10-15T05:22:48.365701+00:00",
+          "votes": 92,
+          "rank": 12
+        },
+        {
+          "id": "a030c210-8a88-4a99-b758-170fd1e76d59",
+          "title": "More Art, Less Algorithm",
+          "submitter": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+          "createdAt": "2026-10-15T19:15:59.398612+00:00",
+          "votes": 89,
+          "rank": 13
+        },
+        {
+          "id": "bc5bc19e-50b3-4687-b708-a4e5d1a23d56",
+          "title": "Less Talk. Make More",
+          "submitter": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+          "createdAt": "2026-10-15T15:10:35.066517+00:00",
+          "votes": 86,
+          "rank": 14
+        },
+        {
+          "id": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+          "title": "FARCASTER EAT FIRST",
+          "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+          "createdAt": "2026-10-15T17:48:27.873368+00:00",
+          "votes": 74,
+          "rank": 15
+        },
+        {
+          "id": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+          "title": "Free the DAO",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:53:13.492026+00:00",
+          "votes": 69,
+          "rank": 16
+        },
+        {
+          "id": "c7710a24-55cd-45db-885a-0ac9aa4968c6",
+          "title": "Yellow",
+          "submitter": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+          "createdAt": "2026-10-16T20:59:50.533473+00:00",
+          "votes": 29,
+          "rank": 17
+        },
+        {
+          "id": "31b03063-53cb-4484-ad48-32e3d7eb8a64",
+          "title": "Road to Yellow",
+          "submitter": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+          "createdAt": "2026-10-15T20:27:48.642453+00:00",
+          "votes": 28,
+          "rank": 18
+        },
+        {
+          "id": "d9b6dd64-d853-4f0e-bfdb-1cacdf5c59bb",
+          "title": "Build the culture",
+          "submitter": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+          "createdAt": "2026-10-16T05:48:24.977723+00:00",
+          "votes": 26,
+          "rank": 19
+        },
+        {
+          "id": "ac8e8bc0-d9a8-47d4-9fa3-2f47041026a5",
+          "title": "The Culture Is the Currency",
+          "submitter": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+          "createdAt": "2026-10-16T15:54:45.06577+00:00",
+          "votes": 19,
+          "rank": 20
+        },
+        {
+          "id": "7ecfba6f-e584-4bbe-91d2-d4432aa646bc",
+          "title": "Creative Freedom 🪽",
+          "submitter": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+          "createdAt": "2026-10-15T16:45:39.77074+00:00",
+          "votes": 17,
+          "rank": 21
+        },
+        {
+          "id": "5bb2cc39-4bb2-4f98-8875-cd9788f1a77d",
+          "title": "This Could Have Been a Mural",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:00:30.391608+00:00",
+          "votes": 15,
+          "rank": 22
+        }
+      ],
+      "changed": [
+        {
+          "title": "We can make it!",
+          "beforeRank": 6,
+          "afterRank": 6,
+          "beforeVotes": 245,
+          "afterVotes": 185
+        },
+        {
+          "title": "Keep the yellow spirit!",
+          "beforeRank": 10,
+          "afterRank": 9,
+          "beforeVotes": 115,
+          "afterVotes": 115
+        },
+        {
+          "title": "The Museum Has No Front Desk",
+          "beforeRank": 9,
+          "afterRank": 10,
+          "beforeVotes": 161,
+          "afterVotes": 101
+        }
+      ],
+      "top10Entered": [],
+      "top10Exited": []
+    },
+    "paint2": {
+      "excludedVotes": 30,
+      "rankings": [
+        {
+          "id": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+          "title": "Support Yellow Artists",
+          "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+          "createdAt": "2026-10-15T17:56:53.504486+00:00",
+          "votes": 318,
+          "rank": 1
+        },
+        {
+          "id": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+          "createdAt": "2026-10-16T15:06:51.729658+00:00",
+          "votes": 300,
+          "rank": 2
+        },
+        {
+          "id": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+          "createdAt": "2026-10-15T14:25:26.417363+00:00",
+          "votes": 276,
+          "rank": 3
+        },
+        {
+          "id": "90ca347b-d774-4aaf-8089-c290184fc6db",
+          "title": "💛Paint the world Yellow💛",
+          "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+          "createdAt": "2026-10-15T17:24:45.142605+00:00",
+          "votes": 266,
+          "rank": 4
+        },
+        {
+          "id": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+          "title": "TOO MUCH SLOP",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-14T19:48:58.34971+00:00",
+          "votes": 247,
+          "rank": 5
+        },
+        {
+          "id": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+          "title": "We can make it!",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:01:08.154167+00:00",
+          "votes": 245,
+          "rank": 6
+        },
+        {
+          "id": "f65d2947-c100-4dc4-af85-c055f481a600",
+          "title": "Yellow🟡 The Culture We Own",
+          "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+          "createdAt": "2026-10-14T14:12:11.918654+00:00",
+          "votes": 182,
+          "rank": 7
+        },
+        {
+          "id": "c243f71d-0621-4ed6-9fce-a6d0a88ce158",
+          "title": "YELLOW IS EVERYWHERE",
+          "submitter": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+          "createdAt": "2026-10-16T17:55:30.004546+00:00",
+          "votes": 167,
+          "rank": 8
+        },
+        {
+          "id": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+          "title": "The Museum Has No Front Desk",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:17:51.828503+00:00",
+          "votes": 161,
+          "rank": 9
+        },
+        {
+          "id": "a1622728-cc2c-400c-9e55-f09aa1843af6",
+          "title": "Keep the yellow spirit!",
+          "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+          "createdAt": "2026-10-15T21:19:25.197717+00:00",
+          "votes": 115,
+          "rank": 10
+        },
+        {
+          "id": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+          "title": "Make Art Great Again",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:54:03.711226+00:00",
+          "votes": 99,
+          "rank": 11
+        },
+        {
+          "id": "20f9ff2a-39a8-4b47-8226-6984cd5336e9",
+          "title": "On-chain Art for All",
+          "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+          "createdAt": "2026-10-15T05:22:48.365701+00:00",
+          "votes": 92,
+          "rank": 12
+        },
+        {
+          "id": "a030c210-8a88-4a99-b758-170fd1e76d59",
+          "title": "More Art, Less Algorithm",
+          "submitter": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+          "createdAt": "2026-10-15T19:15:59.398612+00:00",
+          "votes": 89,
+          "rank": 13
+        },
+        {
+          "id": "bc5bc19e-50b3-4687-b708-a4e5d1a23d56",
+          "title": "Less Talk. Make More",
+          "submitter": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+          "createdAt": "2026-10-15T15:10:35.066517+00:00",
+          "votes": 86,
+          "rank": 14
+        },
+        {
+          "id": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+          "title": "FARCASTER EAT FIRST",
+          "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+          "createdAt": "2026-10-15T17:48:27.873368+00:00",
+          "votes": 74,
+          "rank": 15
+        },
+        {
+          "id": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+          "title": "Free the DAO",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:53:13.492026+00:00",
+          "votes": 69,
+          "rank": 16
+        },
+        {
+          "id": "c7710a24-55cd-45db-885a-0ac9aa4968c6",
+          "title": "Yellow",
+          "submitter": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+          "createdAt": "2026-10-16T20:59:50.533473+00:00",
+          "votes": 29,
+          "rank": 17
+        },
+        {
+          "id": "31b03063-53cb-4484-ad48-32e3d7eb8a64",
+          "title": "Road to Yellow",
+          "submitter": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+          "createdAt": "2026-10-15T20:27:48.642453+00:00",
+          "votes": 28,
+          "rank": 18
+        },
+        {
+          "id": "d9b6dd64-d853-4f0e-bfdb-1cacdf5c59bb",
+          "title": "Build the culture",
+          "submitter": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+          "createdAt": "2026-10-16T05:48:24.977723+00:00",
+          "votes": 26,
+          "rank": 19
+        },
+        {
+          "id": "ac8e8bc0-d9a8-47d4-9fa3-2f47041026a5",
+          "title": "The Culture Is the Currency",
+          "submitter": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+          "createdAt": "2026-10-16T15:54:45.06577+00:00",
+          "votes": 19,
+          "rank": 20
+        },
+        {
+          "id": "7ecfba6f-e584-4bbe-91d2-d4432aa646bc",
+          "title": "Creative Freedom 🪽",
+          "submitter": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+          "createdAt": "2026-10-15T16:45:39.77074+00:00",
+          "votes": 17,
+          "rank": 21
+        },
+        {
+          "id": "5bb2cc39-4bb2-4f98-8875-cd9788f1a77d",
+          "title": "This Could Have Been a Mural",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:00:30.391608+00:00",
+          "votes": 15,
+          "rank": 22
+        }
+      ],
+      "changed": [
+        {
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "beforeRank": 4,
+          "afterRank": 3,
+          "beforeVotes": 276,
+          "afterVotes": 276
+        },
+        {
+          "title": "💛Paint the world Yellow💛",
+          "beforeRank": 3,
+          "afterRank": 4,
+          "beforeVotes": 296,
+          "afterVotes": 266
+        }
+      ],
+      "top10Entered": [],
+      "top10Exited": []
+    },
+    "nft318": {
+      "excludedVotes": 34,
+      "rankings": [
+        {
+          "id": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+          "title": "Support Yellow Artists",
+          "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+          "createdAt": "2026-10-15T17:56:53.504486+00:00",
+          "votes": 318,
+          "rank": 1
+        },
+        {
+          "id": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+          "createdAt": "2026-10-16T15:06:51.729658+00:00",
+          "votes": 300,
+          "rank": 2
+        },
+        {
+          "id": "90ca347b-d774-4aaf-8089-c290184fc6db",
+          "title": "💛Paint the world Yellow💛",
+          "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+          "createdAt": "2026-10-15T17:24:45.142605+00:00",
+          "votes": 296,
+          "rank": 3
+        },
+        {
+          "id": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+          "createdAt": "2026-10-15T14:25:26.417363+00:00",
+          "votes": 276,
+          "rank": 4
+        },
+        {
+          "id": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+          "title": "We can make it!",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:01:08.154167+00:00",
+          "votes": 245,
+          "rank": 5
+        },
+        {
+          "id": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+          "title": "TOO MUCH SLOP",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-14T19:48:58.34971+00:00",
+          "votes": 232,
+          "rank": 6
+        },
+        {
+          "id": "f65d2947-c100-4dc4-af85-c055f481a600",
+          "title": "Yellow🟡 The Culture We Own",
+          "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+          "createdAt": "2026-10-14T14:12:11.918654+00:00",
+          "votes": 182,
+          "rank": 7
+        },
+        {
+          "id": "c243f71d-0621-4ed6-9fce-a6d0a88ce158",
+          "title": "YELLOW IS EVERYWHERE",
+          "submitter": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+          "createdAt": "2026-10-16T17:55:30.004546+00:00",
+          "votes": 167,
+          "rank": 8
+        },
+        {
+          "id": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+          "title": "The Museum Has No Front Desk",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:17:51.828503+00:00",
+          "votes": 161,
+          "rank": 9
+        },
+        {
+          "id": "a1622728-cc2c-400c-9e55-f09aa1843af6",
+          "title": "Keep the yellow spirit!",
+          "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+          "createdAt": "2026-10-15T21:19:25.197717+00:00",
+          "votes": 115,
+          "rank": 10
+        },
+        {
+          "id": "20f9ff2a-39a8-4b47-8226-6984cd5336e9",
+          "title": "On-chain Art for All",
+          "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+          "createdAt": "2026-10-15T05:22:48.365701+00:00",
+          "votes": 92,
+          "rank": 11
+        },
+        {
+          "id": "a030c210-8a88-4a99-b758-170fd1e76d59",
+          "title": "More Art, Less Algorithm",
+          "submitter": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+          "createdAt": "2026-10-15T19:15:59.398612+00:00",
+          "votes": 89,
+          "rank": 12
+        },
+        {
+          "id": "bc5bc19e-50b3-4687-b708-a4e5d1a23d56",
+          "title": "Less Talk. Make More",
+          "submitter": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+          "createdAt": "2026-10-15T15:10:35.066517+00:00",
+          "votes": 86,
+          "rank": 13
+        },
+        {
+          "id": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+          "title": "Make Art Great Again",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:54:03.711226+00:00",
+          "votes": 84,
+          "rank": 14
+        },
+        {
+          "id": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+          "title": "FARCASTER EAT FIRST",
+          "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+          "createdAt": "2026-10-15T17:48:27.873368+00:00",
+          "votes": 74,
+          "rank": 15
+        },
+        {
+          "id": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+          "title": "Free the DAO",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:53:13.492026+00:00",
+          "votes": 65,
+          "rank": 16
+        },
+        {
+          "id": "c7710a24-55cd-45db-885a-0ac9aa4968c6",
+          "title": "Yellow",
+          "submitter": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+          "createdAt": "2026-10-16T20:59:50.533473+00:00",
+          "votes": 29,
+          "rank": 17
+        },
+        {
+          "id": "31b03063-53cb-4484-ad48-32e3d7eb8a64",
+          "title": "Road to Yellow",
+          "submitter": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+          "createdAt": "2026-10-15T20:27:48.642453+00:00",
+          "votes": 28,
+          "rank": 18
+        },
+        {
+          "id": "d9b6dd64-d853-4f0e-bfdb-1cacdf5c59bb",
+          "title": "Build the culture",
+          "submitter": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+          "createdAt": "2026-10-16T05:48:24.977723+00:00",
+          "votes": 26,
+          "rank": 19
+        },
+        {
+          "id": "ac8e8bc0-d9a8-47d4-9fa3-2f47041026a5",
+          "title": "The Culture Is the Currency",
+          "submitter": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+          "createdAt": "2026-10-16T15:54:45.06577+00:00",
+          "votes": 19,
+          "rank": 20
+        },
+        {
+          "id": "7ecfba6f-e584-4bbe-91d2-d4432aa646bc",
+          "title": "Creative Freedom 🪽",
+          "submitter": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+          "createdAt": "2026-10-15T16:45:39.77074+00:00",
+          "votes": 17,
+          "rank": 21
+        },
+        {
+          "id": "5bb2cc39-4bb2-4f98-8875-cd9788f1a77d",
+          "title": "This Could Have Been a Mural",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:00:30.391608+00:00",
+          "votes": 15,
+          "rank": 22
+        }
+      ],
+      "changed": [
+        {
+          "title": "We can make it!",
+          "beforeRank": 6,
+          "afterRank": 5,
+          "beforeVotes": 245,
+          "afterVotes": 245
+        },
+        {
+          "title": "TOO MUCH SLOP",
+          "beforeRank": 5,
+          "afterRank": 6,
+          "beforeVotes": 247,
+          "afterVotes": 232
+        },
+        {
+          "title": "On-chain Art for All",
+          "beforeRank": 12,
+          "afterRank": 11,
+          "beforeVotes": 92,
+          "afterVotes": 92
+        },
+        {
+          "title": "More Art, Less Algorithm",
+          "beforeRank": 13,
+          "afterRank": 12,
+          "beforeVotes": 89,
+          "afterVotes": 89
+        },
+        {
+          "title": "Less Talk. Make More",
+          "beforeRank": 14,
+          "afterRank": 13,
+          "beforeVotes": 86,
+          "afterVotes": 86
+        },
+        {
+          "title": "Make Art Great Again",
+          "beforeRank": 11,
+          "afterRank": 14,
+          "beforeVotes": 99,
+          "afterVotes": 84
+        },
+        {
+          "title": "Free the DAO",
+          "beforeRank": 16,
+          "afterRank": 16,
+          "beforeVotes": 69,
+          "afterVotes": 65
+        }
+      ],
+      "top10Entered": [],
+      "top10Exited": []
+    },
+    "funded3ba": {
+      "excludedVotes": 30,
+      "rankings": [
+        {
+          "id": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+          "title": "Support Yellow Artists",
+          "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+          "createdAt": "2026-10-15T17:56:53.504486+00:00",
+          "votes": 318,
+          "rank": 1
+        },
+        {
+          "id": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+          "createdAt": "2026-10-16T15:06:51.729658+00:00",
+          "votes": 300,
+          "rank": 2
+        },
+        {
+          "id": "90ca347b-d774-4aaf-8089-c290184fc6db",
+          "title": "💛Paint the world Yellow💛",
+          "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+          "createdAt": "2026-10-15T17:24:45.142605+00:00",
+          "votes": 296,
+          "rank": 3
+        },
+        {
+          "id": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+          "createdAt": "2026-10-15T14:25:26.417363+00:00",
+          "votes": 276,
+          "rank": 4
+        },
+        {
+          "id": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+          "title": "We can make it!",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:01:08.154167+00:00",
+          "votes": 245,
+          "rank": 5
+        },
+        {
+          "id": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+          "title": "TOO MUCH SLOP",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-14T19:48:58.34971+00:00",
+          "votes": 232,
+          "rank": 6
+        },
+        {
+          "id": "f65d2947-c100-4dc4-af85-c055f481a600",
+          "title": "Yellow🟡 The Culture We Own",
+          "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+          "createdAt": "2026-10-14T14:12:11.918654+00:00",
+          "votes": 182,
+          "rank": 7
+        },
+        {
+          "id": "c243f71d-0621-4ed6-9fce-a6d0a88ce158",
+          "title": "YELLOW IS EVERYWHERE",
+          "submitter": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+          "createdAt": "2026-10-16T17:55:30.004546+00:00",
+          "votes": 167,
+          "rank": 8
+        },
+        {
+          "id": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+          "title": "The Museum Has No Front Desk",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:17:51.828503+00:00",
+          "votes": 161,
+          "rank": 9
+        },
+        {
+          "id": "a1622728-cc2c-400c-9e55-f09aa1843af6",
+          "title": "Keep the yellow spirit!",
+          "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+          "createdAt": "2026-10-15T21:19:25.197717+00:00",
+          "votes": 115,
+          "rank": 10
+        },
+        {
+          "id": "20f9ff2a-39a8-4b47-8226-6984cd5336e9",
+          "title": "On-chain Art for All",
+          "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+          "createdAt": "2026-10-15T05:22:48.365701+00:00",
+          "votes": 92,
+          "rank": 11
+        },
+        {
+          "id": "a030c210-8a88-4a99-b758-170fd1e76d59",
+          "title": "More Art, Less Algorithm",
+          "submitter": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+          "createdAt": "2026-10-15T19:15:59.398612+00:00",
+          "votes": 89,
+          "rank": 12
+        },
+        {
+          "id": "bc5bc19e-50b3-4687-b708-a4e5d1a23d56",
+          "title": "Less Talk. Make More",
+          "submitter": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+          "createdAt": "2026-10-15T15:10:35.066517+00:00",
+          "votes": 86,
+          "rank": 13
+        },
+        {
+          "id": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+          "title": "Make Art Great Again",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:54:03.711226+00:00",
+          "votes": 84,
+          "rank": 14
+        },
+        {
+          "id": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+          "title": "FARCASTER EAT FIRST",
+          "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+          "createdAt": "2026-10-15T17:48:27.873368+00:00",
+          "votes": 74,
+          "rank": 15
+        },
+        {
+          "id": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+          "title": "Free the DAO",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:53:13.492026+00:00",
+          "votes": 69,
+          "rank": 16
+        },
+        {
+          "id": "c7710a24-55cd-45db-885a-0ac9aa4968c6",
+          "title": "Yellow",
+          "submitter": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+          "createdAt": "2026-10-16T20:59:50.533473+00:00",
+          "votes": 29,
+          "rank": 17
+        },
+        {
+          "id": "31b03063-53cb-4484-ad48-32e3d7eb8a64",
+          "title": "Road to Yellow",
+          "submitter": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+          "createdAt": "2026-10-15T20:27:48.642453+00:00",
+          "votes": 28,
+          "rank": 18
+        },
+        {
+          "id": "d9b6dd64-d853-4f0e-bfdb-1cacdf5c59bb",
+          "title": "Build the culture",
+          "submitter": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+          "createdAt": "2026-10-16T05:48:24.977723+00:00",
+          "votes": 26,
+          "rank": 19
+        },
+        {
+          "id": "ac8e8bc0-d9a8-47d4-9fa3-2f47041026a5",
+          "title": "The Culture Is the Currency",
+          "submitter": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+          "createdAt": "2026-10-16T15:54:45.06577+00:00",
+          "votes": 19,
+          "rank": 20
+        },
+        {
+          "id": "7ecfba6f-e584-4bbe-91d2-d4432aa646bc",
+          "title": "Creative Freedom 🪽",
+          "submitter": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+          "createdAt": "2026-10-15T16:45:39.77074+00:00",
+          "votes": 17,
+          "rank": 21
+        },
+        {
+          "id": "5bb2cc39-4bb2-4f98-8875-cd9788f1a77d",
+          "title": "This Could Have Been a Mural",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:00:30.391608+00:00",
+          "votes": 15,
+          "rank": 22
+        }
+      ],
+      "changed": [
+        {
+          "title": "We can make it!",
+          "beforeRank": 6,
+          "afterRank": 5,
+          "beforeVotes": 245,
+          "afterVotes": 245
+        },
+        {
+          "title": "TOO MUCH SLOP",
+          "beforeRank": 5,
+          "afterRank": 6,
+          "beforeVotes": 247,
+          "afterVotes": 232
+        },
+        {
+          "title": "On-chain Art for All",
+          "beforeRank": 12,
+          "afterRank": 11,
+          "beforeVotes": 92,
+          "afterVotes": 92
+        },
+        {
+          "title": "More Art, Less Algorithm",
+          "beforeRank": 13,
+          "afterRank": 12,
+          "beforeVotes": 89,
+          "afterVotes": 89
+        },
+        {
+          "title": "Less Talk. Make More",
+          "beforeRank": 14,
+          "afterRank": 13,
+          "beforeVotes": 86,
+          "afterVotes": 86
+        },
+        {
+          "title": "Make Art Great Again",
+          "beforeRank": 11,
+          "afterRank": 14,
+          "beforeVotes": 99,
+          "afterVotes": 84
+        }
+      ],
+      "top10Entered": [],
+      "top10Exited": []
+    },
+    "draw3": {
+      "excludedVotes": 45,
+      "rankings": [
+        {
+          "id": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+          "title": "Support Yellow Artists",
+          "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+          "createdAt": "2026-10-15T17:56:53.504486+00:00",
+          "votes": 318,
+          "rank": 1
+        },
+        {
+          "id": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+          "title": "Perpetual Collective Machine - Loop Animation",
+          "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+          "createdAt": "2026-10-16T15:06:51.729658+00:00",
+          "votes": 300,
+          "rank": 2
+        },
+        {
+          "id": "90ca347b-d774-4aaf-8089-c290184fc6db",
+          "title": "💛Paint the world Yellow💛",
+          "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+          "createdAt": "2026-10-15T17:24:45.142605+00:00",
+          "votes": 296,
+          "rank": 3
+        },
+        {
+          "id": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+          "title": "TOO MUCH SLOP",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-14T19:48:58.34971+00:00",
+          "votes": 247,
+          "rank": 4
+        },
+        {
+          "id": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+          "title": "We can make it!",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:01:08.154167+00:00",
+          "votes": 245,
+          "rank": 5
+        },
+        {
+          "id": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+          "createdAt": "2026-10-15T14:25:26.417363+00:00",
+          "votes": 231,
+          "rank": 6
+        },
+        {
+          "id": "f65d2947-c100-4dc4-af85-c055f481a600",
+          "title": "Yellow🟡 The Culture We Own",
+          "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+          "createdAt": "2026-10-14T14:12:11.918654+00:00",
+          "votes": 182,
+          "rank": 7
+        },
+        {
+          "id": "c243f71d-0621-4ed6-9fce-a6d0a88ce158",
+          "title": "YELLOW IS EVERYWHERE",
+          "submitter": "0x72d4e991040e3b65fddbe5f340f65cf03c506e6f",
+          "createdAt": "2026-10-16T17:55:30.004546+00:00",
+          "votes": 167,
+          "rank": 8
+        },
+        {
+          "id": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+          "title": "The Museum Has No Front Desk",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:17:51.828503+00:00",
+          "votes": 161,
+          "rank": 9
+        },
+        {
+          "id": "a1622728-cc2c-400c-9e55-f09aa1843af6",
+          "title": "Keep the yellow spirit!",
+          "submitter": "0x1ba77f0359fb0e0c13a93ba284a084da2122e957",
+          "createdAt": "2026-10-15T21:19:25.197717+00:00",
+          "votes": 115,
+          "rank": 10
+        },
+        {
+          "id": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+          "title": "Make Art Great Again",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:54:03.711226+00:00",
+          "votes": 99,
+          "rank": 11
+        },
+        {
+          "id": "20f9ff2a-39a8-4b47-8226-6984cd5336e9",
+          "title": "On-chain Art for All",
+          "submitter": "0xfb1bbff3747b6090fce6c171ef9bfc2298ad3bd6",
+          "createdAt": "2026-10-15T05:22:48.365701+00:00",
+          "votes": 92,
+          "rank": 12
+        },
+        {
+          "id": "a030c210-8a88-4a99-b758-170fd1e76d59",
+          "title": "More Art, Less Algorithm",
+          "submitter": "0x8661ee79c9ec060bd263f41420ff1b4a36bb3ce8",
+          "createdAt": "2026-10-15T19:15:59.398612+00:00",
+          "votes": 89,
+          "rank": 13
+        },
+        {
+          "id": "bc5bc19e-50b3-4687-b708-a4e5d1a23d56",
+          "title": "Less Talk. Make More",
+          "submitter": "0xed764f46c8b6e4ebeadb795017e436ddb3561476",
+          "createdAt": "2026-10-15T15:10:35.066517+00:00",
+          "votes": 86,
+          "rank": 14
+        },
+        {
+          "id": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+          "title": "FARCASTER EAT FIRST",
+          "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+          "createdAt": "2026-10-15T17:48:27.873368+00:00",
+          "votes": 74,
+          "rank": 15
+        },
+        {
+          "id": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+          "title": "Free the DAO",
+          "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "createdAt": "2026-10-15T18:53:13.492026+00:00",
+          "votes": 69,
+          "rank": 16
+        },
+        {
+          "id": "c7710a24-55cd-45db-885a-0ac9aa4968c6",
+          "title": "Yellow",
+          "submitter": "0x8ec956961cc68313dc67237376ed16f6721a46b6",
+          "createdAt": "2026-10-16T20:59:50.533473+00:00",
+          "votes": 29,
+          "rank": 17
+        },
+        {
+          "id": "31b03063-53cb-4484-ad48-32e3d7eb8a64",
+          "title": "Road to Yellow",
+          "submitter": "0xc19f77dd0781605b2f551cfbfb3161ff2d7e93c8",
+          "createdAt": "2026-10-15T20:27:48.642453+00:00",
+          "votes": 28,
+          "rank": 18
+        },
+        {
+          "id": "d9b6dd64-d853-4f0e-bfdb-1cacdf5c59bb",
+          "title": "Build the culture",
+          "submitter": "0x46978b8e5f2d1e6e077d35047337b4fcc18d4079",
+          "createdAt": "2026-10-16T05:48:24.977723+00:00",
+          "votes": 26,
+          "rank": 19
+        },
+        {
+          "id": "ac8e8bc0-d9a8-47d4-9fa3-2f47041026a5",
+          "title": "The Culture Is the Currency",
+          "submitter": "0x5ce3e4c14fec4bf6d6fe942828b65785026c069b",
+          "createdAt": "2026-10-16T15:54:45.06577+00:00",
+          "votes": 19,
+          "rank": 20
+        },
+        {
+          "id": "7ecfba6f-e584-4bbe-91d2-d4432aa646bc",
+          "title": "Creative Freedom 🪽",
+          "submitter": "0x6681aba8a0ec9f26846e1fc1231994a42d0dea6b",
+          "createdAt": "2026-10-15T16:45:39.77074+00:00",
+          "votes": 17,
+          "rank": 21
+        },
+        {
+          "id": "5bb2cc39-4bb2-4f98-8875-cd9788f1a77d",
+          "title": "This Could Have Been a Mural",
+          "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+          "createdAt": "2026-10-16T20:00:30.391608+00:00",
+          "votes": 15,
+          "rank": 22
+        }
+      ],
+      "changed": [
+        {
+          "title": "TOO MUCH SLOP",
+          "beforeRank": 5,
+          "afterRank": 4,
+          "beforeVotes": 247,
+          "afterVotes": 247
+        },
+        {
+          "title": "We can make it!",
+          "beforeRank": 6,
+          "afterRank": 5,
+          "beforeVotes": 245,
+          "afterVotes": 245
+        },
+        {
+          "title": "Draw or Die! 🫀 by msmeghna",
+          "beforeRank": 4,
+          "afterRank": 6,
+          "beforeVotes": 276,
+          "afterVotes": 231
+        }
+      ],
+      "top10Entered": [],
+      "top10Exited": []
+    }
+  }
+}

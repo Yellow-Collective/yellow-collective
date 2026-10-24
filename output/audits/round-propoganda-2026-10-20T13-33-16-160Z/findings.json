@@ -1,0 +1,179 @@
+[
+  {
+    "id": "F01",
+    "kind": "coordination lead; self-voting unproven",
+    "beneficiary": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+    "entryTitles": [
+      "The Museum Has No Front Desk",
+      "We can make it!"
+    ],
+    "wallets": [
+      "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+      "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+      "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+      "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d"
+    ],
+    "votes": 120,
+    "owner": "UNKNOWN",
+    "evidence": "Four wallets each allocated 15 to both entries between 2026-10-19T22:54:54.419190Z and 22:56:49.685609Z (115.266419 seconds). Three recipients had historical delegation from the same delegator at different times; only f7 retained that delegation at this snapshot. No NFT Transfer or DelegateChanged directly connects these voters to beneficiary 7802 in the scanned contract.",
+    "allocations": [
+      {
+        "id": "6693f2c8-4679-4e66-8a5b-135e367bdc56",
+        "submissionId": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:54:54.41919+00:00",
+        "wallet": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de"
+      },
+      {
+        "id": "f114b406-eb65-4734-b7d1-240c89a0805c",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:54:54.41919+00:00",
+        "wallet": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de"
+      },
+      {
+        "id": "d00a491a-183f-4e4f-b02d-0e789fa38864",
+        "submissionId": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:55:49.223266+00:00",
+        "wallet": "0x517186eefab9d631e7ddbed521740e84afd9b11f"
+      },
+      {
+        "id": "d8dad2ce-314f-4361-8bbb-c8d7947183e7",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:55:49.223266+00:00",
+        "wallet": "0x517186eefab9d631e7ddbed521740e84afd9b11f"
+      },
+      {
+        "id": "1034396e-4af9-43cc-951d-8ad69da05724",
+        "submissionId": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:56:30.389397+00:00",
+        "wallet": "0x5eaa352f438023f956f8e6bd581f37a67971e46b"
+      },
+      {
+        "id": "bcfef889-f3ca-4eef-a70f-5ffc35524571",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:56:30.389397+00:00",
+        "wallet": "0x5eaa352f438023f956f8e6bd581f37a67971e46b"
+      },
+      {
+        "id": "1cc880ef-168c-4335-82f3-f3a03e8f1a4e",
+        "submissionId": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:56:49.685609+00:00",
+        "wallet": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d"
+      },
+      {
+        "id": "7fb96057-af98-4ea0-9e45-6304f4356932",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:56:49.685609+00:00",
+        "wallet": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d"
+      }
+    ]
+  },
+  {
+    "id": "F02",
+    "kind": "verified NFT relationship; common control unproven",
+    "beneficiary": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+    "entryTitles": [
+      "TOO MUCH SLOP",
+      "Make Art Great Again",
+      "Free the DAO"
+    ],
+    "wallets": [
+      "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+    ],
+    "votes": 34,
+    "owner": "UNKNOWN",
+    "evidence": "Submitter initiated transferFrom for token 318 to the voter on 2026-08-08; verified successful receipt. The voter placed 15+15+4 votes on submitter entries and 17 votes on other entries. Five-round retained platform history. Transfer could be gift, sale or custody.",
+    "allocations": [
+      {
+        "id": "166e57bc-e5f0-4e5a-a565-9e8d2498e298",
+        "submissionId": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+        "votes": 4,
+        "createdAt": "2026-10-19T03:45:57.048196+00:00",
+        "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+      },
+      {
+        "id": "844ff97a-2778-43ec-a6b2-9e8ca1220d03",
+        "submissionId": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+        "votes": 15,
+        "createdAt": "2026-10-19T03:45:57.048196+00:00",
+        "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+      },
+      {
+        "id": "a013197b-beb8-478b-84fc-8a70db7cd584",
+        "submissionId": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+        "votes": 15,
+        "createdAt": "2026-10-19T03:45:57.048196+00:00",
+        "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+      }
+    ]
+  },
+  {
+    "id": "F03",
+    "kind": "voting pattern only",
+    "beneficiary": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+    "entryTitles": [
+      "Draw or Die! 🫀 by msmeghna"
+    ],
+    "wallets": [
+      "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+      "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+      "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0"
+    ],
+    "votes": 45,
+    "owner": "UNKNOWN",
+    "evidence": "Each wallet has one retained platform allocation, 15 to this entry. Their NFT holdings predate this round substantially, and no direct NFT transfer/delegation connects them to the beneficiary. New platform voters are not necessarily new wallets.",
+    "allocations": [
+      {
+        "id": "f3b0980e-11a8-4aed-8f11-a468601ef186",
+        "submissionId": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+        "votes": 15,
+        "createdAt": "2026-10-17T12:50:07.755636+00:00",
+        "wallet": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134"
+      },
+      {
+        "id": "b5d5691d-d9e7-445e-b0f5-8f8588c19fff",
+        "submissionId": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+        "votes": 15,
+        "createdAt": "2026-10-17T22:29:53.842074+00:00",
+        "wallet": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c"
+      },
+      {
+        "id": "2868c8ee-0562-425e-8fa2-54be3fd374cf",
+        "submissionId": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+        "votes": 15,
+        "createdAt": "2026-10-18T19:09:27.801625+00:00",
+        "wallet": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0"
+      }
+    ]
+  },
+  {
+    "id": "F04",
+    "kind": "voting pattern only",
+    "beneficiary": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+    "entryTitles": [
+      "Support Yellow Artists"
+    ],
+    "wallets": [
+      "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b"
+    ],
+    "votes": 15,
+    "owner": "UNKNOWN",
+    "evidence": "Five of six retained platform allocations favor this submitter across four rounds, 190 of 205 historical votes; current 15 favors this entry and 15 favors More Art, Less Algorithm. Token 339 acquired through auction in 2024. No direct beneficiary NFT/delegation link.",
+    "allocations": [
+      {
+        "id": "13f691a8-5899-4fe7-b344-73d6229e5e34",
+        "submissionId": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "votes": 15,
+        "createdAt": "2026-10-20T00:09:23.030001+00:00",
+        "wallet": "0x9ffaab6c24d4fb58d61b26b08c8795e9e323f28b"
+      }
+    ]
+  }
+]

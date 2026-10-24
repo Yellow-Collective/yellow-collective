@@ -1,0 +1,590 @@
+{
+  "probe": {
+    "args": {
+      "chainid": "8453",
+      "address": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+      "startblock": 0,
+      "endblock": 52999999,
+      "page": 1,
+      "offset": 1000,
+      "sort": "asc"
+    },
+    "retrievedAt": "2026-10-23T21:13:02.664Z",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"ok\": true,\n  \"status\": \"0\",\n  \"message\": \"No transactions found\",\n  \"result\": []\n}"
+        }
+      ],
+      "structuredContent": {
+        "data": {
+          "ok": true,
+          "status": "0",
+          "message": "No transactions found",
+          "result": []
+        }
+      }
+    }
+  },
+  "receipt": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"ok\": true,\n  \"result\": {\n    \"type\": \"0x2\",\n    \"status\": \"0x1\",\n    \"cumulativeGasUsed\": \"0x452b66\",\n    \"logs\": [\n      {\n        \"address\": \"0x220e41499cf4d93a3629a5509410cbf9e6e0b109\",\n        \"topics\": [\n          \"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef\",\n          \"0x000000000000000000000000215db99298af65306a4c60bd3b7612d5f60b03d7\",\n          \"0x0000000000000000000000004e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25\",\n          \"0x000000000000000000000000000000000000000000000000000000000000013e\"\n        ],\n        \"data\": \"0x\",\n        \"blockHash\": \"0xd7b33f80fd6d39707cc1e0729dad3020159b10b564203a8e4f1142e63ab8ca76\",\n        \"blockNumber\": \"0x2f69c96\",\n        \"blockTimestamp\": \"0x6a77960f\",\n        \"transactionHash\": \"0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd\",\n        \"transactionIndex\": \"0x20\",\n        \"logIndex\": \"0x49\",\n        \"removed\": false\n      },\n      {\n        \"address\": \"0x220e41499cf4d93a3629a5509410cbf9e6e0b109\",\n        \"topics\": [\n          \"0xdec2bacdd2f05b59de34da9b523dff8be42e5e38e818c82fdb0bae774387a724\",\n          \"0x000000000000000000000000215db99298af65306a4c60bd3b7612d5f60b03d7\"\n        ],\n        \"data\": \"0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000\",\n        \"blockHash\": \"0xd7b33f80fd6d39707cc1e0729dad3020159b10b564203a8e4f1142e63ab8ca76\",\n        \"blockNumber\": \"0x2f69c96\",\n        \"blockTimestamp\": \"0x6a77960f\",\n        \"transactionHash\": \"0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd\",\n        \"transactionIndex\": \"0x20\",\n        \"logIndex\": \"0x4a\",\n        \"removed\": false\n      },\n      {\n        \"address\": \"0x220e41499cf4d93a3629a5509410cbf9e6e0b109\",\n        \"topics\": [\n          \"0xdec2bacdd2f05b59de34da9b523dff8be42e5e38e818c82fdb0bae774387a724\",\n          \"0x0000000000000000000000004e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25\"\n        ],\n        \"data\": \"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\",\n        \"blockHash\": \"0xd7b33f80fd6d39707cc1e0729dad3020159b10b564203a8e4f1142e63ab8ca76\",\n        \"blockNumber\": \"0x2f69c96\",\n        \"blockTimestamp\": \"0x6a77960f\",\n        \"transactionHash\": \"0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd\",\n        \"transactionIndex\": \"0x20\",\n        \"logIndex\": \"0x4b\",\n        \"removed\": false\n      }\n    ],\n    \"logsBloom\": \"0x00000000008000000000000000000000000000000000000000040000000000000000000000000200000200000000000000000000000000000000000000000000000000000000000000000008000010000000000010000000000000000000000000000000000000008040000000000000000000000000000000000010000000000000000000000004000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000004000000000000000000000000008000000000000000000000000040020000000000000200000000000000000000\",\n    \"transactionHash\": \"0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd\",\n    \"transactionIndex\": \"0x20\",\n    \"blockHash\": \"0xd7b33f80fd6d39707cc1e0729dad3020159b10b564203a8e4f1142e63ab8ca76\",\n    \"blockNumber\": \"0x2f69c96\",\n    \"gasUsed\": \"0x22bc8\",\n    \"effectiveGasPrice\": \"0x4c4bd6\",\n    \"blobGasUsed\": \"0x3cb4\",\n    \"from\": \"0x215db99298af65306a4c60bd3b7612d5f60b03d7\",\n    \"to\": \"0x220e41499cf4d93a3629a5509410cbf9e6e0b109\",\n    \"contractAddress\": null,\n    \"l1GasPrice\": \"0x34af668\",\n    \"l1GasUsed\": \"0x697\",\n    \"l1Fee\": \"0x2369a61f\",\n    \"l1BaseFeeScalar\": \"0x8dd\",\n    \"l1BlobBaseFee\": \"0x346cb0\",\n    \"l1BlobBaseFeeScalar\": \"0x101c12\",\n    \"daFootprintGasScalar\": \"0x94\"\n  }\n}"
+      }
+    ],
+    "structuredContent": {
+      "data": {
+        "ok": true,
+        "result": {
+          "type": "0x2",
+          "status": "0x1",
+          "cumulativeGasUsed": "0x452b66",
+          "logs": [
+            {
+              "address": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+              "topics": [
+                "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+                "0x000000000000000000000000215db99298af65306a4c60bd3b7612d5f60b03d7",
+                "0x0000000000000000000000004e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+                "0x000000000000000000000000000000000000000000000000000000000000013e"
+              ],
+              "data": "0x",
+              "blockHash": "0xd7b33f80fd6d39707cc1e0729dad3020159b10b564203a8e4f1142e63ab8ca76",
+              "blockNumber": "0x2f69c96",
+              "blockTimestamp": "0x6a77960f",
+              "transactionHash": "0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd",
+              "transactionIndex": "0x20",
+              "logIndex": "0x49",
+              "removed": false
+            },
+            {
+              "address": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+              "topics": [
+                "0xdec2bacdd2f05b59de34da9b523dff8be42e5e38e818c82fdb0bae774387a724",
+                "0x000000000000000000000000215db99298af65306a4c60bd3b7612d5f60b03d7"
+              ],
+              "data": "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000",
+              "blockHash": "0xd7b33f80fd6d39707cc1e0729dad3020159b10b564203a8e4f1142e63ab8ca76",
+              "blockNumber": "0x2f69c96",
+              "blockTimestamp": "0x6a77960f",
+              "transactionHash": "0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd",
+              "transactionIndex": "0x20",
+              "logIndex": "0x4a",
+              "removed": false
+            },
+            {
+              "address": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+              "topics": [
+                "0xdec2bacdd2f05b59de34da9b523dff8be42e5e38e818c82fdb0bae774387a724",
+                "0x0000000000000000000000004e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25"
+              ],
+              "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+              "blockHash": "0xd7b33f80fd6d39707cc1e0729dad3020159b10b564203a8e4f1142e63ab8ca76",
+              "blockNumber": "0x2f69c96",
+              "blockTimestamp": "0x6a77960f",
+              "transactionHash": "0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd",
+              "transactionIndex": "0x20",
+              "logIndex": "0x4b",
+              "removed": false
+            }
+          ],
+          "logsBloom": "0x00000000008000000000000000000000000000000000000000040000000000000000000000000200000200000000000000000000000000000000000000000000000000000000000000000008000010000000000010000000000000000000000000000000000000008040000000000000000000000000000000000010000000000000000000000004000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000004000000000000000000000000008000000000000000000000000040020000000000000200000000000000000000",
+          "transactionHash": "0x302072f37a511d291ec55a62c0c0144c64eee30a170e5f52ba4150dc70c1f6bd",
+          "transactionIndex": "0x20",
+          "blockHash": "0xd7b33f80fd6d39707cc1e0729dad3020159b10b564203a8e4f1142e63ab8ca76",
+          "blockNumber": "0x2f69c96",
+          "gasUsed": "0x22bc8",
+          "effectiveGasPrice": "0x4c4bd6",
+          "blobGasUsed": "0x3cb4",
+          "from": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+          "to": "0x220e41499cf4d93a3629a5509410cbf9e6e0b109",
+          "contractAddress": null,
+          "l1GasPrice": "0x34af668",
+          "l1GasUsed": "0x697",
+          "l1Fee": "0x2369a61f",
+          "l1BaseFeeScalar": "0x8dd",
+          "l1BlobBaseFee": "0x346cb0",
+          "l1BlobBaseFeeScalar": "0x101c12",
+          "daFootprintGasScalar": "0x94"
+        }
+      }
+    }
+  },
+  "chains": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"ok\": true,\n  \"result\": {\n    \"comments\": \"Bundled Etherscan chain list; update the package to refresh this snapshot.\",\n    \"totalcount\": 57,\n    \"result\": [\n      {\n        \"chainid\": \"1\",\n        \"chainname\": \"Ethereum Mainnet\",\n        \"blockexplorer\": \"https://etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=1\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"11155111\",\n        \"chainname\": \"Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=11155111\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"560048\",\n        \"chainname\": \"Hoodi Testnet\",\n        \"blockexplorer\": \"https://hoodi.etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=560048\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"56\",\n        \"chainname\": \"BNB Smart Chain Mainnet\",\n        \"blockexplorer\": \"https://bscscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=56\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"97\",\n        \"chainname\": \"BNB Smart Chain Testnet\",\n        \"blockexplorer\": \"https://testnet.bscscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=97\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"137\",\n        \"chainname\": \"Polygon Mainnet\",\n        \"blockexplorer\": \"https://polygonscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=137\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"80002\",\n        \"chainname\": \"Polygon Amoy Testnet\",\n        \"blockexplorer\": \"https://amoy.polygonscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=80002\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"8453\",\n        \"chainname\": \"Base Mainnet\",\n        \"blockexplorer\": \"https://basescan.org/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=8453\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"84532\",\n        \"chainname\": \"Base Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.basescan.org/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=84532\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"42161\",\n        \"chainname\": \"Arbitrum One Mainnet\",\n        \"blockexplorer\": \"https://arbiscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=42161\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"421614\",\n        \"chainname\": \"Arbitrum Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.arbiscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=421614\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"59144\",\n        \"chainname\": \"Linea Mainnet\",\n        \"blockexplorer\": \"https://lineascan.build/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=59144\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"59141\",\n        \"chainname\": \"Linea Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.lineascan.build/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=59141\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"10\",\n        \"chainname\": \"OP Mainnet\",\n        \"blockexplorer\": \"https://optimistic.etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=10\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"11155420\",\n        \"chainname\": \"OP Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia-optimism.etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=11155420\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"43114\",\n        \"chainname\": \"Avalanche C-Chain\",\n        \"blockexplorer\": \"https://snowscan.xyz/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=43114\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"43113\",\n        \"chainname\": \"Avalanche Fuji Testnet\",\n        \"blockexplorer\": \"https://testnet.snowscan.xyz/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=43113\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"199\",\n        \"chainname\": \"BitTorrent Chain Mainnet\",\n        \"blockexplorer\": \"https://bttcscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=199\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"1029\",\n        \"chainname\": \"BitTorrent Chain Testnet\",\n        \"blockexplorer\": \"https://testnet.bttcscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=1029\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"42220\",\n        \"chainname\": \"Celo Mainnet\",\n        \"blockexplorer\": \"https://celoscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=42220\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"11142220\",\n        \"chainname\": \"Celo Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.celoscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=11142220\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"252\",\n        \"chainname\": \"Fraxtal Mainnet\",\n        \"blockexplorer\": \"https://fraxscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=252\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"2523\",\n        \"chainname\": \"Fraxtal Hoodi Testnet\",\n        \"blockexplorer\": \"https://hoodi.fraxscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=2523\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"100\",\n        \"chainname\": \"Gnosis\",\n        \"blockexplorer\": \"https://gnosisscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=100\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"5000\",\n        \"chainname\": \"Mantle Mainnet\",\n        \"blockexplorer\": \"https://mantlescan.xyz/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=5000\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"5003\",\n        \"chainname\": \"Mantle Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.mantlescan.xyz/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=5003\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"4352\",\n        \"chainname\": \"Memecore Mainnet\",\n        \"blockexplorer\": \"https://memecorescan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=4352\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"43522\",\n        \"chainname\": \"Memecore Insectarium Testnet\",\n        \"blockexplorer\": \"https://testnet.memecorescan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=43522\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"167000\",\n        \"chainname\": \"Taiko Mainnet\",\n        \"blockexplorer\": \"https://taikoscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=167000\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"167013\",\n        \"chainname\": \"Taiko Hoodi\",\n        \"blockexplorer\": \"https://hoodi.taikoscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=167013\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"50\",\n        \"chainname\": \"XDC Mainnet\",\n        \"blockexplorer\": \"https://xdcscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=50\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"51\",\n        \"chainname\": \"XDC Apothem Testnet\",\n        \"blockexplorer\": \"https://testnet.xdcscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=51\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"480\",\n        \"chainname\": \"World Mainnet\",\n        \"blockexplorer\": \"https://worldscan.org/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=480\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"4801\",\n        \"chainname\": \"World Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.worldscan.org/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=4801\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"146\",\n        \"chainname\": \"Sonic Mainnet\",\n        \"blockexplorer\": \"https://sonicscan.org/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=146\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"14601\",\n        \"chainname\": \"Sonic Testnet\",\n        \"blockexplorer\": \"https://testnet.sonicscan.org/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=14601\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"130\",\n        \"chainname\": \"Unichain Mainnet\",\n        \"blockexplorer\": \"https://uniscan.xyz/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=130\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"1301\",\n        \"chainname\": \"Unichain Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.uniscan.xyz/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=1301\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"2741\",\n        \"chainname\": \"Abstract Mainnet\",\n        \"blockexplorer\": \"https://abscan.org/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=2741\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"11124\",\n        \"chainname\": \"Abstract Sepolia Testnet\",\n        \"blockexplorer\": \"https://sepolia.abscan.org/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=11124\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"80094\",\n        \"chainname\": \"Berachain Mainnet\",\n        \"blockexplorer\": \"https://berascan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=80094\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"80069\",\n        \"chainname\": \"Berachain Bepolia Testnet\",\n        \"blockexplorer\": \"https://testnet.berascan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=80069\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"143\",\n        \"chainname\": \"Monad Mainnet\",\n        \"blockexplorer\": \"https://monadscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=143\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"10143\",\n        \"chainname\": \"Monad Testnet\",\n        \"blockexplorer\": \"https://testnet.monadscan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=10143\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"999\",\n        \"chainname\": \"HyperEVM Mainnet\",\n        \"blockexplorer\": \"https://hyperevmscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=999\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"747474\",\n        \"chainname\": \"Katana Mainnet\",\n        \"blockexplorer\": \"https://katanascan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=747474\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"737373\",\n        \"chainname\": \"Katana Bokuto\",\n        \"blockexplorer\": \"https://bokuto.katanascan.com/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=737373\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"1329\",\n        \"chainname\": \"Sei Mainnet\",\n        \"blockexplorer\": \"https://seiscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=1329\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"1328\",\n        \"chainname\": \"Sei Testnet\",\n        \"blockexplorer\": \"https://testnet.seiscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=1328\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"988\",\n        \"chainname\": \"Stable Mainnet\",\n        \"blockexplorer\": \"https://stablescan.xyz/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=988\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"2201\",\n        \"chainname\": \"Stable Testnet\",\n        \"blockexplorer\": \"https://testnet.stablescan.xyz/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=2201\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"9745\",\n        \"chainname\": \"Plasma Mainnet\",\n        \"blockexplorer\": \"https://plasmascan.to/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=9745\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"9746\",\n        \"chainname\": \"Plasma Testnet\",\n        \"blockexplorer\": \"https://testnet.plasmascan.to/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=9746\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"4326\",\n        \"chainname\": \"MegaETH Mainnet\",\n        \"blockexplorer\": \"https://mega.etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=4326\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"6343\",\n        \"chainname\": \"MegaETH Testnet\",\n        \"blockexplorer\": \"https://testnet-mega.etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=6343\",\n        \"status\": 1,\n        \"comment\": \"Free-tier available\"\n      },\n      {\n        \"chainid\": \"4663\",\n        \"chainname\": \"Robinhood Chain\",\n        \"blockexplorer\": \"https://robin.etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=4663\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      },\n      {\n        \"chainid\": \"5042\",\n        \"chainname\": \"Arc Mainnet\",\n        \"blockexplorer\": \"https://arc.etherscan.io/\",\n        \"apiurl\": \"https://api.etherscan.io/v2/api?chainid=5042\",\n        \"status\": 1,\n        \"comment\": \"Paid Plan required\"\n      }\n    ]\n  }\n}"
+      }
+    ],
+    "structuredContent": {
+      "data": {
+        "ok": true,
+        "result": {
+          "comments": "Bundled Etherscan chain list; update the package to refresh this snapshot.",
+          "totalcount": 57,
+          "result": [
+            {
+              "chainid": "1",
+              "chainname": "Ethereum Mainnet",
+              "blockexplorer": "https://etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=1",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "11155111",
+              "chainname": "Sepolia Testnet",
+              "blockexplorer": "https://sepolia.etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=11155111",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "560048",
+              "chainname": "Hoodi Testnet",
+              "blockexplorer": "https://hoodi.etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=560048",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "56",
+              "chainname": "BNB Smart Chain Mainnet",
+              "blockexplorer": "https://bscscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=56",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "97",
+              "chainname": "BNB Smart Chain Testnet",
+              "blockexplorer": "https://testnet.bscscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=97",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "137",
+              "chainname": "Polygon Mainnet",
+              "blockexplorer": "https://polygonscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=137",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "80002",
+              "chainname": "Polygon Amoy Testnet",
+              "blockexplorer": "https://amoy.polygonscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=80002",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "8453",
+              "chainname": "Base Mainnet",
+              "blockexplorer": "https://basescan.org/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=8453",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "84532",
+              "chainname": "Base Sepolia Testnet",
+              "blockexplorer": "https://sepolia.basescan.org/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=84532",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "42161",
+              "chainname": "Arbitrum One Mainnet",
+              "blockexplorer": "https://arbiscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=42161",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "421614",
+              "chainname": "Arbitrum Sepolia Testnet",
+              "blockexplorer": "https://sepolia.arbiscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=421614",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "59144",
+              "chainname": "Linea Mainnet",
+              "blockexplorer": "https://lineascan.build/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=59144",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "59141",
+              "chainname": "Linea Sepolia Testnet",
+              "blockexplorer": "https://sepolia.lineascan.build/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=59141",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "10",
+              "chainname": "OP Mainnet",
+              "blockexplorer": "https://optimistic.etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=10",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "11155420",
+              "chainname": "OP Sepolia Testnet",
+              "blockexplorer": "https://sepolia-optimism.etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=11155420",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "43114",
+              "chainname": "Avalanche C-Chain",
+              "blockexplorer": "https://snowscan.xyz/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=43114",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "43113",
+              "chainname": "Avalanche Fuji Testnet",
+              "blockexplorer": "https://testnet.snowscan.xyz/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=43113",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "199",
+              "chainname": "BitTorrent Chain Mainnet",
+              "blockexplorer": "https://bttcscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=199",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "1029",
+              "chainname": "BitTorrent Chain Testnet",
+              "blockexplorer": "https://testnet.bttcscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=1029",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "42220",
+              "chainname": "Celo Mainnet",
+              "blockexplorer": "https://celoscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=42220",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "11142220",
+              "chainname": "Celo Sepolia Testnet",
+              "blockexplorer": "https://sepolia.celoscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=11142220",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "252",
+              "chainname": "Fraxtal Mainnet",
+              "blockexplorer": "https://fraxscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=252",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "2523",
+              "chainname": "Fraxtal Hoodi Testnet",
+              "blockexplorer": "https://hoodi.fraxscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=2523",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "100",
+              "chainname": "Gnosis",
+              "blockexplorer": "https://gnosisscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=100",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "5000",
+              "chainname": "Mantle Mainnet",
+              "blockexplorer": "https://mantlescan.xyz/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=5000",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "5003",
+              "chainname": "Mantle Sepolia Testnet",
+              "blockexplorer": "https://sepolia.mantlescan.xyz/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=5003",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "4352",
+              "chainname": "Memecore Mainnet",
+              "blockexplorer": "https://memecorescan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=4352",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "43522",
+              "chainname": "Memecore Insectarium Testnet",
+              "blockexplorer": "https://testnet.memecorescan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=43522",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "167000",
+              "chainname": "Taiko Mainnet",
+              "blockexplorer": "https://taikoscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=167000",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "167013",
+              "chainname": "Taiko Hoodi",
+              "blockexplorer": "https://hoodi.taikoscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=167013",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "50",
+              "chainname": "XDC Mainnet",
+              "blockexplorer": "https://xdcscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=50",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "51",
+              "chainname": "XDC Apothem Testnet",
+              "blockexplorer": "https://testnet.xdcscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=51",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "480",
+              "chainname": "World Mainnet",
+              "blockexplorer": "https://worldscan.org/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=480",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "4801",
+              "chainname": "World Sepolia Testnet",
+              "blockexplorer": "https://sepolia.worldscan.org/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=4801",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "146",
+              "chainname": "Sonic Mainnet",
+              "blockexplorer": "https://sonicscan.org/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=146",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "14601",
+              "chainname": "Sonic Testnet",
+              "blockexplorer": "https://testnet.sonicscan.org/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=14601",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "130",
+              "chainname": "Unichain Mainnet",
+              "blockexplorer": "https://uniscan.xyz/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=130",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "1301",
+              "chainname": "Unichain Sepolia Testnet",
+              "blockexplorer": "https://sepolia.uniscan.xyz/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=1301",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "2741",
+              "chainname": "Abstract Mainnet",
+              "blockexplorer": "https://abscan.org/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=2741",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "11124",
+              "chainname": "Abstract Sepolia Testnet",
+              "blockexplorer": "https://sepolia.abscan.org/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=11124",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "80094",
+              "chainname": "Berachain Mainnet",
+              "blockexplorer": "https://berascan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=80094",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "80069",
+              "chainname": "Berachain Bepolia Testnet",
+              "blockexplorer": "https://testnet.berascan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=80069",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "143",
+              "chainname": "Monad Mainnet",
+              "blockexplorer": "https://monadscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=143",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "10143",
+              "chainname": "Monad Testnet",
+              "blockexplorer": "https://testnet.monadscan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=10143",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "999",
+              "chainname": "HyperEVM Mainnet",
+              "blockexplorer": "https://hyperevmscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=999",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "747474",
+              "chainname": "Katana Mainnet",
+              "blockexplorer": "https://katanascan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=747474",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "737373",
+              "chainname": "Katana Bokuto",
+              "blockexplorer": "https://bokuto.katanascan.com/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=737373",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "1329",
+              "chainname": "Sei Mainnet",
+              "blockexplorer": "https://seiscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=1329",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "1328",
+              "chainname": "Sei Testnet",
+              "blockexplorer": "https://testnet.seiscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=1328",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "988",
+              "chainname": "Stable Mainnet",
+              "blockexplorer": "https://stablescan.xyz/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=988",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "2201",
+              "chainname": "Stable Testnet",
+              "blockexplorer": "https://testnet.stablescan.xyz/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=2201",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "9745",
+              "chainname": "Plasma Mainnet",
+              "blockexplorer": "https://plasmascan.to/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=9745",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "9746",
+              "chainname": "Plasma Testnet",
+              "blockexplorer": "https://testnet.plasmascan.to/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=9746",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "4326",
+              "chainname": "MegaETH Mainnet",
+              "blockexplorer": "https://mega.etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=4326",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "6343",
+              "chainname": "MegaETH Testnet",
+              "blockexplorer": "https://testnet-mega.etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=6343",
+              "status": 1,
+              "comment": "Free-tier available"
+            },
+            {
+              "chainid": "4663",
+              "chainname": "Robinhood Chain",
+              "blockexplorer": "https://robin.etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=4663",
+              "status": 1,
+              "comment": "Paid Plan required"
+            },
+            {
+              "chainid": "5042",
+              "chainname": "Arc Mainnet",
+              "blockexplorer": "https://arc.etherscan.io/",
+              "apiurl": "https://api.etherscan.io/v2/api?chainid=5042",
+              "status": 1,
+              "comment": "Paid Plan required"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

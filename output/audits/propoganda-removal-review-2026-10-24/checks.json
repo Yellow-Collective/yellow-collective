@@ -1,0 +1,32 @@
+{
+  "allRowsJoinSnapshot": true,
+  "uniqueAllocationIds": true,
+  "currentRoundOnly": true,
+  "approvedActiveOnly": true,
+  "highConfidenceVotes": 34,
+  "rankedRows": 58,
+  "policyRows": 22,
+  "byTier": [
+    {
+      "tier": "High",
+      "rows": 3,
+      "votes": 34
+    },
+    {
+      "tier": "Medium",
+      "rows": 4,
+      "votes": 60
+    },
+    {
+      "tier": "Low",
+      "rows": 12,
+      "votes": 180
+    },
+    {
+      "tier": "Very low",
+      "rows": 39,
+      "votes": 447
+    }
+  ],
+  "policyVotes": 206
+}

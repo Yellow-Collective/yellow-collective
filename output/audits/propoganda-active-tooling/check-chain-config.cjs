@@ -1,0 +1,1 @@
+const fs=require('fs');const {parseEnv}=require('node:util');const cfg=parseEnv(fs.readFileSync('.env.local','utf8')); console.log(JSON.stringify({configuredAlchemyKey:!!cfg.NEXT_PUBLIC_ALCHEMY_KEY,configuredBaseRPC:!!(cfg.BASE_RPC_URL||cfg.NEXT_PUBLIC_BASE_RPC_URL)}));

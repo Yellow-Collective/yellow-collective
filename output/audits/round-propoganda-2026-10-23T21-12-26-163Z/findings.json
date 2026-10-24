@@ -1,0 +1,585 @@
+[
+  {
+    "id": "F01",
+    "label": "NEW: seven connected late voters",
+    "beneficiaries": [
+      "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+      "0xa09aa75da763d4aeb692672897c057786cdd258b",
+      "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+      "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+      "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+      "0x9ab51fd89f163d07127df192b615356d53b406f6"
+    ],
+    "wallets": [
+      "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+      "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+      "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+      "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+      "0x07566caf069465977e9b0d3a96629c73a6c69740",
+      "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+      "0x31475a5652efbb267b3afdd9591ef05406db792b"
+    ],
+    "votes": 360,
+    "ownerAssessment": "UNKNOWN. Common operation or close coordination is plausible; no submitter ownership established.",
+    "basis": "Seven first-time platform voters allocated 360 votes in 34m 1.440s on October 23, 19:50:44.033627–20:24:45.473238 UTC. Each gave Support Yellow Artists 15 votes (105 combined). They have 82 distinct non-self native transfers within the bounded explorer pages plus an NFT transfer (#399) between group members. A six-edge native-transfer spanning tree and #399 receipt were corroborated against RPC. Funding links began years before this round; this is not evidence that the wallets were freshly created for this vote. Alternate explanations include friends, household members or coordinated genuine supporters.",
+    "allocations": [
+      {
+        "id": "306131ed-e4a0-4219-ad6b-6587018849af",
+        "wallet": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+        "submissionId": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "title": "Support Yellow Artists",
+        "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "votes": 15,
+        "createdAt": "2026-10-23T19:50:44.033627+00:00",
+        "updatedAt": "2026-10-23T19:50:44.033627+00:00"
+      },
+      {
+        "id": "523393cb-e927-4b82-b8ba-c5760c852e6a",
+        "wallet": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+        "submissionId": "f65d2947-c100-4dc4-af85-c055f481a600",
+        "title": "Yellow🟡 The Culture We Own",
+        "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "votes": 15,
+        "createdAt": "2026-10-23T19:50:44.033627+00:00",
+        "updatedAt": "2026-10-23T19:50:44.033627+00:00"
+      },
+      {
+        "id": "92c92972-d28e-45f1-9519-dd91accb92a2",
+        "wallet": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+        "submissionId": "990f9c9c-3a14-4325-a706-f6d08b5eeadf",
+        "title": "FARCASTER EAT FIRST",
+        "submitter": "0x4e0658e1e379faf0b96b78cfe7051f87c07900e2",
+        "votes": 7,
+        "createdAt": "2026-10-23T19:50:44.033627+00:00",
+        "updatedAt": "2026-10-23T19:50:44.033627+00:00"
+      },
+      {
+        "id": "c3919f51-f78a-43ba-88df-e9178a9e2222",
+        "wallet": "0xdc37e6f67bfb7361e25731fc477903e172d211f1",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-23T19:50:44.033627+00:00",
+        "updatedAt": "2026-10-23T19:50:44.033627+00:00"
+      },
+      {
+        "id": "4fcc584d-4fcb-4ee5-a5cf-4552a751a2f0",
+        "wallet": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+        "submissionId": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "title": "Support Yellow Artists",
+        "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "votes": 15,
+        "createdAt": "2026-10-23T19:53:42.596167+00:00",
+        "updatedAt": "2026-10-23T19:53:42.596167+00:00"
+      },
+      {
+        "id": "7cd1afdc-ec92-4e3c-b9ee-9b4620fc2d8b",
+        "wallet": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+        "submissionId": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+        "title": "Perpetual Collective Machine - Loop Animation",
+        "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "votes": 15,
+        "createdAt": "2026-10-23T19:53:42.596167+00:00",
+        "updatedAt": "2026-10-23T19:53:42.596167+00:00"
+      },
+      {
+        "id": "9e9e212d-6bce-4205-8bac-e486482d945b",
+        "wallet": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 10,
+        "createdAt": "2026-10-23T19:53:42.596167+00:00",
+        "updatedAt": "2026-10-23T19:53:42.596167+00:00"
+      },
+      {
+        "id": "f3a5ac2c-37ca-4df6-b89c-ae79ec247f3b",
+        "wallet": "0x0b81bffce9970aca9868120eee1bcc8de19119f7",
+        "submissionId": "f65d2947-c100-4dc4-af85-c055f481a600",
+        "title": "Yellow🟡 The Culture We Own",
+        "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "votes": 13,
+        "createdAt": "2026-10-23T19:53:42.596167+00:00",
+        "updatedAt": "2026-10-23T19:53:42.596167+00:00"
+      },
+      {
+        "id": "2fc0a203-15ea-40a2-a414-93a08c48e5ea",
+        "wallet": "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+        "submissionId": "f65d2947-c100-4dc4-af85-c055f481a600",
+        "title": "Yellow🟡 The Culture We Own",
+        "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "votes": 15,
+        "createdAt": "2026-10-23T19:55:20.725556+00:00",
+        "updatedAt": "2026-10-23T19:55:20.725556+00:00"
+      },
+      {
+        "id": "663047a8-0240-41ac-89dd-cd93c6b1cba6",
+        "wallet": "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 2,
+        "createdAt": "2026-10-23T19:55:20.725556+00:00",
+        "updatedAt": "2026-10-23T19:55:20.725556+00:00"
+      },
+      {
+        "id": "87181a26-8799-42fe-a7e4-4afecd636024",
+        "wallet": "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+        "submissionId": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+        "title": "Free the DAO",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "votes": 4,
+        "createdAt": "2026-10-23T19:55:20.725556+00:00",
+        "updatedAt": "2026-10-23T19:55:20.725556+00:00"
+      },
+      {
+        "id": "91aa8abe-db46-48f7-9a42-df00b912f4f6",
+        "wallet": "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+        "submissionId": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "title": "Support Yellow Artists",
+        "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "votes": 15,
+        "createdAt": "2026-10-23T19:55:20.725556+00:00",
+        "updatedAt": "2026-10-23T19:55:20.725556+00:00"
+      },
+      {
+        "id": "b9046e9b-1cb7-429b-b6db-91cbfe9c40ab",
+        "wallet": "0xeb8a03b68e4f5ee0f02ff612915bfafba4902c00",
+        "submissionId": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+        "title": "Perpetual Collective Machine - Loop Animation",
+        "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "votes": 15,
+        "createdAt": "2026-10-23T19:55:20.725556+00:00",
+        "updatedAt": "2026-10-23T19:55:20.725556+00:00"
+      },
+      {
+        "id": "0bb86f29-cf28-4e23-ac26-bbd0148b5b26",
+        "wallet": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+        "submissionId": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "title": "Support Yellow Artists",
+        "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:16:42.380518+00:00",
+        "updatedAt": "2026-10-23T20:16:42.380518+00:00"
+      },
+      {
+        "id": "9545497d-0f9c-4aa5-886d-310cb57a6731",
+        "wallet": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+        "submissionId": "90ca347b-d774-4aaf-8089-c290184fc6db",
+        "title": "💛Paint the world Yellow💛",
+        "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:16:42.380518+00:00",
+        "updatedAt": "2026-10-23T20:16:42.380518+00:00"
+      },
+      {
+        "id": "bf89f7e3-6397-4d50-be67-abcb592bcfbc",
+        "wallet": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:16:42.380518+00:00",
+        "updatedAt": "2026-10-23T20:16:42.380518+00:00"
+      },
+      {
+        "id": "e3de7b9c-12cf-4437-a43e-2291dc911c87",
+        "wallet": "0x08165c34b6689a7b35ec1a57d1265f83e758240c",
+        "submissionId": "f65d2947-c100-4dc4-af85-c055f481a600",
+        "title": "Yellow🟡 The Culture We Own",
+        "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "votes": 6,
+        "createdAt": "2026-10-23T20:16:42.380518+00:00",
+        "updatedAt": "2026-10-23T20:16:42.380518+00:00"
+      },
+      {
+        "id": "4848bfcc-3229-40ed-92ff-56e230a17847",
+        "wallet": "0x07566caf069465977e9b0d3a96629c73a6c69740",
+        "submissionId": "f65d2947-c100-4dc4-af85-c055f481a600",
+        "title": "Yellow🟡 The Culture We Own",
+        "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:19:40.63423+00:00",
+        "updatedAt": "2026-10-23T20:19:40.63423+00:00"
+      },
+      {
+        "id": "afd79295-dd9c-47fb-b3d8-3d224542fe7e",
+        "wallet": "0x07566caf069465977e9b0d3a96629c73a6c69740",
+        "submissionId": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+        "title": "Free the DAO",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:19:40.63423+00:00",
+        "updatedAt": "2026-10-23T20:19:40.63423+00:00"
+      },
+      {
+        "id": "ee49b5a0-1a09-405a-9f10-9ec47ad2e48d",
+        "wallet": "0x07566caf069465977e9b0d3a96629c73a6c69740",
+        "submissionId": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "title": "Support Yellow Artists",
+        "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:19:40.63423+00:00",
+        "updatedAt": "2026-10-23T20:19:40.63423+00:00"
+      },
+      {
+        "id": "fe3c96ce-93f7-4694-8417-2010dfe0c998",
+        "wallet": "0x07566caf069465977e9b0d3a96629c73a6c69740",
+        "submissionId": "90ca347b-d774-4aaf-8089-c290184fc6db",
+        "title": "💛Paint the world Yellow💛",
+        "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "votes": 6,
+        "createdAt": "2026-10-23T20:19:40.63423+00:00",
+        "updatedAt": "2026-10-23T20:19:40.63423+00:00"
+      },
+      {
+        "id": "0408b2e6-c2d3-48e7-9b8e-694e9dd12f56",
+        "wallet": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+        "submissionId": "90ca347b-d774-4aaf-8089-c290184fc6db",
+        "title": "💛Paint the world Yellow💛",
+        "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:22:51.776987+00:00",
+        "updatedAt": "2026-10-23T20:22:51.776987+00:00"
+      },
+      {
+        "id": "38eb1d11-4724-4573-906c-f6fc287e0675",
+        "wallet": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+        "submissionId": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+        "title": "Perpetual Collective Machine - Loop Animation",
+        "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "votes": 5,
+        "createdAt": "2026-10-23T20:22:51.776987+00:00",
+        "updatedAt": "2026-10-23T20:22:51.776987+00:00"
+      },
+      {
+        "id": "42af8108-a99f-4e44-96d5-86a2d821d347",
+        "wallet": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+        "submissionId": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "title": "Support Yellow Artists",
+        "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:22:51.776987+00:00",
+        "updatedAt": "2026-10-23T20:22:51.776987+00:00"
+      },
+      {
+        "id": "9c130c1a-c9c0-4430-9b46-0106b193a682",
+        "wallet": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+        "submissionId": "f65d2947-c100-4dc4-af85-c055f481a600",
+        "title": "Yellow🟡 The Culture We Own",
+        "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "votes": 1,
+        "createdAt": "2026-10-23T20:22:51.776987+00:00",
+        "updatedAt": "2026-10-23T20:22:51.776987+00:00"
+      },
+      {
+        "id": "ed921437-4c65-414f-bc7b-d3fa0052cbf6",
+        "wallet": "0xb15acc09c28226c7b47918f14951a65a0671ef3d",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:22:51.776987+00:00",
+        "updatedAt": "2026-10-23T20:22:51.776987+00:00"
+      },
+      {
+        "id": "1bd3d39b-336f-4d82-8352-87b8cfd893e9",
+        "wallet": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+        "submissionId": "90ca347b-d774-4aaf-8089-c290184fc6db",
+        "title": "💛Paint the world Yellow💛",
+        "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "votes": 10,
+        "createdAt": "2026-10-23T20:24:45.473238+00:00",
+        "updatedAt": "2026-10-23T20:24:45.473238+00:00"
+      },
+      {
+        "id": "3e3c936c-c805-458b-8b73-97b840f6680a",
+        "wallet": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:24:45.473238+00:00",
+        "updatedAt": "2026-10-23T20:24:45.473238+00:00"
+      },
+      {
+        "id": "78f7d8ec-f58a-4174-b2dd-603f231c76b0",
+        "wallet": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+        "submissionId": "c0da6068-159f-4fea-85e6-a5a8cefbda8a",
+        "title": "Support Yellow Artists",
+        "submitter": "0xcb6eb98d0533dd42367cd064fc5b988814187527",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:24:45.473238+00:00",
+        "updatedAt": "2026-10-23T20:24:45.473238+00:00"
+      },
+      {
+        "id": "a8a25907-7911-47b5-b0e3-59bdf62f0c90",
+        "wallet": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+        "submissionId": "f65d2947-c100-4dc4-af85-c055f481a600",
+        "title": "Yellow🟡 The Culture We Own",
+        "submitter": "0xa09aa75da763d4aeb692672897c057786cdd258b",
+        "votes": 1,
+        "createdAt": "2026-10-23T20:24:45.473238+00:00",
+        "updatedAt": "2026-10-23T20:24:45.473238+00:00"
+      },
+      {
+        "id": "e7a5fba5-5d3d-489d-8508-dea285d65f79",
+        "wallet": "0x31475a5652efbb267b3afdd9591ef05406db792b",
+        "submissionId": "4100b7f0-aaa5-4f58-b7ab-7591768c11b0",
+        "title": "Perpetual Collective Machine - Loop Animation",
+        "submitter": "0x1bae19af613bd5db94baf043d5817e16a53a4c33",
+        "votes": 10,
+        "createdAt": "2026-10-23T20:24:45.473238+00:00",
+        "updatedAt": "2026-10-23T20:24:45.473238+00:00"
+      }
+    ]
+  },
+  {
+    "id": "F02",
+    "label": "NEW in this round: Paint transfer-linked pair",
+    "beneficiaries": [
+      "0x9ab51fd89f163d07127df192b615356d53b406f6"
+    ],
+    "wallets": [
+      "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+      "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e"
+    ],
+    "votes": 30,
+    "ownerAssessment": "Submitter 9ab5 is the verified NFT source and the candidate associated owner for review; common control remains unproven.",
+    "basis": "b897 and 79ed each allocated 15 to Paint the world Yellow. The beneficiary previously transferred NFT 870 to b897 on September 22 and NFT 860 to 79ed on September 24. Successful sender-initiated transferFrom transactions corroborated by Etherscan and RPC. Both wallets also voted for other submitters in this round. These were the transfer-linked addresses discussed in the earlier comic-strip audit, but that earlier suspicion is not used as proof of ownership here.",
+    "allocations": [
+      {
+        "id": "ab6b508b-5cf1-464b-8291-94388f1dcf7b",
+        "wallet": "0xb89743f3b06d66ed5d7e3bbdf8312f6856de6c6b",
+        "submissionId": "90ca347b-d774-4aaf-8089-c290184fc6db",
+        "title": "💛Paint the world Yellow💛",
+        "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "votes": 15,
+        "createdAt": "2026-10-21T01:37:38.814025+00:00",
+        "updatedAt": "2026-10-21T16:32:54.917494+00:00"
+      },
+      {
+        "id": "e34232be-59be-48ac-92ce-96b3a7c204a1",
+        "wallet": "0x79ed59c8c92ff3f3384c2c43e1088e6b56e8af6e",
+        "submissionId": "90ca347b-d774-4aaf-8089-c290184fc6db",
+        "title": "💛Paint the world Yellow💛",
+        "submitter": "0x9ab51fd89f163d07127df192b615356d53b406f6",
+        "votes": 15,
+        "createdAt": "2026-10-23T20:16:59.766577+00:00",
+        "updatedAt": "2026-10-23T20:16:59.766577+00:00"
+      }
+    ]
+  },
+  {
+    "id": "F03",
+    "label": "Expanded: Slop submitter-linked voters",
+    "beneficiaries": [
+      "0x215db99298af65306a4c60bd3b7612d5f60b03d7"
+    ],
+    "wallets": [
+      "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+      "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded"
+    ],
+    "votes": 64,
+    "ownerAssessment": "Submitter 215d is the candidate associated owner for review; UNKNOWN beneficial ownership. Repeated native transfers strengthen the 3ba relationship, but gifts, repayments or shared expenses remain possible.",
+    "basis": "4e2a allocated 34 across Free the DAO (4), Make Art Great Again (15), TOO MUCH SLOP (15) and received NFT 318 from the submitter in August 2026. 3ba allocated 30 across the latter two entries, has three retained allocations over two rounds, all for this submitter, and received 0.001 ETH from the submitter in June 2024 before returning ETH on four observed occasions in August/September 2024. Those five native transactions were receipt-verified. Native funding is a verified relationship, not proof of control.",
+    "allocations": [
+      {
+        "id": "55a7b1db-78c3-4e45-998c-b5426e46af7f",
+        "wallet": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+        "submissionId": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+        "title": "TOO MUCH SLOP",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "votes": 15,
+        "createdAt": "2026-10-19T02:10:31.983616+00:00",
+        "updatedAt": "2026-10-19T02:10:31.983616+00:00"
+      },
+      {
+        "id": "e10e7224-d3c3-4e54-97e1-45844e222b3a",
+        "wallet": "0x3ba02da5b9fe77aed5592e934f7ec15381b3dded",
+        "submissionId": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+        "title": "Make Art Great Again",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "votes": 15,
+        "createdAt": "2026-10-19T02:10:31.983616+00:00",
+        "updatedAt": "2026-10-19T02:10:31.983616+00:00"
+      },
+      {
+        "id": "166e57bc-e5f0-4e5a-a565-9e8d2498e298",
+        "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "submissionId": "8c2744d4-d21c-47e8-b37b-f52a0b77c432",
+        "title": "Free the DAO",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "votes": 4,
+        "createdAt": "2026-10-19T03:45:57.048196+00:00",
+        "updatedAt": "2026-10-19T03:45:57.048196+00:00"
+      },
+      {
+        "id": "844ff97a-2778-43ec-a6b2-9e8ca1220d03",
+        "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "submissionId": "9cf86dda-d2d5-4145-8678-66bba53b0527",
+        "title": "Make Art Great Again",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "votes": 15,
+        "createdAt": "2026-10-19T03:45:57.048196+00:00",
+        "updatedAt": "2026-10-19T03:45:57.048196+00:00"
+      },
+      {
+        "id": "a013197b-beb8-478b-84fc-8a70db7cd584",
+        "wallet": "0x4e2a3a65d0e2bcdb507a70fe2d3fc5dff464aa25",
+        "submissionId": "8be30870-eaa5-408f-ba50-ae1751d17ef9",
+        "title": "TOO MUCH SLOP",
+        "submitter": "0x215db99298af65306a4c60bd3b7612d5f60b03d7",
+        "votes": 15,
+        "createdAt": "2026-10-19T03:45:57.048196+00:00",
+        "updatedAt": "2026-10-19T03:45:57.048196+00:00"
+      }
+    ]
+  },
+  {
+    "id": "F04",
+    "label": "Unchanged: four-wallet 120-vote cluster",
+    "beneficiaries": [
+      "0x7802cc411bfe02655fadfa5b23f9db3382d84a44"
+    ],
+    "wallets": [
+      "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+      "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+      "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+      "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d"
+    ],
+    "votes": 120,
+    "ownerAssessment": "UNKNOWN. No direct submitter-to-voter NFT or delegation relationship found in the complete configured-contract event history.",
+    "basis": "Each wallet gave Museum and We can make it 15 each; 60 per entry, 120 combined. Ballots were cast within 115.266419 seconds on October 19 and remained unchanged. Three have historical links to the same external delegator at different times; they did not reuse a single NFT simultaneously for this round snapshot.",
+    "allocations": [
+      {
+        "id": "6693f2c8-4679-4e66-8a5b-135e367bdc56",
+        "wallet": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "submissionId": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "title": "The Museum Has No Front Desk",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:54:54.41919+00:00",
+        "updatedAt": "2026-10-19T22:54:54.41919+00:00"
+      },
+      {
+        "id": "f114b406-eb65-4734-b7d1-240c89a0805c",
+        "wallet": "0xf7aef946d3f2e58a3685166ace1fc3db76d614de",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:54:54.41919+00:00",
+        "updatedAt": "2026-10-19T22:54:54.41919+00:00"
+      },
+      {
+        "id": "d00a491a-183f-4e4f-b02d-0e789fa38864",
+        "wallet": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "submissionId": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "title": "The Museum Has No Front Desk",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:55:49.223266+00:00",
+        "updatedAt": "2026-10-19T22:55:49.223266+00:00"
+      },
+      {
+        "id": "d8dad2ce-314f-4361-8bbb-c8d7947183e7",
+        "wallet": "0x517186eefab9d631e7ddbed521740e84afd9b11f",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:55:49.223266+00:00",
+        "updatedAt": "2026-10-19T22:55:49.223266+00:00"
+      },
+      {
+        "id": "1034396e-4af9-43cc-951d-8ad69da05724",
+        "wallet": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "submissionId": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "title": "The Museum Has No Front Desk",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:56:30.389397+00:00",
+        "updatedAt": "2026-10-19T22:56:30.389397+00:00"
+      },
+      {
+        "id": "bcfef889-f3ca-4eef-a70f-5ffc35524571",
+        "wallet": "0x5eaa352f438023f956f8e6bd581f37a67971e46b",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:56:30.389397+00:00",
+        "updatedAt": "2026-10-19T22:56:30.389397+00:00"
+      },
+      {
+        "id": "1cc880ef-168c-4335-82f3-f3a03e8f1a4e",
+        "wallet": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+        "submissionId": "06deb341-f6eb-44d6-b9fd-6ccbc7621cb1",
+        "title": "The Museum Has No Front Desk",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:56:49.685609+00:00",
+        "updatedAt": "2026-10-19T22:56:49.685609+00:00"
+      },
+      {
+        "id": "7fb96057-af98-4ea0-9e45-6304f4356932",
+        "wallet": "0xe348b541dd51c5e7b32557f055f7205e6d8c0a6d",
+        "submissionId": "0c5c2e3e-4a55-46b8-b8fa-d3e5596431ab",
+        "title": "We can make it!",
+        "submitter": "0x7802cc411bfe02655fadfa5b23f9db3382d84a44",
+        "votes": 15,
+        "createdAt": "2026-10-19T22:56:49.685609+00:00",
+        "updatedAt": "2026-10-19T22:56:49.685609+00:00"
+      }
+    ]
+  },
+  {
+    "id": "F05",
+    "label": "Unchanged: Draw-only voters",
+    "beneficiaries": [
+      "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b"
+    ],
+    "wallets": [
+      "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+      "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+      "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0"
+    ],
+    "votes": 45,
+    "ownerAssessment": "UNKNOWN. Voting-pattern lead only; no direct NFT/delegation relationship to the submitter.",
+    "basis": "Three wallets each placed one retained platform allocation, 15 for Draw or Die. They held NFTs long before this round. No new evidence establishing submitter control was found.",
+    "allocations": [
+      {
+        "id": "f3b0980e-11a8-4aed-8f11-a468601ef186",
+        "wallet": "0x5d69c42a3a481d0ccfd88cfa8a2a08e2bf456134",
+        "submissionId": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+        "title": "Draw or Die! 🫀 by msmeghna",
+        "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "votes": 15,
+        "createdAt": "2026-10-17T12:50:07.755636+00:00",
+        "updatedAt": "2026-10-17T12:50:07.755636+00:00"
+      },
+      {
+        "id": "b5d5691d-d9e7-445e-b0f5-8f8588c19fff",
+        "wallet": "0x8f3a83a3356d2666d89d027544bbaffa12139e3c",
+        "submissionId": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+        "title": "Draw or Die! 🫀 by msmeghna",
+        "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "votes": 15,
+        "createdAt": "2026-10-17T22:29:53.842074+00:00",
+        "updatedAt": "2026-10-17T22:29:53.842074+00:00"
+      },
+      {
+        "id": "2868c8ee-0562-425e-8fa2-54be3fd374cf",
+        "wallet": "0x282d656a9d95c64522f6bc1a42ee759de81e8dc0",
+        "submissionId": "1a44858b-fec6-4dff-aeeb-32e73b765f36",
+        "title": "Draw or Die! 🫀 by msmeghna",
+        "submitter": "0x15c6a4bf9023ad20c51cbea9992a5bccf83f3e7b",
+        "votes": 15,
+        "createdAt": "2026-10-18T19:09:27.801625+00:00",
+        "updatedAt": "2026-10-18T19:09:27.801625+00:00"
+      }
+    ]
+  }
+]
