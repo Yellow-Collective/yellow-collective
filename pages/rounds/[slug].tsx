@@ -42,6 +42,7 @@ import {
 } from "@/utils/rounds/roundMediaPayload";
 import { getRoundSignedRequestAction } from "@/utils/rounds/auth";
 import { refreshCommittedVote } from "@/utils/rounds/refresh-committed-vote";
+import { applyRoundStandings, type RoundStandings } from "@/utils/rounds/standings";
 import { createSignedRequestAuthHeader } from "@/utils/signature-auth-client";
 import { TOKEN_NETWORK } from "constants/addresses";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
@@ -176,6 +177,18 @@ export default function RoundDetailPage({
   const mediaKey = initialRound
     ? `/api/rounds/${initialRound.slug}/media?v=2`
     : null;
+  const { data: standings, error: standingsError, mutate: mutateStandings } = useSWR<RoundStandings>(
+    initialRound ? `/api/rounds/${initialRound.slug}/standings` : null,
+    fetcher,
+    {
+      refreshInterval: 15_000,
+      dedupingInterval: 10_000,
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      refreshWhenHidden: false,
+      keepPreviousData: false,
+    }
+  );
   const { data: roundMedia, error: roundMediaError } = useSWR<RoundMediaPayload>(mediaKey, fetcher, {
     refreshInterval: 15_000,
     dedupingInterval: 10_000,
@@ -201,11 +214,12 @@ export default function RoundDetailPage({
   }, [roundMedia?.revision, router]);
   const round = useMemo(
     () => {
+      const currentRound = applyRoundStandings(initialRound, standings);
       // A failed refresh must not leave artwork from a previous visibility state open.
-      if (roundMediaError && initialRound) return clearRoundArtwork(initialRound);
-      return hydrateRoundInlineMedia(initialRound, roundMedia);
+      if (roundMediaError && currentRound) return clearRoundArtwork(currentRound);
+      return hydrateRoundInlineMedia(currentRound, roundMedia);
     },
-    [initialRound, roundMedia, roundMediaError]
+    [initialRound, standings, roundMedia, roundMediaError]
   );
   const visibleSelectedSubmission = !roundMediaError && !isRefreshingArtworkMetadata && selectedSubmission
     ? round?.submissions.find((submission) => submission.id === selectedSubmission.id)
@@ -244,7 +258,7 @@ export default function RoundDetailPage({
   const votingStrategyLabel = getRoundVotingStrategyLabel(round);
   const winners =
     round && state === "ended"
-      ? round.submissions.slice(0, round.winnerCount)
+      ? round.submissions.filter((submission) => submission.status === "approved").slice(0, round.winnerCount)
       : [];
   const isRoundEnded = state === "ended";
 
@@ -344,6 +358,7 @@ export default function RoundDetailPage({
           await mutateVotingPower();
         },
         () => router.replace(router.asPath, undefined, { scroll: false }),
+        () => mutateStandings(),
       ]));
     } catch (voteError) {
       setMessage(
@@ -363,6 +378,7 @@ export default function RoundDetailPage({
       <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-7 pb-12">
         <div role="status" aria-live="polite">
           {roundMediaError ? "Artwork could not refresh. Images are temporarily hidden; reconnect or refresh to try again." : ""}
+          {standingsError ? " Vote totals could not refresh. Showing the last available standings; retrying automatically." : ""}
         </div>
         <Link
           href="/rounds"
@@ -623,7 +639,7 @@ export default function RoundDetailPage({
                       : undefined
                   }
                   rank={index + 1}
-                  isWinner={state === "ended" && index < round.winnerCount}
+                  isWinner={winners.some((winner) => winner.id === submission.id)}
                   isRoundEnded={isRoundEnded}
                   isVotingOpen={state === "voting_open"}
                   isOwnSubmission={isSameWalletAddress(
@@ -638,7 +654,7 @@ export default function RoundDetailPage({
                   onChange={(value) => updateAllocation(submission.id, value)}
                   onOpen={() => setSelectedSubmission(submission)}
                   artwork={artwork}
-                  showRank={state === "voting_open" || state === "ended"}
+                  showRank={submission.status === "approved" && (state === "voting_open" || state === "ended")}
                   showVoteCount={state === "voting_open" || state === "ended"}
                 />
               ))}

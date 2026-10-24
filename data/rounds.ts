@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { Pool, type PoolClient } from "pg";
 import { getAddress, isAddress } from "viem";
 import { getRoundState } from "@/utils/rounds/state";
+import type { RoundStandings } from "@/utils/rounds/standings";
 import {
   getBlockNumberAtOrBeforeTimestamp,
   getLatestRoundVotingBlockTimestamp,
@@ -2254,15 +2255,43 @@ export const listRoundSubmissions = async (
         AND s.deleted_at IS NULL
         ${publicOnly ? "AND (s.status = 'approved' OR w.winner_position IS NOT NULL)" : ""}
       ORDER BY
-        CASE WHEN w.winner_position IS NULL THEN 1 ELSE 0 END,
-        w.winner_position ASC,
+        ${publicOnly ? "CASE WHEN s.status = 'approved' THEN 0 ELSE 1 END," : ""}
         vote_count DESC,
-        s.created_at DESC
+        s.created_at DESC,
+        s.id ASC
     `,
     [roundId]
   );
 
   return result.rows.map(mapSubmission);
+};
+
+// A bounded, read-only refresh: no media, voter identities, schema setup or
+// winner finalization. One statement keeps totals and entry counts consistent.
+export const getPublicRoundStandingsBySlug = async (slug: string): Promise<RoundStandings | null> => {
+  if (slug.startsWith("demo-")) {
+    const round = await getDummyPublicRoundBySlug(slug);
+    return round ? {
+      roundId: round.id, totalVotes: round.totalVotes ?? 0,
+      submissions: round.submissions.map(({ id, voteCount, status }) => ({ id, voteCount, status })),
+    } : null;
+  }
+  const result = await getPool().query(`
+    SELECT r.id,
+      (SELECT COALESCE(SUM(v.vote_count), 0)::int FROM round_votes v WHERE v.round_id = r.id) AS total_votes,
+      COALESCE((SELECT jsonb_agg(jsonb_build_object(
+        'id', s.id, 'status', s.status,
+        'voteCount', (SELECT COALESCE(SUM(v.vote_count), 0)::int FROM round_votes v
+          WHERE v.round_id = r.id AND v.submission_id = s.id)
+      )) FROM round_submissions s WHERE s.round_id = r.id AND s.deleted_at IS NULL
+        AND (s.status = 'approved' OR EXISTS (
+          SELECT 1 FROM round_winners w WHERE w.round_id = r.id AND w.submission_id = s.id
+        ))), '[]'::jsonb) AS submissions
+    FROM rounds r WHERE r.slug = $1 AND r.status = 'published' AND r.active = true
+      AND r.deleted_at IS NULL LIMIT 1
+  `, [slug]);
+  const row = result.rows[0];
+  return row ? { roundId: row.id, totalVotes: Number(row.total_votes), submissions: row.submissions } : null;
 };
 
 export const finalizeRoundWinners = async (round: Round) => {
@@ -2298,7 +2327,7 @@ export const finalizeRoundWinners = async (round: Round) => {
           AND s.status = 'approved'
           AND s.deleted_at IS NULL
         GROUP BY s.id, s.created_at
-        ORDER BY vote_count DESC, s.created_at DESC
+        ORDER BY vote_count DESC, s.created_at DESC, s.id ASC
         LIMIT $2
       `,
       [round.id, round.winnerCount]

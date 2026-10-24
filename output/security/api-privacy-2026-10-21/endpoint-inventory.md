@@ -71,6 +71,7 @@
 | `/api/propdates/[proposalId]` | Intentionally public presentation / onchain data; no privileged record listing | `pages/api/propdates/[proposalId].ts` |
 | `/api/rounds/[slug]/asset` | Intentionally public presentation / onchain data; no privileged record listing | `pages/api/rounds/[slug]/asset.ts` |
 | `/api/rounds/[slug]/media` | Intentionally public presentation / onchain data; no privileged record listing | `pages/api/rounds/[slug]/media.ts` |
+| `/api/rounds/[slug]/standings` | Intentionally public aggregate counts for active published rounds; SELECT-only, no-store, no voter identities or media | `pages/api/rounds/[slug]/standings.ts` |
 | `/api/rounds/[slug]/my-submissions` | Signed owner; wallet derived on server | `pages/api/rounds/[slug]/my-submissions.ts` |
 | `/api/rounds/[slug]/submissions/[submissionId]/edit` | Signed owner; wallet derived on server | `pages/api/rounds/[slug]/submissions/[submissionId]/edit.ts` |
 | `/api/rounds/[slug]/submissions/[submissionId]/votes` | Intentionally public presentation / onchain data; no privileged record listing | `pages/api/rounds/[slug]/submissions/[submissionId]/votes.ts` |
