@@ -1,6 +1,9 @@
 import WalletIdentityLink from "@/components/WalletIdentityLink";
 import { useMemo } from "react";
 import { isAddress } from "viem";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSanitize from "rehype-sanitize";
 
 export type ProposalVote = {
   voter: string;
@@ -122,9 +125,23 @@ const ProposalVoteRow = ({ vote }: { vote: ProposalVote }) => {
         </div>
       </div>
       {vote.reason && (
-        <p className="mt-3 text-base leading-snug text-skin-base">
+        <ReactMarkdown
+          className="prose prose-skin mt-3 max-w-none text-base leading-relaxed text-skin-base [overflow-wrap:anywhere] prose-headings:font-heading prose-p:my-3 prose-p:whitespace-pre-line prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:underline prose-code:text-skin-base prose-pre:max-w-full prose-pre:overflow-x-auto prose-pre:bg-skin-muted prose-pre:text-skin-base [&>:first-child]:mt-0 [&>:last-child]:mb-0"
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeSanitize]}
+          skipHtml
+          components={{
+            a: ({ href, children }) => (
+              <a href={href} target="_blank" rel="noopener noreferrer">
+                {children}
+              </a>
+            ),
+            // Vote comments must not introduce author-controlled image requests.
+            img: ({ alt }) => <span>{alt || "Image"}</span>,
+          }}
+        >
           {vote.reason}
-        </p>
+        </ReactMarkdown>
       )}
     </div>
   );

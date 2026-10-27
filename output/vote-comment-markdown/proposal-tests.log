@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: maps a complete Goldsky proposal to the NounsDaoProposal contract
+ok 1 - maps a complete Goldsky proposal to the NounsDaoProposal contract
+  ---
+  duration_ms: 2.0968
+  ...
+# Subtest: falls through indexer and Goldsky misses to targeted RPC
+ok 2 - falls through indexer and Goldsky misses to targeted RPC
+  ---
+  duration_ms: 0.5359
+  ...
+# Subtest: continues to Goldsky when PostgreSQL detail lookup rejects
+ok 3 - continues to Goldsky when PostgreSQL detail lookup rejects
+  ---
+  duration_ms: 0.3665
+  ...
+# Subtest: merges fresh Goldsky list entries when the indexer is behind
+ok 4 - merges fresh Goldsky list entries when the indexer is behind
+  ---
+  duration_ms: 0.32
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18.287
